@@ -37,7 +37,8 @@ int main()
 </code></pre>
 
 *enuSpace Tensorflow plugin*
+[enuSpace blog](http://enuspace.tistory.com)
 
 ![Alt text](/image/enuSpaceTensorflow.png "enuSpace plugin (tensorflow)")
 
-[enuSpace blog](http://enuspace.tistory.com)
+
