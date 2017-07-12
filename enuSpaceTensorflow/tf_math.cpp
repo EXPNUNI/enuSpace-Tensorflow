@@ -27,7 +27,8 @@ void* Create_Acos(std::string id, Json::Value pInputItem) {
 	return pAcos;
 }
 
-void* Create_Add(std::string id, Json::Value pInputItem) {
+void* Create_Add(std::string id, Json::Value pInputItem) 
+{
 	Scope* pScope = nullptr;
 	Output* pX = nullptr;
 	Output* pY = nullptr;
