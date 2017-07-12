@@ -281,15 +281,15 @@ void* Create_Div(std::string id, Json::Value pInputItem) {
 	{
 		Json::Value ItemValue = pInputItem[subindex];
 
-		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
-		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
-		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
-		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
-		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
-		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
-		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
-		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
-		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							
 
 		if (strPinName == "scope")
 		{
@@ -437,15 +437,212 @@ void* Create_GreaterEqual(std::string id, Json::Value pInputItem) {
 	return pGreaterEqual;
 }
 
-void* Create_Igamma(std::string id, Json::Value pInputItem) {
-	Igamma* pIgamma = nullptr;
+void* Create_Igamma(std::string id, Json::Value pInputItem) 
+{
 	Scope* pScope = nullptr;
+	Output* pA = nullptr;
+	Output* pX = nullptr;
+	Igamma* pIgamma = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();
+		std::string strPinType = ItemValue.get("pin-type", "").asString();
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();
+
+		if (strPinName == "scope")
+		{
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : Igamma - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "a")
+		{
+			if (strPinInterface == "Input")
+			{
+				if (strPinInterface == "Input")
+				{
+					ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+					if (pObj)
+					{
+						OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+						if (pOutputObj)
+						{
+							if (pOutputObj->pOutput)
+							{
+								pA = (Output*)pOutputObj->pOutput;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : Igamma - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "x")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pX = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : Igamma - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : Igamma pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && pA && pX)
+	{
+		pIgamma = new Igamma(*pScope, *pX, *pA);
+		ObjectInfo* pObj = AddObjectMap(pIgamma, id, SYMBOL_IGAMMA, "Igamma", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, &pIgamma->z, OUTPUT_TYPE_OUTPUT, "z");
+	}
+	else
+	{
+		std::string msg = string_format("error : Igamma(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
 	return pIgamma;
 }
 
 void* Create_Igammac(std::string id, Json::Value pInputItem) {
-	Igammac* pIgammac = nullptr;
 	Scope* pScope = nullptr;
+	Output* pA = nullptr;
+	Output* pX = nullptr;
+	Igammac* pIgammac = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();
+		std::string strPinType = ItemValue.get("pin-type", "").asString();
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();
+
+		if (strPinName == "scope")
+		{
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : Igammac - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "a")
+		{
+			if (strPinInterface == "Input")
+			{
+				if (strPinInterface == "Input")
+				{
+					ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+					if (pObj)
+					{
+						OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+						if (pOutputObj)
+						{
+							if (pOutputObj->pOutput)
+							{
+								pA = (Output*)pOutputObj->pOutput;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : Igammac - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "x")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pX = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : Igammac - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : Igammac pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && pA && pX)
+	{
+		pIgammac = new Igammac(*pScope, *pX, *pA);
+		ObjectInfo* pObj = AddObjectMap(pIgammac, id, SYMBOL_IGAMMAC, "Igammac", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, &pIgammac->z, OUTPUT_TYPE_OUTPUT, "z");
+	}
+	else
+	{
+		std::string msg = string_format("error : Igammac(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
 	return pIgammac;
 }
 
@@ -479,7 +676,8 @@ void* Create_LessEqual(std::string id, Json::Value pInputItem) {
 	return pLessEqual;
 }
 
-void* Create_Lgamma(std::string id, Json::Value pInputItem) {
+void* Create_Lgamma(std::string id, Json::Value pInputItem) 
+{
 	Lgamma* pLgamma = nullptr;
 	Scope* pScope = nullptr;
 	return pLgamma;
@@ -624,7 +822,7 @@ void* Create_MatMul(std::string id, Json::Value pInputItem) {
 		pMatMul = new MatMul(*pScope, *pA, *pB, attrs);
 		ObjectInfo* pObj = AddObjectMap(pMatMul, id, SYMBOL_MATMUL, "MatMul", pInputItem);
 		if (pObj)
-			AddOutputInfo(pObj, &pMatMul->product, OUTPUT_TYPE_OUTPUT, "output");
+			AddOutputInfo(pObj, &pMatMul->product, OUTPUT_TYPE_OUTPUT, "product");
 	}
 	else
 	{
@@ -1194,8 +1392,6 @@ void* Create_Subtract(std::string id, Json::Value pInputItem) {
 							pX = (Output*)pOutputObj->pOutput;
 						}
 					}
-
-					// pX = pObj->pOutput;
 				}
 			}
 			else
@@ -1219,8 +1415,6 @@ void* Create_Subtract(std::string id, Json::Value pInputItem) {
 							pY = (Output*)pOutputObj->pOutput;
 						}
 					}
-
-					// pY = pObj->pOutput;
 				}
 			}
 			else
