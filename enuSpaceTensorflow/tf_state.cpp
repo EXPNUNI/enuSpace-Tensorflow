@@ -304,6 +304,7 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 						pTensor->flat<double>()(i) = *it;
 						i++;
 					}
+					arrayvals.clear();
 				}
 				else if (strPinType == "float")
 				{
@@ -319,6 +320,7 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 						pTensor->flat<float>()(i) = *it;
 						i++;
 					}
+					arrayvals.clear();
 				}
 				else if (strPinType == "int")
 				{
@@ -334,6 +336,7 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 						pTensor->flat<int>()(i) = *it;
 						i++;
 					}
+					arrayvals.clear();
 				}
 				else if (strPinType == "bool")
 				{
@@ -349,6 +352,7 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 						pTensor->flat<bool>()(i) = *it;
 						i++;
 					}
+					arrayvals.clear();
 				}
 				else if (strPinType == "string")
 				{
@@ -364,12 +368,15 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 						pTensor->flat<std::string>()(i) = *it;
 						i++;
 					}
+					arrayvals.clear();
 				}
 				else
 				{
 					std::string msg = string_format("warning : Const - %s(val-initvalue) transfer information missed.", id.c_str());
 					PrintMessage(msg);
 				}
+				array_slice.clear();
+				arraydims.clear();
 			}
 		}
 	}
@@ -390,7 +397,6 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_CONST, "Const", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
-			// pObj->pOutput = pOutput;
 	}
 	else
 	{
