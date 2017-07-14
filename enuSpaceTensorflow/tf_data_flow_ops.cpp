@@ -116,9 +116,14 @@ void* Create_AccumulatorApplyGradient(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : AccumulatorApplyGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && plocal_step && pgradient)
 	{
 		pAccumulatorApplyGradient = new AccumulatorApplyGradient(*pScope, *phandle, *plocal_step, *pgradient);
 		ObjectInfo* pObj = AddObjectMap(pAccumulatorApplyGradient, id, SYMBOL_ACCUMULATORAPPLYGRADIENT, "AccumulatorApplyGradient", pInputItem);
@@ -191,9 +196,14 @@ void* Create_AccumulatorNumAccumulated(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : AccumulatorNumAccumulated pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle)
 	{
 		pAccumulatorNumAccumulated = new AccumulatorNumAccumulated(*pScope, *phandle);
 		ObjectInfo* pObj = AddObjectMap(pAccumulatorNumAccumulated, id, SYMBOL_ACCUMULATORNUMACCUMULATED, "AccumulatorNumAccumulated", pInputItem);
@@ -289,9 +299,14 @@ void* Create_AccumulatorSetGlobalStep(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : AccumulatorSetGlobalStep pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pnew_global_step)
 	{
 		pAccumulatorSetGlobalStep = new AccumulatorSetGlobalStep(*pScope, *phandle, *pnew_global_step);
 		ObjectInfo* pObj = AddObjectMap(pAccumulatorSetGlobalStep, id, SYMBOL_ACCUMULATORSETGLOBALSTEP, "AccumulatorSetGlobalStep", pInputItem);
@@ -414,9 +429,14 @@ void* Create_AccumulatorTakeGradient(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : AccumulatorTakeGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pnum_required)
 	{
 		pAccumulatorTakeGradient = new AccumulatorTakeGradient(*pScope, *phandle, *pnum_required, dtype);
 		ObjectInfo* pObj = AddObjectMap(pAccumulatorTakeGradient, id, SYMBOL_ACCUMULATORTAKEGRADIENT, "AccumulatorTakeGradient", pInputItem);
@@ -585,7 +605,7 @@ void* Create_BarrierClose(std::string id, Json::Value pInputItem) {
 
 	}
 
-	if (pScope)
+	if (pScope && phandle)
 	{
 		pBarrierClose = new BarrierClose(*pScope, *phandle, attrs);
 		ObjectInfo* pObj = AddObjectMap(pBarrierClose, id, SYMBOL_BARRIERREADYSIZE, "BarrierClose", pInputItem);
@@ -657,9 +677,14 @@ void* Create_BarrierIncompleteSize(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : BarrierIncompleteSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle)
 	{
 		pBarrierIncompleteSize = new BarrierIncompleteSize(*pScope, *phandle);
 		ObjectInfo* pObj = AddObjectMap(pBarrierIncompleteSize, id, SYMBOL_BARRIERREADYSIZE, "BarrierIncompleteSize", pInputItem);
@@ -792,10 +817,14 @@ void* Create_BarrierInsertMany(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-
+		else
+		{
+			std::string msg = string_format("warning : BarrierInsertMany pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pkeys && pvalues)
 	{
 		pBarrierInsertMany = new BarrierInsertMany(*pScope, *phandle, *pkeys, *pvalues, component_index);
 		ObjectInfo* pObj = AddObjectMap(pBarrierInsertMany, id, SYMBOL_BARRIERINSERTMANY, "BarrierInsertMany", pInputItem);
@@ -867,9 +896,14 @@ void* Create_BarrierReadySize(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : BarrierReadySize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle)
 	{
 		pBarrierReadySize = new BarrierReadySize(*pScope, *phandle);
 		ObjectInfo* pObj = AddObjectMap(pBarrierReadySize, id, SYMBOL_BARRIERREADYSIZE, "BarrierReadySize", pInputItem);
@@ -996,7 +1030,7 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pnum_elements)
 	{
 		pBarrierTakeMany = new BarrierTakeMany(*pScope, *phandle, *pnum_elements, component_types, attrs);
 		ObjectInfo* pObj = AddObjectMap(pBarrierTakeMany, id, SYMBOL_BARRIERTAKEMANY, "BarrierTakeMany", pInputItem);
@@ -1173,9 +1207,14 @@ void* Create_DeleteSessionTensor(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : DeleteSessionTensor pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle)
 	{
 		pDeleteSessionTensor = new DeleteSessionTensor(*pScope, *phandle);
 		ObjectInfo* pObj = AddObjectMap(pDeleteSessionTensor, id, SYMBOL_DELETESESSIONTENSOR, "DeleteSessionTensor", pInputItem);
@@ -1282,9 +1321,14 @@ void* Create_DynamicPartition(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : DynamicPartition pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && pdata && ppartitions)
 	{
 		pDynamicPartition = new DynamicPartition(*pScope, *pdata, *ppartitions, num_partitions);
 		ObjectInfo* pObj = AddObjectMap(pDynamicPartition, id, SYMBOL_DYNAMICPARTITION, "DynamicPartition", pInputItem);
@@ -1378,9 +1422,14 @@ void* Create_DynamicStitch(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : DynamicStitch pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && pindices && pdata)
 	{
 		pDynamicStitch = new DynamicStitch(*pScope, *pindices, *pdata);
 		ObjectInfo* pObj = AddObjectMap(pDynamicStitch, id, SYMBOL_DYNAMICSTITCH, "DynamicStitch", pInputItem);
@@ -1529,9 +1578,14 @@ void* Create_GetSessionHandle(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : GetSessionHandle pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && pvalue)
 	{
 		pGetSessionHandle = new GetSessionHandle(*pScope, *pvalue);
 		ObjectInfo* pObj = AddObjectMap(pGetSessionHandle, id, SYMBOL_GETSESSIONHANDLE, "GetSessionHandle", pInputItem);
@@ -1603,9 +1657,14 @@ void* Create_GetSessionHandleV2(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : GetSessionHandleV2 pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && pvalue)
 	{
 		pGetSessionHandleV2 = new GetSessionHandleV2(*pScope, *pvalue);
 		ObjectInfo* pObj = AddObjectMap(pGetSessionHandleV2, id, SYMBOL_GETSESSIONHANDLEV2, "GetSessionHandleV2", pInputItem);
@@ -1704,9 +1763,14 @@ void* Create_GetSessionTensor(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : GetSessionTensor pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle)
 	{
 		pGetSessionTensor = new GetSessionTensor(*pScope, *phandle, dtype);
 		ObjectInfo* pObj = AddObjectMap(pGetSessionTensor, id, SYMBOL_GETSESSIONTENSOR, "GetSessionTensor", pInputItem);
@@ -1951,7 +2015,7 @@ void* Create_QueueClose(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && phandle)
 	{
 		pQueueClose = new QueueClose(*pScope, *phandle, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQueueClose, id, SYMBOL_QUEUECLOSE, "QueueClose", pInputItem);
@@ -2051,7 +2115,7 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && phandle)
 	{
 		pQueueDequeue = new QueueDequeue(*pScope, *phandle, component_types, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQueueDequeue, id, SYMBOL_QUEUEDEQUEUE, "QueueDequeue", pInputItem);
@@ -2174,7 +2238,7 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pn)
 	{
 		pQueueDequeueMany = new QueueDequeueMany(*pScope, *phandle, *pn, component_types, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQueueDequeueMany, id, SYMBOL_QUEUEDEQUEUEMANY, "QueueDequeueMany", pInputItem);
@@ -2297,7 +2361,7 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pn)
 	{
 		pQueueDequeueUpTo = new QueueDequeueUpTo(*pScope, *phandle, *pn, component_types, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQueueDequeueUpTo, id, SYMBOL_QUEUEDEQUEUEUPTO, "QueueDequeueUpTo", pInputItem);
@@ -2407,7 +2471,7 @@ void* Create_QueueEnqueue(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && components)
 	{
 		pQueueEnqueue = new QueueEnqueue(*pScope, *phandle, *components, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQueueEnqueue, id, SYMBOL_QUEUEENQUEUE, "QueueEnqueue", pInputItem);
@@ -2517,7 +2581,7 @@ void* Create_QueueEnqueueMany(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && components)
 	{
 		pQueueEnqueueMany = new QueueEnqueueMany(*pScope, *phandle, *components, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQueueEnqueueMany, id, SYMBOL_QUEUEENQUEUEMANY, "QueueEnqueueMany", pInputItem);
@@ -2589,7 +2653,7 @@ void* Create_QueueSize(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && phandle)
 	{
 		pQueueSize = new QueueSize(*pScope, *phandle);
 		ObjectInfo* pObj = AddObjectMap(pQueueSize, id, SYMBOL_QUEUESIZE, "QueueSize", pInputItem);
@@ -2929,9 +2993,14 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : SparseAccumulatorApplyGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && plocal_step && pgradient_indices && pgradient_values && pgradient_shape)
 	{
 		pSparseAccumulatorApplyGradient = new SparseAccumulatorApplyGradient(*pScope, *phandle, *plocal_step, *pgradient_indices, *pgradient_values, *pgradient_shape, has_known_shape);
 		ObjectInfo* pObj = AddObjectMap(pSparseAccumulatorApplyGradient, id, SYMBOL_SPARSEACCUMULATORAPPLYGRADIENT, "SparseAccumulatorApplyGradient", pInputItem);
@@ -3052,9 +3121,14 @@ void* Create_SparseAccumulatorTakeGradient(std::string id, Json::Value pInputIte
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : SparseAccumulatorTakeGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pnum_required)
 	{
 		pSparseAccumulatorTakeGradient = new SparseAccumulatorTakeGradient(*pScope, *phandle, *pnum_required, dtype);
 		ObjectInfo* pObj = AddObjectMap(pSparseAccumulatorTakeGradient, id, SYMBOL_SPARSEACCUMULATORTAKEGRADIENT, "SparseAccumulatorTakeGradient", pInputItem);
@@ -3248,7 +3322,7 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && pvalues)
 	{
 		pStage = new Stage(*pScope, *pvalues, attrs);
 		ObjectInfo* pObj = AddObjectMap(pStage, id, SYMBOL_STAGE, "Stage", pInputItem);
@@ -3364,7 +3438,7 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && psize)
 	{
 		pTensorArray = new TensorArray(*pScope, *psize, dtype, attrs);
 		ObjectInfo* pObj = AddObjectMap(pTensorArray, id, SYMBOL_TENSORARRAY, "TensorArray", pInputItem);
@@ -3437,9 +3511,14 @@ void* Create_TensorArrayClose(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : TensorArrayClose pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle)
 	{
 		pTensorArrayClose = new TensorArrayClose(*pScope, *phandle);
 		ObjectInfo* pObj = AddObjectMap(pTensorArrayClose, id, SYMBOL_TENSORARRAYCLOSE, "TensorArrayClose", pInputItem);
@@ -3576,7 +3655,7 @@ void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pflow_in)
 	{
 		pTensorArrayConcat = new TensorArrayConcat(*pScope, *phandle, *pflow_in, dtype, attrs);
 		ObjectInfo* pObj = AddObjectMap(pTensorArrayConcat, id, SYMBOL_TENSORARRAYCONCAT, "TensorArrayConcat", pInputItem);
@@ -3740,7 +3819,7 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pindices && pflow_in)
 	{
 		pTensorArrayGather = new TensorArrayGather(*pScope, *phandle, *pindices, *pflow_in, dtype, attrs);
 		ObjectInfo* pObj = AddObjectMap(pTensorArrayGather, id, SYMBOL_TENSORARRAYGATHER, "TensorArrayGather", pInputItem);
@@ -3849,9 +3928,14 @@ void* Create_TensorArrayGrad(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : TensorArrayGrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pflow_in)
 	{
 		pTensorArrayGrad = new TensorArrayGrad(*pScope, *phandle,*pflow_in, source);
 		ObjectInfo* pObj = AddObjectMap(pTensorArrayGrad, id, SYMBOL_TENSORARRAYGRAD, "TensorArrayGrad", pInputItem);
@@ -3999,9 +4083,14 @@ void* Create_TensorArrayRead(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : TensorArrayRead pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pindex && pflow_in)
 	{
 		pTensorArrayRead = new TensorArrayRead(*pScope, *phandle, *pindex, *pflow_in, dtype);
 		ObjectInfo* pObj = AddObjectMap(pTensorArrayRead, id, SYMBOL_TENSORARRAYREAD, "TensorArrayRead", pInputItem);
@@ -4145,9 +4234,14 @@ void* Create_TensorArrayScatter(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : TensorArrayScatter pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pindices && pvalue)
 	{
 		pTensorArrayScatter = new TensorArrayScatter(*pScope, *phandle, *pindices, *pvalue, *pflow_in);
 		ObjectInfo* pObj = AddObjectMap(pTensorArrayScatter, id, SYMBOL_TENSORARRAYSCATTER, "TensorArrayScatter", pInputItem);
@@ -4243,9 +4337,14 @@ void* Create_TensorArraySize(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : TensorArraySize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pflow_in)
 	{
 		pTensorArraySize = new TensorArraySize(*pScope, *phandle, *pflow_in);
 		ObjectInfo* pObj = AddObjectMap(pTensorArraySize, id, SYMBOL_TENSORARRAYSIZE, "TensorArraySize", pInputItem);
@@ -4389,9 +4488,14 @@ void* Create_TensorArraySplit(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : TensorArraySplit pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pvalue && plengths && pflow_in)
 	{
 		pTensorArraySplit = new TensorArraySplit(*pScope, *phandle, *pvalue,*plengths, *pflow_in);
 		ObjectInfo* pObj = AddObjectMap(pTensorArraySplit, id, SYMBOL_TENSORARRAYSPLIT, "TensorArraySplit", pInputItem);
@@ -4535,9 +4639,14 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else
+		{
+			std::string msg = string_format("warning : TensorArrayWrite pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
 	}
 
-	if (pScope)
+	if (pScope && phandle && pindex && pvalue && pflow_in)
 	{
 		pTensorArrayWrite = new TensorArrayWrite(*pScope, *phandle, *pindex, *pvalue, *pflow_in);
 		ObjectInfo* pObj = AddObjectMap(pTensorArrayWrite, id, SYMBOL_TENSORARRAYWRITE, "TensorArrayWrite", pInputItem);
