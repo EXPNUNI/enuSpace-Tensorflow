@@ -1,6 +1,9 @@
 # enuSpaceTensorflow
  A tensorflow module plugin in versatile software enuSpace for graphical flow programming.
 
+[enuSpaceTensorflow Guide](https://expnuni.gitbooks.io/enuspacetensorflow/content/)
+
+
 *Tensorflow C++ API*
 
 [Tensorflow C++ API Guide](https://www.tensorflow.org/api_guides/cc/guide)
