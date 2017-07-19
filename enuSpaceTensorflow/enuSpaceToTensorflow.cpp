@@ -148,9 +148,20 @@ bool Task_Tensorflow()
 
 								if (pData)
 								{
+									std::string strdim;
+									TensorShape shape = it->shape();
+									int idim = shape.dims();
+									for (int i = 0; i < idim; i++)
+									{
+										int64 idim = shape.dim_size(i);
+										strdim += strings::Printf("[%d]", idim);
+									}
+
 									std::string strVariable;
-									strVariable = pObjet->id + ".result";
-									SetArrayValue(pObjet->id, pData, iDataType, iNum);
+									strVariable = pObjet->id + ".result" + strdim;
+									SetReShapeArrayValue(strVariable, pData, iDataType, iNum);
+
+									delete[] pData;
 								}
 
 								vObjIt++;

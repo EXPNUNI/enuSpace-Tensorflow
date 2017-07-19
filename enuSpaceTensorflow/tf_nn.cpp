@@ -11,6 +11,7 @@
 #include "tensorflow.h"
 #include "utility_functions.h"
 #include "enuSpaceToTensorflow.h"
+#include "AttributeParser.h"
 
 void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 	AvgPool* pAvgPool = nullptr;
@@ -285,36 +286,572 @@ void* Create_Relu6(std::string id, Json::Value pInputItem) {
 void* Create_Softmax(std::string id, Json::Value pInputItem) {
 	Softmax* pSoftmax = nullptr;
 	Scope* pScope = nullptr;
+	Output* plogits = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "tensorflow::Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : Softmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "logits")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							plogits = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : Softmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : Softmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && plogits)
+	{
+		*pSoftmax = Softmax(*pScope, *plogits);
+		ObjectInfo* pObj = AddObjectMap(pSoftmax, id, SYMBOL_SOFTMAX, "softmax", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, &pSoftmax->softmax, OUTPUT_TYPE_OUTPUT, "softmax");
+	}
+	else
+	{
+		std::string msg = string_format("error : softmax(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
 	return pSoftmax;
 }
 
 void* Create_SoftmaxCrossEntropyWithLogits(std::string id, Json::Value pInputItem) {
 	SoftmaxCrossEntropyWithLogits* pSoftmaxCrossEntropyWithLogits = nullptr;
 	Scope* pScope = nullptr;
+	Output* features = nullptr;
+	Output* labels = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "tensorflow::Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : SoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "features")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							features = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "labels")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							labels = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : SoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && features && labels)
+	{
+		*pSoftmaxCrossEntropyWithLogits = SoftmaxCrossEntropyWithLogits(*pScope, *features, *labels);
+		ObjectInfo* pObj = AddObjectMap(pSoftmaxCrossEntropyWithLogits, id, SYMBOL_SOFTMAXCROSSENTROPYWITHLOGITS, "SoftmaxCrossEntropyWithLogits", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pSoftmaxCrossEntropyWithLogits->backprop, OUTPUT_TYPE_OUTPUT, "backprop");
+			AddOutputInfo(pObj, &pSoftmaxCrossEntropyWithLogits->loss, OUTPUT_TYPE_OUTPUT, "loss");
+		}	
+	}
+	else
+	{
+		std::string msg = string_format("error : SoftmaxCrossEntropyWithLogits(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
 	return pSoftmaxCrossEntropyWithLogits;
 }
 
 void* Create_Softplus(std::string id, Json::Value pInputItem) {
 	Softplus* pSoftplus = nullptr;
 	Scope* pScope = nullptr;
+	Output* pfeatures = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "tensorflow::Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : Softplus - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "features")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pfeatures = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+
+			}
+			else
+			{
+				std::string msg = string_format("warning : Softplus - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : Softplus - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && pfeatures)
+	{
+		*pSoftplus = Softplus(*pScope, *pfeatures);
+		ObjectInfo* pObj = AddObjectMap(pSoftplus, id, SYMBOL_SOFTMAX, "Softplus", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, &pSoftplus->activations, OUTPUT_TYPE_OUTPUT, "activations");
+	}
+	else
+	{
+		std::string msg = string_format("error : Softplus(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
 	return pSoftplus;
 }
 
 void* Create_Softsign(std::string id, Json::Value pInputItem) {
+	
 	Softsign* pSoftsign = nullptr;
 	Scope* pScope = nullptr;
+	Output* pfeatures = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "tensorflow::Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : Softsign - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "features")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pfeatures = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+
+			}
+			else
+			{
+				std::string msg = string_format("warning : Softsign - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : Softsign - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && pfeatures)
+	{
+		*pSoftsign = Softsign(*pScope, *pfeatures);
+		ObjectInfo* pObj = AddObjectMap(pSoftsign, id, SYMBOL_SOFTSIGN, "Softsign", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, &pSoftsign->activations, OUTPUT_TYPE_OUTPUT, "activations");
+	}
+	else
+	{
+		std::string msg = string_format("error : Softsign(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+
 	return pSoftsign;
 }
 
 void* Create_SparseSoftmaxCrossEntropyWithLogits(std::string id, Json::Value pInputItem) {
 	SparseSoftmaxCrossEntropyWithLogits* pSparseSoftmaxCrossEntropyWithLogits = nullptr;
 	Scope* pScope = nullptr;
+	Output* pfeatures = nullptr;
+	Output* plabels = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "tensorflow::Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseSoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "features")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pfeatures = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseSoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "labels")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							plabels = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseSoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : SparseSoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+	/*
+	::tensorflow::Output loss;
+	::tensorflow::Output backprop;
+	*/
+	if (pScope && pfeatures && plabels)
+	{
+		*pSparseSoftmaxCrossEntropyWithLogits = SparseSoftmaxCrossEntropyWithLogits(*pScope, *pfeatures,*plabels);
+		ObjectInfo* pObj = AddObjectMap(pSparseSoftmaxCrossEntropyWithLogits, id, SYMBOL_SOFTMAXCROSSENTROPYWITHLOGITS, "SparseSoftmaxCrossEntropyWithLogits", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pSparseSoftmaxCrossEntropyWithLogits->loss, OUTPUT_TYPE_OUTPUT, "loss");
+			AddOutputInfo(pObj, &pSparseSoftmaxCrossEntropyWithLogits->backprop, OUTPUT_TYPE_OUTPUT, "backprop");
+		}
+			
+	}
+	else
+	{
+		std::string msg = string_format("error : SparseSoftmaxCrossEntropyWithLogits(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
 	return pSparseSoftmaxCrossEntropyWithLogits;
 }
 
 void* Create_TopK(std::string id, Json::Value pInputItem) {
 	TopK* pTopK = nullptr;
 	Scope* pScope = nullptr;
+	Output* pinput = nullptr;
+	Output* pk = nullptr;
+	TopK::Attrs attrs;
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "tensorflow::Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : TopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "input")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pinput = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+
+			}
+			else
+			{
+				std::string msg = string_format("warning : TopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "k")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pk = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : TopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "TopK::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				attrs.Sorted(attrParser.GetValue_bool("Sorted_"));
+				
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : TopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+	/*
+	 ::tensorflow::Output values;
+	 ::tensorflow::Output indices;
+	*/
+	if (pScope && pinput && pk)
+	{
+		*pTopK = TopK(*pScope, *pinput, *pk);
+		ObjectInfo* pObj = AddObjectMap(pTopK, id, SYMBOL_TOPK, "TopK", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pTopK->values, OUTPUT_TYPE_OUTPUT, "values");
+			AddOutputInfo(pObj, &pTopK->indices, OUTPUT_TYPE_OUTPUT, "indices");
+		}
+
+	}
+	else
+	{
+		std::string msg = string_format("error : TopK(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
 	return pTopK;
 }
 
