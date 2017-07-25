@@ -42,7 +42,7 @@ int main()
 }
 </code></pre>
 
-*enuSpace Tensorflow plugin*
+*enuSpace Tensorflow gui plugin*
 
 enuSpaceTensorflow (Scalable vector graphic + dynamic link library)
 
