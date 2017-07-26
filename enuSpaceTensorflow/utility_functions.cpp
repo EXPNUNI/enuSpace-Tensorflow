@@ -4,6 +4,7 @@
 
 #include <string>
 #include <cstdarg>
+#include "tensorflow/core/framework/types.pb.h"
 
 std::string string_format(const std::string fmt_str, ...) 
 {
@@ -120,7 +121,7 @@ bool GetArrayDimsFromShape(std::string strShape, std::vector<int64>& arraydims, 
 	return true;
 }
 
-bool GetDoubleVectorFormInitial(std::string strinitial, std::vector<double>& arrayvals)
+bool GetDoubleVectorFromInitial(std::string strinitial, std::vector<double>& arrayvals)
 {
 	std::string val;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
@@ -141,7 +142,7 @@ bool GetDoubleVectorFormInitial(std::string strinitial, std::vector<double>& arr
 	return true;
 }
 
-bool GetFloatVectorFormInitial(std::string strinitial, std::vector<float>& arrayvals)
+bool GetFloatVectorFromInitial(std::string strinitial, std::vector<float>& arrayvals)
 {
 	std::string val;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
@@ -162,7 +163,7 @@ bool GetFloatVectorFormInitial(std::string strinitial, std::vector<float>& array
 	return true;
 }
 
-bool GetIntVectorFormInitial(std::string strinitial, std::vector<int>& arrayvals)
+bool GetIntVectorFromInitial(std::string strinitial, std::vector<int>& arrayvals)
 {
 	std::string val;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
@@ -183,7 +184,7 @@ bool GetIntVectorFormInitial(std::string strinitial, std::vector<int>& arrayvals
 	return true;
 }
 
-bool GetBoolVectorFormInitial(std::string strinitial, std::vector<bool>& arrayvals)
+bool GetBoolVectorFromInitial(std::string strinitial, std::vector<bool>& arrayvals)
 {
 	std::string val;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
@@ -212,7 +213,7 @@ bool GetBoolVectorFormInitial(std::string strinitial, std::vector<bool>& arrayva
 	return true;
 }
 
-bool GetStringVectorFormInitial(std::string strinitial, std::vector<std::string>& arrayvals)
+bool GetStringVectorFromInitial(std::string strinitial, std::vector<std::string>& arrayvals)
 {
 	std::string val;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
@@ -231,4 +232,228 @@ bool GetStringVectorFormInitial(std::string strinitial, std::vector<std::string>
 	if (val.length() > 0)
 		arrayvals.push_back(val);
 	return true;
+}
+DataType GetDatatypeFromInitial(std::string strinitial)
+{
+	DataType dt;
+	if (strinitial == "DT_INVALID")
+		dt = DT_INVALID;
+	else if (strinitial == "DT_DOUBLE")
+		dt = DT_DOUBLE;
+	else if (strinitial == "DT_INT32")
+		dt = DT_INT32;
+	else if (strinitial == "DT_UINT8")
+		dt = DT_UINT8;
+	else if (strinitial == "DT_INT16")
+		dt = DT_INT16;
+	else if (strinitial == "DT_INT8")
+		dt = DT_INT8;
+	else if (strinitial == "DT_STRING")
+		dt = DT_STRING;
+	else if (strinitial == "DT_COMPLEX64")
+		dt = DT_COMPLEX64;
+	else if (strinitial == "DT_INT64")
+		dt = DT_INT64;
+	else if (strinitial == "DT_BOOL")
+		dt = DT_BOOL;
+	else if (strinitial == "DT_QINT8")
+		dt = DT_QINT8;
+	else if (strinitial == "DT_QUINT8")
+		dt = DT_QUINT8;
+	else if (strinitial == "DT_QINT32")
+		dt = DT_QINT32;
+	else if (strinitial == "DT_BFLOAT16")
+		dt = DT_BFLOAT16;
+	else if (strinitial == "DT_QINT16")
+		dt = DT_QINT16;
+	else if (strinitial == "DT_QUINT16")
+		dt = DT_QUINT16;
+	else if (strinitial == "DT_UINT16")
+		dt = DT_UINT16;
+	else if (strinitial == "DT_COMPLEX128")
+		dt = DT_COMPLEX128;
+	else if (strinitial == "DT_HALF")
+		dt = DT_HALF;
+	else if (strinitial == "DT_RESOURCE")
+		dt = DT_RESOURCE;
+	else if (strinitial == "DT_FLOAT_REF")
+		dt = DT_FLOAT_REF;
+	else if (strinitial == "DT_DOUBLE_REF")
+		dt = DT_DOUBLE_REF;
+	else if (strinitial == "DT_INT32_REF")
+		dt = DT_INT32_REF;
+	else if (strinitial == "DT_UINT8_REF")
+		dt = DT_UINT8_REF;
+	else if (strinitial == "DT_INT16_REF")
+		dt = DT_INT16_REF;
+	else if (strinitial == "DT_INT8_REF")
+		dt = DT_INT8_REF;
+	else if (strinitial == "DT_STRING_REF")
+		dt = DT_STRING_REF;
+	else if (strinitial == "DT_COMPLEX64_REF")
+		dt = DT_COMPLEX64_REF;
+	else if (strinitial == "DT_INT64_REF")
+		dt = DT_INT64_REF;
+	else if (strinitial == "DT_BOOL_REF")
+		dt = DT_BOOL_REF;
+	else if (strinitial == "DT_QINT8_REF")
+		dt = DT_QINT8_REF;
+	else if (strinitial == "DT_QUINT8_REF")
+		dt = DT_QUINT8_REF;
+	else if (strinitial == "DT_QINT32_REF")
+		dt = DT_QINT32_REF;
+	else if (strinitial == "DT_BFLOAT16_REF")
+		dt = DT_BFLOAT16_REF;
+	else if (strinitial == "DT_QINT16_REF")
+		dt = DT_QINT16_REF;
+	else if (strinitial == "DT_QUINT16_REF")
+		dt = DT_QUINT16_REF;
+	else if (strinitial == "DT_UINT16_REF")
+		dt = DT_UINT16_REF;
+	else if (strinitial == "DT_COMPLEX128_REF")
+		dt = DT_COMPLEX128_REF;
+	else if (strinitial == "DT_HALF_REF")
+		dt = DT_HALF_REF;
+	else if (strinitial == "DT_RESOURCE_REF")
+		dt = DT_RESOURCE_REF;
+	else if (strinitial == "DataType_INT_MIN_SENTINEL_DO_NOT_USE_")
+		dt = DataType_INT_MIN_SENTINEL_DO_NOT_USE_;
+	else if (strinitial == "DataType_INT_MAX_SENTINEL_DO_NOT_USE_")
+		dt = DataType_INT_MAX_SENTINEL_DO_NOT_USE_;
+	else
+		dt = DT_INVALID;
+	return dt;
+}
+
+DataTypeSlice GetDatatypeSliceFromInitial(std::string strinitial)
+{
+	std::string val;
+	std::vector<DataType> arrayvals;
+	for (std::string::size_type i = 0; i < strinitial.size(); i++)
+	{
+		if (strinitial[i] == ';')
+		{
+			DataType dtype;
+			dtype = GetDatatypeFromInitial(val);
+			if (dtype !=DT_INVALID)
+				arrayvals.push_back(dtype);
+			val = "";
+		}
+		else
+		{
+			val = val + strinitial[i];
+		}
+	}
+
+	if (val.length() > 0)
+	{
+		DataType dtype;
+		dtype = GetDatatypeFromInitial(val);
+		if (dtype != DT_INVALID)
+			arrayvals.push_back(dtype);
+	}
+	DataTypeSlice DT(arrayvals);
+	arrayvals.clear();
+	return DT;
+}
+
+gtl::ArraySlice<PartialTensorShape> GetArrayShapeFromInitial(std::string strinitial)
+{
+	//{2,2,3},{2,2,3}
+	std::vector<int64> arraydims;
+	std::vector<PartialTensorShape> vec_PTS;
+
+	std::string val;
+	int64 iDimSize = 1;
+	bool bOpen = false;
+	int iOpen = 0; //{갯수 판단하여 다음 배열인지 체크한다.
+	for (std::string::size_type i = 0; i < strinitial.size(); i++)
+	{
+		
+		if (strinitial[i] == ',')
+		{
+			if (bOpen)
+			{
+				arraydims.push_back(stoll(val));
+				val = "";
+			}
+			else
+			{
+				val = "";
+			}
+			
+		}
+		if (strinitial[i] == '{')
+		{
+			bOpen = true;
+		}
+		else if (strinitial[i] == '}')
+		{
+			bOpen = false;
+			PartialTensorShape partts(arraydims);
+			vec_PTS.push_back(partts);
+			arraydims.clear();
+		}
+		else
+		{
+			val = val + strinitial[i];
+		}
+		
+	}
+	
+	gtl::ArraySlice<PartialTensorShape> TempArray(vec_PTS);
+	arraydims.clear();
+	vec_PTS.clear();
+	return TempArray;
+}
+
+TensorShape GetShapeFromInitial(std::string strinitial)
+{
+	TensorShape tempTS;
+	std::string val;
+	int64 iDimSize = 1;
+	//{2, 2, 3}
+	for (std::string::size_type i = 0; i < strinitial.size(); i++)
+	{
+		if (strinitial[i] == ',')
+		{
+			iDimSize = iDimSize * stoll (val);
+			val = "";
+		}
+		if (strinitial[i] == '{' || strinitial[i] == '}')
+		{
+
+		}
+		else
+		{
+			val = val + strinitial[i];
+		}
+	}
+	tempTS.AddDim(iDimSize);
+	return tempTS;
+}
+PartialTensorShape GetPartialShapeFromInitial(std::string strinitial)
+{
+	std::string val;
+	std::vector<int64> arraydims;
+	for (std::string::size_type i = 0; i < strinitial.size(); i++)
+	{
+		if (strinitial[i] == ',')
+		{
+			arraydims.push_back(stoll(val));
+			val = "";
+		}
+		if (strinitial[i] == '{' || strinitial[i] == '}')
+		{
+
+		}
+		else
+		{
+			val = val + strinitial[i];
+		}
+	}
+
+	PartialTensorShape tempTS(arraydims);
+	arraydims.clear();
+	return tempTS;
 }

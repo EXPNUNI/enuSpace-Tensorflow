@@ -484,7 +484,9 @@
 #define SYMBOL_INPUT_EX				455
 #define SYMBOL_RANDOMNORMAL_EX		456
 
-#define OUTPUT_TYPE_OUTPUT		1
+#define OUTPUT_TYPE_OUTPUT			1
+#define OUTPUT_TYPE_OUTPUTLIST		2
+#define OUTPUT_TYPE_OPERATION		3
 
 using namespace tensorflow;
 using namespace tensorflow::ops;
@@ -525,6 +527,7 @@ struct FetchInfo
 	std::vector<ObjectInfo*> fetch_object;			// ClientSession 객체의 fetch_output에 연결된 객체의 리스트
 	std::vector<tensorflow::Output> fetch_outputs;	// ClientSession 객체의 fetch_output에 연결된 객체의 output 리스트
 	std::vector<tensorflow::Tensor> outputs;		// 실행 결과를 담는 변수.
+	std::vector<std::string> pin_names;				// 입력핀의 이름
 
 	public:FetchInfo()
 	{
