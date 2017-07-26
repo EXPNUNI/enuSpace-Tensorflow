@@ -77,6 +77,7 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 							{
 								pFetchInfo->fetch_object.push_back(pfetchObj);
 								pFetchInfo->fetch_outputs.push_back(*(Output*)pOutputObj->pOutput);
+								pFetchInfo->pin_names.push_back(strInSymbolPinName);
 							}
 							else
 							{
