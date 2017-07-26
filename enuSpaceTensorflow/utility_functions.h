@@ -23,8 +23,15 @@ using namespace tensorflow;
 std::string string_format(const std::string fmt_str, ...);
 bool GetArraryFromInitial(std::string strinitial, std::vector<double>& arrayvals, std::vector<int64>& arraydims);
 bool GetArrayDimsFromShape(std::string strShape, std::vector<int64>& arraydims, std::vector<int64>& arrayslice);
-bool GetDoubleVectorFormInitial(std::string strinitial, std::vector<double>& arrayvals);
-bool GetFloatVectorFormInitial(std::string strinitial, std::vector<float>& arrayvals);
-bool GetIntVectorFormInitial(std::string strinitial, std::vector<int>& arrayvals);
-bool GetBoolVectorFormInitial(std::string strinitial, std::vector<bool>& arrayvals);
-bool GetStringVectorFormInitial(std::string strinitial, std::vector<std::string>& arrayvals);
+bool GetDoubleVectorFromInitial(std::string strinitial, std::vector<double>& arrayvals);
+bool GetFloatVectorFromInitial(std::string strinitial, std::vector<float>& arrayvals);
+bool GetIntVectorFromInitial(std::string strinitial, std::vector<int>& arrayvals);
+bool GetBoolVectorFromInitial(std::string strinitial, std::vector<bool>& arrayvals);
+bool GetStringVectorFromInitial(std::string strinitial, std::vector<std::string>& arrayvals);
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+DataType GetDatatypeFromInitial(std::string strinitial);
+DataTypeSlice GetDatatypeSliceFromInitial(std::string strinitial);
+gtl::ArraySlice<PartialTensorShape> GetArrayShapeFromInitial(std::string strinitial);
+TensorShape GetShapeFromInitial(std::string strinitial);
+PartialTensorShape GetPartialShapeFromInitial(std::string strinitial);
