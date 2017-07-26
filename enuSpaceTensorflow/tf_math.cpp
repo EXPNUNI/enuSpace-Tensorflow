@@ -315,7 +315,7 @@ void* Create_AddN(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "inputs")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -1598,11 +1598,11 @@ void* Create_Bucketize(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "weights")
+		else if (strPinName == "boundaries")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "gtl::ArraySlice<float>")
 			{
-				GetFloatVectorFormInitial(strPinInitial, v_boundaries);
+				GetFloatVectorFromInitial(strPinInitial, v_boundaries);
 			}
 			else
 			{
@@ -1699,17 +1699,7 @@ void* Create_Cast(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					DstT = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					DstT = DT_FLOAT;
-				else if (strPinInitial == "int")
-					DstT = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(DstT = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : Cast - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -6400,17 +6390,7 @@ void* Create_QuantizeDownAndShrinkRange(std::string id, Json::Value pInputItem) 
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					out_type = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					out_type = DT_FLOAT;
-				else if (strPinInitial == "int")
-					out_type = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(out_type = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : QuantizeDownAndShrinkRange - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -7562,17 +7542,7 @@ void* Create_Requantize(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					out_type = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					out_type = DT_FLOAT;
-				else if (strPinInitial == "int")
-					out_type = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(out_type = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : Requantize - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
