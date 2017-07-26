@@ -1754,7 +1754,7 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 			{
 				if (strPinInitial !="")
 				{
-					shape = GetPartialShapeFromInital(strPinInitial);
+					shape = GetPartialShapeFromInitial(strPinInitial);
 				}
 				
 			}
@@ -1866,7 +1866,7 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 			{
 				if (strPinInitial != "")
 				{
-					shape = GetPartialShapeFromInital(strPinInitial);
+					shape = GetPartialShapeFromInitial(strPinInitial);
 				}
 
 			}
@@ -1981,7 +1981,7 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 				if (strPinType == "double")
 				{
 					std::vector<double> arrayvals;
-					GetDoubleVectorFormInitial(strPinInitial, arrayvals);
+					GetDoubleVectorFromInitial(strPinInitial, arrayvals);
 
 					gtl::ArraySlice< int64 > arraySlice(arraydims);
 					pTensor = new Tensor(DT_DOUBLE, TensorShape(arraySlice));
@@ -1998,7 +1998,7 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 				else if (strPinType == "float")
 				{
 					std::vector<float> arrayvals;
-					GetFloatVectorFormInitial(strPinInitial, arrayvals);
+					GetFloatVectorFromInitial(strPinInitial, arrayvals);
 
 					gtl::ArraySlice< int64 > arraySlice(arraydims);
 					pTensor = new Tensor(DT_FLOAT, TensorShape(arraySlice));
@@ -2015,7 +2015,7 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 				else if (strPinType == "int")
 				{
 					std::vector<int> arrayvals;
-					GetIntVectorFormInitial(strPinInitial, arrayvals);
+					GetIntVectorFromInitial(strPinInitial, arrayvals);
 
 					gtl::ArraySlice< int64 > arraySlice(arraydims);
 					pTensor = new Tensor(DT_INT32, TensorShape(arraySlice));
@@ -2032,7 +2032,7 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 				else if (strPinType == "bool")
 				{
 					std::vector<bool> arrayvals;
-					GetBoolVectorFormInitial(strPinInitial, arrayvals);
+					GetBoolVectorFromInitial(strPinInitial, arrayvals);
 
 					gtl::ArraySlice< int64 > arraySlice(arraydims);
 					pTensor = new Tensor(DT_BOOL, TensorShape(arraySlice));
@@ -2049,7 +2049,7 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 				else if (strPinType == "string")
 				{
 					std::vector<std::string> arrayvals;
-					GetStringVectorFormInitial(strPinInitial, arrayvals);
+					GetStringVectorFromInitial(strPinInitial, arrayvals);
 
 					gtl::ArraySlice< int64 > arraySlice(arraydims);
 					pTensor = new Tensor(DT_STRING, TensorShape(arraySlice));
