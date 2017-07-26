@@ -318,17 +318,8 @@ void* Create_Bitcast(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				else if (strPinInitial == "bool")
-					dtype = DT_BOOL;
-				else if (strPinInitial == "string")
-					dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if(dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : Bitcast - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -1418,7 +1409,7 @@ void* Create_ExtractImagePatches(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<int>")
 			{
-				GetIntVectorFormInitial(strPinInitial, v_ksizes);
+				GetIntVectorFromInitial(strPinInitial, v_ksizes);
 			}
 			else
 			{
@@ -1430,7 +1421,7 @@ void* Create_ExtractImagePatches(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<int>")
 			{
-				GetIntVectorFormInitial(strPinInitial, v_strides);
+				GetIntVectorFromInitial(strPinInitial, v_strides);
 			}
 			else
 			{
@@ -1442,7 +1433,7 @@ void* Create_ExtractImagePatches(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<int>")
 			{
-				GetIntVectorFormInitial(strPinInitial, v_rates);
+				GetIntVectorFromInitial(strPinInitial, v_rates);
 			}
 			else
 			{
@@ -2756,17 +2747,8 @@ void* Create_ImmutableConst(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				else if (strPinInitial == "bool")
-					dtype = DT_BOOL;
-				else if (strPinInitial == "string")
-					dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if (dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : ImmutableConst - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -2782,7 +2764,7 @@ void* Create_ImmutableConst(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "PartialTensorShape")
 			{
-				shape = GetpartialShapeFromInital(strPinInitial);
+				shape = GetPartialShapeFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -4006,7 +3988,7 @@ void* Create_ParallelConcat(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "PartialTensorShape")
 			{
-				shape = GetpartialShapeFromInital(strPinInitial);
+				shape = GetPartialShapeFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -4073,17 +4055,8 @@ void* Create_Placeholder(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				else if (strPinInitial == "bool")
-					dtype = DT_BOOL;
-				else if (strPinInitial == "string")
-					dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if (dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : Placeholder - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -4158,17 +4131,8 @@ void* Create_PlaceholderV2(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				else if (strPinInitial == "bool")
-					dtype = DT_BOOL;
-				else if (strPinInitial == "string")
-					dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if (dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : PlaceholderV2 - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -4184,7 +4148,7 @@ void* Create_PlaceholderV2(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "PartialTensorShape")
 			{
-				shape = GetpartialShapeFromInital(strPinInitial);
+				shape = GetPartialShapeFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -4277,7 +4241,7 @@ void* Create_PlaceholderWithDefault(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "PartialTensorShape")
 			{
-				shape = GetpartialShapeFromInital(strPinInitial);
+				shape = GetPartialShapeFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -4666,17 +4630,8 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					T = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					T = DT_FLOAT;
-				else if (strPinInitial == "int")
-					T = DT_INT32;
-				else if (strPinInitial == "bool")
-					T = DT_BOOL;
-				else if (strPinInitial == "string")
-					T = DT_STRING;
-				else
+				T = GetDatatypeFromInitial(strPinInitial);
+				if (T == DT_INVALID)
 				{
 					std::string msg = string_format("warning : QuantizeV2 - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
