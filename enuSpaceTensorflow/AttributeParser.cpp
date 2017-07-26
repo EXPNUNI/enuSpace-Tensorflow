@@ -133,7 +133,7 @@ tensorflow::DataTypeSlice CAttributeParser::ConvStrToDataTypeSlice(std::string a
 gtl::ArraySlice<string> CAttributeParser::ConvStrToArraySliceString(std::string attrValue)
 {
 	std::vector<std::string> v_string;
-	GetStringVectorFormInitial(attrValue, v_string);
+	GetStringVectorFromInitial(attrValue, v_string);
 	gtl::ArraySlice< string > arraySlice(v_string);
 	return arraySlice;
 }
@@ -141,7 +141,7 @@ gtl::ArraySlice<string> CAttributeParser::ConvStrToArraySliceString(std::string 
 gtl::ArraySlice<float> CAttributeParser::ConvStrToArraySlicefloat(std::string attrValue)
 {
 	std::vector<float> v_float;
-	GetFloatVectorFormInitial(attrValue, v_float);
+	GetFloatVectorFromInitial(attrValue, v_float);
 	gtl::ArraySlice< float > arraySlice(v_float);
 	return arraySlice;
 }
@@ -159,7 +159,7 @@ tensorflow::PartialTensorShape CAttributeParser::ConvStrToPartialTensorShape(std
 gtl::ArraySlice<int> CAttributeParser::ConvStrToArraySliceInt(std::string attrValue)
 {
 	std::vector<int> v_int;
-	GetIntVectorFormInitial(attrValue, v_int);
+	GetIntVectorFromInitial(attrValue, v_int);
 	gtl::ArraySlice< int > arraySlice(v_int);
 	return arraySlice;
 }
