@@ -97,12 +97,13 @@ bool Task_Tensorflow()
 
 							vObjIt = pTar->fetch_object.begin();
 							pinname = pTar->pin_names.begin();
-							std::string strpinname = *pinname;
+							
 
 							// result msg
 							for (std::vector<tensorflow::Tensor>::iterator it = pTar->outputs.begin(); it != pTar->outputs.end(); it++)
 							{
 								ObjectInfo* pObjet = *vObjIt;
+								std::string strpinname = *pinname;
 
 								int iNum = it->NumElements();
 								int iType = it->dtype();
