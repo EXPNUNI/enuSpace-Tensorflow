@@ -484,7 +484,9 @@
 #define SYMBOL_INPUT_EX				455
 #define SYMBOL_RANDOMNORMAL_EX		456
 
-#define OUTPUT_TYPE_OUTPUT		1
+#define OUTPUT_TYPE_OUTPUT			1
+#define OUTPUT_TYPE_OUTPUTLIST		2
+#define OUTPUT_TYPE_OPERATION		3
 
 using namespace tensorflow;
 using namespace tensorflow::ops;
