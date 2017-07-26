@@ -76,6 +76,7 @@ bool Init_Tensorflow(std::string config_doc, std::string page_name)
 
 bool Task_Tensorflow()
 {
+	std::vector<std::string>::iterator pinname;
 	std::vector<ObjectInfo*>::iterator vObjIt;
 	std::map<std::string, FetchInfo*>::iterator vit;
 	for (vit = m_RunMapList.begin(); vit != m_RunMapList.end(); ++vit)
@@ -95,7 +96,9 @@ bool Task_Tensorflow()
 							TF_CHECK_OK(pClientSession->Run(pTar->fetch_outputs, &pTar->outputs));
 
 							vObjIt = pTar->fetch_object.begin();
-							
+							pinname = pTar->pin_names.begin();
+							std::string strpinname = *pinname;
+
 							// result msg
 							for (std::vector<tensorflow::Tensor>::iterator it = pTar->outputs.begin(); it != pTar->outputs.end(); it++)
 							{
@@ -157,8 +160,11 @@ bool Task_Tensorflow()
 										strdim += strings::Printf("[%d]", idim);
 									}
 
+									pTar->outputs;
+									LookupFromOutputMap(pObjet, "");
+
 									std::string strVariable;
-									strVariable = pObjet->id + ".result" + strdim;
+									strVariable = pObjet->id + ".result_"+ strpinname + strdim;
 									SetReShapeArrayValue(strVariable, pData, iDataType, iNum);
 
 									delete[] pData;
