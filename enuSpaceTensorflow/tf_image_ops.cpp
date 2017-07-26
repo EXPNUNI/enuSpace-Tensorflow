@@ -776,17 +776,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					T = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					T = DT_FLOAT;
-				else if (strPinInitial == "int")
-					T = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(T = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : CropAndResizeGradImage - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);

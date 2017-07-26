@@ -1166,17 +1166,7 @@ void* Create_Restore(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dt = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dt = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dt = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(dt = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : Restore - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -1329,17 +1319,7 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dt = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dt = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dt = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(dt = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : RestoreSlice - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -1492,7 +1472,7 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				dtypes = GetDatatypeSliceFromInital(strPinInitial);
+				dtypes = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -1606,7 +1586,7 @@ void* Create_Save(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "data")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -1757,7 +1737,7 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "data")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -1906,9 +1886,9 @@ void* Create_SaveV2(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "data")
+		else if (strPinName == "tensors")
 		{
-			if (strPinInterface == "tensors")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)

@@ -74,7 +74,7 @@ void* Create_Assert(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "data")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -264,7 +264,7 @@ void* Create_MergeSummary(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "inputs")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -368,7 +368,7 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "data")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)

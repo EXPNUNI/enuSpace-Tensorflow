@@ -407,17 +407,7 @@ void* Create_AccumulatorTakeGradient(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : AccumulatorTakeGradient - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -491,7 +481,7 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInital(strPinInitial);
+				component_types = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -1005,7 +995,7 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInital(strPinInitial);
+				component_types = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -1087,7 +1077,7 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "PartialTensorShape")
 			{
-				shape = GetPartialShapeFromInital(strPinInitial);
+				shape = GetPartialShapeFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -1099,17 +1089,7 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : ConditionalAccumulator - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -1378,7 +1358,7 @@ void* Create_DynamicStitch(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "indices")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -1401,7 +1381,7 @@ void* Create_DynamicStitch(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "data")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -1481,7 +1461,7 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInital(strPinInitial);
+				component_types = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -1741,17 +1721,7 @@ void* Create_GetSessionTensor(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : GetSessionTensor - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -1824,7 +1794,7 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInital(strPinInitial);
+				component_types = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -1903,7 +1873,7 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<PartialTensorShape>")
 			{
-				shapes = GetArrayShapeFromInital(strPinInitial);
+				shapes = GetArrayShapeFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -2092,7 +2062,7 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInital(strPinInitial);
+				component_types = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -2215,7 +2185,7 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInital(strPinInitial);
+				component_types = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -2338,7 +2308,7 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInital(strPinInitial);
+				component_types = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -2705,7 +2675,7 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInital(strPinInitial);
+				component_types = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -3099,17 +3069,7 @@ void* Create_SparseAccumulatorTakeGradient(std::string id, Json::Value pInputIte
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : SparseAccumulatorTakeGradient - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -3185,7 +3145,7 @@ void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem
 		{
 			if (strPinInterface == "PartialTensorShape")
 			{
-				shape = GetPartialShapeFromInital(strPinInitial);
+				shape = GetPartialShapeFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -3197,17 +3157,7 @@ void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : SparseConditionalAccumulator - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -3285,7 +3235,7 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "values")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -3398,17 +3348,7 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : TensorArray - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -3618,17 +3558,7 @@ void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : TensorArrayConcat - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -3782,17 +3712,7 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : TensorArrayGather - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -4061,17 +3981,7 @@ void* Create_TensorArrayRead(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//   dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//   dtype = DT_STRING;
-				else
+				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : TensorArrayRead - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -4700,7 +4610,7 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				dtypes = GetDatatypeSliceFromInital(strPinInitial);
+				dtypes = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
