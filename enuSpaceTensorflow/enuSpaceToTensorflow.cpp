@@ -171,6 +171,7 @@ bool Task_Tensorflow()
 								}
 
 								vObjIt++;
+								pinname++;
 
 								std::string strvalue = it->DebugString();
 								PrintMessage(strvalue);
