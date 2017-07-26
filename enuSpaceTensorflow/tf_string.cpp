@@ -834,7 +834,7 @@ void* Create_StringToHashBucketStrong(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<int>")
 			{
-				GetIntVectorFormInitial(strPinInitial, v_key);
+				GetIntVectorFromInitial(strPinInitial, v_key);
 			}
 			else
 			{
