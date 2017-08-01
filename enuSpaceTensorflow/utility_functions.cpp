@@ -98,26 +98,30 @@ bool GetArraryFromInitial(std::string strinitial, std::vector<double>& arrayvals
 
 bool GetArrayDimsFromShape(std::string strShape, std::vector<int64>& arraydims, std::vector<int64>& arrayslice)
 {
-	int64 islice = 0;
-	std::string val;
-	for (std::string::size_type i = 0; i < strShape.size(); i++)
+	if (strShape.length() > 0)
 	{
-		if (strShape[i] == '[')
+		int64 islice = 0;
+		std::string val;
+		for (std::string::size_type i = 0; i < strShape.size(); i++)
 		{
-			val = "";
+			if (strShape[i] == '[')
+			{
+				val = "";
+			}
+			else if (strShape[i] == ']')
+			{
+				arraydims.push_back(std::stoi(val));
+				islice++;
+			}
+			else
+			{
+				val = val + strShape[i];
+			}
 		}
-		else if (strShape[i] == ']')
-		{
-			arraydims.push_back(std::stoi(val));
-			islice++;
-		}
-		else
-		{
-			val = val + strShape[i];
-		}
+
+		arrayslice.push_back(islice);
 	}
 
-	arrayslice.push_back(islice);
 	return true;
 }
 
