@@ -123,8 +123,10 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "AddManySparseToTensorsMap::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Container(attrParser.GetValue_StringPiece("container_"));
-				attrs.Container(attrParser.GetValue_StringPiece("shared_name_"));
+				if (attrParser.GetAttribute("container_")!="")
+					attrs.Container(attrParser.GetValue_StringPiece("container_"));
+				if (attrParser.GetAttribute("shared_name_") != "")
+					attrs.SharedName(attrParser.GetValue_StringPiece("shared_name_"));
 			}
 		}
 		else
@@ -135,7 +137,7 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && sparse_indices && sparse_values && sparse_shape)
 	{
-		*pAddManySparseToTensorsMap = AddManySparseToTensorsMap(*pScope, *sparse_indices, *sparse_values,*sparse_shape, attrs);
+		pAddManySparseToTensorsMap = new AddManySparseToTensorsMap(*pScope, *sparse_indices, *sparse_values,*sparse_shape, attrs);
 		ObjectInfo* pObj = AddObjectMap(pAddManySparseToTensorsMap, id, SYMBOL_ADDMANYSPARSETOTENSORSMAP, "AddManySparseToTensorsMap", pInputItem);
 		if (pObj)
 		{
@@ -260,8 +262,10 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "AddSparseToTensorsMap::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Container(attrParser.GetValue_StringPiece("container_"));
-				attrs.Container(attrParser.GetValue_StringPiece("shared_name_"));
+				if (attrParser.GetAttribute("container_") != "")
+					attrs.Container(attrParser.GetValue_StringPiece("container_"));
+				if (attrParser.GetAttribute("shared_name_") != "")
+					attrs.SharedName(attrParser.GetValue_StringPiece("shared_name_"));
 			}
 		}
 		else
@@ -272,7 +276,7 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && sparse_indices && sparse_values && sparse_shape)
 	{
-		*pAddSparseToTensorsMap = AddSparseToTensorsMap(*pScope, *sparse_indices, *sparse_values, *sparse_shape, attrs);
+		pAddSparseToTensorsMap = new AddSparseToTensorsMap(*pScope, *sparse_indices, *sparse_values, *sparse_shape, attrs);
 		ObjectInfo* pObj = AddObjectMap(pAddSparseToTensorsMap, id, SYMBOL_ADDSPARSETOTENSORSMAP, "AddSparseToTensorsMap", pInputItem);
 		if (pObj)
 		{
@@ -348,17 +352,8 @@ void* Create_DeserializeManySparse(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//	dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//	dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if(dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : DeserializeManySparse - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -378,7 +373,7 @@ void* Create_DeserializeManySparse(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && serialized_sparse)
 	{
-		*pDeserializeManySparse = DeserializeManySparse(*pScope, *serialized_sparse, dtype);
+		pDeserializeManySparse = new DeserializeManySparse(*pScope, *serialized_sparse, dtype);
 		ObjectInfo* pObj = AddObjectMap(pDeserializeManySparse, id, SYMBOL_DESERIALIZEMANYSPARSE, "DeserializeManySparse", pInputItem);
 		if (pObj)
 		{
@@ -507,7 +502,7 @@ void* Create_SerializeManySparse(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && sparse_indices && sparse_values && sparse_shape)
 	{
-		*pSerializeManySparse = SerializeManySparse(*pScope, *sparse_indices, *sparse_values, *sparse_shape);
+		pSerializeManySparse = new SerializeManySparse(*pScope, *sparse_indices, *sparse_values, *sparse_shape);
 		ObjectInfo* pObj = AddObjectMap(pSerializeManySparse, id, SYMBOL_SERIALIZEMANYSPARSE, "SerializeManySparse", pInputItem);
 		if (pObj)
 		{
@@ -634,7 +629,7 @@ void* Create_SerializeSparse(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && sparse_indices && sparse_values && sparse_shape)
 	{
-		*pSerializeSparse = SerializeSparse(*pScope, *sparse_indices, *sparse_values, *sparse_shape);
+		pSerializeSparse = new SerializeSparse(*pScope, *sparse_indices, *sparse_values, *sparse_shape);
 		ObjectInfo* pObj = AddObjectMap(pSerializeSparse, id, SYMBOL_SERIALIZESPARSE, "SerializeSparse", pInputItem);
 		if (pObj)
 		{
@@ -857,7 +852,7 @@ void* Create_SparseAdd(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && a_indices && a_values && a_shape &&  b_indices && b_values && b_shape && thresh)
 	{
-		*pSparseAdd = SparseAdd(*pScope, *a_indices, *a_values, *a_shape, *b_indices, *b_values, *b_shape,*thresh);
+		pSparseAdd = new SparseAdd(*pScope, *a_indices, *a_values, *a_shape, *b_indices, *b_values, *b_shape,*thresh);
 		ObjectInfo* pObj = AddObjectMap(pSparseAdd, id, SYMBOL_SPARSEADD, "SparseAdd", pInputItem);
 		if (pObj)
 		{
@@ -1010,7 +1005,7 @@ void* Create_SparseAddGrad(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && backprop_val_grad && a_indices && b_indices && sum_indices)
 	{
-		*pSparseAddGrad = SparseAddGrad(*pScope, *backprop_val_grad, *a_indices, *b_indices, *sum_indices);
+		pSparseAddGrad = new SparseAddGrad(*pScope, *backprop_val_grad, *a_indices, *b_indices, *sum_indices);
 		ObjectInfo* pObj = AddObjectMap(pSparseAddGrad, id, SYMBOL_SPARSEADDGRAD, "SparseAddGrad", pInputItem);
 		if (pObj)
 		{
@@ -1155,7 +1150,7 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && indices && values && shapes)
 	{
-		*pSparseConcat = SparseConcat(*pScope, *indices, *values, *shapes,concat_dim);
+		pSparseConcat = new SparseConcat(*pScope, *indices, *values, *shapes,concat_dim);
 		ObjectInfo* pObj = AddObjectMap(pSparseConcat, id, SYMBOL_SPARSECONCAT, "SparseConcat", pInputItem);
 		if (pObj)
 		{
@@ -1341,17 +1336,8 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					out_type = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					out_type = DT_FLOAT;
-				else if (strPinInitial == "int")
-					out_type = DT_INT32;
-				else if (strPinInitial == "bool")
-					out_type = DT_BOOL;
-				else if (strPinInitial == "string")
-					out_type = DT_STRING;
-				else
+				out_type = GetDatatypeFromInitial(strPinInitial);
+				if (out_type == DT_INVALID)
 				{
 					std::string msg = string_format("warning : SparseCross - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -1367,17 +1353,9 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					internal_type = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					internal_type = DT_FLOAT;
-				else if (strPinInitial == "int")
-					internal_type = DT_INT32;
-				else if (strPinInitial == "bool")
-					internal_type = DT_BOOL;
-				else if (strPinInitial == "string")
-					internal_type = DT_STRING;
-				else
+			
+				internal_type = GetDatatypeFromInitial(strPinInitial);
+				if (internal_type == DT_INVALID)
 				{
 					std::string msg = string_format("warning : SparseCross - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -1397,7 +1375,7 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && indices && values && shapes && dense_inputs)
 	{
-		*pSparseCross = SparseCross(*pScope, *indices, *values, *shapes, *dense_inputs, hashed_output, num_buckets, hash_key, out_type, internal_type);
+		pSparseCross = new SparseCross(*pScope, *indices, *values, *shapes, *dense_inputs, hashed_output, num_buckets, hash_key, out_type, internal_type);
 		ObjectInfo* pObj = AddObjectMap(pSparseCross, id, SYMBOL_SPARSECROSS, "SparseCross", pInputItem);
 		if (pObj)
 		{
@@ -1550,7 +1528,7 @@ void* Create_SparseDenseCwiseAdd(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && sp_indices && sp_values && sp_shape && dense)
 	{
-		*pSparseDenseCwiseAdd = SparseDenseCwiseAdd(*pScope, *sp_indices, *sp_values, *sp_shape,*dense);
+		pSparseDenseCwiseAdd = new SparseDenseCwiseAdd(*pScope, *sp_indices, *sp_values, *sp_shape,*dense);
 		ObjectInfo* pObj = AddObjectMap(pSparseDenseCwiseAdd, id, SYMBOL_SPARSEDENSECWISEADD, "SparseDenseCwiseAdd", pInputItem);
 		if (pObj)
 		{
@@ -1701,7 +1679,7 @@ void* Create_SparseDenseCwiseDiv(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && sp_indices && sp_values && sp_shape && dense)
 	{
-		*pSparseDenseCwiseDiv = SparseDenseCwiseDiv(*pScope, *sp_indices, *sp_values, *sp_shape, *dense);
+		pSparseDenseCwiseDiv = new SparseDenseCwiseDiv(*pScope, *sp_indices, *sp_values, *sp_shape, *dense);
 		ObjectInfo* pObj = AddObjectMap(pSparseDenseCwiseDiv, id, SYMBOL_SPARSEDENSECWISEDIV, "SparseDenseCwiseDiv", pInputItem);
 		if (pObj)
 		{
@@ -1852,7 +1830,7 @@ void* Create_SparseDenseCwiseMul(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && sp_indices && sp_values && sp_shape && dense)
 	{
-		*pSparseDenseCwiseMul = SparseDenseCwiseMul(*pScope, *sp_indices, *sp_values, *sp_shape, *dense);
+		pSparseDenseCwiseMul = new SparseDenseCwiseMul(*pScope, *sp_indices, *sp_values, *sp_shape, *dense);
 		ObjectInfo* pObj = AddObjectMap(pSparseDenseCwiseMul, id, SYMBOL_SPARSEDENSECWISEMUL, "SparseDenseCwiseMul", pInputItem);
 		if (pObj)
 		{
@@ -2001,7 +1979,8 @@ void* Create_SparseReduceSum(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "SparseReduceSum::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.KeepDims(attrParser.GetValue_bool("keep_dims_"));
+				if(attrParser.GetAttribute("keep_dims_")!="")
+					attrs.KeepDims(attrParser.GetValue_bool("keep_dims_"));
 			}
 		}
 		else
@@ -2012,7 +1991,7 @@ void* Create_SparseReduceSum(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && input_indices && input_values && input_shape && reduction_axes)
 	{
-		*pSparseReduceSum = SparseReduceSum(*pScope, *input_indices, *input_values, *input_shape, *reduction_axes,attrs);
+		pSparseReduceSum = new SparseReduceSum(*pScope, *input_indices, *input_values, *input_shape, *reduction_axes,attrs);
 		ObjectInfo* pObj = AddObjectMap(pSparseReduceSum, id, SYMBOL_SPARSEREDUCESUM, "SparseReduceSum", pInputItem);
 		if (pObj)
 		{
@@ -2161,7 +2140,8 @@ void* Create_SparseReduceSumSparse(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "SparseReduceSumSparse::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.KeepDims(attrParser.GetValue_bool("keep_dims_"));
+				if (attrParser.GetAttribute("keep_dims_")!="")
+					attrs.KeepDims(attrParser.GetValue_bool("keep_dims_"));
 			}
 		}
 		else
@@ -2172,7 +2152,7 @@ void* Create_SparseReduceSumSparse(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && input_indices && input_values && input_shape && reduction_axes)
 	{
-		*pSparseReduceSumSparse = SparseReduceSumSparse(*pScope, *input_indices, *input_values, *input_shape, *reduction_axes, attrs);
+		pSparseReduceSumSparse = new SparseReduceSumSparse(*pScope, *input_indices, *input_values, *input_shape, *reduction_axes, attrs);
 		ObjectInfo* pObj = AddObjectMap(pSparseReduceSumSparse, id, SYMBOL_SPARSEREDUCESUMSPARSE, "SparseReduceSumSparse", pInputItem);
 		if (pObj)
 		{
@@ -2301,7 +2281,7 @@ void* Create_SparseReorder(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && input_indices && input_values && input_shape)
 	{
-		*pSparseReorder = SparseReorder(*pScope, *input_indices, *input_values, *input_shape);
+		pSparseReorder = new SparseReorder(*pScope, *input_indices, *input_values, *input_shape);
 		ObjectInfo* pObj = AddObjectMap(pSparseReorder, id, SYMBOL_SPARSEREORDER, "SparseReorder", pInputItem);
 		if (pObj)
 		{
@@ -2429,7 +2409,7 @@ void* Create_SparseReshape(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && input_indices && input_shape && new_shape)
 	{
-		*pSparseReshape = SparseReshape(*pScope, *input_indices, *input_shape, *new_shape);
+		pSparseReshape = new SparseReshape(*pScope, *input_indices, *input_shape, *new_shape);
 		ObjectInfo* pObj = AddObjectMap(pSparseReshape, id, SYMBOL_SPARSERESHAPE, "SparseReshape", pInputItem);
 		if (pObj)
 		{
@@ -2557,7 +2537,7 @@ void* Create_SparseSoftmax(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && sp_indices && sp_values && sp_shape)
 	{
-		*pSparseSoftmax = SparseSoftmax(*pScope, *sp_indices, *sp_values, *sp_shape);
+		pSparseSoftmax = new SparseSoftmax(*pScope, *sp_indices, *sp_values, *sp_shape);
 		ObjectInfo* pObj = AddObjectMap(pSparseSoftmax, id, SYMBOL_SPARSESOFTMAX, "SparseSoftmax", pInputItem);
 		if (pObj)
 		{
@@ -2756,7 +2736,7 @@ void* Create_SparseSparseMaximum(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && a_indices && a_values && a_shape && b_indices && b_values && b_shape)
 	{
-		*pSparseSparseMaximum = SparseSparseMaximum(*pScope, *a_indices, *a_values, *a_shape, *b_indices, *b_values, *b_shape);
+		pSparseSparseMaximum = new SparseSparseMaximum(*pScope, *a_indices, *a_values, *a_shape, *b_indices, *b_values, *b_shape);
 		ObjectInfo* pObj = AddObjectMap(pSparseSparseMaximum, id, SYMBOL_SPARSESPARSEMAXIMUM, "SparseSparseMaximum", pInputItem);
 		if (pObj)
 		{
@@ -2956,7 +2936,7 @@ void* Create_SparseSparseMinimum(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && a_indices && a_values && a_shape && b_indices && b_values && b_shape)
 	{
-		*pSparseSparseMinimum = SparseSparseMinimum(*pScope, *a_indices, *a_values, *a_shape, *b_indices, *b_values, *b_shape);
+		pSparseSparseMinimum = new SparseSparseMinimum(*pScope, *a_indices, *a_values, *a_shape, *b_indices, *b_values, *b_shape);
 		ObjectInfo* pObj = AddObjectMap(pSparseSparseMinimum, id, SYMBOL_SPARSESPARSEMINIMUM, "SparseSparseMinimum", pInputItem);
 		if (pObj)
 		{
@@ -3125,7 +3105,7 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && split_dim &&indices&&values&&shape)
 	{
-		*pSparseSplit = SparseSplit(*pScope, *split_dim, *indices,*values,*shape,num_split);
+		pSparseSplit = new SparseSplit(*pScope, *split_dim, *indices,*values,*shape,num_split);
 		ObjectInfo* pObj = AddObjectMap(pSparseSplit, id, SYMBOL_SPARSESPLIT, "SparseSplit", pInputItem);
 		if (pObj)
 		{
@@ -3278,7 +3258,7 @@ void* Create_SparseTensorDenseAdd(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && a_indices &&a_values && a_shape&&b)
 	{
-		*pSparseTensorDenseAdd = SparseTensorDenseAdd(*pScope, *a_indices, *a_values, *a_shape,*b);
+		pSparseTensorDenseAdd = new SparseTensorDenseAdd(*pScope, *a_indices, *a_values, *a_shape,*b);
 		ObjectInfo* pObj = AddObjectMap(pSparseTensorDenseAdd, id, SYMBOL_SPARSETENSORDENSEADD, "SparseTensorDenseAdd", pInputItem);
 		if (pObj)
 		{
@@ -3427,8 +3407,8 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "SparseTensorDenseMatMul::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.AdjointA(attrParser.GetValue_bool("adjoint_a_"));
-				attrs.AdjointB(attrParser.GetValue_bool("adjoint_b_"));
+				if(attrParser.GetAttribute("adjoint_a_")!="") attrs.AdjointA(attrParser.GetValue_bool("adjoint_a_"));
+				if (attrParser.GetAttribute("adjoint_b_") != "") attrs.AdjointB(attrParser.GetValue_bool("adjoint_b_"));
 			}
 		}
 		else
@@ -3439,7 +3419,7 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && a_indices &&a_values && a_shape&&b)
 	{
-		*pSparseTensorDenseMatMul = SparseTensorDenseMatMul(*pScope, *a_indices, *a_values, *a_shape, *b,attrs);
+		pSparseTensorDenseMatMul = new SparseTensorDenseMatMul(*pScope, *a_indices, *a_values, *a_shape, *b,attrs);
 		ObjectInfo* pObj = AddObjectMap(pSparseTensorDenseMatMul, id, SYMBOL_SPARSETENSORDENSEMATMUL, "SparseTensorDenseMatMul", pInputItem);
 		if (pObj)
 		{
@@ -3565,7 +3545,8 @@ void* Create_SparseToDense(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "SparseToDense::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.ValidateIndices(attrParser.GetValue_bool("validate_indices_"));
+				if(attrParser.GetAttribute("validate_indices_")!="") 
+					attrs.ValidateIndices(attrParser.GetValue_bool("validate_indices_"));
 			}
 		}
 		else
@@ -3576,7 +3557,7 @@ void* Create_SparseToDense(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && sparse_indices && output_shape && sparse_values && default_value)
 	{
-		*pSparseToDense = SparseToDense(*pScope, *sparse_indices, *output_shape, *sparse_values,*default_value,attrs);
+		pSparseToDense = new SparseToDense(*pScope, *sparse_indices, *output_shape, *sparse_values,*default_value,attrs);
 		ObjectInfo* pObj = AddObjectMap(pSparseToDense, id, SYMBOL_SPARSETODENSE, "SparseToDense", pInputItem);
 		if (pObj)
 		{
@@ -3653,17 +3634,8 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				else if (strPinInitial == "bool")
-					dtype = DT_BOOL;
-				else if (strPinInitial == "string")
-					dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if (dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : TakeManySparseFromTensorsMap - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -3680,8 +3652,10 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 			if (strPinInterface == "TakeManySparseFromTensorsMap::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Container(attrParser.GetValue_StringPiece("container_"));
-				attrs.Container(attrParser.GetValue_StringPiece("shared_name_"));
+				if(attrParser.GetAttribute("container_")!="")
+					attrs.Container(attrParser.GetValue_StringPiece("container_"));
+				if (attrParser.GetAttribute("shared_name_") != "")
+					attrs.SharedName(attrParser.GetValue_StringPiece("shared_name_"));
 			}
 		}
 		else
@@ -3692,7 +3666,7 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 	}
 	if (pScope && sparse_handles)
 	{
-		*pTakeManySparseFromTensorsMap = TakeManySparseFromTensorsMap(*pScope, *sparse_handles, dtype, attrs);
+		pTakeManySparseFromTensorsMap = new TakeManySparseFromTensorsMap(*pScope, *sparse_handles, dtype, attrs);
 		ObjectInfo* pObj = AddObjectMap(pTakeManySparseFromTensorsMap, id, SYMBOL_TAKEMANYSPARSEFROMTENSORSMAP, "TakeManySparseFromTensorsMap", pInputItem);
 		if (pObj)
 		{

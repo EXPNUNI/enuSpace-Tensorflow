@@ -99,7 +99,11 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "DecodeCSV::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.FieldDelim(attrParser.GetValue_StringPiece("field_delim_"));
+				if (attrParser.GetAttribute("field_delim_")!="")
+				{
+					attrs.FieldDelim(attrParser.GetValue_StringPiece("field_delim_"));
+				}
+				
 			}
 		}
 		else
@@ -110,7 +114,7 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && precords && precord_defaults)
 	{
-		*pDecodeCSV = DecodeCSV(*pScope, *precords, *precord_defaults,attrs);
+		pDecodeCSV = new DecodeCSV(*pScope, *precords, *precord_defaults,attrs);
 		ObjectInfo* pObj = AddObjectMap(pDecodeCSV, id, SYMBOL_DECODECSV, "DecodeCSV", pInputItem);
 		if (pObj)
 		{
@@ -188,7 +192,7 @@ void* Create_DecodeJSONExample(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && pjson_examples)
 	{
-		*pDecodeJSONExample = DecodeJSONExample(*pScope, *pjson_examples);
+		pDecodeJSONExample = new DecodeJSONExample(*pScope, *pjson_examples);
 		ObjectInfo* pObj = AddObjectMap(pDecodeJSONExample, id, SYMBOL_DECODEJSONEXAMPLE, "DecodeJSONExample", pInputItem);
 		if (pObj)
 		{
@@ -291,7 +295,11 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "DecodeRaw::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.LittleEndian(attrParser.GetValue_bool("little_endian_"));
+				if (attrParser.GetAttribute("little_endian_")!="")
+				{
+					attrs.LittleEndian(attrParser.GetValue_bool("little_endian_"));
+				}
+				
 			}
 		}
 		else
@@ -302,7 +310,7 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && pbytes)
 	{
-		*pDecodeRaw = DecodeRaw(*pScope, *pbytes,dtype,attrs);
+		pDecodeRaw =new DecodeRaw(*pScope, *pbytes,dtype,attrs);
 		ObjectInfo* pObj = AddObjectMap(pDecodeRaw, id, SYMBOL_DECODERAW, "DecodeRaw", pInputItem);
 		if (pObj)
 		{
@@ -325,9 +333,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 	OutputList* psparse_keys = nullptr;
 	OutputList* pdense_keys = nullptr;
 	OutputList* pdense_defaults = nullptr;
-	std::vector<DataType> v_dtype;
-	std::vector<PartialTensorShape> v_partTS;
-
+	DataTypeSlice sparse_types;
+	gtl::ArraySlice<PartialTensorShape> dense_shapes;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -475,38 +482,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				std::string val;
-				for (std::string::size_type i = 0; i < strPinInitial.size(); i++)
-				{
-					if (strPinInitial[i] == ';')
-					{
-						DataType dtype;
-						if (val == "double")
-							dtype = DT_DOUBLE;
-						else if (val == "float")
-							dtype = DT_FLOAT;
-						else if (val == "int")
-							dtype = DT_INT32;
-						v_dtype.push_back(dtype);
-						val = "";
-					}
-					else
-					{
-						val = val + strPinInitial[i];
-					}
-				}
-
-				if (val.length() > 0)
-				{
-					DataType dtype;
-					if (val == "double")
-						dtype = DT_DOUBLE;
-					else if (val == "float")
-						dtype = DT_FLOAT;
-					else if (val == "int")
-						dtype = DT_INT32;
-					v_dtype.push_back(dtype);
-				}
+				sparse_types = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -518,7 +494,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<PartialTensorShape>")
 			{
-				//dev_need
+				dense_shapes = GetArrayShapeFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -527,11 +503,10 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			}
 		}
 	}
-	if (pScope && pserialized && pnames && psparse_keys && pdense_keys&&pdense_defaults && v_dtype.size()!=0 && v_partTS.size()!=0)
+	if (pScope && pserialized && pnames && psparse_keys && pdense_keys&&pdense_defaults)
 	{
-		DataTypeSlice sparse_types(v_dtype);
-		gtl::ArraySlice<PartialTensorShape> dense_shapes(v_partTS);
-		*pParseExample = ParseExample(*pScope, *pserialized, *pnames, *psparse_keys, *pdense_keys, *pdense_defaults, sparse_types, dense_shapes);
+
+		pParseExample = new ParseExample(*pScope, *pserialized, *pnames, *psparse_keys, *pdense_keys, *pdense_defaults, sparse_types, dense_shapes);
 		ObjectInfo* pObj = AddObjectMap(pParseExample, id, SYMBOL_PARSEEXAMPLE, "ParseExample", pInputItem);
 		if (pObj)
 		{
@@ -540,8 +515,9 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			AddOutputInfo(pObj, &pParseExample->sparse_shapes, OUTPUT_TYPE_OUTPUTLIST, "sparse_shapes");
 			AddOutputInfo(pObj, &pParseExample->dense_values, OUTPUT_TYPE_OUTPUTLIST, "dense_values");
 		}
-		v_dtype.clear();
+		sparse_types.clear();
 		dense_shapes.clear();
+
 	}
 	else
 	{
@@ -782,11 +758,27 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			if (strPinInterface == "DecodeRaw::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.ContextSparseTypes(attrParser.GetValue_DataTypeSlice("context_sparse_types_"));
-				attrs.FeatureListDenseTypes(attrParser.GetValue_DataTypeSlice("feature_list_dense_types_"));
-				attrs.ContextDenseShapes(attrParser.GetValue_arraySliceTensorshape("context_dense_shapes_"));
-				attrs.FeatureListSparseTypes(attrParser.GetValue_DataTypeSlice("feature_list_sparse_types_"));
-				attrs.FeatureListDenseShapes(attrParser.GetValue_arraySliceTensorshape("feature_list_dense_shapes_"));
+				if (attrParser.GetAttribute("context_sparse_types_")!="")
+				{
+					attrs.ContextSparseTypes(attrParser.GetValue_DataTypeSlice("context_sparse_types_"));
+				}
+				if (attrParser.GetAttribute("feature_list_dense_types_") != "")
+				{
+					attrs.FeatureListDenseTypes(attrParser.GetValue_DataTypeSlice("feature_list_dense_types_"));
+				}
+				if (attrParser.GetAttribute("context_dense_shapes_") != "")
+				{
+					attrs.ContextDenseShapes(attrParser.GetValue_arraySliceTensorshape("context_dense_shapes_"));
+				}
+				if (attrParser.GetAttribute("feature_list_sparse_types_") != "")
+				{
+					attrs.FeatureListSparseTypes(attrParser.GetValue_DataTypeSlice("feature_list_sparse_types_"));
+				}
+				if (attrParser.GetAttribute("feature_list_dense_shapes_") != "")
+				{
+					attrs.FeatureListDenseShapes(attrParser.GetValue_arraySliceTensorshape("feature_list_dense_shapes_"));
+				}
+				
 			}
 		}
 		else
@@ -797,7 +789,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 	}
 	if (pScope && serialized &&feature_list_dense_missing_assumed_empty&&context_sparse_keys&&context_dense_keys &&feature_list_sparse_keys&&feature_list_dense_keys&&context_dense_defaults && debug_name)
 	{
-		*pParseSingleSequenceExample = ParseSingleSequenceExample(*pScope, *serialized,
+		pParseSingleSequenceExample = new ParseSingleSequenceExample(*pScope, *serialized,
 												*feature_list_dense_missing_assumed_empty,
 												*context_sparse_keys,
 												*context_dense_keys,
@@ -889,17 +881,9 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//	dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//	dtype = DT_STRING;
-				else
+
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if(dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : ParseTensor - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -919,7 +903,7 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && serialized)
 	{
-		*pParseTensor = ParseTensor(*pScope, *serialized, dtype);
+		pParseTensor = new ParseTensor(*pScope, *serialized, dtype);
 		ObjectInfo* pObj = AddObjectMap(pParseTensor, id, SYMBOL_PARSETENSOR, "ParseTensor", pInputItem);
 		if (pObj)
 		{
@@ -995,7 +979,11 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "StringToNumber::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.OutType(attrParser.GetValue_DataType("out_type_"));
+				if (attrParser.GetAttribute("out_type_")!="")
+				{
+					attrs.OutType(attrParser.GetValue_DataType("out_type_"));
+				}
+				
 			}
 		}
 		else
@@ -1006,7 +994,7 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && string_tensor)
 	{
-		*pStringToNumber = StringToNumber(*pScope, *string_tensor, attrs);
+		pStringToNumber = new StringToNumber(*pScope, *string_tensor, attrs);
 		ObjectInfo* pObj = AddObjectMap(pStringToNumber, id, SYMBOL_DECODERAW, "StringToNumber", pInputItem);
 		if (pObj)
 		{

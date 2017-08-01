@@ -39,8 +39,8 @@ void* Create_Assign(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -101,8 +101,10 @@ void* Create_Assign(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Assign::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.ValidateShape(attrParser.GetValue_bool("validate_shape_"));
-				attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
+				if(attrParser.GetAttribute("validate_shape_")!="")
+					attrs.ValidateShape(attrParser.GetValue_bool("validate_shape_"));
+				if (attrParser.GetAttribute("use_locking_") != "")
+					attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
 			}
 		}
 		else
@@ -113,7 +115,7 @@ void* Create_Assign(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref && value)
 	{
-		*pAssign = Assign(*pScope, *ref, *value, attrs);
+		pAssign = new Assign(*pScope, *ref, *value, attrs);
 		ObjectInfo* pObj = AddObjectMap(pAssign, id, SYMBOL_ASSIGN, "Assign", pInputItem);
 		if (pObj)
 		{
@@ -153,8 +155,8 @@ void* Create_AssignAdd(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -215,7 +217,8 @@ void* Create_AssignAdd(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "AssignAdd::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
+				if (attrParser.GetAttribute("use_locking_") != "")
+					attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
 			
 			}
 		}
@@ -227,7 +230,7 @@ void* Create_AssignAdd(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref && value)
 	{
-		*pAssignAdd = AssignAdd(*pScope, *ref, *value, attrs);
+		pAssignAdd = new AssignAdd(*pScope, *ref, *value, attrs);
 		ObjectInfo* pObj = AddObjectMap(pAssignAdd, id, SYMBOL_ASSIGNADD, "AssignAdd", pInputItem);
 		if (pObj)
 		{
@@ -266,8 +269,8 @@ void* Create_AssignSub(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -328,7 +331,8 @@ void* Create_AssignSub(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "AssignSub::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
+				if (attrParser.GetAttribute("use_locking_") != "")
+					attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
 
 			}
 		}
@@ -340,7 +344,7 @@ void* Create_AssignSub(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref && value)
 	{
-		*pAssignSub = AssignSub(*pScope, *ref, *value, attrs);
+		pAssignSub = new AssignSub(*pScope, *ref, *value, attrs);
 		ObjectInfo* pObj = AddObjectMap(pAssignSub, id, SYMBOL_ASSIGNSUB, "AssignSub", pInputItem);
 		if (pObj)
 		{
@@ -378,8 +382,8 @@ void* Create_CountUpTo(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -432,7 +436,7 @@ void* Create_CountUpTo(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref)
 	{
-		*pCountUpTo = CountUpTo(*pScope, *ref, limit);
+		pCountUpTo = new CountUpTo(*pScope, *ref, limit);
 		ObjectInfo* pObj = AddObjectMap(pCountUpTo, id, SYMBOL_COUNTUPTO, "CountUpTo", pInputItem);
 		if (pObj)
 		{
@@ -470,8 +474,8 @@ void* Create_DestroyTemporaryVariable(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -524,7 +528,7 @@ void* Create_DestroyTemporaryVariable(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref)
 	{
-		*pDestroyTemporaryVariable = DestroyTemporaryVariable(*pScope, *ref, var_name);
+		pDestroyTemporaryVariable = new DestroyTemporaryVariable(*pScope, *ref, var_name);
 		ObjectInfo* pObj = AddObjectMap(pDestroyTemporaryVariable, id, SYMBOL_DESTROYTEMPORARYVARIABLE, "DestroyTemporaryVariable", pInputItem);
 		if (pObj)
 		{
@@ -560,8 +564,8 @@ void* Create_IsVariableInitialized(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -602,7 +606,7 @@ void* Create_IsVariableInitialized(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref)
 	{
-		*pIsVariableInitialized = IsVariableInitialized(*pScope, *ref);
+		pIsVariableInitialized = new IsVariableInitialized(*pScope, *ref);
 		ObjectInfo* pObj = AddObjectMap(pIsVariableInitialized, id, SYMBOL_ISVARIABLEINITIALIZED, "IsVariableInitialized", pInputItem);
 		if (pObj)
 		{
@@ -642,8 +646,8 @@ void* Create_ScatterAdd(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -727,7 +731,8 @@ void* Create_ScatterAdd(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ScatterAdd::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
+				if (attrParser.GetAttribute("use_locking_") != "")
+					attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
 
 			}
 		}
@@ -739,7 +744,7 @@ void* Create_ScatterAdd(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref && indices && updates)
 	{
-		*pScatterAdd = ScatterAdd(*pScope, *ref ,*indices,*updates, attrs);
+		pScatterAdd = new ScatterAdd(*pScope, *ref ,*indices,*updates, attrs);
 		ObjectInfo* pObj = AddObjectMap(pScatterAdd, id, SYMBOL_SCATTERADD, "ScatterAdd", pInputItem);
 		if (pObj)
 		{
@@ -779,8 +784,8 @@ void* Create_ScatterDiv(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -864,7 +869,8 @@ void* Create_ScatterDiv(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ScatterDiv::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
+				if (attrParser.GetAttribute("use_locking_") != "")
+					attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
 
 			}
 		}
@@ -876,7 +882,7 @@ void* Create_ScatterDiv(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref && indices && updates)
 	{
-		*pScatterDiv = ScatterDiv(*pScope, *ref, *indices, *updates, attrs);
+		pScatterDiv = new ScatterDiv(*pScope, *ref, *indices, *updates, attrs);
 		ObjectInfo* pObj = AddObjectMap(pScatterDiv, id, SYMBOL_SCATTERDIV, "ScatterDiv", pInputItem);
 		if (pObj)
 		{
@@ -916,8 +922,8 @@ void* Create_ScatterMul(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1001,7 +1007,8 @@ void* Create_ScatterMul(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ScatterMul::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
+				if (attrParser.GetAttribute("use_locking_") != "")
+					attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
 
 			}
 		}
@@ -1013,7 +1020,7 @@ void* Create_ScatterMul(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref && indices && updates)
 	{
-		*pScatterMul = ScatterMul(*pScope, *ref, *indices, *updates, attrs);
+		pScatterMul = new ScatterMul(*pScope, *ref, *indices, *updates, attrs);
 		ObjectInfo* pObj = AddObjectMap(pScatterMul, id, SYMBOL_SCATTERMUL, "ScatterMul", pInputItem);
 		if (pObj)
 		{
@@ -1053,8 +1060,8 @@ void* Create_ScatterNdAdd(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1138,7 +1145,8 @@ void* Create_ScatterNdAdd(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ScatterNdAdd::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
+				if (attrParser.GetAttribute("use_locking_") != "")
+					attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
 
 			}
 		}
@@ -1150,7 +1158,7 @@ void* Create_ScatterNdAdd(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref && indices && updates)
 	{
-		*pScatterNdAdd = ScatterNdAdd(*pScope, *ref, *indices, *updates, attrs);
+		pScatterNdAdd = new ScatterNdAdd(*pScope, *ref, *indices, *updates, attrs);
 		ObjectInfo* pObj = AddObjectMap(pScatterNdAdd, id, SYMBOL_SCATTERNDADD, "ScatterNdAdd", pInputItem);
 		if (pObj)
 		{
@@ -1190,8 +1198,8 @@ void* Create_ScatterNdSub(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1275,7 +1283,8 @@ void* Create_ScatterNdSub(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ScatterNdSub::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
+				if (attrParser.GetAttribute("use_locking_") != "")
+					attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
 
 			}
 		}
@@ -1287,7 +1296,7 @@ void* Create_ScatterNdSub(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref && indices && updates)
 	{
-		*pScatterNdSub = ScatterNdSub(*pScope, *ref, *indices, *updates, attrs);
+		pScatterNdSub = new ScatterNdSub(*pScope, *ref, *indices, *updates, attrs);
 		ObjectInfo* pObj = AddObjectMap(pScatterNdSub, id, SYMBOL_SCATTERNDSUB, "ScatterNdSub", pInputItem);
 		if (pObj)
 		{
@@ -1327,8 +1336,8 @@ void* Create_ScatterNdUpdate(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1412,7 +1421,8 @@ void* Create_ScatterNdUpdate(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ScatterNdUpdate::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
+				if (attrParser.GetAttribute("use_locking_") != "")
+					attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
 
 			}
 		}
@@ -1424,7 +1434,7 @@ void* Create_ScatterNdUpdate(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref && indices && updates)
 	{
-		*pScatterNdUpdate = ScatterNdUpdate(*pScope, *ref, *indices, *updates, attrs);
+		pScatterNdUpdate = new ScatterNdUpdate(*pScope, *ref, *indices, *updates, attrs);
 		ObjectInfo* pObj = AddObjectMap(pScatterNdUpdate, id, SYMBOL_SCATTERNDUPDATE, "ScatterNdUpdate", pInputItem);
 		if (pObj)
 		{
@@ -1464,8 +1474,8 @@ void* Create_ScatterSub(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1549,7 +1559,8 @@ void* Create_ScatterSub(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ScatterSub::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
+				if (attrParser.GetAttribute("use_locking_") != "")
+					attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
 
 			}
 		}
@@ -1561,7 +1572,7 @@ void* Create_ScatterSub(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref && indices && updates)
 	{
-		*pScatterSub = ScatterSub(*pScope, *ref, *indices, *updates, attrs);
+		pScatterSub = new ScatterSub(*pScope, *ref, *indices, *updates, attrs);
 		ObjectInfo* pObj = AddObjectMap(pScatterSub, id, SYMBOL_SCATTERSUB, "ScatterSub", pInputItem);
 		if (pObj)
 		{
@@ -1601,8 +1612,8 @@ void* Create_ScatterUpdate(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1686,7 +1697,8 @@ void* Create_ScatterUpdate(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ScatterUpdate::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
+				if (attrParser.GetAttribute("use_locking_") != "")
+					attrs.UseLocking(attrParser.GetValue_bool("use_locking_"));
 
 			}
 		}
@@ -1698,7 +1710,7 @@ void* Create_ScatterUpdate(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && ref && indices && updates)
 	{
-		*pScatterUpdate = ScatterUpdate(*pScope, *ref, *indices, *updates, attrs);
+		pScatterUpdate = new ScatterUpdate(*pScope, *ref, *indices, *updates, attrs);
 		ObjectInfo* pObj = AddObjectMap(pScatterUpdate, id, SYMBOL_SCATTERUPDATE, "ScatterUpdate", pInputItem);
 		if (pObj)
 		{
@@ -1737,8 +1749,8 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1768,17 +1780,8 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				else if (strPinInitial == "bool")
-					dtype = DT_BOOL;
-				else if (strPinInitial == "string")
-					dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if(dtype==DT_INVALID)
 				{
 					std::string msg = string_format("warning : TemporaryVariable - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -1809,7 +1812,7 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope)
 	{
-		*pTemporaryVariable = TemporaryVariable(*pScope, shape,dtype, attrs);
+		pTemporaryVariable = new TemporaryVariable(*pScope, shape,dtype, attrs);
 		ObjectInfo* pObj = AddObjectMap(pTemporaryVariable, id, SYMBOL_TEMPORARYVARIABLE, "TemporaryVariable", pInputItem);
 		if (pObj)
 		{
@@ -1849,7 +1852,7 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
 			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
@@ -1880,17 +1883,8 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				else if (strPinInitial == "bool")
-					dtype = DT_BOOL;
-				else if (strPinInitial == "string")
-					dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if (dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : Variable - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -1959,7 +1953,7 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
 			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;

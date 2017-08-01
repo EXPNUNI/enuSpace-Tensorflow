@@ -40,8 +40,8 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -132,7 +132,7 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> ksize(v_ksize);
 		gtl::ArraySlice<int> strides(v_strides);
-		*pAvgPool = AvgPool(*pScope, *value,ksize, strides, padding, attrs);
+		pAvgPool = new AvgPool(*pScope, *value,ksize, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pAvgPool, id, SYMBOL_AVGPOOL, "AvgPool", pInputItem);
 		if (pObj)
 		{
@@ -177,8 +177,8 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -269,7 +269,7 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> ksize(v_ksize);
 		gtl::ArraySlice<int> strides(v_strides);
-		*pAvgPool3D = AvgPool3D(*pScope, *value, ksize, strides, padding, attrs);
+		pAvgPool3D = new AvgPool3D(*pScope, *value, ksize, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pAvgPool3D, id, SYMBOL_AVGPOOL3D, "AvgPool3D", pInputItem);
 		if (pObj)
 		{
@@ -316,8 +316,8 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -432,7 +432,7 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> ksize(v_ksize);
 		gtl::ArraySlice<int> strides(v_strides);
-		*pAvgPool3DGrad = AvgPool3DGrad(*pScope, *orig_input_shape,*grad, ksize, strides, padding, attrs);
+		pAvgPool3DGrad = new AvgPool3DGrad(*pScope, *orig_input_shape,*grad, ksize, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pAvgPool3DGrad, id, SYMBOL_AVGPOOL3DGRAD, "AvgPool3DGrad", pInputItem);
 		if (pObj)
 		{
@@ -476,8 +476,8 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -552,7 +552,7 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && value && bias)
 	{
-		*pBiasAdd = BiasAdd(*pScope, *value, *bias, attrs);
+		pBiasAdd = new BiasAdd(*pScope, *value, *bias, attrs);
 		ObjectInfo* pObj = AddObjectMap(pBiasAdd, id, SYMBOL_BIASADD, "BiasAdd", pInputItem);
 		if (pObj)
 		{
@@ -593,8 +593,8 @@ void* Create_BiasAddGrad(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -645,7 +645,7 @@ void* Create_BiasAddGrad(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && out_backprop)
 	{
-		*pBiasAddGrad = BiasAddGrad(*pScope, *out_backprop,attrs);
+		pBiasAddGrad = new BiasAddGrad(*pScope, *out_backprop,attrs);
 		ObjectInfo* pObj = AddObjectMap(pBiasAddGrad, id, SYMBOL_BIASADDGRAD, "BiasAddGrad", pInputItem);
 		if (pObj)
 		{
@@ -688,8 +688,8 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -791,7 +791,7 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 	if (pScope && pInput && filter)
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pConv2D = Conv2D(*pScope, *pInput, *filter, strides, padding,attrs);
+		pConv2D = new Conv2D(*pScope, *pInput, *filter, strides, padding,attrs);
 		ObjectInfo* pObj = AddObjectMap(pConv2D, id, SYMBOL_CONV2D, "Conv2D", pInputItem);
 		if (pObj)
 		{
@@ -836,8 +836,8 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -962,7 +962,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 	if (pScope && pInput && filter_sizes && out_backprop)
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pConv2DBackpropFilter = Conv2DBackpropFilter(*pScope, *pInput, *filter_sizes,*out_backprop, strides, padding, attrs);
+		pConv2DBackpropFilter = new Conv2DBackpropFilter(*pScope, *pInput, *filter_sizes,*out_backprop, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pConv2DBackpropFilter, id, SYMBOL_CONV2DBACKPROPFILTER, "Conv2DBackpropFilter", pInputItem);
 		if (pObj)
 		{
@@ -1007,8 +1007,8 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1133,7 +1133,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 	if (pScope && pInput && filter && out_backprop)
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pConv2DBackpropInput = Conv2DBackpropInput(*pScope, *pInput, *filter, *out_backprop, strides, padding, attrs);
+		pConv2DBackpropInput = new Conv2DBackpropInput(*pScope, *pInput, *filter, *out_backprop, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pConv2DBackpropInput, id, SYMBOL_CONV2DBACKPROPINPUT, "Conv2DBackpropInput", pInputItem);
 		if (pObj)
 		{
@@ -1177,8 +1177,8 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1278,7 +1278,7 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 	if (pScope && pInput && filter )
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pConv3D = Conv3D(*pScope, *pInput, *filter, strides, padding, attrs);
+		pConv3D = new Conv3D(*pScope, *pInput, *filter, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pConv3D, id, SYMBOL_CONV3D, "Conv3D", pInputItem);
 		if (pObj)
 		{
@@ -1323,8 +1323,8 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1447,7 +1447,7 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 	if (pScope && pInput && filter_sizes && out_backprop)
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pConv3DBackpropFilterV2 = Conv3DBackpropFilterV2(*pScope, *pInput, *filter_sizes,*out_backprop, strides, padding, attrs);
+		pConv3DBackpropFilterV2 = new Conv3DBackpropFilterV2(*pScope, *pInput, *filter_sizes,*out_backprop, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pConv3DBackpropFilterV2, id, SYMBOL_CONV3DBACKPROPFILTERV2, "Conv3DBackpropFilterV2", pInputItem);
 		if (pObj)
 		{
@@ -1492,8 +1492,8 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1616,7 +1616,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 	if (pScope && pInput && filter && out_backprop)
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pConv3DBackpropInputV2 = Conv3DBackpropInputV2(*pScope, *pInput, *filter, *out_backprop, strides, padding, attrs);
+		pConv3DBackpropInputV2 = new Conv3DBackpropInputV2(*pScope, *pInput, *filter, *out_backprop, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pConv3DBackpropInputV2, id, SYMBOL_CONV3DBACKPROPINPUTV2, "Conv3DBackpropInputV2", pInputItem);
 		if (pObj)
 		{
@@ -1660,8 +1660,8 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1761,7 +1761,7 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 	if (pScope && pInput && filter)
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pDepthwiseConv2dNative = DepthwiseConv2dNative(*pScope, *pInput, *filter, strides, padding, attrs);
+		pDepthwiseConv2dNative = new DepthwiseConv2dNative(*pScope, *pInput, *filter, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pDepthwiseConv2dNative, id, SYMBOL_DEPTHWISECONV2DNATIVE, "DepthwiseConv2dNative", pInputItem);
 		if (pObj)
 		{
@@ -1806,8 +1806,8 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1930,7 +1930,7 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 	if (pScope && pInput && filter_sizes && out_backprop)
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pDepthwiseConv2dNativeBackpropFilter = DepthwiseConv2dNativeBackpropFilter(*pScope, *pInput, *filter_sizes,*out_backprop, strides, padding, attrs);
+		pDepthwiseConv2dNativeBackpropFilter = new DepthwiseConv2dNativeBackpropFilter(*pScope, *pInput, *filter_sizes,*out_backprop, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pDepthwiseConv2dNativeBackpropFilter, id, SYMBOL_DEPTHWISECONV2DNATIVEBACKPROPFILTER, 
 										"DepthwiseConv2dNativeBackpropFilter", pInputItem);
 		if (pObj)
@@ -1976,8 +1976,8 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2100,7 +2100,7 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 	if (pScope && input_sizes && filter && out_backprop)
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pDepthwiseConv2dNativeBackpropInput = DepthwiseConv2dNativeBackpropInput(*pScope, *input_sizes, *filter, *out_backprop, strides, padding, attrs);
+		pDepthwiseConv2dNativeBackpropInput = new DepthwiseConv2dNativeBackpropInput(*pScope, *input_sizes, *filter, *out_backprop, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pDepthwiseConv2dNativeBackpropInput, id, SYMBOL_DEPTHWISECONV2DNATIVEBACKPROPINPUT,
 			"DepthwiseConv2dNativeBackpropInput", pInputItem);
 		if (pObj)
@@ -2145,8 +2145,8 @@ void* Create_Dilation2D(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2251,7 +2251,7 @@ void* Create_Dilation2D(std::string id, Json::Value pInputItem) {
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> rates(v_rates);
 
-		*pDilation2D = Dilation2D(*pScope, *pinput, *filter, strides, rates, padding);
+		pDilation2D = new Dilation2D(*pScope, *pinput, *filter, strides, rates, padding);
 		ObjectInfo* pObj = AddObjectMap(pDilation2D, id, SYMBOL_DILATION2D,"Dilation2D", pInputItem);
 		if (pObj)
 		{
@@ -2297,8 +2297,8 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2426,7 +2426,7 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> rates(v_rates);
 
-		*pDilation2DBackpropFilter = Dilation2DBackpropFilter(*pScope, *pinput, *filter,*out_backprop ,strides, rates, padding);
+		pDilation2DBackpropFilter = new Dilation2DBackpropFilter(*pScope, *pinput, *filter,*out_backprop ,strides, rates, padding);
 		ObjectInfo* pObj = AddObjectMap(pDilation2DBackpropFilter, id, SYMBOL_DILATION2DBACKPROPFILTER, "Dilation2DBackpropFilter", pInputItem);
 		if (pObj)
 		{
@@ -2472,8 +2472,8 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2601,7 +2601,7 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> rates(v_rates);
 
-		*pDilation2DBackpropInput = Dilation2DBackpropInput(*pScope, *pinput, *filter, *out_backprop, strides, rates, padding);
+		pDilation2DBackpropInput = new Dilation2DBackpropInput(*pScope, *pinput, *filter, *out_backprop, strides, rates, padding);
 		ObjectInfo* pObj = AddObjectMap(pDilation2DBackpropInput, id, SYMBOL_DILATION2DBACKPROPINPUT, "Dilation2DBackpropInput", pInputItem);
 		if (pObj)
 		{
@@ -2642,8 +2642,8 @@ void* Create_Elu(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2686,7 +2686,7 @@ void* Create_Elu(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && features)
 	{
-		*pElu = Elu(*pScope, *features);
+		pElu = new Elu(*pScope, *features);
 		ObjectInfo* pObj = AddObjectMap(pElu, id, SYMBOL_ELU, "Elu", pInputItem);
 		if (pObj)
 		{
@@ -2725,8 +2725,8 @@ void* Create_FractionalAvgPool(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2800,7 +2800,7 @@ void* Create_FractionalAvgPool(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<float> pooling_ratio(v_pooling_ratio);
 
-		*pFractionalAvgPool = FractionalAvgPool(*pScope, *value, pooling_ratio,attrs);
+		pFractionalAvgPool = new FractionalAvgPool(*pScope, *value, pooling_ratio,attrs);
 		ObjectInfo* pObj = AddObjectMap(pFractionalAvgPool, id, SYMBOL_FRACTIONALAVGPOOL, "FractionalAvgPool", pInputItem);
 		if (pObj)
 		{
@@ -2843,8 +2843,8 @@ void* Create_FractionalMaxPool(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2917,7 +2917,7 @@ void* Create_FractionalMaxPool(std::string id, Json::Value pInputItem) {
 	if (pScope && value)
 	{
 		gtl::ArraySlice<float> pooling_ratio(v_pooling_ratio);
-		*pFractionalMaxPool = FractionalMaxPool(*pScope, *value, pooling_ratio, attrs);
+		pFractionalMaxPool = new FractionalMaxPool(*pScope, *value, pooling_ratio, attrs);
 		ObjectInfo* pObj = AddObjectMap(pFractionalMaxPool, id, SYMBOL_FRACTIONALMAXPOOL, "FractionalMaxPool", pInputItem);
 		if (pObj)
 		{
@@ -2963,8 +2963,8 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -3117,7 +3117,7 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 	if (pScope && x &&scale &&offset &&mean &&variance)
 	{
 		
-		*pFusedBatchNorm = FusedBatchNorm(*pScope, *x, *scale,*offset,*mean,*variance, attrs);
+		pFusedBatchNorm = new FusedBatchNorm(*pScope, *x, *scale,*offset,*mean,*variance, attrs);
 		ObjectInfo* pObj = AddObjectMap(pFusedBatchNorm, id, SYMBOL_FUSEDBATCHNORM, "FusedBatchNorm", pInputItem);
 		if (pObj)
 		{
@@ -3163,8 +3163,8 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -3317,7 +3317,7 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 	if (pScope &&y_backprop&& x &&scale &&reserve_space_1 &&reserve_space_2)
 	{
 		
-		*pFusedBatchNormGrad = FusedBatchNormGrad(*pScope,*y_backprop ,*x, *scale,*reserve_space_1,*reserve_space_2, attrs);
+		pFusedBatchNormGrad = new FusedBatchNormGrad(*pScope,*y_backprop ,*x, *scale,*reserve_space_1,*reserve_space_2, attrs);
 		ObjectInfo* pObj = AddObjectMap(pFusedBatchNormGrad, id, SYMBOL_FUSEDBATCHNORMGRAD, "FusedBatchNormGrad", pInputItem);
 		if (pObj)
 		{
@@ -3363,8 +3363,8 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -3492,7 +3492,7 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 	if (pScope &&pinput&& paddings &&filter)
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pFusedPadConv2D = FusedPadConv2D(*pScope, *pinput, *paddings, *filter, mode, strides, padding);
+		pFusedPadConv2D = new FusedPadConv2D(*pScope, *pinput, *paddings, *filter, mode, strides, padding);
 		ObjectInfo* pObj = AddObjectMap(pFusedPadConv2D, id, SYMBOL_FUSEDPADCONV2D, "FusedPadConv2D", pInputItem);
 		if (pObj)
 		{
@@ -3538,8 +3538,8 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -3705,7 +3705,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 	if (pScope &&pinput&&size &&paddings &&filter)
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pFusedResizeAndPadConv2D = FusedResizeAndPadConv2D(*pScope, *pinput,*size, *paddings, *filter, mode, strides, padding,attrs);
+		pFusedResizeAndPadConv2D = new FusedResizeAndPadConv2D(*pScope, *pinput,*size, *paddings, *filter, mode, strides, padding,attrs);
 		ObjectInfo* pObj = AddObjectMap(pFusedResizeAndPadConv2D, id, SYMBOL_FUSEDRESIZEANDPADCONV2D, "FusedResizeAndPadConv2D", pInputItem);
 		if (pObj)
 		{
@@ -3746,8 +3746,8 @@ void* Create_InTopK(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -3826,7 +3826,7 @@ void* Create_InTopK(std::string id, Json::Value pInputItem) {
 
 	if (pScope &&predictions&&targets)
 	{
-		*pInTopK = InTopK(*pScope, *predictions, *targets, k);
+		pInTopK = new InTopK(*pScope, *predictions, *targets, k);
 		ObjectInfo* pObj = AddObjectMap(pInTopK, id, SYMBOL_INTOPK, "InTopK", pInputItem);
 		if (pObj)
 		{
@@ -3863,8 +3863,8 @@ void* Create_L2Loss(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -3907,7 +3907,7 @@ void* Create_L2Loss(std::string id, Json::Value pInputItem) {
 
 	if (pScope &&t)
 	{
-		*pL2Loss = L2Loss(*pScope, *t);
+		pL2Loss = new L2Loss(*pScope, *t);
 		ObjectInfo* pObj = AddObjectMap(pL2Loss, id, SYMBOL_L2LOSS, "L2Loss", pInputItem);
 		if (pObj)
 		{
@@ -3945,8 +3945,8 @@ void* Create_LRN(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -4004,7 +4004,7 @@ void* Create_LRN(std::string id, Json::Value pInputItem) {
 
 	if (pScope &&pinput)
 	{
-		*pLRN = LRN(*pScope, *pinput,attrs);
+		pLRN = new LRN(*pScope, *pinput,attrs);
 		ObjectInfo* pObj = AddObjectMap(pLRN, id, SYMBOL_LRN, "LRN", pInputItem);
 		if (pObj)
 		{
@@ -4041,8 +4041,8 @@ void* Create_LogSoftmax(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -4085,7 +4085,7 @@ void* Create_LogSoftmax(std::string id, Json::Value pInputItem) {
 
 	if (pScope &&logits)
 	{
-		*pLogSoftmax = LogSoftmax(*pScope, *logits);
+		pLogSoftmax = new LogSoftmax(*pScope, *logits);
 		ObjectInfo* pObj = AddObjectMap(pLogSoftmax, id, SYMBOL_LOGSOFTMAX, "LogSoftmax", pInputItem);
 		if (pObj)
 		{
@@ -4126,8 +4126,8 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -4222,7 +4222,7 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> ksize(v_ksize);
-		*pMaxPool = MaxPool(*pScope, *pinput, ksize, strides, padding, attrs);
+		pMaxPool = new MaxPool(*pScope, *pinput, ksize, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pMaxPool, id, SYMBOL_MAXPOOL, "MaxPool", pInputItem);
 		if (pObj)
 		{
@@ -4267,8 +4267,8 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -4363,7 +4363,7 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> ksize(v_ksize);
-		*pMaxPool3D = MaxPool3D(*pScope, *pinput, ksize, strides, padding, attrs);
+		pMaxPool3D = new MaxPool3D(*pScope, *pinput, ksize, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pMaxPool3D, id, SYMBOL_MAXPOOL3D, "MaxPool3D", pInputItem);
 		if (pObj)
 		{
@@ -4410,8 +4410,8 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -4554,7 +4554,7 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> ksize(v_ksize);
-		*pMaxPool3DGrad = MaxPool3DGrad(*pScope, *orig_input,*orig_output,*grad, ksize, strides, padding, attrs);
+		pMaxPool3DGrad = new MaxPool3DGrad(*pScope, *orig_input,*orig_output,*grad, ksize, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pMaxPool3DGrad, id, SYMBOL_MAXPOOL3DGRAD, "MaxPool3DGrad", pInputItem);
 		if (pObj)
 		{
@@ -4601,8 +4601,8 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -4745,7 +4745,7 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> ksize(v_ksize);
-		*pMaxPool3DGradGrad = MaxPool3DGradGrad(*pScope, *orig_input, *orig_output, *grad, ksize, strides, padding, attrs);
+		pMaxPool3DGradGrad = new MaxPool3DGradGrad(*pScope, *orig_input, *orig_output, *grad, ksize, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pMaxPool3DGradGrad, id, SYMBOL_MAXPOOL3DGRADGRAD, "MaxPool3DGradGrad", pInputItem);
 		if (pObj)
 		{
@@ -4792,8 +4792,8 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -4936,7 +4936,7 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> ksize(v_ksize);
-		*pMaxPoolGradGrad = MaxPoolGradGrad(*pScope, *orig_input, *orig_output, *grad, ksize, strides, padding, attrs);
+		pMaxPoolGradGrad = new MaxPoolGradGrad(*pScope, *orig_input, *orig_output, *grad, ksize, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pMaxPoolGradGrad, id, SYMBOL_MAXPOOLGRADGRAD, "MaxPoolGradGrad", pInputItem);
 		if (pObj)
 		{
@@ -4982,8 +4982,8 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -5112,7 +5112,7 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> ksize(v_ksize);
-		*pMaxPoolGradGradWithArgmax = MaxPoolGradGradWithArgmax(*pScope, *pinput, *grad, *argmax, ksize, strides, padding);
+		pMaxPoolGradGradWithArgmax = new MaxPoolGradGradWithArgmax(*pScope, *pinput, *grad, *argmax, ksize, strides, padding);
 		ObjectInfo* pObj = AddObjectMap(pMaxPoolGradGradWithArgmax, id, SYMBOL_MAXPOOLGRADGRADWITHARGMAX, "MaxPoolGradGradWithArgmax", pInputItem);
 		if (pObj)
 		{
@@ -5157,8 +5157,8 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -5249,7 +5249,7 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> ksize(v_ksize);
-		*pMaxPoolWithArgmax = MaxPoolWithArgmax(*pScope, *pinput, ksize, strides, padding,attrs);
+		pMaxPoolWithArgmax = new MaxPoolWithArgmax(*pScope, *pinput, ksize, strides, padding,attrs);
 		ObjectInfo* pObj = AddObjectMap(pMaxPoolWithArgmax, id, SYMBOL_MAXPOOLWITHARGMAX, "pMaxPoolWithArgmax", pInputItem);
 		if (pObj)
 		{
@@ -5298,8 +5298,8 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -5428,7 +5428,7 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> ksize(v_ksize);
-		*pQuantizedAvgPool = QuantizedAvgPool(*pScope, *pinput,*min_input,*max_input, ksize, strides, padding);
+		pQuantizedAvgPool = new QuantizedAvgPool(*pScope, *pinput,*min_input,*max_input, ksize, strides, padding);
 		ObjectInfo* pObj = AddObjectMap(pQuantizedAvgPool, id, SYMBOL_QUANTIZEDAVGPOOL, "QuantizedAvgPool", pInputItem);
 		if (pObj)
 		{
@@ -5489,8 +5489,8 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -5897,7 +5897,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 	if (pScope &&t&&t_min&&t_max&&m&&m_min&&m_max&&v&&v_min&&v_max&&beta&&beta_min&&beta_max&&gamma&&gamma_min&&gamma_max)
 	{
 
-		*pQuantizedBatchNormWithGlobalNormalization = QuantizedBatchNormWithGlobalNormalization(
+		pQuantizedBatchNormWithGlobalNormalization = new QuantizedBatchNormWithGlobalNormalization(
 			*pScope, *t, *t_min, *t_max,
 			*m, *m_min, *m_max,
 			*v, *v_min, *v_max,
@@ -5950,8 +5950,8 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -6120,7 +6120,7 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope &&pInput&&bias&&min_input&&max_input&&min_bias&&max_bias)
 	{
-		*pQuantizedBiasAdd = QuantizedBiasAdd(*pScope, *pInput, *bias,*min_input,*max_input,*min_bias,*max_bias,out_type);
+		pQuantizedBiasAdd = new QuantizedBiasAdd(*pScope, *pInput, *bias,*min_input,*max_input,*min_bias,*max_bias,out_type);
 		ObjectInfo* pObj = AddObjectMap(pQuantizedBiasAdd, id, SYMBOL_QUANTIZEDBIASADD, "QuantizedBiasAdd", pInputItem);
 		if (pObj)
 		{
@@ -6167,8 +6167,8 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -6370,7 +6370,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 	if (pScope &&pinput&&max_input&&min_input&&filter&&min_filter&&max_filter)
 	{
 		gtl::ArraySlice<int> strides(v_strides);
-		*pQuantizedConv2D = QuantizedConv2D(*pScope, *pinput,*filter, *min_input, *max_input,*min_filter,*max_filter, strides, padding,attrs);
+		pQuantizedConv2D = new QuantizedConv2D(*pScope, *pinput,*filter, *min_input, *max_input,*min_filter,*max_filter, strides, padding,attrs);
 		ObjectInfo* pObj = AddObjectMap(pQuantizedConv2D, id, SYMBOL_QUANTIZEDCONV2D, "QuantizedConv2D", pInputItem);
 		if (pObj)
 		{
@@ -6417,8 +6417,8 @@ void* Create_QuantizedMaxPool(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -6547,7 +6547,7 @@ void* Create_QuantizedMaxPool(std::string id, Json::Value pInputItem) {
 	{
 		gtl::ArraySlice<int> ksize(v_ksize);
 		gtl::ArraySlice<int> strides(v_strides);
-		*pQuantizedMaxPool = QuantizedMaxPool(*pScope, *pinput, *min_input, *max_input, ksize, strides, padding);
+		pQuantizedMaxPool = new QuantizedMaxPool(*pScope, *pinput, *min_input, *max_input, ksize, strides, padding);
 		ObjectInfo* pObj = AddObjectMap(pQuantizedMaxPool, id, SYMBOL_QUANTIZEDMAXPOOL, "QuantizedMaxPool", pInputItem);
 		if (pObj)
 		{
@@ -6594,8 +6594,8 @@ void* Create_QuantizedRelu(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -6701,7 +6701,7 @@ void* Create_QuantizedRelu(std::string id, Json::Value pInputItem) {
 	if (pScope &&features&&min_features&&max_features)
 	{
 	
-		*pQuantizedRelu = QuantizedRelu(*pScope, *features, *min_features, *max_features, attrs);
+		pQuantizedRelu = new QuantizedRelu(*pScope, *features, *min_features, *max_features, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQuantizedRelu, id, SYMBOL_QUANTIZEDRELU, "QuantizedRelu", pInputItem);
 		if (pObj)
 		{
@@ -6743,8 +6743,8 @@ void* Create_QuantizedRelu6(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -6850,7 +6850,7 @@ void* Create_QuantizedRelu6(std::string id, Json::Value pInputItem) {
 	if (pScope &&features&&min_features&&max_features)
 	{
 
-		*pQuantizedRelu6 = QuantizedRelu6(*pScope, *features, *min_features, *max_features, attrs);
+		pQuantizedRelu6 = new QuantizedRelu6(*pScope, *features, *min_features, *max_features, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQuantizedRelu6, id, SYMBOL_QUANTIZEDRELU6, "QuantizedRelu6", pInputItem);
 		if (pObj)
 		{
@@ -6893,8 +6893,8 @@ void* Create_QuantizedReluX(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -7023,7 +7023,7 @@ void* Create_QuantizedReluX(std::string id, Json::Value pInputItem) {
 
 	if (pScope &&features&&max_value&&min_features&&max_features)
 	{
-		*pQuantizedReluX = QuantizedReluX(*pScope, *features, *max_value,*min_features, *max_features, attrs);
+		pQuantizedReluX = new QuantizedReluX(*pScope, *features, *max_value,*min_features, *max_features, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQuantizedReluX, id, SYMBOL_QUANTIZEDRELUX, "QuantizedReluX", pInputItem);
 		if (pObj)
 		{
@@ -7062,8 +7062,8 @@ void* Create_Relu(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -7106,7 +7106,7 @@ void* Create_Relu(std::string id, Json::Value pInputItem) {
 
 	if (pScope &&features)
 	{
-		*pRelu = Relu(*pScope, *features);
+		pRelu = new Relu(*pScope, *features);
 		ObjectInfo* pObj = AddObjectMap(pRelu, id, SYMBOL_RELU, "Relu", pInputItem);
 		if (pObj)
 		{
@@ -7143,8 +7143,8 @@ void* Create_Relu6(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -7187,7 +7187,7 @@ void* Create_Relu6(std::string id, Json::Value pInputItem) {
 
 	if (pScope &&features)
 	{
-		*pRelu6 = Relu6(*pScope, *features);
+		pRelu6 = new Relu6(*pScope, *features);
 		ObjectInfo* pObj = AddObjectMap(pRelu6, id, SYMBOL_RELU6, "Relu6", pInputItem);
 		if (pObj)
 		{
@@ -7224,8 +7224,8 @@ void* Create_Softmax(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -7267,7 +7267,7 @@ void* Create_Softmax(std::string id, Json::Value pInputItem) {
 
 	if (pScope && plogits)
 	{
-		*pSoftmax = Softmax(*pScope, *plogits);
+		pSoftmax = new Softmax(*pScope, *plogits);
 		ObjectInfo* pObj = AddObjectMap(pSoftmax, id, SYMBOL_SOFTMAX, "softmax", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pSoftmax->softmax, OUTPUT_TYPE_OUTPUT, "softmax");
@@ -7303,8 +7303,8 @@ void* Create_SoftmaxCrossEntropyWithLogits(std::string id, Json::Value pInputIte
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -7369,7 +7369,7 @@ void* Create_SoftmaxCrossEntropyWithLogits(std::string id, Json::Value pInputIte
 
 	if (pScope && features && labels)
 	{
-		*pSoftmaxCrossEntropyWithLogits = SoftmaxCrossEntropyWithLogits(*pScope, *features, *labels);
+		pSoftmaxCrossEntropyWithLogits = new SoftmaxCrossEntropyWithLogits(*pScope, *features, *labels);
 		ObjectInfo* pObj = AddObjectMap(pSoftmaxCrossEntropyWithLogits, id, SYMBOL_SOFTMAXCROSSENTROPYWITHLOGITS, "SoftmaxCrossEntropyWithLogits", pInputItem);
 		if (pObj)
 		{
@@ -7407,8 +7407,8 @@ void* Create_Softplus(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -7451,7 +7451,7 @@ void* Create_Softplus(std::string id, Json::Value pInputItem) {
 
 	if (pScope && pfeatures)
 	{
-		*pSoftplus = Softplus(*pScope, *pfeatures);
+		pSoftplus = new Softplus(*pScope, *pfeatures);
 		ObjectInfo* pObj = AddObjectMap(pSoftplus, id, SYMBOL_SOFTMAX, "Softplus", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pSoftplus->activations, OUTPUT_TYPE_OUTPUT, "activations");
@@ -7487,8 +7487,8 @@ void* Create_Softsign(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -7531,7 +7531,7 @@ void* Create_Softsign(std::string id, Json::Value pInputItem) {
 
 	if (pScope && pfeatures)
 	{
-		*pSoftsign = Softsign(*pScope, *pfeatures);
+		pSoftsign = new Softsign(*pScope, *pfeatures);
 		ObjectInfo* pObj = AddObjectMap(pSoftsign, id, SYMBOL_SOFTSIGN, "Softsign", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pSoftsign->activations, OUTPUT_TYPE_OUTPUT, "activations");
@@ -7568,8 +7568,8 @@ void* Create_SparseSoftmaxCrossEntropyWithLogits(std::string id, Json::Value pIn
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -7632,13 +7632,10 @@ void* Create_SparseSoftmaxCrossEntropyWithLogits(std::string id, Json::Value pIn
 			PrintMessage(msg);
 		}
 	}
-	/*
-	::tensorflow::Output loss;
-	::tensorflow::Output backprop;
-	*/
+	
 	if (pScope && pfeatures && plabels)
 	{
-		*pSparseSoftmaxCrossEntropyWithLogits = SparseSoftmaxCrossEntropyWithLogits(*pScope, *pfeatures,*plabels);
+		pSparseSoftmaxCrossEntropyWithLogits = new SparseSoftmaxCrossEntropyWithLogits(*pScope, *pfeatures,*plabels);
 		ObjectInfo* pObj = AddObjectMap(pSparseSoftmaxCrossEntropyWithLogits, id, SYMBOL_SOFTMAXCROSSENTROPYWITHLOGITS, "SparseSoftmaxCrossEntropyWithLogits", pInputItem);
 		if (pObj)
 		{
@@ -7678,8 +7675,8 @@ void* Create_TopK(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -7741,7 +7738,11 @@ void* Create_TopK(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "TopK::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Sorted(attrParser.GetValue_bool("Sorted_"));
+				if (attrParser.GetAttribute("Sorted_") !="")
+				{
+					attrs.Sorted(attrParser.GetValue_bool("Sorted_"));
+				}
+				
 				
 			}
 		}
@@ -7751,13 +7752,10 @@ void* Create_TopK(std::string id, Json::Value pInputItem) {
 			PrintMessage(msg);
 		}
 	}
-	/*
-	 ::tensorflow::Output values;
-	 ::tensorflow::Output indices;
-	*/
+
 	if (pScope && pinput && pk)
 	{
-		*pTopK = TopK(*pScope, *pinput, *pk);
+		pTopK = new TopK(*pScope, *pinput, *pk);
 		ObjectInfo* pObj = AddObjectMap(pTopK, id, SYMBOL_TOPK, "TopK", pInputItem);
 		if (pObj)
 		{

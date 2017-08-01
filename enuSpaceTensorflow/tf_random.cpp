@@ -100,8 +100,10 @@ void* Create_Multinomial(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Multinomial::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Seed(attrParser.GetValue_int64("seed_"));
-				attrs.Seed2(attrParser.GetValue_int64("seed2_"));
+				if (attrParser.GetAttribute("seed_")!="")
+					attrs.Seed(attrParser.GetValue_int64("seed_"));
+				if (attrParser.GetAttribute("seed2_") != "")
+					attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -112,7 +114,7 @@ void* Create_Multinomial(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && logit && num_samples)
 	{
-		*pMultinomial = Multinomial(*pScope, *logit, *num_samples, attrs);
+		pMultinomial = new Multinomial(*pScope, *logit, *num_samples, attrs);
 		ObjectInfo* pObj = AddObjectMap(pMultinomial, id, SYMBOL_MULTINOMIAL, "Multinomial", pInputItem);
 		if (pObj)
 		{
@@ -285,8 +287,10 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 			if (strPinInterface == "ParameterizedTruncatedNormal::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Seed(attrParser.GetValue_int64("seed_"));
-				attrs.Seed2(attrParser.GetValue_int64("seed2_"));
+				if (attrParser.GetAttribute("seed_")!="")
+					attrs.Seed(attrParser.GetValue_int64("seed_"));
+				if (attrParser.GetAttribute("seed2_") != "")
+					attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -311,7 +315,7 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 		}
 		Input input(tensor);
 		*/
-		*pParameterizedTruncatedNormal = ParameterizedTruncatedNormal(*pScope, *shape, *means, *stdevs, *minvals, *maxvals, attrs);
+		pParameterizedTruncatedNormal = new ParameterizedTruncatedNormal(*pScope, *shape, *means, *stdevs, *minvals, *maxvals, attrs);
 		ObjectInfo* pObj = AddObjectMap(pParameterizedTruncatedNormal, id, SYMBOL_PARAMETERIZEDTRUNCATEDNORMAL, "ParameterizedTruncatedNormal", pInputItem);
 		if (pObj)
 		{
@@ -414,8 +418,10 @@ void* Create_RandomGamma(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "RandomGamma::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Seed(attrParser.GetValue_bool("seed_"));
-				attrs.Seed2(attrParser.GetValue_bool("seed2_"));
+				if (attrParser.GetAttribute("seed_")!="")
+					attrs.Seed(attrParser.GetValue_int64("seed_"));
+				if (attrParser.GetAttribute("seed2_") != "")
+					attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -440,7 +446,7 @@ void* Create_RandomGamma(std::string id, Json::Value pInputItem) {
 		}
 		Input input(tensor);
 		*/
-		*pRandomGamma = RandomGamma(*pScope, *shape, *alpha, attrs);
+		pRandomGamma = new RandomGamma(*pScope, *shape, *alpha, attrs);
 		ObjectInfo* pObj = AddObjectMap(pRandomGamma, id, SYMBOL_RANDOMGAMMA, "RandomGamma", pInputItem);
 		if (pObj)
 		{
@@ -518,17 +524,8 @@ void* Create_RandomNormal(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//	dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//	dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if (dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : RandomNormal - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -545,8 +542,10 @@ void* Create_RandomNormal(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ops::RandomNormal::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Seed(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed_")));
-				attrs.Seed2(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed2_")));
+				if (attrParser.GetAttribute("seed_") != "")
+					attrs.Seed(attrParser.ConvStrToInt64("seed_"));
+				if (attrParser.GetAttribute("seed2_") != "")
+					attrs.Seed2(attrParser.ConvStrToInt64("seed2_"));
 			}
 			else
 			{
@@ -675,8 +674,10 @@ void* Create_RandomPoisson(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "RandomPoisson::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Seed(attrParser.GetValue_bool("seed_"));
-				attrs.Seed2(attrParser.GetValue_bool("seed2_"));
+				if (attrParser.GetAttribute("seed_") != "")
+					attrs.Seed(attrParser.ConvStrToInt64("seed_"));
+				if (attrParser.GetAttribute("seed2_") != "")
+					attrs.Seed2(attrParser.ConvStrToInt64("seed2_"));
 			}
 		}
 		else
@@ -701,7 +702,7 @@ void* Create_RandomPoisson(std::string id, Json::Value pInputItem) {
 		}
 		Input input(tensor);
 		*/
-		*pRandomPoisson = RandomPoisson(*pScope, *shape, *rate, attrs);
+		pRandomPoisson = new RandomPoisson(*pScope, *shape, *rate, attrs);
 		ObjectInfo* pObj = AddObjectMap(pRandomPoisson, id, SYMBOL_RANDOMPOISSON, "RandomPoisson", pInputItem);
 		if (pObj)
 		{
@@ -777,8 +778,8 @@ void* Create_RandomShuffle(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "RandomShuffle::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Seed(attrParser.GetValue_bool("seed_"));
-				attrs.Seed2(attrParser.GetValue_bool("seed2_"));
+				attrs.Seed(attrParser.GetValue_int64("seed_"));
+				attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -866,17 +867,8 @@ void* Create_RandomUniform(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				else if (strPinInitial == "bool")
-					dtype = DT_BOOL;
-				else if (strPinInitial == "string")
-					dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if(dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : RandomUniform - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -893,8 +885,10 @@ void* Create_RandomUniform(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "RandomUniform::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Seed(attrParser.GetValue_bool("seed_"));
-				attrs.Seed2(attrParser.GetValue_bool("seed2_"));
+				if (attrParser.GetAttribute("seed_") != "")
+					attrs.Seed(attrParser.ConvStrToInt64("seed_"));
+				if (attrParser.GetAttribute("seed2_") != "")
+					attrs.Seed2(attrParser.ConvStrToInt64("seed2_"));
 			}
 		}
 		else
@@ -905,21 +899,7 @@ void* Create_RandomUniform(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && shape)
 	{
-		/*
-		Input tempInput(*shape);
-		Tensor orgtensor = tempInput.tensor();
-		int idim = orgtensor.dims();
-		TensorShape shape = TensorShape();
-		shape.AddDim(idim);
-		Tensor tensor(DT_INT32, shape);
-		for (int i = 0; i < idim; i++)
-		{
-			int64 idim = orgtensor.dim_size(i);
-			tensor.flat<int>()(i) = idim;
-		}
-		Input input(tensor);
-		*/
-		*pRandomUniform = RandomUniform(*pScope,*shape,dtype,attrs);
+		pRandomUniform = new RandomUniform(*pScope,*shape,dtype,attrs);
 		ObjectInfo* pObj = AddObjectMap(pRandomUniform, id, SYMBOL_RANDOMUNIFORM, "RandomUniform", pInputItem);
 		if (pObj)
 		{
@@ -1044,8 +1024,10 @@ void* Create_RandomUniformInt(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "RandomUniformInt::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Seed(attrParser.GetValue_bool("seed_"));
-				attrs.Seed2(attrParser.GetValue_bool("seed2_"));
+				if (attrParser.GetAttribute("seed_") != "")
+					attrs.Seed(attrParser.ConvStrToInt64("seed_"));
+				if (attrParser.GetAttribute("seed2_") != "")
+					attrs.Seed2(attrParser.ConvStrToInt64("seed2_"));
 			}
 		}
 		else
@@ -1056,21 +1038,8 @@ void* Create_RandomUniformInt(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && shape && minval && maxval)
 	{
-		/*
-		Input tempInput(*shape);
-		Tensor orgtensor = tempInput.tensor();
-		int idim = orgtensor.dims();
-		TensorShape shape = TensorShape();
-		shape.AddDim(idim);
-		Tensor tensor(DT_INT32, shape);
-		for (int i = 0; i < idim; i++)
-		{
-			int64 idim = orgtensor.dim_size(i);
-			tensor.flat<int>()(i) = idim;
-		}
-		Input input(tensor);
-		*/
-		*pRandomUniformInt = RandomUniformInt(*pScope, *shape, *minval, *maxval, attrs);
+		
+		pRandomUniformInt = new RandomUniformInt(*pScope, *shape, *minval, *maxval, attrs);
 		ObjectInfo* pObj = AddObjectMap(pRandomUniformInt, id, SYMBOL_RANDOMUNIFORMINT, "RandomUniformInt", pInputItem);
 		if (pObj)
 		{
@@ -1147,17 +1116,8 @@ void* Create_TruncatedNormal(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//	dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//	dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if(dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : TruncatedNormal - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -1174,8 +1134,10 @@ void* Create_TruncatedNormal(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "TruncatedNormal::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Seed(attrParser.GetValue_bool("seed_"));
-				attrs.Seed2(attrParser.GetValue_bool("seed2_"));
+				if (attrParser.GetAttribute("seed_") != "")
+					attrs.Seed(attrParser.ConvStrToInt64("seed_"));
+				if (attrParser.GetAttribute("seed2_") != "")
+					attrs.Seed2(attrParser.ConvStrToInt64("seed2_"));
 			}
 		}
 		else
@@ -1186,21 +1148,8 @@ void* Create_TruncatedNormal(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && shape )
 	{
-		/*
-		Input tempInput(*shape);
-		Tensor orgtensor = tempInput.tensor();
-		int idim = orgtensor.dims();
-		TensorShape shape = TensorShape();
-		shape.AddDim(idim);
-		Tensor tensor(DT_INT32, shape);
-		for (int i = 0; i < idim; i++)
-		{
-			int64 idim = orgtensor.dim_size(i);
-			tensor.flat<int>()(i) = idim;
-		}
-		Input input(tensor);
-		*/
-		*pTruncatedNormal = TruncatedNormal(*pScope, *shape, dtype, attrs);
+
+		pTruncatedNormal = new TruncatedNormal(*pScope, *shape, dtype, attrs);
 		ObjectInfo* pObj = AddObjectMap(pTruncatedNormal, id, SYMBOL_TRUNCATEDNORMAL, "TruncatedNormal", pInputItem);
 		if (pObj)
 		{
@@ -1275,17 +1224,8 @@ void* Create_RandomNormal_ex(std::string id, Json::Value pInputItem)
 		{
 			if (strPinInterface == "DataType")
 			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				//else if (strPinInitial == "bool")
-				//	dtype = DT_BOOL;
-				//else if (strPinInitial == "string")
-				//	dtype = DT_STRING;
-				else
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if (dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : RandomNormal_ex - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
 					PrintMessage(msg);
@@ -1302,8 +1242,10 @@ void* Create_RandomNormal_ex(std::string id, Json::Value pInputItem)
 			if (strPinInterface == "ops::RandomNormal::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				attrs.Seed(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed_")));
-				attrs.Seed2(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed2_")));
+				if (attrParser.GetAttribute("seed_") != "")
+					attrs.Seed(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed_")));
+				if (attrParser.GetAttribute("seed2_") != "")
+					attrs.Seed2(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed2_")));
 			}
 			else
 			{

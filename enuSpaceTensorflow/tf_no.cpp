@@ -52,7 +52,7 @@ void* Create_NoOp(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope)
 	{
-		*pNoOp = NoOp(*pScope);
+		pNoOp = new NoOp(*pScope);
 		ObjectInfo* pObj = AddObjectMap(pNoOp, id, SYMBOL_NOOP, "NoOp", pInputItem);
 		if (pObj)
 		{

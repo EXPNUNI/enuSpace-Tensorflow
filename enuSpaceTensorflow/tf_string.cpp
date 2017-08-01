@@ -91,7 +91,7 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && pinput)
 	{
-		*pAsString = AsString(*pScope, *pinput,  attrs);
+		pAsString = new AsString(*pScope, *pinput,  attrs);
 		ObjectInfo* pObj = AddObjectMap(pAsString, id, SYMBOL_ASSTRING, "AsString", pInputItem);
 		if (pObj)
 		{
@@ -170,7 +170,7 @@ void* Create_DecodeBase64(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && pInput)
 	{
-		*pDecodeBase64 = DecodeBase64(*pScope, *pInput);
+		pDecodeBase64 = new DecodeBase64(*pScope, *pInput);
 		ObjectInfo* pObj = AddObjectMap(pDecodeBase64, id, SYMBOL_DECODEBASE64, "DecodeBase64", pInputItem);
 		if (pObj)
 		{
@@ -258,7 +258,7 @@ void* Create_EncodeBase64(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && pInput)
 	{
-		*pEncodeBase64 = EncodeBase64(*pScope, *pInput,attrs);
+		pEncodeBase64 = new EncodeBase64(*pScope, *pInput,attrs);
 		ObjectInfo* pObj = AddObjectMap(pEncodeBase64, id, SYMBOL_ENCODEBASE64, "EncodeBase64", pInputItem);
 		if (pObj)
 		{
@@ -371,7 +371,7 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && pInput && reduction_indices)
 	{
-		*pReduceJoin = ReduceJoin(*pScope, *pInput, *reduction_indices, attrs);
+		pReduceJoin = new ReduceJoin(*pScope, *pInput, *reduction_indices, attrs);
 		ObjectInfo* pObj = AddObjectMap(pReduceJoin, id, SYMBOL_REDUCEJOIN, "ReduceJoin", pInputItem);
 		if (pObj)
 		{
@@ -459,7 +459,7 @@ void* Create_StringJoin(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && pInputs)
 	{
-		*pStringJoin = StringJoin(*pScope, *pInputs, attrs);
+		pStringJoin = new StringJoin(*pScope, *pInputs, attrs);
 		ObjectInfo* pObj = AddObjectMap(pStringJoin, id, SYMBOL_STRINGJOIN, "StringJoin", pInputItem);
 		if (pObj)
 		{
@@ -561,7 +561,7 @@ void* Create_StringSplit(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && pInput && delimiter)
 	{
-		*pStringSplit = StringSplit(*pScope, *pInput,*delimiter);
+		pStringSplit =new StringSplit(*pScope, *pInput,*delimiter);
 		ObjectInfo* pObj = AddObjectMap(pStringSplit, id, SYMBOL_STRINGSPLIT, "StringSplit", pInputItem);
 		if (pObj)
 		{
@@ -654,7 +654,7 @@ void* Create_StringToHashBucket(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && string_tensor )
 	{
-		*pStringToHashBucket = StringToHashBucket(*pScope, *string_tensor, num_buckets);
+		pStringToHashBucket =new StringToHashBucket(*pScope, *string_tensor, num_buckets);
 		ObjectInfo* pObj = AddObjectMap(pStringToHashBucket, id, SYMBOL_STRINGTOHASHBUCKET, "StringToHashBucket", pInputItem);
 		if (pObj)
 		{
@@ -745,7 +745,7 @@ void* Create_StringToHashBucketFast(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && pinput)
 	{
-		*pStringToHashBucketFast = StringToHashBucketFast(*pScope, *pinput, num_buckets);
+		pStringToHashBucketFast = new StringToHashBucketFast(*pScope, *pinput, num_buckets);
 		ObjectInfo* pObj = AddObjectMap(pStringToHashBucketFast, id, SYMBOL_STRINGTOHASHBUCKET, "StringToHashBucketFast", pInputItem);
 		if (pObj)
 		{
@@ -851,7 +851,7 @@ void* Create_StringToHashBucketStrong(std::string id, Json::Value pInputItem) {
 	if (pScope && pinput)
 	{
 		gtl::ArraySlice<int> key(v_key);
-		*pStringToHashBucketStrong = StringToHashBucketStrong(*pScope, *pinput, num_buckets,key);
+		pStringToHashBucketStrong = new StringToHashBucketStrong(*pScope, *pinput, num_buckets,key);
 		ObjectInfo* pObj = AddObjectMap(pStringToHashBucketStrong, id, SYMBOL_STRINGTOHASHBUCKETSTRONG, "StringToHashBucketStrong", pInputItem);
 		if (pObj)
 		{
@@ -982,7 +982,7 @@ void* Create_Substr(std::string id, Json::Value pInputItem) {
 
 	if (pScope && pInput &&pos&&len )
 	{
-		*pSubstr = Substr(*pScope, *pInput,*pos,*len);
+		pSubstr = new Substr(*pScope, *pInput,*pos,*len);
 		ObjectInfo* pObj = AddObjectMap(pSubstr, id, SYMBOL_SUBSTR, "Substr", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pSubstr->output, OUTPUT_TYPE_OUTPUT, "output");
