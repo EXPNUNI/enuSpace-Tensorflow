@@ -130,7 +130,7 @@ bool GetDoubleVectorFromInitial(std::string strinitial, std::vector<double>& arr
 	std::string val;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
 	{
-		if (strinitial[i] == ',')
+		if (strinitial[i] == ';')
 		{
 			arrayvals.push_back(std::stod(val));
 			val = "";
@@ -151,7 +151,7 @@ bool GetFloatVectorFromInitial(std::string strinitial, std::vector<float>& array
 	std::string val;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
 	{
-		if (strinitial[i] == ',')
+		if (strinitial[i] == ';')
 		{
 			arrayvals.push_back(std::stof(val));
 			val = "";
@@ -172,7 +172,7 @@ bool GetIntVectorFromInitial(std::string strinitial, std::vector<int>& arrayvals
 	std::string val;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
 	{
-		if (strinitial[i] == ',')
+		if (strinitial[i] == ';')
 		{
 			arrayvals.push_back(std::stoi(val));
 			val = "";
@@ -193,7 +193,7 @@ bool GetBoolVectorFromInitial(std::string strinitial, std::vector<bool>& arrayva
 	std::string val;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
 	{
-		if (strinitial[i] == ',')
+		if (strinitial[i] == ';')
 		{
 			if (val == "1" || val == "true" )
 				arrayvals.push_back(true);
@@ -222,7 +222,7 @@ bool GetStringVectorFromInitial(std::string strinitial, std::vector<std::string>
 	std::string val;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
 	{
-		if (strinitial[i] == ',')
+		if (strinitial[i] == ';')
 		{
 			arrayvals.push_back(val);
 			val = "";
@@ -329,13 +329,14 @@ DataType GetDatatypeFromInitial(std::string strinitial)
 	return dt;
 }
 
+
 DataTypeSlice GetDatatypeSliceFromInitial(std::string strinitial)
 {
 	std::string val;
 	std::vector<DataType> arrayvals;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
 	{
-		if (strinitial[i] == ';')
+		if (strinitial[i] == ',')
 		{
 			DataType dtype;
 			dtype = GetDatatypeFromInitial(val);

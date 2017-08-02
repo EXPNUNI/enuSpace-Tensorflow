@@ -122,6 +122,7 @@ bool Task_Tensorflow()
 									iDataType = DEF_FLOAT;
 									break;
 								case DT_INT32:
+								case DT_INT64:
 									pData = new int[iNum];
 									iDataType = DEF_INT;
 									break;
@@ -145,6 +146,12 @@ bool Task_Tensorflow()
 									else if (iType == DT_INT32)
 									{
 										auto flat = it->flat<int>();
+										PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+										*((int*)pData + i) = flat(i);
+									}
+									else if (iType == DT_INT64)
+									{
+										auto flat = it->flat<int64>();
 										PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
 										*((int*)pData + i) = flat(i);
 									}
