@@ -521,13 +521,26 @@ struct ObjectInfo
 	}
 };
 
+struct Fetch_Output
+{
+	std::vector<ObjectInfo*> fetch_object;				// ClientSession 객체의 fetch_output에 연결된 객체의 리스트
+	std::vector<tensorflow::Output> fetch_outputs;		// ClientSession 객체의 fetch_output에 연결된 객체의 output 리스트
+	std::vector<std::string> pin_names;					// 입력핀의 이름
+};
+
+struct Fetch_OutputList
+{
+	std::vector<ObjectInfo*> fetch_object;				// ClientSession 객체의 fetch_output에 연결된 객체의 리스트
+	std::vector<tensorflow::OutputList> fetch_outputs;	// ClientSession 객체의 fetch_output에 연결된 객체의 output 리스트
+	std::vector<std::string> pin_names;					// 입력핀의 이름
+};
+
 struct FetchInfo
 {
 	ObjectInfo* pSession;							// ClientSession 객체
-	std::vector<ObjectInfo*> fetch_object;			// ClientSession 객체의 fetch_output에 연결된 객체의 리스트
-	std::vector<tensorflow::Output> fetch_outputs;	// ClientSession 객체의 fetch_output에 연결된 객체의 output 리스트
-	std::vector<tensorflow::Tensor> outputs;		// 실행 결과를 담는 변수.
-	std::vector<std::string> pin_names;				// 입력핀의 이름
+	
+	Fetch_Output output;
+	Fetch_OutputList output_list;
 
 	public:FetchInfo()
 	{

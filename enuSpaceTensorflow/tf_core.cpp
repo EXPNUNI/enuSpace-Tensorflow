@@ -75,10 +75,17 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 						{
 							if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
 							{
-								pFetchInfo->fetch_object.push_back(pfetchObj);
-								pFetchInfo->fetch_outputs.push_back(*(Output*)pOutputObj->pOutput);
-								pFetchInfo->pin_names.push_back(strInSymbolPinName);
+								pFetchInfo->output.fetch_object.push_back(pfetchObj);
+								pFetchInfo->output.fetch_outputs.push_back(*(Output*)pOutputObj->pOutput);
+								pFetchInfo->output.pin_names.push_back(strInSymbolPinName);
 							}
+							else if (pOutputObj->type == OUTPUT_TYPE_OUTPUTLIST)
+							{
+								pFetchInfo->output_list.fetch_object.push_back(pfetchObj);
+								pFetchInfo->output_list.fetch_outputs.push_back(*(OutputList*)pOutputObj->pOutput);
+								pFetchInfo->output_list.pin_names.push_back(strInSymbolPinName);
+							}
+
 							else
 							{
 								std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed (lookup type is not output).", id.c_str(), strPinName.c_str());

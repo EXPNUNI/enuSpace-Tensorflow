@@ -79,6 +79,8 @@ bool Task_Tensorflow()
 	std::vector<std::string>::iterator pinname;
 	std::vector<ObjectInfo*>::iterator vObjIt;
 	std::map<std::string, FetchInfo*>::iterator vit;
+
+	// ClientSession 객체의 개수만큼 수행.
 	for (vit = m_RunMapList.begin(); vit != m_RunMapList.end(); ++vit)
 	{
 		FetchInfo* pTar = vit->second;
@@ -90,17 +92,17 @@ bool Task_Tensorflow()
 				{
 					if (pTar->pSession->type == SYMBOL_CLIENTSESSION)
 					{
-						if (pTar->fetch_object.size() > 0)
+						if (pTar->output.fetch_object.size() > 0)
 						{
 							ClientSession* pClientSession = (ClientSession*)pTar->pSession->pObject;
-							TF_CHECK_OK(pClientSession->Run(pTar->fetch_outputs, &pTar->outputs));
+							std::vector<tensorflow::Tensor> outputs;
+							TF_CHECK_OK(pClientSession->Run(pTar->output.fetch_outputs, &outputs));
 
-							vObjIt = pTar->fetch_object.begin();
-							pinname = pTar->pin_names.begin();
-							
-
+							vObjIt = pTar->output.fetch_object.begin();
+							pinname = pTar->output.pin_names.begin();
+														
 							// result msg
-							for (std::vector<tensorflow::Tensor>::iterator it = pTar->outputs.begin(); it != pTar->outputs.end(); it++)
+							for (std::vector<tensorflow::Tensor>::iterator it = outputs.begin(); it != outputs.end(); it++)
 							{
 								ObjectInfo* pObjet = *vObjIt;
 								std::string strpinname = *pinname;
@@ -168,9 +170,6 @@ bool Task_Tensorflow()
 										strdim += strings::Printf("[%d]", idim);
 									}
 
-									pTar->outputs;
-									LookupFromOutputMap(pObjet, "");
-
 									std::string strVariable;
 									strVariable = pObjet->id + ".result_"+ strpinname + strdim;
 									SetReShapeArrayValue(strVariable, pData, iDataType, iNum);
@@ -183,6 +182,142 @@ bool Task_Tensorflow()
 
 								std::string strvalue = it->DebugString();
 								PrintMessage(strvalue);
+							}
+						}
+
+						// OutputList 실행 로직
+						if (pTar->output_list.fetch_object.size() > 0)
+						{
+							ClientSession* pClientSession = (ClientSession*)pTar->pSession->pObject;
+
+							vObjIt = pTar->output_list.fetch_object.begin();
+							pinname = pTar->output_list.pin_names.begin();
+
+							for (std::vector<tensorflow::OutputList>::iterator it_list = pTar->output_list.fetch_outputs.begin(); it_list != pTar->output_list.fetch_outputs.end(); it_list++)
+							{
+								ObjectInfo* pObjet = *vObjIt;
+								std::string strpinname = *pinname;
+
+								tensorflow::OutputList output_list = *it_list;
+
+								std::vector<tensorflow::Tensor> outputs;
+								TF_CHECK_OK(pClientSession->Run(output_list, &outputs));
+								
+								int iSize = outputs.size();
+								int iMax = 0;
+								int iType = DEF_UNKNOWN;
+								std::string strdim;
+								for (std::vector<tensorflow::Tensor>::iterator it = outputs.begin(); it != outputs.end(); it++)
+								{
+									int iNum = it->NumElements();
+									int iInType = it->dtype();
+
+									if (iNum > iMax)
+									{
+										iMax = iNum;
+
+										std::string strIndim;
+										TensorShape shape = it->shape();
+										int idim = shape.dims();
+										for (int i = 0; i < idim; i++)
+										{
+											int64 idim = shape.dim_size(i);
+											strIndim += strings::Printf("[%d]", idim);
+										}
+
+										strdim = strIndim;
+									}
+
+
+									if (iType == DEF_UNKNOWN)
+									{
+										iType = iInType;
+									}
+									else if (iType != iInType)
+									{
+										std::string msg = string_format("error : ClientSession output value type is multi. (%s)", pObjet->id.c_str());
+										PrintMessage(msg);
+									}
+								}
+
+								strdim = strings::Printf("[%d]", iSize) + strdim;
+
+								int iArraySize = iSize*iMax;
+
+								void* pData = nullptr;
+								int iDataType = DEF_UNKNOWN;
+
+								switch (iType)
+								{
+								case DT_DOUBLE:
+									pData = new double[iArraySize];
+									iDataType = DEF_DOUBLE;
+									break;
+								case DT_FLOAT:
+									pData = new float[iArraySize];
+									iDataType = DEF_FLOAT;
+									break;
+								case DT_INT32:
+								case DT_INT64:
+									pData = new int[iArraySize];
+									iDataType = DEF_INT;
+									break;
+								}
+
+								int iOffset = 0;
+								int iCount = 0;
+								for (std::vector<tensorflow::Tensor>::iterator it = outputs.begin(); it != outputs.end(); it++)
+								{
+									int iNum = it->NumElements();
+									int iType = it->dtype();
+
+									iOffset = iCount*iMax;
+									iCount++;
+
+									for (int i = 0; i < iNum; i++)
+									{
+										if (iType == DT_DOUBLE)
+										{
+											auto flat = it->flat<double>();
+											PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+
+											*((double*)pData + i + iOffset) = flat(i);
+										}
+										else if (iType == DT_FLOAT)
+										{
+											auto flat = it->flat<float>();
+											PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+											*((float*)pData + i + iOffset) = flat(i);
+										}
+										else if (iType == DT_INT32)
+										{
+											auto flat = it->flat<int>();
+											PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((int*)pData + i + iOffset) = flat(i);
+										}
+										else if (iType == DT_INT64)
+										{
+											auto flat = it->flat<int64>();
+											PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((int*)pData + i) = flat(i);
+										}
+									}
+
+									std::string strvalue = it->DebugString();
+									PrintMessage(strvalue);
+								}
+
+								if (pData)
+								{
+									std::string strVariable;
+									strVariable = pObjet->id + ".result_" + strpinname + strdim;
+									SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
+
+									delete[] pData;
+								}
+
+								vObjIt++;
+								pinname++;
 							}
 						}
 					}
