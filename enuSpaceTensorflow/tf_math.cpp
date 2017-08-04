@@ -345,11 +345,20 @@ void* Create_AddN(std::string id, Json::Value pInputItem) {
 
 	if (pScope && pinputs)
 	{
-		pAddN = new AddN(*pScope, *pinputs);
-		ObjectInfo* pObj = AddObjectMap(pAddN, id, SYMBOL_ADDN, "AddN", pInputItem);
-		if (pObj)
+		if (pScope->ok())
 		{
-			AddOutputInfo(pObj, &pAddN->sum, OUTPUT_TYPE_OUTPUT, "sum");
+			pAddN = new AddN(*pScope, *pinputs);
+			ObjectInfo* pObj = AddObjectMap(pAddN, id, SYMBOL_ADDN, "AddN", pInputItem);
+			if (pObj)
+			{
+				AddOutputInfo(pObj, &pAddN->sum, OUTPUT_TYPE_OUTPUT, "sum");
+			}
+
+			if (pScope->ok() == false)
+			{
+				std::string msg = string_format("error : Create AddN(%s) Object create failed. (Scope fail)", id.c_str());
+				PrintMessage(msg);
+			}
 		}
 	}
 	else
@@ -458,11 +467,20 @@ void* Create_All(std::string id, Json::Value pInputItem) {
 
 	if (pScope && pinput && paxis)
 	{
-		pAll = new All(*pScope, *pinput, *paxis, attrs);
-		ObjectInfo* pObj = AddObjectMap(pAll, id, SYMBOL_ALL, "All", pInputItem);
-		if (pObj)
+		if (pScope->ok())
 		{
-			AddOutputInfo(pObj, &pAll->output, OUTPUT_TYPE_OUTPUT, "output");
+			pAll = new All(*pScope, *pinput, *paxis, attrs);
+			ObjectInfo* pObj = AddObjectMap(pAll, id, SYMBOL_ALL, "All", pInputItem);
+			if (pObj)
+			{
+				AddOutputInfo(pObj, &pAll->output, OUTPUT_TYPE_OUTPUT, "output");
+			}
+
+			if (pScope->ok() == false)
+			{
+				std::string msg = string_format("error : Create All(%s) Object create failed. (Scope fail)", id.c_str());
+				PrintMessage(msg);
+			}
 		}
 	}
 	else
