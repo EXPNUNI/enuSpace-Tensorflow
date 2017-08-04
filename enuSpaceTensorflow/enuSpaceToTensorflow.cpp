@@ -128,6 +128,10 @@ bool Task_Tensorflow()
 									pData = new int[iNum];
 									iDataType = DEF_INT;
 									break;
+								case DT_BOOL:
+									pData = new bool[iNum];
+									iDataType = DEF_BOOL;
+									break;
 								}
 
 								for (int i = 0; i < iNum; i++)
@@ -156,6 +160,12 @@ bool Task_Tensorflow()
 										auto flat = it->flat<int64>();
 										PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
 										*((int*)pData + i) = flat(i);
+									}
+									else if (iType == DT_BOOL)
+									{
+										auto flat = it->flat<bool>();
+										PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+										*((bool*)pData + i) = flat(i);
 									}
 								}
 
@@ -262,6 +272,10 @@ bool Task_Tensorflow()
 									pData = new int[iArraySize];
 									iDataType = DEF_INT;
 									break;
+								case DT_BOOL:
+									pData = new bool[iArraySize];
+									iDataType = DEF_BOOL;
+									break;
 								}
 
 								int iOffset = 0;
@@ -300,6 +314,12 @@ bool Task_Tensorflow()
 											auto flat = it->flat<int64>();
 											PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
 											*((int*)pData + i) = flat(i);
+										}
+										else if (iType == DT_BOOL)
+										{
+											auto flat = it->flat<bool>();
+											PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((bool*)pData + i) = flat(i);
 										}
 									}
 
