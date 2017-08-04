@@ -195,7 +195,7 @@ bool GetBoolVectorFromInitial(std::string strinitial, std::vector<bool>& arrayva
 	{
 		if (strinitial[i] == ';')
 		{
-			if (val == "1" || val == "true" )
+			if (val == "1" || val == "true" || val == "TRUE")
 				arrayvals.push_back(true);
 			else
 				arrayvals.push_back(false);
@@ -209,7 +209,7 @@ bool GetBoolVectorFromInitial(std::string strinitial, std::vector<bool>& arrayva
 
 	if (val.length() > 0)
 	{
-		if (val == "1" || val == "true")
+		if (val == "1" || val == "true" || val == "TRUE")
 			arrayvals.push_back(true);
 		else
 			arrayvals.push_back(false);
