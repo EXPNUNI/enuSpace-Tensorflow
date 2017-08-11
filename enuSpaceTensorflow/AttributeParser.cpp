@@ -6,7 +6,6 @@
 #include <vector>
 
 
-
 CAttributeParser::~CAttributeParser()
 {
 
@@ -219,7 +218,7 @@ tensorflow::TensorShape CAttributeParser::ConvStrToTensorShape(std::string attrV
 tensorflow::DataType CAttributeParser::ConvStrToDataType(std::string attrValue)
 {
 	DataType dtype;
-	dtype = GetDatatypeFromInitial(trim(attrValue));
+	dtype = GetDatatypeFromInitial(attrValue);
 	return dtype;
 }
 

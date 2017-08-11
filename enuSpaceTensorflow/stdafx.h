@@ -37,19 +37,3 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 
-inline string trim_left(const string& str)
-{
-	int n = str.find_first_not_of(" \t\v\n");
-	return n == string::npos ? str : str.substr(n, str.length());
-}
-
-inline string trim_right(const string& str)
-{
-	int n = str.find_last_not_of(" \t\v\n");
-	return n == string::npos ? str : str.substr(0, n + 1);
-}
-
-inline string trim(const string& str)
-{
-	return trim_right(trim_left(str));
-}
