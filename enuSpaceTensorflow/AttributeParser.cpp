@@ -33,9 +33,15 @@ CAttributeParser::CAttributeParser(std::string attrs, std::string attrsValue)
 		else
 		{
 			if (iType == 0)
-				attr = attr + attrsValue[i];
+			{
+				if (attrsValue[i] != ' ' && attrsValue[i] != '\n' && attrsValue[i] != '\r')
+					attr = attr + attrsValue[i];
+			}
 			else
-				value = value + attrsValue[i];
+			{
+				if (attrsValue[i] != ' ' && attrsValue[i] != '\n' && attrsValue[i] != '\r')
+					value = value + attrsValue[i];
+			}
 		}
 	}
 	if (attr.length() > 0)
@@ -86,9 +92,50 @@ tensorflow::StringPiece CAttributeParser::ConvStrToStringPiece(std::string attrV
 
 gtl::ArraySlice<PartialTensorShape> CAttributeParser::ConvStrToArraySliceTensorshape(std::string attrValue)
 {
-	gtl::ArraySlice<PartialTensorShape> ad;
-	//dev_need
-	return ad;
+	std::vector<int64> arraydims;
+	std::vector<PartialTensorShape> vec_PTS;
+
+	std::string val;
+	int64 iDimSize = 1;
+	bool bOpen = false;
+	int iOpen = 0; //{갯수 판단하여 다음 배열인지 체크한다.
+	for (std::string::size_type i = 0; i < attrValue.size(); i++)
+	{
+
+		if (attrValue[i] == ',')
+		{
+			if (bOpen)
+			{
+				arraydims.push_back(stoll(val));
+				val = "";
+			}
+			else
+			{
+				val = "";
+			}
+
+		}
+		if (attrValue[i] == '{')
+		{
+			bOpen = true;
+		}
+		else if (attrValue[i] == '}')
+		{
+			bOpen = false;
+			PartialTensorShape partts(arraydims);
+			vec_PTS.push_back(partts);
+			arraydims.clear();
+		}
+		else
+		{
+			val = val + attrValue[i];
+		}
+
+	}
+
+	gtl::ArraySlice<PartialTensorShape> TempArray(vec_PTS);
+	arraydims.clear();
+	vec_PTS.clear();
 }
 
 tensorflow::DataTypeSlice CAttributeParser::ConvStrToDataTypeSlice(std::string attrValue)
@@ -97,16 +144,12 @@ tensorflow::DataTypeSlice CAttributeParser::ConvStrToDataTypeSlice(std::string a
 	std::vector<DataType> arrayvals;
 	for (std::string::size_type i = 0; i < attrValue.size(); i++)
 	{
-		if (attrValue[i] == ';')
+		if (attrValue[i] == ',')
 		{
 			DataType dtype;
-			if (val == "double")
-				dtype = DT_DOUBLE;
-			else if (val == "float")
-				dtype = DT_FLOAT;
-			else if (val == "int")
-				dtype = DT_INT32;
-			arrayvals.push_back(dtype);
+			dtype = GetDatatypeFromInitial(val);
+			if (dtype != DT_INVALID)
+				arrayvals.push_back(dtype);
 			val = "";
 		}
 		else
@@ -118,16 +161,13 @@ tensorflow::DataTypeSlice CAttributeParser::ConvStrToDataTypeSlice(std::string a
 	if (val.length() > 0)
 	{
 		DataType dtype;
-		if (val == "double")
-			dtype = DT_DOUBLE;
-		else if (val == "float")
-			dtype = DT_FLOAT;
-		else if (val == "int")
-			dtype = DT_INT32;
-		arrayvals.push_back(dtype);
+		dtype = GetDatatypeFromInitial(val);
+		if (dtype != DT_INVALID)
+			arrayvals.push_back(dtype);
 	}
-	DataTypeSlice dtypeslice(arrayvals);
-	return dtypeslice;
+	DataTypeSlice DT(arrayvals);
+	arrayvals.clear();
+	return DT;
 }
 
 gtl::ArraySlice<string> CAttributeParser::ConvStrToArraySliceString(std::string attrValue)
@@ -178,16 +218,7 @@ tensorflow::TensorShape CAttributeParser::ConvStrToTensorShape(std::string attrV
 tensorflow::DataType CAttributeParser::ConvStrToDataType(std::string attrValue)
 {
 	DataType dtype;
-	if (attrValue == "double")
-		dtype = DT_DOUBLE;
-	else if (attrValue == "float")
-		dtype = DT_FLOAT;
-	else if (attrValue == "int")
-		dtype = DT_INT32;
-	else if (attrValue == "bool")
-		dtype = DT_BOOL;
-	else if (attrValue == "string")
-		dtype = DT_STRING;
+	dtype = GetDatatypeFromInitial(attrValue);
 	return dtype;
 }
 
