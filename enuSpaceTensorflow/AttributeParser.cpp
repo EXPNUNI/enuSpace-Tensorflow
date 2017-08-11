@@ -6,6 +6,7 @@
 #include <vector>
 
 
+
 CAttributeParser::~CAttributeParser()
 {
 
@@ -102,7 +103,7 @@ gtl::ArraySlice<PartialTensorShape> CAttributeParser::ConvStrToArraySliceTensors
 	for (std::string::size_type i = 0; i < attrValue.size(); i++)
 	{
 
-		if (attrValue[i] == ',')
+		if (attrValue[i] == ',' || attrValue[i] == ';')
 		{
 			if (bOpen)
 			{
@@ -144,7 +145,7 @@ tensorflow::DataTypeSlice CAttributeParser::ConvStrToDataTypeSlice(std::string a
 	std::vector<DataType> arrayvals;
 	for (std::string::size_type i = 0; i < attrValue.size(); i++)
 	{
-		if (attrValue[i] == ',')
+		if (attrValue[i] == ',' || attrValue[i] == ';')
 		{
 			DataType dtype;
 			dtype = GetDatatypeFromInitial(val);
@@ -161,7 +162,7 @@ tensorflow::DataTypeSlice CAttributeParser::ConvStrToDataTypeSlice(std::string a
 	if (val.length() > 0)
 	{
 		DataType dtype;
-		dtype = GetDatatypeFromInitial(val);
+		dtype = GetDatatypeFromInitial(trim(val));
 		if (dtype != DT_INVALID)
 			arrayvals.push_back(dtype);
 	}
@@ -218,7 +219,7 @@ tensorflow::TensorShape CAttributeParser::ConvStrToTensorShape(std::string attrV
 tensorflow::DataType CAttributeParser::ConvStrToDataType(std::string attrValue)
 {
 	DataType dtype;
-	dtype = GetDatatypeFromInitial(attrValue);
+	dtype = GetDatatypeFromInitial(trim(attrValue));
 	return dtype;
 }
 
