@@ -495,11 +495,11 @@ struct OutputInfo
 {
 	int type;						// 노드의 ouput 타입
 	void* pOutput;					// 노드의 output 주소
-	public:OutputInfo()
-	{
-		type = OUTPUT_TYPE_OUTPUT;
-		pOutput = nullptr;
-	}
+public:OutputInfo()
+{
+	type = OUTPUT_TYPE_OUTPUT;
+	pOutput = nullptr;
+}
 };
 
 struct ObjectInfo
@@ -513,12 +513,12 @@ struct ObjectInfo
 	tensorflow::Scope* pScope;		// 그래픽 로직 블럭에 연결된 SCOPE 객체 포인터
 	std::map<std::string, OutputInfo*> pMapOutputs;		// 그래픽 로직 블럭의 클래스의 Output 멤버 포인터 맵 리스트
 
-	public:ObjectInfo()
-	{
-		type = SYMBOL_NONE;
-		pObject = nullptr;
-		pScope = nullptr;
-	}
+public:ObjectInfo()
+{
+	type = SYMBOL_NONE;
+	pObject = nullptr;
+	pScope = nullptr;
+}
 };
 
 struct Fetch_Output
@@ -538,14 +538,14 @@ struct Fetch_OutputList
 struct FetchInfo
 {
 	ObjectInfo* pSession;							// ClientSession 객체
-	
+
 	Fetch_Output output;
 	Fetch_OutputList output_list;
 
-	public:FetchInfo()
-	{
-		pSession = nullptr;
-	}
+public:FetchInfo()
+{
+	pSession = nullptr;
+}
 };
 
 extern std::map<std::string, ObjectInfo* > m_ObjectMapList;
