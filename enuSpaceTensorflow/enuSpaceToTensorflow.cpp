@@ -69,6 +69,14 @@ bool Init_Tensorflow(std::string config_doc, std::string page_name)
 
 		int iType = GetSymbolType(strSymbolName);
 		Create_Symbol(iType, strId, InputItem);
+
+		if (!m_pScope->ok())
+		{
+			Status st = m_pScope->status();
+			std::string errors = st.error_message().c_str();
+			std::string msg = string_format("error : %s.", errors);
+			PrintMessage(msg);
+		}
 	}
 
 	return true;
@@ -109,6 +117,7 @@ bool Task_Tensorflow()
 
 								int iNum = it->NumElements();
 								int iType = it->dtype();
+								int iArraySize = iNum;
 
 								void* pData = nullptr;
 								int iDataType = DEF_UNKNOWN;
@@ -131,6 +140,16 @@ bool Task_Tensorflow()
 								case DT_BOOL:
 									pData = new bool[iNum];
 									iDataType = DEF_BOOL;
+									break;
+								case DT_COMPLEX64:
+									pData = new float[2*iNum];
+									iDataType = DEF_FLOAT;
+									iArraySize = iNum * 2;
+									break;
+								case DT_COMPLEX128:
+									pData = new double[2 * iNum];
+									iDataType = DEF_DOUBLE;
+									iArraySize = iNum * 2;
 									break;
 								}
 
@@ -167,6 +186,20 @@ bool Task_Tensorflow()
 										PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
 										*((bool*)pData + i) = flat(i);
 									}
+									else if (iType == DT_COMPLEX64)
+									{
+										auto flat = it->flat<complex64>();
+										PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+										*((float*)pData + i*2) = flat(i).real();
+										*((float*)pData + i*2+1) = flat(i).imag();
+									}
+									else if (iType == DT_COMPLEX128)
+									{
+										auto flat = it->flat<complex128>();
+										PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+										*((double*)pData + i * 2) = flat(i).real();
+										*((double*)pData + i * 2 + 1) = flat(i).imag();
+									}
 								}
 
 								if (pData)
@@ -181,8 +214,12 @@ bool Task_Tensorflow()
 									}
 
 									std::string strVariable;
-									strVariable = pObjet->id + ".result_"+ strpinname + strdim;
-									SetReShapeArrayValue(strVariable, pData, iDataType, iNum);
+									if (iType == DT_COMPLEX64 || iType == DT_COMPLEX128)
+										strVariable = pObjet->id + ".result_" + strpinname + strdim + "[2]";
+									else
+										strVariable = pObjet->id + ".result_"+ strpinname + strdim;
+
+									SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
 
 									delete[] pData;
 								}
@@ -276,6 +313,16 @@ bool Task_Tensorflow()
 									pData = new bool[iArraySize];
 									iDataType = DEF_BOOL;
 									break;
+								case DT_COMPLEX64:
+									pData = new float[2 * iArraySize];
+									iDataType = DEF_FLOAT;
+									iArraySize = iArraySize * 2;
+									break;
+								case DT_COMPLEX128:
+									pData = new double[2 * iArraySize];
+									iDataType = DEF_DOUBLE;
+									iArraySize = iArraySize * 2;
+									break;
 								}
 
 								int iOffset = 0;
@@ -321,6 +368,20 @@ bool Task_Tensorflow()
 											PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
 											*((bool*)pData + i) = flat(i);
 										}
+										else if (iType == DT_COMPLEX64)
+										{
+											auto flat = it->flat<complex64>();
+											PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+											*((float*)pData + i * 2) = flat(i).real();
+											*((float*)pData + i * 2 + 1) = flat(i).imag();
+										}
+										else if (iType == DT_COMPLEX128)
+										{
+											auto flat = it->flat<complex128>();
+											PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+											*((double*)pData + i * 2) = flat(i).real();
+											*((double*)pData + i * 2 + 1) = flat(i).imag();
+										}
 									}
 
 									std::string strvalue = it->DebugString();
@@ -330,7 +391,11 @@ bool Task_Tensorflow()
 								if (pData)
 								{
 									std::string strVariable;
-									strVariable = pObjet->id + ".result_" + strpinname + strdim;
+									if (iType == DT_COMPLEX64 || iType == DT_COMPLEX128)
+										strVariable = pObjet->id + ".result_" + strpinname + strdim + "[2]";
+									else
+										strVariable = pObjet->id + ".result_" + strpinname + strdim;
+
 									SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
 
 									delete[] pData;
