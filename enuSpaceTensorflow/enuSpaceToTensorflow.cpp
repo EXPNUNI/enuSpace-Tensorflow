@@ -106,7 +106,7 @@ bool Task_Tensorflow()
 							std::vector<tensorflow::Tensor> outputs;
 
 							Status st;
-							pClientSession->Run(pTar->output.fetch_outputs, &outputs);
+							st = pClientSession->Run(pTar->output.fetch_outputs, &outputs);
 							if (st.code() != error::OK)
 							{
 								std::string msg = string_format("error: %s.", st.error_message().c_str());
@@ -421,7 +421,7 @@ bool Task_Tensorflow()
 				{
 					Status st = pTar->pSession->pScope->status();
 					std::string errors = st.error_message().c_str();
-					std::string msg = string_format("error : %s.", errors);
+					std::string msg = string_format("error : %s.", errors.c_str());
 					PrintMessage(msg);
 				}
 			}
