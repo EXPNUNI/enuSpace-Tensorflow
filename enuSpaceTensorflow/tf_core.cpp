@@ -12,7 +12,6 @@
 #include "utility_functions.h"
 #include "enuSpaceToTensorflow.h"
 
-
 void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	ClientSession* pSession = nullptr;
@@ -24,15 +23,15 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 	{
 		Json::Value ItemValue = pInputItem[subindex];
 
-		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
-		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
-		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
-		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
-		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
-		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
-		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
-		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
-		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+		std::string strPinName = ItemValue.get("pin-name", "").asString();                        // val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();                        // double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();                  // 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();               // ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();                  // ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();         // ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();   // ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();               // tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();                     // [2][2]
 
 		if (strPinName == "scope")
 		{
@@ -45,7 +44,7 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 					pSession = pCreateSession;
 
 					pSessionObj = AddObjectMap(pSession, id, SYMBOL_CLIENTSESSION, "ClientSession", pInputItem);
-					pSessionObj->pScope = m_pScope;		// Scope 객체 설정 (실행시 Scope가 ok 상태인지 체크후 실행
+					pSessionObj->pScope = m_pScope;      // Scope 객체 설정 (실행시 Scope가 ok 상태인지 체크후 실행
 
 					pFetchInfo = AddRunObjectMap(pSessionObj);
 				}

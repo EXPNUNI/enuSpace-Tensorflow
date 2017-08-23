@@ -455,7 +455,7 @@ void* Create_All(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "All::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("keep_dims_") != "") attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
+				if (attrParser.GetAttribute("keep_dims_") != "") attrs = attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
 			}
 		}
 		else
@@ -577,7 +577,7 @@ void* Create_Any(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Any::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("keep_dims_") != "") attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
+				if (attrParser.GetAttribute("keep_dims_") != "") attrs = attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
 			}
 		}
 		else
@@ -690,7 +690,7 @@ void* Create_ApproximateEqual(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ApproximateEqual::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("tolerance_") != "") attrs.Tolerance(attrParser.ConvStrToFloat(attrParser.GetAttribute("tolerance_")));
+				if (attrParser.GetAttribute("tolerance_") != "") attrs = attrs.Tolerance(attrParser.ConvStrToFloat(attrParser.GetAttribute("tolerance_")));
 			}
 		}
 		else
@@ -1275,8 +1275,8 @@ void* Create_BatchMatMul(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "BatchMatMul::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("adj_x_") != "") attrs.AdjX(attrParser.ConvStrToBool(attrParser.GetAttribute("adj_x_")));
-				if (attrParser.GetAttribute("adj_y_") != "") attrs.AdjY(attrParser.ConvStrToBool(attrParser.GetAttribute("adj_y_")));
+				if (attrParser.GetAttribute("adj_x_") != "") attrs = attrs.AdjX(attrParser.ConvStrToBool(attrParser.GetAttribute("adj_x_")));
+				if (attrParser.GetAttribute("adj_y_") != "") attrs = attrs.AdjY(attrParser.ConvStrToBool(attrParser.GetAttribute("adj_y_")));
 			}
 		}
 		else
@@ -1919,7 +1919,7 @@ void* Create_Complex(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Complex::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("Tout_") != "") attrs.Tout(attrParser.ConvStrToDataType(attrParser.GetAttribute("Tout_")));
+				if (attrParser.GetAttribute("Tout_") != "") attrs = attrs.Tout(attrParser.ConvStrToDataType(attrParser.GetAttribute("Tout_")));
 			}
 		}
 		else
@@ -2008,7 +2008,7 @@ void* Create_ComplexAbs(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ComplexAbs::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("Tout_") != "") attrs.Tout(attrParser.ConvStrToDataType(attrParser.GetAttribute("Tout_")));
+				if (attrParser.GetAttribute("Tout_") != "") attrs = attrs.Tout(attrParser.ConvStrToDataType(attrParser.GetAttribute("Tout_")));
 			}
 		}
 		else
@@ -2285,7 +2285,7 @@ void* Create_Cross(std::string id, Json::Value pInputItem) {
 	if (pScope && pa && pb)
 	{
 		pCross = new Cross(*pScope, *pa, *pb);
-		ObjectInfo* pObj = AddObjectMap(pCross, id, SYMBOL_COS, "Cos", pInputItem);
+		ObjectInfo* pObj = AddObjectMap(pCross, id, SYMBOL_CROSS, "Cross", pInputItem);
 		if (pObj)
 		{
 			AddOutputInfo(pObj, &pCross->product, OUTPUT_TYPE_OUTPUT, "product");
@@ -2385,8 +2385,8 @@ void* Create_Cumprod(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Cumprod::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("exclusive_") != "") attrs.Exclusive(attrParser.ConvStrToBool(attrParser.GetAttribute("exclusive_")));
-				if (attrParser.GetAttribute("reverse_") != "") attrs.Reverse(attrParser.ConvStrToBool(attrParser.GetAttribute("reverse_")));
+				if (attrParser.GetAttribute("exclusive_") != "") attrs = attrs.Exclusive(attrParser.ConvStrToBool(attrParser.GetAttribute("exclusive_")));
+				if (attrParser.GetAttribute("reverse_") != "") attrs = attrs.Reverse(attrParser.ConvStrToBool(attrParser.GetAttribute("reverse_")));
 			}
 		}
 		else
@@ -2496,11 +2496,11 @@ void* Create_Cumsum(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "attrs")
 		{
-			if (strPinInterface == "Cumprod::Attrs")
+			if (strPinInterface == "Cumsum::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("exclusive_") != "") attrs.Exclusive(attrParser.ConvStrToBool(attrParser.GetAttribute("exclusive_")));
-				if (attrParser.GetAttribute("reverse_") != "") attrs.Reverse(attrParser.ConvStrToBool(attrParser.GetAttribute("reverse_")));
+				if (attrParser.GetAttribute("exclusive_") != "") attrs = attrs.Exclusive(attrParser.ConvStrToBool(attrParser.GetAttribute("exclusive_")));
+				if (attrParser.GetAttribute("reverse_") != "") attrs = attrs.Reverse(attrParser.ConvStrToBool(attrParser.GetAttribute("reverse_")));
 			}
 		}
 		else
@@ -2671,7 +2671,7 @@ void* Create_Div(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolId);
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3663,7 +3663,7 @@ void* Create_Igamma(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "x")
+		else if (strPinName == "a")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -3686,7 +3686,7 @@ void* Create_Igamma(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "y")
+		else if (strPinName == "x")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -3767,7 +3767,7 @@ void* Create_Igammac(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "x")
+		else if (strPinName == "a")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -3790,7 +3790,7 @@ void* Create_Igammac(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "y")
+		else if (strPinName == "x")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -3899,7 +3899,7 @@ void* Create_Imag(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Imag::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("Tout_") != "") attrs.Tout(attrParser.ConvStrToDataType(attrParser.GetAttribute("Tout_")));
+				if (attrParser.GetAttribute("Tout_") != "") attrs = attrs.Tout(attrParser.ConvStrToDataType(attrParser.GetAttribute("Tout_")));
 			}
 		}
 		else
@@ -3925,7 +3925,85 @@ void* Create_Imag(std::string id, Json::Value pInputItem) {
 	}
 	return pImag;
 }
+void* Create_IsFinite(std::string id, Json::Value pInputItem) {
+	IsFinite* pIsFinite = nullptr;
+	Scope* pScope = nullptr;
+	Output* px = nullptr;
 
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : IsFinite - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "x")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							px = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : IsFinite - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : IsFinite pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && px)
+	{
+		pIsFinite = new IsFinite(*pScope, *px);
+		ObjectInfo* pObj = AddObjectMap(pIsFinite, id, SYMBOL_ISFINITE, "IsFinite", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pIsFinite->y, OUTPUT_TYPE_OUTPUT, "y");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : IsFinite(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pIsFinite;
+}
 void* Create_IsInf(std::string id, Json::Value pInputItem) {
 	IsInf* pIsInf = nullptr;
 	Scope* pScope = nullptr;
@@ -5037,8 +5115,8 @@ void* Create_MatMul(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "MatMul::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("transpose_a_") != "") attrs.TransposeA(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_a_")));
-				if (attrParser.GetAttribute("transpose_b_") != "") attrs.TransposeB(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_b_")));
+				if (attrParser.GetAttribute("transpose_a_") != "") attrs = attrs.TransposeA(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_a_")));
+				if (attrParser.GetAttribute("transpose_b_") != "") attrs = attrs.TransposeB(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_b_")));
 			}
 		}
 		else
@@ -5150,7 +5228,7 @@ void* Create_Max(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Max::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if(attrParser.GetAttribute("keep_dims_") != "") attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
+				if(attrParser.GetAttribute("keep_dims_") != "") attrs = attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
 			}
 		}
 		else
@@ -5283,6 +5361,7 @@ void* Create_Mean(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* pinput = nullptr;
 	Output* paxis = nullptr;
+	Mean::Attrs attrs;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -5356,6 +5435,14 @@ void* Create_Mean(std::string id, Json::Value pInputItem) {
 			{
 				std::string msg = string_format("warning : Mean - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
 				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "Mean::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("keep_dims_") != "") attrs = attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
 			}
 		}
 		else
@@ -5468,7 +5555,7 @@ void* Create_Min(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Min::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("keep_dims_") != "") attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
+				if (attrParser.GetAttribute("keep_dims_") != "") attrs = attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
 			}
 		}
 		else
@@ -6274,7 +6361,7 @@ void* Create_Prod(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Prod::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("keep_dims_") != "") attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
+				if (attrParser.GetAttribute("keep_dims_") != "") attrs = attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
 			}
 		}
 		else
@@ -6629,10 +6716,10 @@ void* Create_QuantizedMatMul(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "QuantizedMatMul::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("Toutput_") != "") attrs.Toutput(attrParser.ConvStrToDataType(attrParser.GetAttribute("Toutput_")));
-				if (attrParser.GetAttribute("transpose_a_") != "") attrs.TransposeA(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_a_")));
-				if (attrParser.GetAttribute("transpose_b_") != "") attrs.TransposeB(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_b_")));
-				if (attrParser.GetAttribute("Tactivation_") != "") attrs.Tactivation(attrParser.ConvStrToDataType(attrParser.GetAttribute("Tactivation_")));
+				if (attrParser.GetAttribute("Toutput_") != "") attrs = attrs.Toutput(attrParser.ConvStrToDataType(attrParser.GetAttribute("Toutput_")));
+				if (attrParser.GetAttribute("transpose_a_") != "") attrs = attrs.TransposeA(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_a_")));
+				if (attrParser.GetAttribute("transpose_b_") != "") attrs = attrs.TransposeB(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_b_")));
+				if (attrParser.GetAttribute("Tactivation_") != "") attrs = attrs.Tactivation(attrParser.ConvStrToDataType(attrParser.GetAttribute("Tactivation_")));
 			}
 		}
 		else
@@ -6844,7 +6931,7 @@ void* Create_QuantizedMul(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "QuantizedMul::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("Toutput_") != "") attrs.Toutput(attrParser.ConvStrToDataType(attrParser.GetAttribute("Toutput_")));
+				if (attrParser.GetAttribute("Toutput_") != "") attrs = attrs.Toutput(attrParser.ConvStrToDataType(attrParser.GetAttribute("Toutput_")));
 			}
 		}
 		else
@@ -7065,7 +7152,7 @@ void* Create_Real(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Real::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("Tout_") != "") attrs.Tout(attrParser.ConvStrToDataType(attrParser.GetAttribute("Tout_")));
+				if (attrParser.GetAttribute("Tout_") != "") attrs = attrs.Tout(attrParser.ConvStrToDataType(attrParser.GetAttribute("Tout_")));
 			}
 		}
 		else
@@ -8685,10 +8772,10 @@ void* Create_SparseMatMul(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "SparseMatMul::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("transpose_a_") != "") attrs.TransposeA(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_a_")));
-				if (attrParser.GetAttribute("transpose_b_") != "") attrs.TransposeB(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_b_")));
-				if (attrParser.GetAttribute("a_is_sparse_") != "") attrs.AIsSparse(attrParser.ConvStrToBool(attrParser.GetAttribute("a_is_sparse_")));
-				if (attrParser.GetAttribute("b_is_sparse_") != "") attrs.BIsSparse(attrParser.ConvStrToBool(attrParser.GetAttribute("b_is_sparse_")));
+				if (attrParser.GetAttribute("transpose_a_") != "") attrs = attrs.TransposeA(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_a_")));
+				if (attrParser.GetAttribute("transpose_b_") != "") attrs = attrs.TransposeB(attrParser.ConvStrToBool(attrParser.GetAttribute("transpose_b_")));
+				if (attrParser.GetAttribute("a_is_sparse_") != "") attrs = attrs.AIsSparse(attrParser.ConvStrToBool(attrParser.GetAttribute("a_is_sparse_")));
+				if (attrParser.GetAttribute("b_is_sparse_") != "") attrs = attrs.BIsSparse(attrParser.ConvStrToBool(attrParser.GetAttribute("b_is_sparse_")));
 			}
 		}
 		else
@@ -9851,7 +9938,7 @@ void* Create_Sum(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Sum::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("keep_dims_") != "") attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
+				if (attrParser.GetAttribute("keep_dims_") != "") attrs = attrs.KeepDims(attrParser.ConvStrToBool(attrParser.GetAttribute("keep_dims_")));
 			}
 		}
 		else

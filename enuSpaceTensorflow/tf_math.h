@@ -46,6 +46,7 @@ void* Create_GreaterEqual(std::string id, Json::Value pInputItem);
 void* Create_Igamma(std::string id, Json::Value pInputItem);
 void* Create_Igammac(std::string id, Json::Value pInputItem);
 void* Create_Imag(std::string id, Json::Value pInputItem);
+void* Create_IsFinite(std::string id, Json::Value pInputItem);
 void* Create_IsInf(std::string id, Json::Value pInputItem);
 void* Create_IsNan(std::string id, Json::Value pInputItem);
 void* Create_Less(std::string id, Json::Value pInputItem);

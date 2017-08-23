@@ -257,6 +257,7 @@
 #define SYMBOL_IGAMMA 		229
 #define SYMBOL_IGAMMAC 		230
 #define SYMBOL_IMAG 		231
+#define SYMBOL_ISFINITE 		500
 #define SYMBOL_ISINF 		232
 #define SYMBOL_ISNAN 		233
 #define SYMBOL_LESS 		234

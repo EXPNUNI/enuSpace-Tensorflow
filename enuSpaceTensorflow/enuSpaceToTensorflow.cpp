@@ -677,6 +677,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#Igamma", SYMBOL_IGAMMA));
 	m_SymbolList.insert(std::pair<std::string, int>("#Igammac", SYMBOL_IGAMMAC));
 	m_SymbolList.insert(std::pair<std::string, int>("#Imag", SYMBOL_IMAG));
+	m_SymbolList.insert(std::pair<std::string, int>("#IsFinite", SYMBOL_ISFINITE));
 	m_SymbolList.insert(std::pair<std::string, int>("#IsInf", SYMBOL_ISINF));
 	m_SymbolList.insert(std::pair<std::string, int>("#IsNan", SYMBOL_ISNAN));
 	m_SymbolList.insert(std::pair<std::string, int>("#Less", SYMBOL_LESS));
@@ -1156,6 +1157,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_IGAMMA: {		pCreate = Create_Igamma(id, pInputItem);	break;	}
 	case SYMBOL_IGAMMAC: {		pCreate = Create_Igammac(id, pInputItem);	break;	}
 	case SYMBOL_IMAG: {		pCreate = Create_Imag(id, pInputItem);	break;	}
+	case SYMBOL_ISFINITE: {		pCreate = Create_IsFinite(id, pInputItem);	break;	}
 	case SYMBOL_ISINF: {		pCreate = Create_IsInf(id, pInputItem);	break;	}
 	case SYMBOL_ISNAN: {		pCreate = Create_IsNan(id, pInputItem);	break;	}
 	case SYMBOL_LESS: {		pCreate = Create_Less(id, pInputItem);	break;	}
