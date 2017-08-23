@@ -443,19 +443,22 @@ bool GetArrayShapeFromInitial(std::string strinitial, std::vector<PartialTensorS
 				}
 
 			}
-			if (strinitial[i] == '{')
+			else if (strinitial[i] == '{')
 			{
 				bOpen = true;
+				val = "";
+				
 			}
-			else if (strinitial[i] == '}' || strinitial[i] == ';')
+			else if (strinitial[i] == '}')
 			{
-				if (arraydims.size() != 0)
-				{
-					bOpen = false;
-					PartialTensorShape partts(arraydims);
-					vec_PTS.push_back(partts);
-					arraydims.clear();
-				}
+				if (val != "")
+					arraydims.push_back(stoll(val));
+				bOpen = false;
+				std::string msg = string_format("test %d", arraydims.size());
+				PrintMessage(msg);
+				PartialTensorShape partts(arraydims);
+				vec_PTS.push_back(partts);
+				arraydims.clear();
 
 			}
 			else
@@ -468,6 +471,7 @@ bool GetArrayShapeFromInitial(std::string strinitial, std::vector<PartialTensorS
 	{
 		if (arraydims.size() != 0)
 		{
+			arraydims.push_back(stoll(val));
 			PartialTensorShape partts(arraydims);
 			vec_PTS.push_back(partts);
 			arraydims.clear();
@@ -504,6 +508,7 @@ TensorShape GetShapeFromInitial(std::string strinitial)
 			val = val + strinitial[i];
 		}
 	}
+
 	tempTS.AddDim(iDimSize);
 	return tempTS;
 }
