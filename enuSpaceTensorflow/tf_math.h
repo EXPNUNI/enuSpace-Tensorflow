@@ -5,6 +5,7 @@
 
 #include <string>
 #include "include/json/json.h"
+#include "utility_functions.h"
 
 void* Create_Abs(std::string id, Json::Value pInputItem);
 void* Create_Acos(std::string id, Json::Value pInputItem);
@@ -28,6 +29,7 @@ void* Create_Complex(std::string id, Json::Value pInputItem);
 void* Create_ComplexAbs(std::string id, Json::Value pInputItem);
 void* Create_Conj(std::string id, Json::Value pInputItem);
 void* Create_Cos(std::string id, Json::Value pInputItem);
+void* Create_Cosh(std::string id, Json::Value pInputItem);
 void* Create_Cross(std::string id, Json::Value pInputItem);
 void* Create_Cumprod(std::string id, Json::Value pInputItem);
 void* Create_Cumsum(std::string id, Json::Value pInputItem);
@@ -91,6 +93,7 @@ void* Create_SegmentSum(std::string id, Json::Value pInputItem);
 void* Create_Sigmoid(std::string id, Json::Value pInputItem);
 void* Create_Sign(std::string id, Json::Value pInputItem);
 void* Create_Sin(std::string id, Json::Value pInputItem);
+void* Create_Sinh(std::string id, Json::Value pInputItem);
 void* Create_SparseMatMul(std::string id, Json::Value pInputItem);
 void* Create_SparseSegmentMean(std::string id, Json::Value pInputItem);
 void* Create_SparseSegmentMeanGrad(std::string id, Json::Value pInputItem);

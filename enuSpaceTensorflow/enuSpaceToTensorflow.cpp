@@ -74,7 +74,7 @@ bool Init_Tensorflow(std::string config_doc, std::string page_name)
 		{
 			Status st = m_pScope->status();
 			std::string errors = st.error_message().c_str();
-			std::string msg = string_format("error : %s.", errors);
+			std::string msg = string_format("error : %s.", errors.c_str());
 			PrintMessage(msg);
 		}
 	}
@@ -481,7 +481,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#Pad", SYMBOL_PAD));
 	m_SymbolList.insert(std::pair<std::string, int>("#ParallelConcat", SYMBOL_PARALLELCONCAT));
 	m_SymbolList.insert(std::pair<std::string, int>("#Placeholder", SYMBOL_PLACEHOLDER));
-	m_SymbolList.insert(std::pair<std::string, int>("#PlaceholderV2", SYMBOL_PLACEHOLDERV2));
+//	m_SymbolList.insert(std::pair<std::string, int>("#PlaceholderV2", SYMBOL_PLACEHOLDERV2));
 	m_SymbolList.insert(std::pair<std::string, int>("#PlaceholderWithDefault", SYMBOL_PLACEHOLDERWITHDEFAULT));
 	m_SymbolList.insert(std::pair<std::string, int>("#PreventGradient", SYMBOL_PREVENTGRADIENT));
 	m_SymbolList.insert(std::pair<std::string, int>("#QuantizeAndDequantizeV2", SYMBOL_QUANTIZEANDDEQUANTIZEV2));
@@ -659,6 +659,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#ComplexAbs", SYMBOL_COMPLEXABS));
 	m_SymbolList.insert(std::pair<std::string, int>("#Conj", SYMBOL_CONJ));
 	m_SymbolList.insert(std::pair<std::string, int>("#Cos", SYMBOL_COS));
+	m_SymbolList.insert(std::pair<std::string, int>("#Cosh", SYMBOL_COSH));
 	m_SymbolList.insert(std::pair<std::string, int>("#Cross", SYMBOL_CROSS));
 	m_SymbolList.insert(std::pair<std::string, int>("#Cumprod", SYMBOL_CUMPROD));
 	m_SymbolList.insert(std::pair<std::string, int>("#Cumsum", SYMBOL_CUMSUM));
@@ -722,6 +723,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#Sigmoid", SYMBOL_SIGMOID));
 	m_SymbolList.insert(std::pair<std::string, int>("#Sign", SYMBOL_SIGN));
 	m_SymbolList.insert(std::pair<std::string, int>("#Sin", SYMBOL_SIN));
+	m_SymbolList.insert(std::pair<std::string, int>("#Sinh", SYMBOL_SINH));
 	m_SymbolList.insert(std::pair<std::string, int>("#SparseMatMul", SYMBOL_SPARSEMATMUL));
 	m_SymbolList.insert(std::pair<std::string, int>("#SparseSegmentMean", SYMBOL_SPARSESEGMENTMEAN));
 	m_SymbolList.insert(std::pair<std::string, int>("#SparseSegmentMeanGrad", SYMBOL_SPARSESEGMENTMEANGRAD));
@@ -961,7 +963,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_PAD: {		pCreate = Create_Pad(id, pInputItem);	break;	}
 	case SYMBOL_PARALLELCONCAT: {		pCreate = Create_ParallelConcat(id, pInputItem);	break;	}
 	case SYMBOL_PLACEHOLDER: {		pCreate = Create_Placeholder(id, pInputItem);	break;	}
-	case SYMBOL_PLACEHOLDERV2: {		pCreate = Create_PlaceholderV2(id, pInputItem);	break;	}
+//	case SYMBOL_PLACEHOLDERV2: {		pCreate = Create_PlaceholderV2(id, pInputItem);	break;	}
 	case SYMBOL_PLACEHOLDERWITHDEFAULT: {		pCreate = Create_PlaceholderWithDefault(id, pInputItem);	break;	}
 	case SYMBOL_PREVENTGRADIENT: {		pCreate = Create_PreventGradient(id, pInputItem);	break;	}
 	case SYMBOL_QUANTIZEANDDEQUANTIZEV2: {		pCreate = Create_QuantizeAndDequantizeV2(id, pInputItem);	break;	}
@@ -1139,6 +1141,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_COMPLEXABS: {		pCreate = Create_ComplexAbs(id, pInputItem);	break;	}
 	case SYMBOL_CONJ: {		pCreate = Create_Conj(id, pInputItem);	break;	}
 	case SYMBOL_COS: {		pCreate = Create_Cos(id, pInputItem);	break;	}
+	case SYMBOL_COSH: {		pCreate = Create_Cosh(id, pInputItem);	break;	}
 	case SYMBOL_CROSS: {		pCreate = Create_Cross(id, pInputItem);	break;	}
 	case SYMBOL_CUMPROD: {		pCreate = Create_Cumprod(id, pInputItem);	break;	}
 	case SYMBOL_CUMSUM: {		pCreate = Create_Cumsum(id, pInputItem);	break;	}
@@ -1202,6 +1205,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_SIGMOID: {		pCreate = Create_Sigmoid(id, pInputItem);	break;	}
 	case SYMBOL_SIGN: {		pCreate = Create_Sign(id, pInputItem);	break;	}
 	case SYMBOL_SIN: {		pCreate = Create_Sin(id, pInputItem);	break;	}
+	case SYMBOL_SINH: {		pCreate = Create_Sinh(id, pInputItem);	break;	}
 	case SYMBOL_SPARSEMATMUL: {		pCreate = Create_SparseMatMul(id, pInputItem);	break;	}
 	case SYMBOL_SPARSESEGMENTMEAN: {		pCreate = Create_SparseSegmentMean(id, pInputItem);	break;	}
 	case SYMBOL_SPARSESEGMENTMEANGRAD: {		pCreate = Create_SparseSegmentMeanGrad(id, pInputItem);	break;	}
