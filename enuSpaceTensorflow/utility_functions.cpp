@@ -6,6 +6,7 @@
 #include <cstdarg>
 #include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow.h"
+#include "enuSpaceToTensorflow.h"
 
 
 std::string string_format(const std::string fmt_str, ...) 
@@ -580,5 +581,845 @@ PartialTensorShape GetPartialShapeFromInitial(std::string strinitial)
 	
 	return tempTS;
 }
+void* Create_StrToOutputList(Scope& pScope, std::string strPinType, std::string strPinShape, std::string strPinInitial)
+{
+	OutputList* pOutputList = new OutputList();
+	Output* pOutput = nullptr;
+	Tensor* pTensor = nullptr;
+	std::vector<std::string> arrayStrVal;
+	std::string val = "";
+	std::string strPinLocalType = strPinType;
+	int iDim = 0;
+	DataType itype = DT_INVALID;
+	if (strPinType != "" &&  strPinType != "auto")
+	{
+		itype = GetDatatypeFromInitial(strPinType);
+		if (itype == DT_INVALID)
+		{
+			if (strPinType != "double") itype = DT_DOUBLE;
+			else if (strPinType != "float") itype = DT_FLOAT;
+			else if (strPinType != "int") itype = DT_INT32;
+			else if (strPinType != "bool") itype = DT_BOOL;
+			else if (strPinType != "string") itype = DT_STRING;
+			else
+			{
+				std::string msg = string_format("error : DataType (%s).", strPinType.c_str());
+				return pOutputList;
+			}
+		}
+	}
+	else
+	{
+		if (!strPinInitial.empty())
+		{
+			if (strPinInitial.find('\"') != -1)
+				strPinLocalType = "DT_STRING";
+			else if (strPinInitial.find('j') != -1 || strPinInitial.find('J') != -1)
+				strPinLocalType = "DT_COMPLEX128";
+			else if (strPinInitial.find('f') != -1)
+				strPinLocalType = "DT_FLOAT";
+			else if (strPinInitial.find('.') != -1 || strPinInitial.find('E') != -1 || strPinInitial.find('e') != -1)
+				strPinLocalType = "DT_DOUBLE";
+			else
+				strPinLocalType = "DT_INT32";
+		}
+	}
 
+	for (std::string::size_type i = 0; i < strPinInitial.size(); i++)
+	{
+		if (strPinInitial[i] == '{')
+		{
+			iDim++;
+			val = val + strPinInitial[i];
+		}
+		else if (strPinInitial[i] == '}')
+		{
+			iDim--;
+			val = val + strPinInitial[i];
+		}
+		else if (strPinInitial[i] == ',' || strPinInitial[i] == ';')
+		{
+			if (iDim == 0)
+			{
+				if (val != "")
+				{
+					arrayStrVal.push_back(val.c_str());
+					val = "";
+				}
+			}
+			else
+			{
+				val = val + strPinInitial[i];
+			}
+		}
+		else
+		{
+			if (strPinInitial[i] != '\n' && strPinInitial[i] != '\r')
+				val = val + strPinInitial[i];
+		}
+	}
+	if (iDim == 0)
+	{
+		if (val != "")
+		{
+			arrayStrVal.push_back(val.c_str());
+			val = "";
+		}
+	}
+	for (std::string::size_type i = 0; i < arrayStrVal.size(); i++)
+	{
+		pOutput = ((Output*)Create_StrToOutput(pScope, strPinLocalType, strPinShape, arrayStrVal[i]));
+		pOutputList->push_back(*pOutput);
+		delete pOutput;
+	}
+
+	return pOutputList;
+}
+void* Create_StrToOutput(Scope& pScope, std::string strPinType, std::string strPinShape, std::string strPinInitial)
+{
+	Output* pOutput = new Output();
+	Tensor* pTensor = nullptr;
+	DataType itype = DT_INVALID;
+
+	std::vector<int64> array_slice;
+	std::vector<int64> arraydims;
+	std::vector<double> arrayVal;
+	std::vector<std::string> arrayStrVal;
+	std::vector<std::complex<double>> arrayComplexVal;
+	if (strPinType != "" &&  strPinType != "auto")
+	{
+		itype = GetDatatypeFromInitial(strPinType);
+		if (itype == DT_INVALID)
+		{
+			if (strPinType != "double") itype = DT_DOUBLE;
+			else if (strPinType != "float") itype = DT_FLOAT;
+			else if (strPinType != "int") itype = DT_INT32;
+			else if (strPinType != "bool") itype = DT_BOOL;
+			else if (strPinType != "string") itype = DT_STRING;
+			else
+			{
+				std::string msg = string_format("error : DataType (%s).", strPinType.c_str());
+				return pOutput;
+			}
+		}
+	}
+	else
+	{
+		if (!strPinInitial.empty())
+		{
+			if (strPinInitial.find('\"') != -1)
+				itype = DT_STRING;
+			else if (strPinInitial.find('j') != -1 || strPinInitial.find('J') != -1)
+				itype = DT_COMPLEX128;
+			else if (strPinInitial.find('f') != -1)
+				itype = DT_FLOAT;
+			else if (strPinInitial.find('.') != -1 || strPinInitial.find('E') != -1 || strPinInitial.find('e') != -1)
+				itype = DT_DOUBLE;
+			else
+				itype = DT_INT32;
+		}
+	}
+	if (itype == DT_STRING)
+	{
+		GetArrayDimsFromStrVal(strPinInitial, arraydims, array_slice, arrayStrVal);
+	}
+	else if (itype == DT_COMPLEX64 || itype == DT_COMPLEX128)
+	{
+		GetArrayDimsFromStrVal(strPinInitial, arraydims, array_slice, arrayComplexVal);
+	}
+	else
+	{
+		GetArrayDimsFromStrVal(strPinInitial, arraydims, array_slice, arrayVal);
+	}
+	switch (itype)
+	{
+	case DT_DOUBLE:
+	{
+		std::vector<double> arrayvals;
+		arrayvals = arrayVal;
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_DOUBLE, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<double>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<double>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_COMPLEX64:
+	{
+		std::vector<complex64> arrayvals;
+		std::complex<float> cfVal;
+		for (unsigned int i = 0; i < arrayComplexVal.size(); i++)
+		{
+			cfVal.real((float)(arrayComplexVal[i].real()));
+			cfVal.imag((float)(arrayComplexVal[i].imag()));
+			arrayvals.push_back(cfVal);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_COMPLEX64, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<complex64>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<complex64>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_COMPLEX128:
+	{
+		std::vector<complex128> arrayvals;
+		arrayvals = arrayComplexVal;
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_COMPLEX128, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<complex128>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<complex128>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_FLOAT:
+	{
+		std::vector<float> arrayvals;
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((float)arrayVal[i]);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_FLOAT, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<float>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<float>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_BFLOAT16:
+	{
+		std::vector<bfloat16> arrayvals;
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((bfloat16)arrayVal[i]);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_BFLOAT16, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<bfloat16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<bfloat16>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_INT8:
+	{
+		std::vector<int8_t> arrayvals;
+
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((int8_t)arrayVal[i]);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_INT8, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<int8_t>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<int8_t>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_INT16:
+	{
+		std::vector<int16_t> arrayvals;
+
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((int16_t)arrayVal[i]);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_INT16, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<int16_t>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<int16_t>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_INT32:
+	{
+		std::vector<int32_t> arrayvals;
+
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((int32_t)arrayVal[i]);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_INT32, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<int32_t>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<int32_t>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_INT64:
+	{
+		std::vector<int64_t> arrayvals;
+
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((int64_t)arrayVal[i]);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_INT64, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<int64_t>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<int64_t>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_QINT8:
+	{
+		std::vector<qint8> arrayvals;
+
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((int8_t)arrayVal[i]);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_QINT8, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<qint8>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<qint8>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_QINT16:
+	{
+		std::vector<qint16> arrayvals;
+
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((qint16)arrayVal[i]);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_QINT16, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<qint16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<qint16>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_QINT32:
+	{
+		std::vector<qint32> arrayvals;
+
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((qint32)((float)arrayVal[i]));
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_QINT32, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<qint32>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<qint32>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_QUINT8:
+	{
+		std::vector<quint8> arrayvals;
+
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((quint8)arrayVal[i]);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_QUINT8, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<quint8>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<quint8>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_QUINT16:
+	{
+		std::vector<quint16> arrayvals;
+
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((quint16)arrayVal[i]);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_QUINT16, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<quint16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<quint16>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_BOOL:
+	{
+		std::vector<bool> arrayvals;
+
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((bool)arrayVal[i]);
+		}
+
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_BOOL, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<bool>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<bool>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	case DT_STRING:
+	{
+		std::vector<std::string> arrayvals;
+		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		{
+			arrayvals.push_back((std::string)arrayStrVal[i]);
+		}
+
+		gtl::ArraySlice< int64 > arraySlice(arraydims);
+		pTensor = new Tensor(DT_STRING, TensorShape(arraySlice));
+
+		int i = 0;
+		for (std::vector<std::string>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		{
+			pTensor->flat<std::string>()(i) = *it;
+			i++;
+		}
+		arraySlice.clear();
+		arrayvals.clear();
+	}
+	break;
+	default:
+	{
+		std::string msg = string_format("error : DataType (%s) is not spported in tensor data.", strPinType.c_str());
+		return pOutput;
+	}
+	}
+
+
+	array_slice.clear();
+	arraydims.clear();
+	arrayVal.clear();
+	arrayStrVal.clear();
+	arrayComplexVal.clear();
+
+	*pOutput = Const(pScope, *pTensor);
+
+	if (pTensor)
+		delete pTensor;
+
+	return pOutput;
+}
+bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, std::vector<int64>& arrayslice, std::vector<double>& arrayVal)
+{
+	if (strVal.length() > 0)
+	{
+		int islice = 0;
+		std::string val = "";
+		int iDim = 0;
+		int iMaxDim = 0;
+		std::vector<int> idims;
+		for (std::string::size_type i = 0; i < strVal.size(); i++)
+		{
+			if (strVal[i] == '{')
+			{
+				iDim++;
+				if (iMaxDim < iDim)
+					idims.push_back(0);
+				iMaxDim = max(iMaxDim, iDim);
+			}
+			else if (strVal[i] == '}')
+			{
+				idims[iDim - 1] = idims[iDim - 1] + 1;
+				if (val != "")
+				{
+					arrayVal.push_back(std::stod(val.c_str()));
+				}
+				iDim--;
+				val = "";
+			}
+			else if (strVal[i] == ',')
+			{
+				idims[iDim - 1] = idims[iDim - 1] + 1;
+				if (val != "")
+				{
+					arrayVal.push_back(std::stod(val.c_str()));
+					val = "";
+				}
+			}
+			else
+			{
+				if ((strVal[i] >= 0x30 && strVal[i] <= 0x39) || strVal[i] == '.' || strVal[i] == '-' || strVal[i] == '+' || strVal[i] == 'e' || strVal[i] == 'E')
+					val = val + strVal[i];
+			}
+		}
+		val = "";
+		if (iMaxDim == 0)
+		{
+			for (std::string::size_type i = 0; i < strVal.size(); i++)
+			{
+				if (strVal[i] == ',' || strVal[i] == ';')
+				{
+					if (val != "")
+					{
+						arrayVal.push_back(std::stod(val.c_str()));
+						val = "";
+					}
+				}
+				else
+				{
+					if ((strVal[i] >= 0x30 && strVal[i] <= 0x39) || strVal[i] == '.' || strVal[i] == '-' || strVal[i] == '+' || strVal[i] == 'e' || strVal[i] == 'E')
+						val = val + strVal[i];
+				}
+			}
+			if (val != "")
+			{
+				arrayVal.push_back(std::stod(val.c_str()));
+				val = "";
+			}
+		}
+
+		for (int k = 1; k < idims.size(); k++)
+		{
+			int iDatdNum = 1;
+			for (int j = 0; j < k; j++)
+			{
+				iDatdNum = iDatdNum*idims[j];
+			}
+			idims[k] = idims[k] / iDatdNum;
+		}
+		for (unsigned int l = 0; l < idims.size(); l++)
+		{
+			arraydims.push_back(idims[l]);
+		}
+
+		arrayslice.push_back(iMaxDim);
+	}
+
+	return true;
+}
+bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, std::vector<int64>& arrayslice, std::vector<std::string>& arrayStrVal)
+{
+	if (strVal.length() > 0)
+	{
+		int islice = 0;
+		std::string val = "";
+		int iDim = 0;
+		int iMaxDim = 0;
+		std::vector<int> idims;
+		for (std::string::size_type i = 0; i < strVal.size(); i++)
+		{
+			if (strVal[i] == '{')
+			{
+				iDim++;
+				if (iMaxDim < iDim)
+					idims.push_back(0);
+				iMaxDim = max(iMaxDim, iDim);
+			}
+			else if (strVal[i] == '}')
+			{
+				idims[iDim - 1] = idims[iDim - 1] + 1;
+				if (val != "")
+				{
+					arrayStrVal.push_back(val.c_str());
+				}
+				iDim--;
+				val = "";
+			}
+			else if (strVal[i] == ',')
+			{
+				idims[iDim - 1] = idims[iDim - 1] + 1;
+				if (val != "")
+				{
+					arrayStrVal.push_back(val.c_str());
+					val = "";
+				}
+			}
+			else
+			{
+				if (strVal[i] != '\n' && strVal[i] != '\r')
+					val = val + strVal[i];
+			}
+		}
+		val = "";
+		if (iMaxDim == 0)
+		{
+			for (std::string::size_type i = 0; i < strVal.size(); i++)
+			{
+				if (strVal[i] == ',' || strVal[i] == ';')
+				{
+					if (val != "")
+					{
+						arrayStrVal.push_back(val.c_str());
+						val = "";
+					}
+				}
+				else
+				{
+					if (strVal[i] != '\n' && strVal[i] != '\r')
+						val = val + strVal[i];
+				}
+			}
+			if (val != "")
+			{
+				arrayStrVal.push_back(val.c_str());
+				val = "";
+			}
+		}
+
+		for (int k = 1; k < idims.size(); k++)
+		{
+			int iDatdNum = 1;
+			for (int j = 0; j < k; j++)
+			{
+				iDatdNum = iDatdNum*idims[j];
+			}
+			idims[k] = idims[k] / iDatdNum;
+		}
+		for (unsigned int l = 0; l < idims.size(); l++)
+		{
+			arraydims.push_back(idims[l]);
+		}
+
+		arrayslice.push_back(iMaxDim);
+	}
+
+	return true;
+}
+bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, std::vector<int64>& arrayslice, std::vector<std::complex<double>>& arrayComplexVal)
+{
+	if (strVal.length() > 0)
+	{
+		int islice = 0;
+		std::string val = "";
+		std::string valReal = "";
+		std::string valImag = "";
+		int iDim = 0;
+		int iMaxDim = 0;
+		std::vector<int> idims;
+		std::complex<double> cVal;
+		for (std::string::size_type i = 0; i < strVal.size(); i++)
+		{
+			if (strVal[i] == '{')
+			{
+				iDim++;
+				if (iMaxDim < iDim)
+					idims.push_back(0);
+				iMaxDim = max(iMaxDim, iDim);
+			}
+			else if (strVal[i] == '}')
+			{
+				idims[iDim - 1] = idims[iDim - 1] + 1;
+				if (val != "")
+				{
+					valReal = val;
+					val = "";
+				}
+				if (!valReal.empty()) cVal.real(std::stod(valReal.c_str()));
+				if (!valImag.empty()) cVal.imag(std::stod(valImag.c_str()));
+				if (!valReal.empty() || !valImag.empty()) arrayComplexVal.push_back(cVal);
+				cVal.real(0.0);
+				cVal.imag(0.0);
+				iDim--;
+				valReal = "";
+				valImag = "";
+			}
+			else if (strVal[i] == ',')
+			{
+				idims[iDim - 1] = idims[iDim - 1] + 1;
+				if (val != "")
+				{
+					valReal = val;
+					val = "";
+				}
+				if (!valReal.empty()) cVal.real(std::stod(valReal.c_str()));
+				if (!valImag.empty()) cVal.imag(std::stod(valImag.c_str()));
+				if (!valReal.empty() || !valImag.empty()) arrayComplexVal.push_back(cVal);
+				cVal.real(0.0);
+				cVal.imag(0.0);
+				valReal = "";
+				valImag = "";
+			}
+			else
+			{
+				if ((strVal[i] >= 0x30 && strVal[i] <= 0x39) || strVal[i] == '.' || strVal[i] == '-' || strVal[i] == '+' || strVal[i] == 'e' || strVal[i] == 'E' || strVal[i] == 'j' || strVal[i] == 'J')
+				{
+					if (!val.empty() && (strVal[i] == '+' || strVal[i] == '-'))
+					{
+						valReal = val;
+						val = "";
+						//						val = val + strVal[i];
+					}
+					if (!val.empty() && (strVal[i] == 'j' || strVal[i] == 'J'))
+					{
+						valImag = val;
+						val = "";
+					}
+					else
+						val = val + strVal[i];
+
+				}
+			}
+		}
+		val = "";
+		if (iMaxDim == 0)
+		{
+			for (std::string::size_type i = 0; i < strVal.size(); i++)
+			{
+				if (strVal[i] == ',' || strVal[i] == ';')
+				{
+					if (val != "")
+					{
+						val = "";
+					}
+					if (!valReal.empty()) cVal.real(std::stod(valReal.c_str()));
+					if (!valImag.empty()) cVal.imag(std::stod(valImag.c_str()));
+					if (!valReal.empty() || !valImag.empty()) arrayComplexVal.push_back(cVal);
+					cVal.real(0.0);
+					cVal.imag(0.0);
+					valReal = "";
+					valImag = "";
+				}
+				else
+				{
+					if ((strVal[i] >= 0x30 && strVal[i] <= 0x39) || strVal[i] == '.' || strVal[i] == '-' || strVal[i] == '+' || strVal[i] == 'e' || strVal[i] == 'E' || strVal[i] == 'j' || strVal[i] == 'J')
+					{
+						if (!val.empty() && (strVal[i] == '+' || strVal[i] == '-'))
+						{
+							valReal = val;
+							val = "";
+							//							val = val + strVal[i];
+						}
+						if (!val.empty() && (strVal[i] == 'j' || strVal[i] == 'J'))
+						{
+							valImag = val;
+							val = "";
+						}
+						else
+							val = val + strVal[i];
+					}
+				}
+			}
+
+			if (val != "")
+			{
+				valReal = val;
+				val = "";
+			}
+			if (!valReal.empty()) cVal.real(std::stod(valReal.c_str()));
+			if (!valImag.empty()) cVal.imag(std::stod(valImag.c_str()));
+			if (!valReal.empty() || !valImag.empty()) arrayComplexVal.push_back(cVal);
+			cVal.real(0.0);
+			cVal.imag(0.0);
+			valReal = "";
+			valImag = "";
+		}
+
+		for (int k = 1; k < idims.size(); k++)
+		{
+			int iDatdNum = 1;
+			for (int j = 0; j < k; j++)
+			{
+				iDatdNum = iDatdNum*idims[j];
+			}
+			idims[k] = idims[k] / iDatdNum;
+		}
+		for (unsigned int l = 0; l < idims.size(); l++)
+		{
+			arraydims.push_back(idims[l]);
+		}
+
+		arrayslice.push_back(iMaxDim);
+	}
+
+	return true;
+}
 

@@ -59,3 +59,9 @@ PartialTensorShape GetPartialShapeFromInitial(std::string strinitial);
 bool GetInt64VectorFromInitial(std::string strinitial, std::vector<int64>& arrayvals);
 
 ///////////////////////////////////////////////////////////////////////////////////////////
+void* Create_StrToOutput(Scope& pScope, std::string strPinType, std::string strPinShape, std::string strPinInitial);
+void* Create_StrToOutputList(Scope& pScope, std::string strPinType, std::string strPinShape, std::string strPinInitial);
+bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, std::vector<int64>& arrayslice, std::vector<double>& arrayVal);
+bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, std::vector<int64>& arrayslice, std::vector<std::string>& arrayStrVal);
+bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, std::vector<int64>& arrayslice, std::vector<std::complex<double>>& arrayComplexVal);
+
