@@ -57,3 +57,5 @@ TensorShape GetShapeFromInitial(std::string strinitial);
 PartialTensorShape GetPartialShapeFromInitial(std::string strinitial);
 
 bool GetInt64VectorFromInitial(std::string strinitial, std::vector<int64>& arrayvals);
+
+///////////////////////////////////////////////////////////////////////////////////////////

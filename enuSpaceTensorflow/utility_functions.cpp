@@ -7,6 +7,7 @@
 #include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow.h"
 
+
 std::string string_format(const std::string fmt_str, ...) 
 {
 	int final_n, n = ((int)fmt_str.size()) * 2; /* Reserve two times as much as the length of the fmt_str */
@@ -99,24 +100,51 @@ bool GetArraryFromInitial(std::string strinitial, std::vector<double>& arrayvals
 
 bool GetArrayDimsFromShape(std::string strShape, std::vector<int64>& arraydims, std::vector<int64>& arrayslice)
 {
+	strShape = trim(strShape);
 	if (strShape.length() > 0)
 	{
 		int64 islice = 0;
 		std::string val;
 		for (std::string::size_type i = 0; i < strShape.size(); i++)
 		{
-			if (strShape[i] == '[')
+			if (strShape[0] == '[')
 			{
-				val = "";
-			}
-			else if (strShape[i] == ']')
-			{
-				arraydims.push_back(std::stoi(val));
-				islice++;
+				if (strShape[i] == '[')
+				{
+					val = "";
+				}
+				else if (strShape[i] == ']')
+				{
+					if (val != "")
+					{
+						arraydims.push_back(std::stoi(val));
+						islice++;
+					}
+				}
+				else
+				{
+					val = val + strShape[i];
+				}
 			}
 			else
 			{
-				val = val + strShape[i];
+				if (strShape[i] == '{')
+				{
+					val = "";
+				}
+				else if (strShape[i] == '}' || strShape[i] == ',')
+				{
+					if (val !="")
+					{
+						arraydims.push_back(std::stoi(val));
+						islice++;
+					}
+					
+				}
+				else
+				{
+					val = val + strShape[i];
+				}
 			}
 		}
 
@@ -138,7 +166,8 @@ bool GetDoubleVectorFromInitial(std::string strinitial, std::vector<double>& arr
 		}
 		else
 		{
-			val = val + strinitial[i];
+			if (strinitial[i] != '{' &&  strinitial[i] != '}')
+				val = val + strinitial[i];
 		}
 	}
 
@@ -159,7 +188,8 @@ bool GetFloatVectorFromInitial(std::string strinitial, std::vector<float>& array
 		}
 		else
 		{
-			val = val + strinitial[i];
+			if (strinitial[i] != '{' &&  strinitial[i] != '}')
+				val = val + strinitial[i];
 		}
 	}
 
@@ -180,7 +210,9 @@ bool GetIntVectorFromInitial(std::string strinitial, std::vector<int>& arrayvals
 		}
 		else
 		{
-			val = val + strinitial[i];
+			if (strinitial[i] != '{' &&  strinitial[i] !='}')
+				val = val + strinitial[i];
+		
 		}
 	}
 
@@ -357,9 +389,9 @@ DataType GetDatatypeFromInitial(std::string strinitial)
 	return dt;
 }
 
-
 DataTypeSlice GetDatatypeSliceFromInitial(std::string strinitial)
 {
+	strinitial = trim(strinitial);
 	std::string val;
 	std::vector<DataType> arrayvals;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
@@ -374,7 +406,11 @@ DataTypeSlice GetDatatypeSliceFromInitial(std::string strinitial)
 		}
 		else
 		{
-			val = val + strinitial[i];
+			if (strinitial[i] != '{' && strinitial[i] != '}')
+			{
+				val = val + strinitial[i];
+			}
+			
 		}
 	}
 
@@ -479,8 +515,8 @@ bool GetArrayShapeFromInitial(std::string strinitial, std::vector<PartialTensorS
 	}
 	int isize = vec_PTS.size();
 
-	//std::string msg = string_format("test %d", isize);
-	//PrintMessage(msg);
+	std::string msg = string_format("vec_pts %d", isize);
+	PrintMessage(msg);
 	arraydims.clear();
 
 	return 	true;
@@ -544,3 +580,5 @@ PartialTensorShape GetPartialShapeFromInitial(std::string strinitial)
 	
 	return tempTS;
 }
+
+
