@@ -159,6 +159,13 @@ bool Task_Tensorflow()
 										iDataType = DEF_DOUBLE;
 										iArraySize = iNum * 2;
 										break;
+									case DT_STRING:
+										pData = new std::string[iNum];
+										iDataType = DEF_STRING;
+										break;
+									default:
+										PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()));
+										break;
 									}
 
 									for (int i = 0; i < iNum; i++)
@@ -208,6 +215,12 @@ bool Task_Tensorflow()
 											*((double*)pData + i * 2) = flat(i).real();
 											*((double*)pData + i * 2 + 1) = flat(i).imag();
 										}
+										else if (iType == DT_STRING)
+										{
+											auto flat = it->flat<std::string>();
+											PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
+											*((std::string*)pData + i) = flat(i);
+										}
 									}
 
 									if (pData)
@@ -229,7 +242,10 @@ bool Task_Tensorflow()
 
 										SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
 
-										delete[] pData;
+										if (iType == DT_STRING)
+											delete[](std::string*)pData;
+										else
+											delete[] pData;
 									}
 
 									vObjIt++;
@@ -333,6 +349,13 @@ bool Task_Tensorflow()
 									iDataType = DEF_DOUBLE;
 									iArraySize = iArraySize * 2;
 									break;
+								case DT_STRING:
+									pData = new std::string[iArraySize];
+									iDataType = DEF_STRING;
+									break;
+								default:
+									PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()));
+									break;
 								}
 
 								int iOffset = 0;
@@ -392,6 +415,12 @@ bool Task_Tensorflow()
 											*((double*)pData + i * 2) = flat(i).real();
 											*((double*)pData + i * 2 + 1) = flat(i).imag();
 										}
+										else if (iType == DT_STRING)
+										{
+											auto flat = it->flat<std::string>();
+											PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
+											*((std::string*)pData + i) = flat(i);
+										}
 									}
 
 									std::string strvalue = it->DebugString();
@@ -408,7 +437,10 @@ bool Task_Tensorflow()
 
 									SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
 
-									delete[] pData;
+									if (iType == DT_STRING)
+										delete[](std::string*)pData;
+									else
+										delete[] pData;
 								}
 
 								vObjIt++;

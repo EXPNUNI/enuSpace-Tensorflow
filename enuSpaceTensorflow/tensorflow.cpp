@@ -305,8 +305,13 @@ void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iS
 				}
 				case DEF_STRING:
 				{
-					//*(CString*)pTarget = *((CString*)pData->pValue + iIndex);
-					//break;
+					for (int i = 0; i < iSize; i++)
+					{
+						std::string strValue = *((std::string*)pData->pValue + i);
+						pTarget = ((std::string*)pData->pValue);
+						((CString*)pTarget+i)->SetString(StringToCString(strValue));
+					}
+					break;
 				}
 			}
 		}
@@ -373,8 +378,13 @@ void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iS
 						}
 						case DEF_STRING:
 						{
-							//*(CString*)pTarget = *((CString*)pData->pValue + iIndex);
-							//break;
+							for (int i = 0; i < iSize; i++)
+							{
+								std::string strValue = *((std::string*)Data.pValue + i);
+								pTarget = ((std::string*)Data.pValue);
+								((CString*)pTarget + i)->SetString(StringToCString(strValue));
+							}
+							break;
 						}
 					}
 					// 리스트 추가 
@@ -387,7 +397,19 @@ void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iS
 				{
 					if (g_fcbSetReShapeArrayValue)
 					{
-						g_fcbSetReShapeArrayValue((wchar_t*)widestr.c_str(), pSrc, iType, iSize);
+						if (iType == DEF_STRING)
+						{
+							CString *pString = new CString[iSize];
+							for (int i = 0; i < iSize; i++)
+							{
+								std::string strValue = *((std::string*)Data.pValue + i);
+								((CString*)pString + i)->SetString(StringToCString(strValue));
+							}
+							g_fcbSetReShapeArrayValue((wchar_t*)widestr.c_str(), pString, iType, iSize);
+							delete[] pString;
+						}
+						else
+							g_fcbSetReShapeArrayValue((wchar_t*)widestr.c_str(), pSrc, iType, iSize);
 					}
 				}
 			}
@@ -474,10 +496,15 @@ void SetArrayValue(std::string strVariable, void* pSrc, int iType, int iSize)
 					memcpy(pTarget, pSrc, itemSize);
 					break;
 				}
-				case DEF_STRING:			
+				case DEF_STRING:
 				{
-					//*(CString*)pTarget = *((CString*)pData->pValue + iIndex);
-					//break;
+					pTarget = pData->pValue;
+					for (int i = 0; i < iSize; i++)
+					{
+						std::string strValue = *((std::string*)pData->pValue + i);
+						((CString*)pTarget + i)->SetString(StringToCString(strValue));
+					}
+					break;
 				}
 			}
 		}
@@ -673,6 +700,12 @@ extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar
 	else if (strFromType == L"Output" && strToType == L"Output")
 		return true;
 	else if (strFromType == L"Output" && strToType == L"std::vector(tensorflow::Output)")
+		return true;
+	else if (strFromType == L"OutputList" && strToType == L"InputList")
+		return true;
+	else if (strFromType == L"OutputList" && strToType == L"std::vector(tensorflow::Output)")
+		return true;
+	else if (strFromType == L"string" && strToType == L"string")
 		return true;
 
 	else if (strFromType == L"ops::Variable" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
