@@ -482,10 +482,16 @@
 #define SYMBOL_SPARSEAPPLYPROXIMALGRADIENTDESCENT 		451
 #define SYMBOL_SPARSEAPPLYRMSPROP 		452
 #define SYMBOL_FACT 		453
-
+//////////////////////////////////////////////////
+//ksh add symbol
 #define SYMBOL_ISFINITE 		500
 #define SYMBOL_COSH 		501
 #define SYMBOL_SINH 		502
+
+//////////////////////////////////////////////////////////////////////////
+//lwh add symbol
+#define SYMBOL_GATHERV2	600
+
 //////////////////////////////////////////////////
 #define SYMBOL_CONST				454
 #define SYMBOL_INPUT_EX				455

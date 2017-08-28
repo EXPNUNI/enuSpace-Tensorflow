@@ -500,6 +500,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#Fill", SYMBOL_FILL));
 	m_SymbolList.insert(std::pair<std::string, int>("#Gather", SYMBOL_GATHER));
 	m_SymbolList.insert(std::pair<std::string, int>("#GatherNd", SYMBOL_GATHERND));
+	m_SymbolList.insert(std::pair<std::string, int>("#GatherV2", SYMBOL_GATHERV2));
 	m_SymbolList.insert(std::pair<std::string, int>("#Identity", SYMBOL_IDENTITY));
 	m_SymbolList.insert(std::pair<std::string, int>("#ImmutableConst", SYMBOL_IMMUTABLECONST));
 	m_SymbolList.insert(std::pair<std::string, int>("#InvertPermutation", SYMBOL_INVERTPERMUTATION));
@@ -982,6 +983,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_FILL: {		pCreate = Create_Fill(id, pInputItem);	break;	}
 	case SYMBOL_GATHER: {		pCreate = Create_Gather(id, pInputItem);	break;	}
 	case SYMBOL_GATHERND: {		pCreate = Create_GatherNd(id, pInputItem);	break;	}
+	case SYMBOL_GATHERV2: {		pCreate = Create_GatherV2(id, pInputItem);	break;	}
 	case SYMBOL_IDENTITY: {		pCreate = Create_Identity(id, pInputItem);	break;	}
 	case SYMBOL_IMMUTABLECONST: {		pCreate = Create_ImmutableConst(id, pInputItem);	break;	}
 	case SYMBOL_INVERTPERMUTATION: {		pCreate = Create_InvertPermutation(id, pInputItem);	break;	}

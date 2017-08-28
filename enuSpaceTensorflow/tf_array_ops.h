@@ -29,6 +29,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 void* Create_Fill(std::string id, Json::Value pInputItem);
 void* Create_Gather(std::string id, Json::Value pInputItem);
 void* Create_GatherNd(std::string id, Json::Value pInputItem);
+void* Create_GatherV2(std::string id, Json::Value pInputItem);
 void* Create_Identity(std::string id, Json::Value pInputItem);
 void* Create_ImmutableConst(std::string id, Json::Value pInputItem);
 void* Create_InvertPermutation(std::string id, Json::Value pInputItem);
@@ -42,7 +43,6 @@ void* Create_OnesLike(std::string id, Json::Value pInputItem);
 void* Create_Pad(std::string id, Json::Value pInputItem);
 void* Create_ParallelConcat(std::string id, Json::Value pInputItem);
 void* Create_Placeholder(std::string id, Json::Value pInputItem);
-void* Create_PlaceholderV2(std::string id, Json::Value pInputItem);
 void* Create_PlaceholderWithDefault(std::string id, Json::Value pInputItem);
 void* Create_PreventGradient(std::string id, Json::Value pInputItem);
 void* Create_QuantizeAndDequantizeV2(std::string id, Json::Value pInputItem);

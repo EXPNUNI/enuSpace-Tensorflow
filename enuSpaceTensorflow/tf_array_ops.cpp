@@ -61,6 +61,16 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							pinput = (Output*)pOutputObj->pOutput;
+							DataType type_check = pinput->type();
+							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
+							{
+							}
+							else
+							{
+								pinput = nullptr;
+								std::string msg = string_format("warning : BatchToSpace - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
+								PrintMessage(msg);
+							}
 						}
 					}
 				}
@@ -85,6 +95,15 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							crops = (Output*)pOutputObj->pOutput;
+							DataType type_check = crops->type();
+							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
+							{}
+							else
+							{
+								crops = nullptr;
+								std::string msg = string_format("warning : BatchToSpace - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
+								PrintMessage(msg);
+							}
 						}
 					}
 				}
@@ -100,7 +119,14 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
 			if (strPinInterface == "int64")
 			{
-				block_size = stoll(strPinInitial);
+				if (strPinInitial == "")
+				{
+					block_size = 0;
+				}
+				else
+				{
+					block_size = stoll(strPinInitial);
+				}
 			}
 			else
 			{
@@ -117,10 +143,35 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 
 	if (pScope && pinput && crops)
 	{
+// 		TensorShape shape = TensorShape();
+// 		shape.AddDim(4);
+// 		Tensor tensor(DT_INT32, shape);
+// 		tensor.flat<int>()(0) = 4;
+// 		tensor.flat<int>()(1) = 1;
+// 		tensor.flat<int>()(2) = 1;
+// 		tensor.flat<int>()(3) = 1;
+// 		Input input1(tensor);
+// 		TensorShape shape1 = TensorShape();
+// 		shape1.AddDim(4);
+// 		Tensor tensor1(DT_INT32, shape1);
+// 		tensor1.flat<int>()(0) = 2;
+// 		tensor1.flat<int>()(1) = 1;
+// 		Input input2(tensor1);
+// 		auto A = Const(*pScope, {{{{1}}}, {{{2}}}, {{{3}}}, {{{4}}}});
+// 		auto b = Const(*pScope, { {1.f,1.f},{1.f,1.f} });
 		pBatchToSpace = new BatchToSpace(*pScope, *pinput, *crops, block_size);
 		ObjectInfo* pObj = AddObjectMap(pBatchToSpace, id, SYMBOL_BATCHTOSPACE, "BatchToSpace", pInputItem);
-		if (pObj)
-			AddOutputInfo(pObj, &pBatchToSpace->output, OUTPUT_TYPE_OUTPUT, "output");
+		if (pObj) {
+			if (pBatchToSpace->output.node())
+			{
+				AddOutputInfo(pObj, &pBatchToSpace->output, OUTPUT_TYPE_OUTPUT, "output");
+			}
+			else
+			{
+				std::string msg = string_format("error : BatchToSpace(%s) Object output create failed.", id.c_str());
+				PrintMessage(msg);
+			}
+		}
 	}
 	else
 	{
@@ -178,6 +229,16 @@ void* Create_BatchToSpaceND(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							pinput = (Output*)pOutputObj->pOutput;
+							DataType type_check = pinput->type();
+							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
+							{
+							}
+							else
+							{
+								pinput = nullptr;
+								std::string msg = string_format("warning : BatchToSpaceND - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
+								PrintMessage(msg);
+							}
 						}
 					}
 				}
@@ -202,6 +263,16 @@ void* Create_BatchToSpaceND(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							block_shape = (Output*)pOutputObj->pOutput;
+							DataType type_check = block_shape->type();
+							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
+							{
+							}
+							else
+							{
+								block_shape = nullptr;
+								std::string msg = string_format("warning : BatchToSpaceND - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
+								PrintMessage(msg);
+							}
 						}
 					}
 				}
@@ -226,6 +297,16 @@ void* Create_BatchToSpaceND(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							crops = (Output*)pOutputObj->pOutput;
+							DataType type_check = crops->type();
+							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
+							{
+							}
+							else
+							{
+								crops = nullptr;
+								std::string msg = string_format("warning : BatchToSpaceND - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
+								PrintMessage(msg);
+							}
 						}
 					}
 				}
@@ -341,6 +422,13 @@ void* Create_Bitcast(std::string id, Json::Value pInputItem) {
 	if (pScope && pInput && dtype)
 	{
 		pBitcast = new Bitcast(*pScope, *pInput, dtype);
+		if (!pScope->ok())
+		{
+			Status st = pScope->status();
+			std::string errors = st.error_message().c_str();
+			std::string msg = string_format("error : %s.", errors);
+			PrintMessage(msg);
+		}
 		ObjectInfo* pObj = AddObjectMap(pBitcast, id, SYMBOL_BITCAST, "Bitcast", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pBitcast->output, OUTPUT_TYPE_OUTPUT, "output");
@@ -399,6 +487,16 @@ void* Create_BroadcastDynamicShape(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							s0 = (Output*)pOutputObj->pOutput;
+							DataType type_check = s0->type();
+							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
+							{
+							}
+							else
+							{
+								s0 = nullptr;
+								std::string msg = string_format("warning : BroadcastDynamicShape - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
+								PrintMessage(msg);
+							}
 						}
 					}
 				}
@@ -422,6 +520,16 @@ void* Create_BroadcastDynamicShape(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							s1 = (Output*)pOutputObj->pOutput;
+							DataType type_check = s1->type();
+							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
+							{
+							}
+							else
+							{
+								s1 = nullptr;
+								std::string msg = string_format("warning : BroadcastDynamicShape - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
+								PrintMessage(msg);
+							}
 						}
 					}
 				}
@@ -442,6 +550,13 @@ void* Create_BroadcastDynamicShape(std::string id, Json::Value pInputItem) {
 	if (pScope && s0 && s1)
 	{
 		pBroadcastDynamicShape = new BroadcastDynamicShape(*pScope, *s0, *s1);
+		if (!pScope->ok())
+		{
+			Status st = pScope->status();
+			std::string errors = st.error_message().c_str();
+			std::string msg = string_format("error : %s.", errors);
+			PrintMessage(msg);
+		}
 		ObjectInfo* pObj = AddObjectMap(pBroadcastDynamicShape, id, SYMBOL_BITCAST, "BroadcastDynamicShape", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pBroadcastDynamicShape->r0, OUTPUT_TYPE_OUTPUT, "r0");
@@ -1217,7 +1332,7 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("normalize_") != "")
 				{
-					attrs.Normalize(attrParser.ConvStrToBool(attrParser.GetAttribute("normalize_")));
+					attrs.normalize_ = attrParser.ConvStrToBool(attrParser.GetAttribute("normalize_"));
 				}
 			}
 		}
@@ -1352,7 +1467,7 @@ void* Create_ExtractImagePatches(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_ksizes;
 	std::vector<int> v_strides;
 	std::vector<int> v_rates;
-	StringPiece padding = "";
+	std::string padding;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1466,7 +1581,10 @@ void* Create_ExtractImagePatches(std::string id, Json::Value pInputItem) {
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> rates(v_rates);
 
-		pExtractImagePatches = new ExtractImagePatches(*pScope, *images, ksizes, strides, rates, padding);
+		StringPiece strpadding(padding);
+		std::string temp = strpadding.data();
+
+		pExtractImagePatches = new ExtractImagePatches(*pScope, *images, ksizes, strides, rates, strpadding);
 		ObjectInfo* pObj = AddObjectMap(pExtractImagePatches, id, SYMBOL_MATMUL, "ExtractImagePatches", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pExtractImagePatches->patches, OUTPUT_TYPE_OUTPUT, "patches");
@@ -1517,7 +1635,7 @@ void* Create_FakeQuantWithMinMaxArgs(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "input")
+		else if (strPinName == "inputs")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -2284,6 +2402,10 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 				{
 					attrs.NumBits(attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_")));
 				}
+				if (attrParser.GetAttribute("narrow_range_") != "")
+				{
+					attrs.NumBits(attrParser.ConvStrToBool(attrParser.GetAttribute("narrow_range_")));
+				}
 			}
 		}
 		else
@@ -2630,6 +2752,133 @@ void* Create_GatherNd(std::string id, Json::Value pInputItem) {
 
 	return pGatherNd;
 }
+void* Create_GatherV2(std::string id, Json::Value pInputItem) {
+	GatherV2* pGatherV2 = nullptr;
+	Scope* pScope = nullptr;
+	Output* params = nullptr;
+	Output* indices = nullptr;
+	Output* axis = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : GatherV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "params")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							params = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : GatherV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : GatherV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "axis")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : GatherV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : GatherV2 pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && params && indices && axis)
+	{
+		pGatherV2 = new GatherV2(*pScope, *params, *indices, *axis);
+		ObjectInfo* pObj = AddObjectMap(pGatherV2, id, SYMBOL_GATHERV2, "GatherV2", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, &pGatherV2->output, OUTPUT_TYPE_OUTPUT, "output");
+	}
+	else
+	{
+		std::string msg = string_format("error : GatherV2(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+
+	return pGatherV2;
+}
+
 void* Create_Identity(std::string id, Json::Value pInputItem) {
 	Identity* pIdentity = nullptr;
 	Scope* pScope = nullptr;
@@ -4093,93 +4342,7 @@ void* Create_Placeholder(std::string id, Json::Value pInputItem) {
 
 	return pPlaceholder;
 }
-void* Create_PlaceholderV2(std::string id, Json::Value pInputItem) {
-	PlaceholderV2* pPlaceholderV2 = nullptr;
-	Scope* pScope = nullptr;
-	DataType dtype;
-	PartialTensorShape shape;
 
-	int iSize = (int)pInputItem.size();
-	for (int subindex = 0; subindex < iSize; ++subindex)
-	{
-		Json::Value ItemValue = pInputItem[subindex];
-
-		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
-		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
-		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
-		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
-		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
-		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
-		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
-		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
-		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
-
-		if (strPinName == "scope")
-		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "Scope")
-			{
-				pScope = m_pScope;
-			}
-			else
-			{
-				std::string msg = string_format("warning : PlaceholderV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
-			}
-		}
-		else if (strPinName == "dtype")
-		{
-			if (strPinInterface == "DataType")
-			{
-				dtype = GetDatatypeFromInitial(strPinInitial);
-				if (dtype == DT_INVALID)
-				{
-					std::string msg = string_format("warning : PlaceholderV2 - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
-				}
-			}
-			else
-			{
-				std::string msg = string_format("warning : PlaceholderV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
-			}
-		}
-		else if (strPinName == "shape")
-		{
-			if (strPinInterface == "PartialTensorShape")
-			{
-				shape = GetPartialShapeFromInitial(strPinInitial);
-			}
-			else
-			{
-				std::string msg = string_format("warning : PlaceholderV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
-			}
-		}
-		else
-		{
-			std::string msg = string_format("warning : PlaceholderV2 pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
-		}
-	}
-
-	if (pScope)
-	{
-		pPlaceholderV2 = new PlaceholderV2(*pScope, dtype, shape);
-		ObjectInfo* pObj = AddObjectMap(pPlaceholderV2, id, SYMBOL_PLACEHOLDERV2, "PlaceholderV2", pInputItem);
-		if (pObj)
-		{
-			AddOutputInfo(pObj, &pPlaceholderV2->output, OUTPUT_TYPE_OUTPUT, "output");
-		}
-	}
-	else
-	{
-		std::string msg = string_format("error : PlaceholderV2(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
-	}
-		
-	return pPlaceholderV2;
-}
 void* Create_PlaceholderWithDefault(std::string id, Json::Value pInputItem) {
 	PlaceholderWithDefault* pPlaceholderWithDefault = nullptr;
 	Scope* pScope = nullptr;
@@ -5603,7 +5766,14 @@ void* Create_ReverseSequence(std::string id, Json::Value pInputItem) {
 			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
 			if (strPinInterface == "int64")
 			{
-				seq_dim = stoll(strPinInitial);
+				if (strPinInitial == "")
+				{
+					seq_dim = 0;
+				}
+				else
+				{
+					seq_dim = stoll(strPinInitial);
+				}
 			}
 			else
 			{
@@ -6352,7 +6522,14 @@ void* Create_SpaceToBatch(std::string id, Json::Value pInputItem) {
 			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
 			if (strPinInterface == "int64")
 			{
-				block_size = stoll(strPinInitial);
+				if (strPinInitial == "")
+				{
+					block_size = 0;
+				}
+				else
+				{
+					block_size = stoll(strPinInitial);
+				}
 			}
 			else
 			{
@@ -6571,7 +6748,14 @@ void* Create_SpaceToDepth(std::string id, Json::Value pInputItem) {
 			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
 			if (strPinInterface == "int64")
 			{
-				block_size = stoll(strPinInitial);
+				if (strPinInitial == "")
+				{
+					block_size = 0;
+				}
+				else
+				{
+					block_size = stoll(strPinInitial);
+				}
 			}
 			else
 			{
@@ -6689,7 +6873,14 @@ void* Create_Split(std::string id, Json::Value pInputItem) {
 			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
 			if (strPinInterface == "int64")
 			{
-				num_split = stoll(strPinInitial);
+				if (strPinInitial == "")
+				{
+					num_split = 0;
+				}
+				else
+				{
+					num_split = stoll(strPinInitial);
+				}
 			}
 			else
 			{
@@ -6832,7 +7023,14 @@ void* Create_SplitV(std::string id, Json::Value pInputItem) {
 			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
 			if (strPinInterface == "int64")
 			{
-				num_split = stoll(strPinInitial);
+				if (strPinInitial == "")
+				{
+					num_split = 0;
+				}
+				else
+				{
+					num_split = stoll(strPinInitial);
+				}
 			}
 			else
 			{
@@ -8072,7 +8270,14 @@ void* Create_Unstack(std::string id, Json::Value pInputItem) {
 			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
 			if (strPinInterface == "int64")
 			{
-				num = stoll(strPinInitial);
+				if (strPinInitial == "")
+				{
+					num = 0;
+				}
+				else
+				{
+					num = stoll(strPinInitial);
+				}
 			}
 			else
 			{
