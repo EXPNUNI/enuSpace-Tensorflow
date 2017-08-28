@@ -294,7 +294,7 @@ bool GetStringVectorFromInitial(std::string strinitial, std::vector<std::string>
 		trim(val);
 		arrayvals.push_back(val);
 	}
-	return true;
+return true;
 }
 DataType GetDatatypeFromInitial(std::string strinitial)
 {
@@ -733,355 +733,391 @@ void* Create_StrToOutput(Scope& pScope, std::string strPinType, std::string strP
 	}
 	switch (itype)
 	{
-	case DT_DOUBLE:
-	{
-		std::vector<double> arrayvals;
-		arrayvals = arrayVal;
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_DOUBLE, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<double>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		case DT_DOUBLE:
 		{
-			pTensor->flat<double>()(i) = *it;
-			i++;
+			std::vector<double> arrayvals;
+			arrayvals = arrayVal;
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_DOUBLE, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<double>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<double>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_COMPLEX64:
-	{
-		std::vector<complex64> arrayvals;
-		std::complex<float> cfVal;
-		for (unsigned int i = 0; i < arrayComplexVal.size(); i++)
+		break;
+		case DT_COMPLEX64:
 		{
-			cfVal.real((float)(arrayComplexVal[i].real()));
-			cfVal.imag((float)(arrayComplexVal[i].imag()));
-			arrayvals.push_back(cfVal);
+			std::vector<complex64> arrayvals;
+			std::complex<float> cfVal;
+			for (unsigned int i = 0; i < arrayComplexVal.size(); i++)
+			{
+				cfVal.real((float)(arrayComplexVal[i].real()));
+				cfVal.imag((float)(arrayComplexVal[i].imag()));
+				arrayvals.push_back(cfVal);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_COMPLEX64, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<complex64>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<complex64>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_COMPLEX64, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<complex64>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		break;
+		case DT_COMPLEX128:
 		{
-			pTensor->flat<complex64>()(i) = *it;
-			i++;
+			std::vector<complex128> arrayvals;
+			arrayvals = arrayComplexVal;
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_COMPLEX128, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<complex128>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<complex128>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_COMPLEX128:
-	{
-		std::vector<complex128> arrayvals;
-		arrayvals = arrayComplexVal;
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_COMPLEX128, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<complex128>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		break;
+		case DT_FLOAT:
 		{
-			pTensor->flat<complex128>()(i) = *it;
-			i++;
+			std::vector<float> arrayvals;
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((float)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_FLOAT, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<float>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<float>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_FLOAT:
-	{
-		std::vector<float> arrayvals;
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		break;
+		case DT_BFLOAT16:
 		{
-			arrayvals.push_back((float)arrayVal[i]);
+			std::vector<bfloat16> arrayvals;
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((bfloat16)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_BFLOAT16, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<bfloat16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<bfloat16>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_FLOAT, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<float>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		break;
+		case DT_INT8:
 		{
-			pTensor->flat<float>()(i) = *it;
-			i++;
+			std::vector<int8> arrayvals;
+
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((int8)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_INT8, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<int8>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<int8>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_BFLOAT16:
-	{
-		std::vector<bfloat16> arrayvals;
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
+		break;
+		case DT_INT16:
 		{
-			arrayvals.push_back((bfloat16)arrayVal[i]);
+			std::vector<int16> arrayvals;
+
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((int16)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_INT16, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<int16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<int16>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_BFLOAT16, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<bfloat16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		break;
+		case DT_UINT8:
 		{
-			pTensor->flat<bfloat16>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_INT8:
-	{
-		std::vector<int8_t> arrayvals;
+			std::vector<uint8> arrayvals;
 
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((uint8)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_INT8, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<uint8>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<uint8>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
+		}
+		break;
+		case DT_UINT16:
 		{
-			arrayvals.push_back((int8_t)arrayVal[i]);
+			std::vector<uint16> arrayvals;
+
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((uint16)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_INT16, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<uint16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<uint16>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_INT8, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<int8_t>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		break;
+		case DT_INT32:
 		{
-			pTensor->flat<int8_t>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_INT16:
-	{
-		std::vector<int16_t> arrayvals;
+			std::vector<int32_t> arrayvals;
 
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((int32_t)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_INT32, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<int32_t>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<int32_t>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
+		}
+		break;
+		case DT_INT64:
 		{
-			arrayvals.push_back((int16_t)arrayVal[i]);
+			std::vector<int64_t> arrayvals;
+
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((int64_t)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_INT64, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<int64_t>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<int64_t>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_INT16, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<int16_t>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		break;
+		case DT_QINT8:
 		{
-			pTensor->flat<int16_t>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_INT32:
-	{
-		std::vector<int32_t> arrayvals;
+			std::vector<qint8> arrayvals;
 
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((int8_t)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_QINT8, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<qint8>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<qint8>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
+		}
+		break;
+		case DT_QINT16:
 		{
-			arrayvals.push_back((int32_t)arrayVal[i]);
+			std::vector<qint16> arrayvals;
+
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((qint16)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_QINT16, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<qint16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<qint16>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_INT32, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<int32_t>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		break;
+		case DT_QINT32:
 		{
-			pTensor->flat<int32_t>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_INT64:
-	{
-		std::vector<int64_t> arrayvals;
+			std::vector<qint32> arrayvals;
 
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((qint32)((float)arrayVal[i]));
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_QINT32, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<qint32>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<qint32>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
+		}
+		break;
+		case DT_QUINT8:
 		{
-			arrayvals.push_back((int64_t)arrayVal[i]);
+			std::vector<quint8> arrayvals;
+
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((quint8)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_QUINT8, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<quint8>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<quint8>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_INT64, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<int64_t>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		break;
+		case DT_QUINT16:
 		{
-			pTensor->flat<int64_t>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_QINT8:
-	{
-		std::vector<qint8> arrayvals;
+			std::vector<quint16> arrayvals;
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((quint16)arrayVal[i]);
+			}
 
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_QUINT16, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<quint16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<quint16>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
+		}
+		break;
+		case DT_BOOL:
 		{
-			arrayvals.push_back((int8_t)arrayVal[i]);
+			std::vector<bool> arrayvals;
+			for (unsigned int i = 0; i < arrayVal.size(); i++)
+			{
+				arrayvals.push_back((bool)arrayVal[i]);
+			}
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_BOOL, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<bool>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<bool>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
 		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_QINT8, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<qint8>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+		break;
+		case DT_STRING:
 		{
-			pTensor->flat<qint8>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_QINT16:
-	{
-		std::vector<qint16> arrayvals;
+			std::vector<std::string> arrayvals;
+			arrayvals = arrayStrVal;
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_STRING, TensorShape(arraySlice));
 
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
+			int i = 0;
+			for (std::vector<std::string>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<std::string>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+		}
+		break;
+		default:
 		{
-			arrayvals.push_back((qint16)arrayVal[i]);
+			std::string msg = string_format("error : DataType (%s) is not spported in tensor data.", strPinType.c_str());
+			return pOutput;
 		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_QINT16, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<qint16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
-		{
-			pTensor->flat<qint16>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_QINT32:
-	{
-		std::vector<qint32> arrayvals;
-
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
-		{
-			arrayvals.push_back((qint32)((float)arrayVal[i]));
-		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_QINT32, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<qint32>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
-		{
-			pTensor->flat<qint32>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_QUINT8:
-	{
-		std::vector<quint8> arrayvals;
-
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
-		{
-			arrayvals.push_back((quint8)arrayVal[i]);
-		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_QUINT8, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<quint8>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
-		{
-			pTensor->flat<quint8>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_QUINT16:
-	{
-		std::vector<quint16> arrayvals;
-
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
-		{
-			arrayvals.push_back((quint16)arrayVal[i]);
-		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_QUINT16, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<quint16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
-		{
-			pTensor->flat<quint16>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_BOOL:
-	{
-		std::vector<bool> arrayvals;
-
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
-		{
-			arrayvals.push_back((bool)arrayVal[i]);
-		}
-
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_BOOL, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<bool>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
-		{
-			pTensor->flat<bool>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	case DT_STRING:
-	{
-		std::vector<std::string> arrayvals;
-		for (unsigned int i = 0; i < arrayVal.size(); i++)
-		{
-			arrayvals.push_back((std::string)arrayStrVal[i]);
-		}
-
-		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_STRING, TensorShape(arraySlice));
-
-		int i = 0;
-		for (std::vector<std::string>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
-		{
-			pTensor->flat<std::string>()(i) = *it;
-			i++;
-		}
-		arraySlice.clear();
-		arrayvals.clear();
-	}
-	break;
-	default:
-	{
-		std::string msg = string_format("error : DataType (%s) is not spported in tensor data.", strPinType.c_str());
-		return pOutput;
-	}
 	}
 
 
@@ -1090,11 +1126,11 @@ void* Create_StrToOutput(Scope& pScope, std::string strPinType, std::string strP
 	arrayVal.clear();
 	arrayStrVal.clear();
 	arrayComplexVal.clear();
-
-	*pOutput = Const(pScope, *pTensor);
-
 	if (pTensor)
+	{
+		*pOutput = Const(pScope, *pTensor);
 		delete pTensor;
+	}
 
 	return pOutput;
 }
@@ -1181,6 +1217,7 @@ bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, s
 			arraydims.push_back(idims[l]);
 		}
 
+//		if (iMaxDim == 0) arraydims.push_back(arrayVal.size());
 		arrayslice.push_back(iMaxDim);
 	}
 
@@ -1268,6 +1305,8 @@ bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, s
 		{
 			arraydims.push_back(idims[l]);
 		}
+//		if (iMaxDim == 0)
+//			arraydims.push_back(arrayStrVal.size());
 
 		arrayslice.push_back(iMaxDim);
 	}
@@ -1362,7 +1401,10 @@ bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, s
 					}
 					if (!valReal.empty()) cVal.real(std::stod(valReal.c_str()));
 					if (!valImag.empty()) cVal.imag(std::stod(valImag.c_str()));
-					if (!valReal.empty() || !valImag.empty()) arrayComplexVal.push_back(cVal);
+					if (!valReal.empty() || !valImag.empty())
+					{
+						arrayComplexVal.push_back(cVal);
+					}
 					cVal.real(0.0);
 					cVal.imag(0.0);
 					valReal = "";
@@ -1396,7 +1438,10 @@ bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, s
 			}
 			if (!valReal.empty()) cVal.real(std::stod(valReal.c_str()));
 			if (!valImag.empty()) cVal.imag(std::stod(valImag.c_str()));
-			if (!valReal.empty() || !valImag.empty()) arrayComplexVal.push_back(cVal);
+			if (!valReal.empty() || !valImag.empty())
+			{
+				arrayComplexVal.push_back(cVal);
+			}
 			cVal.real(0.0);
 			cVal.imag(0.0);
 			valReal = "";
@@ -1417,9 +1462,11 @@ bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, s
 			arraydims.push_back(idims[l]);
 		}
 
+//		if (iMaxDim == 0) arraydims.push_back(arrayComplexVal.size());
 		arrayslice.push_back(iMaxDim);
 	}
 
 	return true;
 }
+
 

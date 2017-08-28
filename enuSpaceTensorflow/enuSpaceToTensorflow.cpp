@@ -140,6 +140,10 @@ bool Task_Tensorflow()
 										pData = new float[iNum];
 										iDataType = DEF_FLOAT;
 										break;
+									case DT_UINT8:
+									case DT_UINT16:
+									case DT_INT8:
+									case DT_INT16:
 									case DT_INT32:
 									case DT_INT64:
 										pData = new int[iNum];
@@ -168,58 +172,83 @@ bool Task_Tensorflow()
 										break;
 									}
 
+									int idis = 10;
 									for (int i = 0; i < iNum; i++)
 									{
 										if (iType == DT_DOUBLE)
 										{
 											auto flat = it->flat<double>();
-											PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
 
 											*((double*)pData + i) = flat(i);
 										}
 										else if (iType == DT_FLOAT)
 										{
 											auto flat = it->flat<float>();
-											PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
 											*((float*)pData + i) = flat(i);
+										}
+										else if (iType == DT_UINT8)
+										{
+											auto flat = it->flat<uint8>();
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((int*)pData + i) = flat(i);
+										}
+										else if (iType == DT_UINT16)
+										{
+											auto flat = it->flat<uint16>();
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((int*)pData + i) = flat(i);
+										}
+										else if (iType == DT_INT8)
+										{
+											auto flat = it->flat<int8>();
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((int*)pData + i) = flat(i);
+										}
+										else if (iType == DT_INT16)
+										{
+											auto flat = it->flat<int16>();
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((int*)pData + i) = flat(i);
 										}
 										else if (iType == DT_INT32)
 										{
-											auto flat = it->flat<int>();
-											PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											auto flat = it->flat<int32>();
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
 											*((int*)pData + i) = flat(i);
 										}
 										else if (iType == DT_INT64)
 										{
 											auto flat = it->flat<int64>();
-											PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
 											*((int*)pData + i) = flat(i);
 										}
 										else if (iType == DT_BOOL)
 										{
 											auto flat = it->flat<bool>();
-											PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
 											*((bool*)pData + i) = flat(i);
 										}
 										else if (iType == DT_COMPLEX64)
 										{
 											auto flat = it->flat<complex64>();
-											PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
 											*((float*)pData + i * 2) = flat(i).real();
 											*((float*)pData + i * 2 + 1) = flat(i).imag();
 										}
 										else if (iType == DT_COMPLEX128)
 										{
 											auto flat = it->flat<complex128>();
-											PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
 											*((double*)pData + i * 2) = flat(i).real();
 											*((double*)pData + i * 2 + 1) = flat(i).imag();
 										}
 										else if (iType == DT_STRING)
 										{
 											auto flat = it->flat<std::string>();
-											PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
-											*((std::string*)pData + i) = flat(i);
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
+											((std::string*)pData + i)->assign(flat(i));
 										}
 									}
 
@@ -327,9 +356,19 @@ bool Task_Tensorflow()
 									iDataType = DEF_DOUBLE;
 									break;
 								case DT_FLOAT:
+								case DT_BFLOAT16:
 									pData = new float[iArraySize];
 									iDataType = DEF_FLOAT;
 									break;
+								case DT_UINT8:
+								case DT_UINT16:
+								case DT_QINT8:
+								case DT_QINT16:
+								case DT_QINT32:
+								case DT_QUINT8:
+								case DT_QUINT16:
+								case DT_INT8:
+								case DT_INT16:
 								case DT_INT32:
 								case DT_INT64:
 									pData = new int[iArraySize];
@@ -368,58 +407,91 @@ bool Task_Tensorflow()
 									iOffset = iCount*iMax;
 									iCount++;
 
+									int idis = 10;
+
 									for (int i = 0; i < iNum; i++)
 									{
 										if (iType == DT_DOUBLE)
 										{
 											auto flat = it->flat<double>();
-											PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
 
 											*((double*)pData + i + iOffset) = flat(i);
 										}
 										else if (iType == DT_FLOAT)
 										{
 											auto flat = it->flat<float>();
-											PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
 											*((float*)pData + i + iOffset) = flat(i);
 										}
-										else if (iType == DT_INT32)
+										else if (iType == DT_BFLOAT16)
 										{
-											auto flat = it->flat<int>();
-											PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i + iOffset) = flat(i);
+											auto flat = it->flat<bfloat16>();
+											if (i < idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+											//*((float*)pData + i + iOffset) = flat(i);
+											BFloat16ToFloat(&flat(i), ((float*)pData + i + iOffset),1);
+										}
+										else if (iType == DT_UINT8 || DT_QUINT8)
+										{
+											auto flat = it->flat<uint8>();
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((int*)pData + i) = flat(i);
+										}
+										else if (iType == DT_UINT16 || DT_QUINT16)
+										{
+											auto flat = it->flat<uint16>();
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((int*)pData + i) = flat(i);
+										}
+										else if (iType == DT_INT8 || DT_QINT8)
+										{
+											auto flat = it->flat<int8>();
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((int*)pData + i) = flat(i);
+										}
+										else if (iType == DT_INT16 || DT_QINT16)
+										{
+											auto flat = it->flat<int16>();
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((int*)pData + i) = flat(i);
+										}
+										else if (iType == DT_INT32 || DT_QINT32)
+										{
+											auto flat = it->flat<int32>();
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											*((int*)pData + i) = flat(i);
 										}
 										else if (iType == DT_INT64)
 										{
 											auto flat = it->flat<int64>();
-											PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
 											*((int*)pData + i) = flat(i);
 										}
 										else if (iType == DT_BOOL)
 										{
 											auto flat = it->flat<bool>();
-											PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
 											*((bool*)pData + i) = flat(i);
 										}
 										else if (iType == DT_COMPLEX64)
 										{
 											auto flat = it->flat<complex64>();
-											PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
 											*((float*)pData + i * 2) = flat(i).real();
 											*((float*)pData + i * 2 + 1) = flat(i).imag();
 										}
 										else if (iType == DT_COMPLEX128)
 										{
 											auto flat = it->flat<complex128>();
-											PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
 											*((double*)pData + i * 2) = flat(i).real();
 											*((double*)pData + i * 2 + 1) = flat(i).imag();
 										}
 										else if (iType == DT_STRING)
 										{
 											auto flat = it->flat<std::string>();
-											PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
-											*((std::string*)pData + i) = flat(i);
+											if (i<idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
+											((std::string*)pData + i)->assign(flat(i));
 										}
 									}
 
@@ -500,7 +572,6 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#Fill", SYMBOL_FILL));
 	m_SymbolList.insert(std::pair<std::string, int>("#Gather", SYMBOL_GATHER));
 	m_SymbolList.insert(std::pair<std::string, int>("#GatherNd", SYMBOL_GATHERND));
-	m_SymbolList.insert(std::pair<std::string, int>("#GatherV2", SYMBOL_GATHERV2));
 	m_SymbolList.insert(std::pair<std::string, int>("#Identity", SYMBOL_IDENTITY));
 	m_SymbolList.insert(std::pair<std::string, int>("#ImmutableConst", SYMBOL_IMMUTABLECONST));
 	m_SymbolList.insert(std::pair<std::string, int>("#InvertPermutation", SYMBOL_INVERTPERMUTATION));
@@ -983,7 +1054,6 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_FILL: {		pCreate = Create_Fill(id, pInputItem);	break;	}
 	case SYMBOL_GATHER: {		pCreate = Create_Gather(id, pInputItem);	break;	}
 	case SYMBOL_GATHERND: {		pCreate = Create_GatherNd(id, pInputItem);	break;	}
-	case SYMBOL_GATHERV2: {		pCreate = Create_GatherV2(id, pInputItem);	break;	}
 	case SYMBOL_IDENTITY: {		pCreate = Create_Identity(id, pInputItem);	break;	}
 	case SYMBOL_IMMUTABLECONST: {		pCreate = Create_ImmutableConst(id, pInputItem);	break;	}
 	case SYMBOL_INVERTPERMUTATION: {		pCreate = Create_InvertPermutation(id, pInputItem);	break;	}
@@ -1429,6 +1499,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 ObjectInfo* LookupFromObjectMap(std::string strid)
 {
 	ObjectInfo* pObj = nullptr;
+	if(strid.empty()) return pObj;
 	const std::map<std::string, ObjectInfo*>::const_iterator aLookup = m_ObjectMapList.find(strid);
 	const bool bExists = aLookup != m_ObjectMapList.end();
 	if (bExists)

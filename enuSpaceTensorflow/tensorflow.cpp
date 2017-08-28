@@ -307,7 +307,7 @@ void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iS
 				{
 					for (int i = 0; i < iSize; i++)
 					{
-						std::string strValue = *((std::string*)pData->pValue + i);
+						std::string strValue = *((std::string*)pSrc + i);
 						pTarget = ((std::string*)pData->pValue);
 						((CString*)pTarget+i)->SetString(StringToCString(strValue));
 					}
@@ -380,7 +380,7 @@ void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iS
 						{
 							for (int i = 0; i < iSize; i++)
 							{
-								std::string strValue = *((std::string*)Data.pValue + i);
+								std::string strValue = *((std::string*)pSrc + i);
 								pTarget = ((std::string*)Data.pValue);
 								((CString*)pTarget + i)->SetString(StringToCString(strValue));
 							}
@@ -402,7 +402,7 @@ void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iS
 							CString *pString = new CString[iSize];
 							for (int i = 0; i < iSize; i++)
 							{
-								std::string strValue = *((std::string*)Data.pValue + i);
+								std::string strValue = *((std::string*)pSrc + i);
 								((CString*)pString + i)->SetString(StringToCString(strValue));
 							}
 							g_fcbSetReShapeArrayValue((wchar_t*)widestr.c_str(), pString, iType, iSize);
