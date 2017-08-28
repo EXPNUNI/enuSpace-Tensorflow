@@ -303,6 +303,8 @@ DataType GetDatatypeFromInitial(std::string strinitial)
 	DataType dt;
 	if (strinitial == "DT_INVALID")
 		dt = DT_INVALID;
+	else if (strinitial == "DT_FLOAT")
+		dt = DT_FLOAT;
 	else if (strinitial == "DT_DOUBLE")
 		dt = DT_DOUBLE;
 	else if (strinitial == "DT_INT32")
