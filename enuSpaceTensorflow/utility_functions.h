@@ -51,7 +51,7 @@ bool GetStringVectorFromInitial(std::string strinitial, std::vector<std::string>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 DataType GetDatatypeFromInitial(std::string strinitial);
-DataTypeSlice GetDatatypeSliceFromInitial(std::string strinitial);
+bool GetDatatypeSliceFromInitial(std::string strinitial, std::vector<DataType>& arrayvals);
 bool GetArrayShapeFromInitial(std::string strinitial, std::vector<PartialTensorShape>& vec_PTS);
 TensorShape GetShapeFromInitial(std::string strinitial);
 PartialTensorShape GetPartialShapeFromInitial(std::string strinitial);
