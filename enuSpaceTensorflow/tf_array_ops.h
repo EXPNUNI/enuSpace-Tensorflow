@@ -13,6 +13,7 @@ void* Create_Bitcast(std::string id, Json::Value pInputItem);
 void* Create_BroadcastDynamicShape(std::string id, Json::Value pInputItem);
 void* Create_CheckNumerics(std::string id, Json::Value pInputItem);
 void* Create_Concat(std::string id, Json::Value pInputItem);
+void* Create_DebugGradientIdentity(std::string id, Json::Value pInputItem);
 void* Create_DepthToSpace(std::string id, Json::Value pInputItem);
 void* Create_Dequantize(std::string id, Json::Value pInputItem);
 void* Create_Diag(std::string id, Json::Value pInputItem);
