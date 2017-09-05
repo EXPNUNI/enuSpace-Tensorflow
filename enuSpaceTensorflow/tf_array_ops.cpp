@@ -761,6 +761,85 @@ void* Create_Concat(std::string id, Json::Value pInputItem) {
 
 	return pConcat;
 }
+void * Create_DebugGradientIdentity(std::string id, Json::Value pInputItem)
+{
+	DebugGradientIdentity* pDebugGradientIdentity = nullptr;
+	Scope* pScope = nullptr;
+	Output* pinput = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : DebugGradientIdentity - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "input")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pinput = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : DebugGradientIdentity - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : DebugGradientIdentity pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && pinput)
+	{
+		pDebugGradientIdentity = new DebugGradientIdentity(*pScope, *pinput);
+		ObjectInfo* pObj = AddObjectMap(pDebugGradientIdentity, id, SYMBOL_DEBUGGRADIENTIDENTITY, "DebugGradientIdentity", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, &pDebugGradientIdentity->output, OUTPUT_TYPE_OUTPUT, "output");
+	}
+	else
+	{
+		std::string msg = string_format("error : DebugGradientIdentity(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+
+	return pDebugGradientIdentity;
+}
 void* Create_DepthToSpace(std::string id, Json::Value pInputItem) {
 	DepthToSpace* pDepthToSpace = nullptr;
 	Scope* pScope = nullptr;
@@ -1504,7 +1583,7 @@ void* Create_ExtractImagePatches(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -1642,7 +1721,7 @@ void* Create_FakeQuantWithMinMaxArgs(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -1741,7 +1820,7 @@ void* Create_FakeQuantWithMinMaxArgsGradient(std::string id, Json::Value pInputI
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -1764,7 +1843,7 @@ void* Create_FakeQuantWithMinMaxArgsGradient(std::string id, Json::Value pInputI
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -1864,7 +1943,7 @@ void* Create_FakeQuantWithMinMaxVars(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -1887,7 +1966,7 @@ void* Create_FakeQuantWithMinMaxVars(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -1910,7 +1989,7 @@ void* Create_FakeQuantWithMinMaxVars(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2003,7 +2082,7 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2026,7 +2105,7 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2049,7 +2128,7 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2072,7 +2151,7 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2169,7 +2248,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannel(std::string id, Json::Value pInpu
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2192,7 +2271,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannel(std::string id, Json::Value pInpu
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2215,7 +2294,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannel(std::string id, Json::Value pInpu
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2308,7 +2387,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2331,7 +2410,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2354,7 +2433,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2377,7 +2456,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2475,7 +2554,7 @@ void* Create_Fill(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2498,7 +2577,7 @@ void* Create_Fill(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2578,7 +2657,7 @@ void* Create_Gather(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2601,7 +2680,7 @@ void* Create_Gather(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2691,7 +2770,7 @@ void* Create_GatherNd(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2714,7 +2793,7 @@ void* Create_GatherNd(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2794,7 +2873,7 @@ void* Create_GatherV2(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2817,7 +2896,7 @@ void* Create_GatherV2(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -2840,12 +2919,12 @@ void* Create_GatherV2(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
 						{
-							indices = (Output*)pOutputObj->pOutput;
+							axis = (Output*)pOutputObj->pOutput;
 						}
 					}
 				}
@@ -2862,7 +2941,6 @@ void* Create_GatherV2(std::string id, Json::Value pInputItem) {
 			PrintMessage(msg);
 		}
 	}
-
 	if (pScope && params && indices && axis)
 	{
 		pGatherV2 = new GatherV2(*pScope, *params, *indices, *axis);
@@ -2919,7 +2997,7 @@ void* Create_Identity(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3095,7 +3173,7 @@ void* Create_InvertPermutation(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3175,7 +3253,7 @@ void* Create_SetDiff1D(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3198,7 +3276,7 @@ void* Create_SetDiff1D(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3291,7 +3369,7 @@ void* Create_MatrixBandPart(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3314,7 +3392,7 @@ void* Create_MatrixBandPart(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3337,7 +3415,7 @@ void* Create_MatrixBandPart(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3415,7 +3493,7 @@ void* Create_MatrixDiag(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3492,7 +3570,7 @@ void* Create_MatrixDiagPart(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3570,7 +3648,7 @@ void* Create_MatrixSetDiag(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3593,7 +3671,7 @@ void* Create_MatrixSetDiag(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3672,7 +3750,7 @@ void* Create_MirrorPad(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3695,7 +3773,7 @@ void* Create_MirrorPad(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3788,7 +3866,7 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3811,7 +3889,7 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3834,7 +3912,7 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3857,7 +3935,7 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3946,7 +4024,7 @@ void* Create_OnesLike(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4025,7 +4103,7 @@ void* Create_Stack(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4115,7 +4193,7 @@ void* Create_Pad(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4138,7 +4216,7 @@ void* Create_Pad(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4217,7 +4295,7 @@ void* Create_ParallelConcat(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4384,7 +4462,7 @@ void* Create_PlaceholderWithDefault(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4477,7 +4555,7 @@ void* Create_PreventGradient(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4569,7 +4647,7 @@ void* Create_QuantizeAndDequantizeV2(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4592,7 +4670,7 @@ void* Create_QuantizeAndDequantizeV2(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4615,7 +4693,7 @@ void* Create_QuantizeAndDequantizeV2(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4716,7 +4794,7 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4739,7 +4817,7 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4762,7 +4840,7 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4875,7 +4953,7 @@ void* Create_QuantizedConcat(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4898,7 +4976,7 @@ void* Create_QuantizedConcat(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4921,7 +4999,7 @@ void* Create_QuantizedConcat(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -4944,7 +5022,7 @@ void* Create_QuantizedConcat(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5029,7 +5107,7 @@ void* Create_QuantizedInstanceNorm(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5052,7 +5130,7 @@ void* Create_QuantizedInstanceNorm(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5075,7 +5153,7 @@ void* Create_QuantizedInstanceNorm(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5187,7 +5265,7 @@ void* Create_QuantizedReshape(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5210,7 +5288,7 @@ void* Create_QuantizedReshape(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5233,7 +5311,7 @@ void* Create_QuantizedReshape(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5256,7 +5334,7 @@ void* Create_QuantizedReshape(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5338,7 +5416,7 @@ void* Create_Rank(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5417,7 +5495,7 @@ void* Create_Reshape(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5440,7 +5518,7 @@ void* Create_Reshape(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5522,7 +5600,7 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5545,7 +5623,7 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5568,7 +5646,7 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5591,7 +5669,7 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5614,7 +5692,7 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5722,7 +5800,7 @@ void* Create_ReverseSequence(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5745,7 +5823,7 @@ void* Create_ReverseSequence(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5855,7 +5933,7 @@ void* Create_Reverse(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5878,7 +5956,7 @@ void* Create_Reverse(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5958,7 +6036,7 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -5981,7 +6059,7 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -6004,7 +6082,7 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -6083,7 +6161,7 @@ void* Create_Shape(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -6173,7 +6251,7 @@ void* Create_ShapeN(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -6262,7 +6340,7 @@ void* Create_Size(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -6353,7 +6431,7 @@ void* Create_Slice(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -6376,7 +6454,7 @@ void* Create_Slice(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -6399,7 +6477,7 @@ void* Create_Slice(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -6478,7 +6556,7 @@ void* Create_SpaceToBatch(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -6501,7 +6579,7 @@ void* Create_SpaceToBatch(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -7125,7 +7203,10 @@ void* Create_Squeeze(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("squeeze_dims_") != "")
 				{
-					attrs.SqueezeDims(attrParser.ConvStrToArraySliceInt(attrParser.GetAttribute("squeeze_dims_")));
+					std::vector<int> v_int;
+					attrParser.ConvStrToArraySliceInt(attrParser.GetAttribute("squeeze_dims_"), v_int);
+					gtl::ArraySlice<int> arrayInt(v_int);
+					attrs.squeeze_dims_ = arrayInt;
 				}
 			}
 		}
@@ -7863,7 +7944,7 @@ void* Create_Tile(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -7886,7 +7967,7 @@ void* Create_Tile(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -7964,7 +8045,7 @@ void* Create_Transpose(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -7987,7 +8068,7 @@ void* Create_Transpose(std::string id, Json::Value pInputItem) {
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, "output");
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
