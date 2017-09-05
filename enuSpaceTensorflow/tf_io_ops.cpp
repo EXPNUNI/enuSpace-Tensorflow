@@ -50,7 +50,8 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "Input")
 			{
-				record_bytes = stoll(strPinInitial);
+				if(strPinInitial !="")
+					record_bytes = stoll(strPinInitial);
 			}
 			else
 			{
@@ -63,11 +64,11 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "FixedLengthRecordReader::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("header_bytes_") != "") attrs.HeaderBytes(attrParser.ConvStrToInt64(attrParser.GetAttribute("header_bytes_")));
-				if (attrParser.GetAttribute("footer_bytes_") != "") attrs.FooterBytes(attrParser.ConvStrToInt64(attrParser.GetAttribute("footer_bytes_")));
-				if (attrParser.GetAttribute("hop_bytes_") != "") attrs.HopBytes(attrParser.ConvStrToInt64(attrParser.GetAttribute("hop_bytes_")));
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("header_bytes_") != "") attrs = attrs.HeaderBytes(attrParser.ConvStrToInt64(attrParser.GetAttribute("header_bytes_")));
+				if (attrParser.GetAttribute("footer_bytes_") != "") attrs = attrs.FooterBytes(attrParser.ConvStrToInt64(attrParser.GetAttribute("footer_bytes_")));
+				if (attrParser.GetAttribute("hop_bytes_") != "") attrs = attrs.HopBytes(attrParser.ConvStrToInt64(attrParser.GetAttribute("hop_bytes_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -131,8 +132,8 @@ void* Create_IdentityReader(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "IdentityReader::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -323,7 +324,7 @@ void* Create_MergeV2Checkpoints(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "MergeV2Checkpoints::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("delete_old_dirs_") != "") attrs.DeleteOldDirs(attrParser.ConvStrToBool(attrParser.GetAttribute("delete_old_dirs_")));
+				if (attrParser.GetAttribute("delete_old_dirs_") != "") attrs = attrs.DeleteOldDirs(attrParser.ConvStrToBool(attrParser.GetAttribute("delete_old_dirs_")));
 			}
 		}
 		else
@@ -397,6 +398,11 @@ void* Create_ReadFile(std::string id, Json::Value pInputItem) {
 							pfilename = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if(!strPinInitial.empty())
+						pfilename = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
 				}
 			}
 			else
@@ -1183,7 +1189,7 @@ void* Create_Restore(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Restore::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("preferred_shard_") != "") attrs.PreferredShard(attrParser.ConvStrToInt64(attrParser.GetAttribute("preferred_shard_")));
+				if (attrParser.GetAttribute("preferred_shard_") != "") attrs = attrs.PreferredShard(attrParser.ConvStrToInt64(attrParser.GetAttribute("preferred_shard_")));
 			}
 		}
 		else
@@ -1336,7 +1342,7 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "RestoreSlice::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("preferred_shard_") != "") attrs.PreferredShard(attrParser.ConvStrToInt64(attrParser.GetAttribute("preferred_shard_")));
+				if (attrParser.GetAttribute("preferred_shard_") != "") attrs = attrs.PreferredShard(attrParser.ConvStrToInt64(attrParser.GetAttribute("preferred_shard_")));
 			}
 		}
 		else
@@ -1369,7 +1375,7 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 	Output *pprefix = nullptr;
 	Output *ptensor_names = nullptr;
 	Output *pshape_and_slices = nullptr;
-	DataTypeSlice dtypes;
+	std::vector<tensorflow::DataType> vDT;
 	RestoreSlice::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1472,7 +1478,8 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				dtypes = GetDatatypeSliceFromInitial(strPinInitial);
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
 			}
 			else
 			{
@@ -1487,9 +1494,11 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope && pprefix && ptensor_names && pshape_and_slices)
+	if (pScope && pprefix && ptensor_names && pshape_and_slices && vDT.size() > 0)
 	{
+		DataTypeSlice dtypes(vDT);
 		pRestoreV2 = new RestoreV2(*pScope, *pprefix, *ptensor_names, *pshape_and_slices, dtypes);
+		vDT.clear();
 		ObjectInfo* pObj = AddObjectMap(pRestoreV2, id, SYMBOL_RESTOREV2, "RestoreV2", pInputItem);
 		if (pObj)
 		{
@@ -1517,6 +1526,7 @@ void* Create_Save(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -1554,6 +1564,11 @@ void* Create_Save(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pfilename = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1577,6 +1592,11 @@ void* Create_Save(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						ptensor_names = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1598,6 +1618,13 @@ void* Create_Save(std::string id, Json::Value pInputItem) {
 						{
 							pdata = (OutputList*)pOutputObj->pOutput;
 						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+					{
+						pdata = (OutputList*)Create_StrToOutputList(*m_pScope, strAutoPinType, "", strPinInitial);
 					}
 				}
 			}
@@ -2198,9 +2225,9 @@ void* Create_TFRecordReader(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "TFRecordReader::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
-				if (attrParser.GetAttribute("compression_type_") != "") attrs.CompressionType(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("compression_type_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("compression_type_") != "") attrs = attrs.CompressionType(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("compression_type_")));
 			}
 		}
 		else
@@ -2264,9 +2291,9 @@ void* Create_TextLineReader(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "TextLineReader::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("skip_header_lines_") != "") attrs.SkipHeaderLines(attrParser.ConvStrToInt64(attrParser.GetAttribute("skip_header_lines_")));
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("skip_header_lines_") != "") attrs = attrs.SkipHeaderLines(attrParser.ConvStrToInt64(attrParser.GetAttribute("skip_header_lines_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -2330,8 +2357,8 @@ void* Create_WholeFileReader(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "WholeFileReader::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else

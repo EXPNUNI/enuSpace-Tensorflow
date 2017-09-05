@@ -392,11 +392,10 @@ DataType GetDatatypeFromInitial(std::string strinitial)
 	return dt;
 }
 
-DataTypeSlice GetDatatypeSliceFromInitial(std::string strinitial)
+bool GetDatatypeSliceFromInitial(std::string strinitial, std::vector<DataType>& arrayvals)
 {
 	strinitial = trim(strinitial);
 	std::string val;
-	std::vector<DataType> arrayvals;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
 	{
 		if (strinitial[i] == ';' || strinitial[i] == ',')
@@ -424,9 +423,7 @@ DataTypeSlice GetDatatypeSliceFromInitial(std::string strinitial)
 		if (dtype != DT_INVALID)
 			arrayvals.push_back(dtype);
 	}
-	DataTypeSlice DT(arrayvals);
-	arrayvals.clear();
-	return DT;
+	return true;
 }
 
 bool GetArrayShapeFromInitial(std::string strinitial, std::vector<PartialTensorShape>& vec_PTS)
@@ -533,18 +530,60 @@ TensorShape GetShapeFromInitial(std::string strinitial)
 	//{2, 2, 3}
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
 	{
-		if (strinitial[i] == ',')
+		if (strinitial[0] == '[')
 		{
-			iDimSize = iDimSize * stoll (val);
-			val = "";
-		}
-		if (strinitial[i] == '{' || strinitial[i] == '}')
-		{
-
+			if (strinitial[i] == '[')
+			{
+				val = "";
+			}
+			else if (strinitial[i] == ']')
+			{
+				if (val != "")
+				{
+					iDimSize = iDimSize * stoll(val);
+					val = "";
+				}
+			}
+			else if (strinitial[i] == ';')
+			{
+				if (val != "")
+				{
+					iDimSize = iDimSize * stoll(val);
+					val = "";
+				}
+			}
+			else
+			{
+				val = val + strinitial[i];
+			}
 		}
 		else
 		{
-			val = val + strinitial[i];
+			if (strinitial[i] == ';' || strinitial[i] == ',')
+			{
+				if (val != "")
+				{
+					iDimSize = iDimSize * stoll(val);
+					val = "";
+				}
+				
+			}
+			else if (strinitial[i] == '}')
+			{
+				if (val != "")
+				{
+					iDimSize = iDimSize * stoll(val);
+					val = "";
+				}
+			}
+			else if (strinitial[i] == '{')
+			{
+				val = "";
+			}
+			else
+			{
+				val = val + strinitial[i];
+			}
 		}
 	}
 
@@ -557,19 +596,64 @@ PartialTensorShape GetPartialShapeFromInitial(std::string strinitial)
 	std::vector<int64> arraydims;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
 	{
-		if (strinitial[i] == ';' || strinitial[i] == ',')
+		if (strinitial[0] == '[')
 		{
-			arraydims.push_back(stoll(val));
-			val = "";
-			continue;
-		}
-		if (strinitial[i] == '{' || strinitial[i] == '}')
-		{
-
+			if (strinitial[i] == '[')
+			{
+				val = "";
+			}
+			else if (strinitial[i] == ']')
+			{
+				if (val!="")
+				{
+					arraydims.push_back(stoll(val));
+					val = "";
+				}
+				
+			}
+			else if (strinitial[i] == ';')
+			{
+				if (val !="")
+				{
+					arraydims.push_back(stoll(val));
+					val = "";
+				}
+			
+			}
+			else
+			{
+				val = val + strinitial[i];
+			}
 		}
 		else
 		{
-			val = val + strinitial[i];
+			if (strinitial[i] == ';' || strinitial[i] == ',')
+			{
+				if (val != 0)
+				{
+					arraydims.push_back(stoll(val));
+					val = "";
+				}
+				
+				
+			}
+			else if (strinitial[i] == '}')
+			{
+				if (val != 0)
+				{
+					arraydims.push_back(stoll(val));
+					val = "";
+				}
+				
+			}
+			else if (strinitial[i] == '{')
+			{
+				val = "";
+			}
+			else
+			{
+				val = val + strinitial[i];
+			}
 		}
 	}
 
