@@ -1045,7 +1045,7 @@ void* Create_Dequantize(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("mode_") != "")
 				{
-					attrs.Mode(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("mode_")));
+					attrs.mode_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("mode_"));
 				}
 			}
 		}

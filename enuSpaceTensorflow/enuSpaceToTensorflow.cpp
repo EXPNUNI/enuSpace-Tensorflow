@@ -556,6 +556,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#BroadcastDynamicShape", SYMBOL_BROADCASTDYNAMICSHAPE));
 	m_SymbolList.insert(std::pair<std::string, int>("#CheckNumerics", SYMBOL_CHECKNUMERICS));
 	m_SymbolList.insert(std::pair<std::string, int>("#Concat", SYMBOL_CONCAT));
+	m_SymbolList.insert(std::pair<std::string, int>("#DebugGradientIdentity", SYMBOL_DEBUGGRADIENTIDENTITY));
 	m_SymbolList.insert(std::pair<std::string, int>("#DepthToSpace", SYMBOL_DEPTHTOSPACE));
 	m_SymbolList.insert(std::pair<std::string, int>("#Dequantize", SYMBOL_DEQUANTIZE));
 	m_SymbolList.insert(std::pair<std::string, int>("#Diag", SYMBOL_DIAG));
@@ -571,6 +572,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#FakeQuantWithMinMaxVarsPerChannelGradient", SYMBOL_FAKEQUANTWITHMINMAXVARSPERCHANNELGRADIENT));
 	m_SymbolList.insert(std::pair<std::string, int>("#Fill", SYMBOL_FILL));
 	m_SymbolList.insert(std::pair<std::string, int>("#Gather", SYMBOL_GATHER));
+	m_SymbolList.insert(std::pair<std::string, int>("#GatherV2", SYMBOL_GATHERV2));
 	m_SymbolList.insert(std::pair<std::string, int>("#GatherNd", SYMBOL_GATHERND));
 	m_SymbolList.insert(std::pair<std::string, int>("#Identity", SYMBOL_IDENTITY));
 	m_SymbolList.insert(std::pair<std::string, int>("#ImmutableConst", SYMBOL_IMMUTABLECONST));
@@ -1039,6 +1041,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_BROADCASTDYNAMICSHAPE: {		pCreate = Create_BroadcastDynamicShape(id, pInputItem);	break;	}
 	case SYMBOL_CHECKNUMERICS: {		pCreate = Create_CheckNumerics(id, pInputItem);	break;	}
 	case SYMBOL_CONCAT: {		pCreate = Create_Concat(id, pInputItem);	break;	}
+	case SYMBOL_DEBUGGRADIENTIDENTITY: {		pCreate = Create_DebugGradientIdentity(id, pInputItem);	break;	}
 	case SYMBOL_DEPTHTOSPACE: {		pCreate = Create_DepthToSpace(id, pInputItem);	break;	}
 	case SYMBOL_DEQUANTIZE: {		pCreate = Create_Dequantize(id, pInputItem);	break;	}
 	case SYMBOL_DIAG: {		pCreate = Create_Diag(id, pInputItem);	break;	}
@@ -1054,6 +1057,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_FAKEQUANTWITHMINMAXVARSPERCHANNELGRADIENT: {		pCreate = Create_FakeQuantWithMinMaxVarsPerChannelGradient(id, pInputItem);	break;	}
 	case SYMBOL_FILL: {		pCreate = Create_Fill(id, pInputItem);	break;	}
 	case SYMBOL_GATHER: {		pCreate = Create_Gather(id, pInputItem);	break;	}
+	case SYMBOL_GATHERV2: {		pCreate = Create_GatherV2(id, pInputItem);	break;	}
 	case SYMBOL_GATHERND: {		pCreate = Create_GatherNd(id, pInputItem);	break;	}
 	case SYMBOL_IDENTITY: {		pCreate = Create_Identity(id, pInputItem);	break;	}
 	case SYMBOL_IMMUTABLECONST: {		pCreate = Create_ImmutableConst(id, pInputItem);	break;	}
