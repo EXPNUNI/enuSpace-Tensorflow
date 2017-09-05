@@ -455,8 +455,8 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "CropAndResize::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("method_") != "") attrs.Method(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_")));
-				if (attrParser.GetAttribute("extrapolation_value_") != "") attrs.ExtrapolationValue(attrParser.ConvStrToFloat(attrParser.GetAttribute("extrapolation_value_")));
+				if (attrParser.GetAttribute("method_") != "") attrs = attrs.Method(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_")));
+				if (attrParser.GetAttribute("extrapolation_value_") != "") attrs = attrs.ExtrapolationValue(attrParser.ConvStrToFloat(attrParser.GetAttribute("extrapolation_value_")));
 			}
 		}
 		else
@@ -616,7 +616,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "CropAndResizeGradBoxes::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("method_") != "") attrs.Method(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_")));
+				if (attrParser.GetAttribute("method_") != "") attrs = attrs.Method(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_")));
 			}
 		}
 		else
@@ -793,7 +793,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "CropAndResizeGradImage::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("method_") != "") attrs.Method(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_")));
+				if (attrParser.GetAttribute("method_") != "") attrs = attrs.Method(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_")));
 			}
 		}
 		else
@@ -960,12 +960,12 @@ void* Create_DecodeJpeg(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "DecodeJpeg::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("channels_") != "") attrs.Channels(attrParser.ConvStrToInt64(attrParser.GetAttribute("channels_")));
-				if (attrParser.GetAttribute("ratio_") != "") attrs.Channels(attrParser.ConvStrToInt64(attrParser.GetAttribute("ratio_")));
-				if (attrParser.GetAttribute("fancy_upscaling_") != "") attrs.FancyUpscaling(attrParser.ConvStrToBool(attrParser.GetAttribute("fancy_upscaling_")));
-				if (attrParser.GetAttribute("try_recover_truncated_") != "") attrs.TryRecoverTruncated(attrParser.ConvStrToBool(attrParser.GetAttribute("try_recover_truncated_")));
-				if (attrParser.GetAttribute("acceptable_fraction_") != "") attrs.AcceptableFraction(attrParser.ConvStrToFloat(attrParser.GetAttribute("acceptable_fraction_")));
-				if (attrParser.GetAttribute("dct_method_") != "") attrs.DctMethod(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("dct_method_")));
+				if (attrParser.GetAttribute("channels_") != "") attrs = attrs.Channels(attrParser.ConvStrToInt64(attrParser.GetAttribute("channels_")));
+				if (attrParser.GetAttribute("ratio_") != "") attrs = attrs.Channels(attrParser.ConvStrToInt64(attrParser.GetAttribute("ratio_")));
+				if (attrParser.GetAttribute("fancy_upscaling_") != "") attrs = attrs.FancyUpscaling(attrParser.ConvStrToBool(attrParser.GetAttribute("fancy_upscaling_")));
+				if (attrParser.GetAttribute("try_recover_truncated_") != "") attrs = attrs.TryRecoverTruncated(attrParser.ConvStrToBool(attrParser.GetAttribute("try_recover_truncated_")));
+				if (attrParser.GetAttribute("acceptable_fraction_") != "") attrs = attrs.AcceptableFraction(attrParser.ConvStrToFloat(attrParser.GetAttribute("acceptable_fraction_")));
+				if (attrParser.GetAttribute("dct_method_") != "") attrs = attrs.DctMethod(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("dct_method_")));
 			}
 		}
 		else
@@ -1053,8 +1053,8 @@ void* Create_DecodePng(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "DecodePng::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("channels_") != "") attrs.Channels(attrParser.ConvStrToInt64(attrParser.GetAttribute("channels_")));
-				if (attrParser.GetAttribute("dtype_") != "") attrs.Channels(attrParser.ConvStrToDataType(attrParser.GetAttribute("dtype_")));
+				if (attrParser.GetAttribute("channels_") != "") attrs = attrs.Channels(attrParser.ConvStrToInt64(attrParser.GetAttribute("channels_")));
+				if (attrParser.GetAttribute("dtype_") != "") attrs = attrs.Channels(attrParser.ConvStrToDataType(attrParser.GetAttribute("dtype_")));
 			}
 		}
 		else
@@ -1233,6 +1233,10 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+
+				}
 			}
 			else
 			{
@@ -1245,15 +1249,15 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "EncodeJpeg::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("format_") != "") attrs.Format(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("format_")));
-				if (attrParser.GetAttribute("quality_") != "") attrs.Quality(attrParser.ConvStrToInt64(attrParser.GetAttribute("quality_")));
-				if (attrParser.GetAttribute("progressive_") != "") attrs.Progressive(attrParser.ConvStrToBool(attrParser.GetAttribute("progressive_")));
-				if (attrParser.GetAttribute("optimize_size_") != "") attrs.OptimizeSize(attrParser.ConvStrToBool(attrParser.GetAttribute("optimize_size_")));
-				if (attrParser.GetAttribute("chroma_downsampling_") != "") attrs.ChromaDownsampling(attrParser.ConvStrToBool(attrParser.GetAttribute("chroma_downsampling_")));
-				if (attrParser.GetAttribute("density_unit_") != "") attrs.DensityUnit(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("density_unit_")));
-				if (attrParser.GetAttribute("x_density_") != "") attrs.XDensity(attrParser.ConvStrToInt64(attrParser.GetAttribute("x_density_")));
-				if (attrParser.GetAttribute("y_density_") != "") attrs.YDensity(attrParser.ConvStrToInt64(attrParser.GetAttribute("y_density_")));
-				if (attrParser.GetAttribute("xmp_metadata_") != "") attrs.XmpMetadata(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("xmp_metadata_")));
+				if (attrParser.GetAttribute("format_") != "") attrs = attrs.Format(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("format_")));
+				if (attrParser.GetAttribute("quality_") != "") attrs = attrs.Quality(attrParser.ConvStrToInt64(attrParser.GetAttribute("quality_")));
+				if (attrParser.GetAttribute("progressive_") != "") attrs = attrs.Progressive(attrParser.ConvStrToBool(attrParser.GetAttribute("progressive_")));
+				if (attrParser.GetAttribute("optimize_size_") != "") attrs = attrs.OptimizeSize(attrParser.ConvStrToBool(attrParser.GetAttribute("optimize_size_")));
+				if (attrParser.GetAttribute("chroma_downsampling_") != "") attrs = attrs.ChromaDownsampling(attrParser.ConvStrToBool(attrParser.GetAttribute("chroma_downsampling_")));
+				if (attrParser.GetAttribute("density_unit_") != "") attrs = attrs.DensityUnit(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("density_unit_")));
+				if (attrParser.GetAttribute("x_density_") != "") attrs = attrs.XDensity(attrParser.ConvStrToInt64(attrParser.GetAttribute("x_density_")));
+				if (attrParser.GetAttribute("y_density_") != "") attrs = attrs.YDensity(attrParser.ConvStrToInt64(attrParser.GetAttribute("y_density_")));
+				if (attrParser.GetAttribute("xmp_metadata_") != "") attrs = attrs.XmpMetadata(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("xmp_metadata_")));
 			}
 		}
 		else
@@ -1341,7 +1345,7 @@ void* Create_EncodePng(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "EncodePng::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("compression_") != "") attrs.Compression(attrParser.ConvStrToInt64(attrParser.GetAttribute("compression_")));
+				if (attrParser.GetAttribute("compression_") != "") attrs = attrs.Compression(attrParser.ConvStrToInt64(attrParser.GetAttribute("compression_")));
 			}
 		}
 		else
@@ -1477,9 +1481,9 @@ void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ExtractGlimpse::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("centered_") != "") attrs.Centered(attrParser.ConvStrToBool(attrParser.GetAttribute("centered_")));
-				if (attrParser.GetAttribute("normalized_") != "") attrs.Normalized(attrParser.ConvStrToBool(attrParser.GetAttribute("normalized_")));
-				if (attrParser.GetAttribute("uniform_noise_") != "") attrs.UniformNoise(attrParser.ConvStrToBool(attrParser.GetAttribute("uniform_noise_")));
+				if (attrParser.GetAttribute("centered_") != "") attrs = attrs.Centered(attrParser.ConvStrToBool(attrParser.GetAttribute("centered_")));
+				if (attrParser.GetAttribute("normalized_") != "") attrs = attrs.Normalized(attrParser.ConvStrToBool(attrParser.GetAttribute("normalized_")));
+				if (attrParser.GetAttribute("uniform_noise_") != "") attrs = attrs.UniformNoise(attrParser.ConvStrToBool(attrParser.GetAttribute("uniform_noise_")));
 			}
 		}
 		else
@@ -1694,7 +1698,7 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "NonMaxSuppression::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("timeout_ms_") != "") attrs.IouThreshold(attrParser.ConvStrToFloat(attrParser.GetAttribute("iou_threshold_")));
+				if (attrParser.GetAttribute("timeout_ms_") != "") attrs = attrs.IouThreshold(attrParser.ConvStrToFloat(attrParser.GetAttribute("iou_threshold_")));
 			}
 		}
 		else
@@ -1885,7 +1889,7 @@ void* Create_ResizeArea(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ResizeArea::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("align_corners_") != "") attrs.AlignCorners(attrParser.ConvStrToBool(attrParser.GetAttribute("align_corners_")));
+				if (attrParser.GetAttribute("align_corners_") != "") attrs = attrs.AlignCorners(attrParser.ConvStrToBool(attrParser.GetAttribute("align_corners_")));
 			}
 		}
 		else
@@ -1997,7 +2001,7 @@ void* Create_ResizeBicubic(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ResizeBicubic::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("align_corners_") != "") attrs.AlignCorners(attrParser.ConvStrToBool(attrParser.GetAttribute("align_corners_")));
+				if (attrParser.GetAttribute("align_corners_") != "") attrs = attrs.AlignCorners(attrParser.ConvStrToBool(attrParser.GetAttribute("align_corners_")));
 			}
 		}
 		else
@@ -2109,7 +2113,7 @@ void* Create_ResizeBilinear(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ResizeBilinear::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("align_corners_") != "") attrs.AlignCorners(attrParser.ConvStrToBool(attrParser.GetAttribute("align_corners_")));
+				if (attrParser.GetAttribute("align_corners_") != "") attrs = attrs.AlignCorners(attrParser.ConvStrToBool(attrParser.GetAttribute("align_corners_")));
 			}
 		}
 		else
@@ -2221,7 +2225,7 @@ void* Create_ResizeNearestNeighbor(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ResizeNearestNeighbor::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("align_corners_") != "") attrs.AlignCorners(attrParser.ConvStrToBool(attrParser.GetAttribute("align_corners_")));
+				if (attrParser.GetAttribute("align_corners_") != "") attrs = attrs.AlignCorners(attrParser.ConvStrToBool(attrParser.GetAttribute("align_corners_")));
 			}
 		}
 		else
@@ -2333,13 +2337,27 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 			if (strPinInterface == "SampleDistortedBoundingBox::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("seed_") != "") attrs.Seed(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed_")));
-				if (attrParser.GetAttribute("seed2_") != "") attrs.Seed2(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed2_")));
-				if (attrParser.GetAttribute("min_object_covered_") != "") attrs.MinObjectCovered(attrParser.ConvStrToFloat(attrParser.GetAttribute("min_object_covered_")));
-				if (attrParser.GetAttribute("aspect_ratio_range_") != "") attrs.AspectRatioRange(attrParser.ConvStrToArraySlicefloat(attrParser.GetAttribute("aspect_ratio_range_")));
-				if (attrParser.GetAttribute("area_range_") != "") attrs.AreaRange(attrParser.ConvStrToArraySlicefloat(attrParser.GetAttribute("area_range_")));
-				if (attrParser.GetAttribute("max_attempts_") != "") attrs.MaxAttempts(attrParser.ConvStrToInt64(attrParser.GetAttribute("max_attempts_")));
-				if (attrParser.GetAttribute("use_image_if_no_bounding_boxes_") != "") attrs.UseImageIfNoBoundingBoxes(attrParser.ConvStrToBool(attrParser.GetAttribute("use_image_if_no_bounding_boxes_")));
+				if (attrParser.GetAttribute("seed_") != "") attrs = attrs.Seed(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed_")));
+				if (attrParser.GetAttribute("seed2_") != "") attrs = attrs.Seed2(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed2_")));
+				if (attrParser.GetAttribute("min_object_covered_") != "") attrs = attrs.MinObjectCovered(attrParser.ConvStrToFloat(attrParser.GetAttribute("min_object_covered_")));
+				if (attrParser.GetAttribute("aspect_ratio_range_") != "")
+				{
+					std::vector<float> fVec;
+					if (GetFloatVectorFromInitial(attrParser.GetAttribute("aspect_ratio_range_"), fVec))
+					{
+						attrs = attrs.AspectRatioRange(fVec);
+					}
+				}
+				if (attrParser.GetAttribute("area_range_") != "")
+				{
+					std::vector<float> fVec;
+					if (GetFloatVectorFromInitial(attrParser.GetAttribute("area_range_"), fVec))
+					{
+						attrs = attrs.AreaRange(fVec);
+					}
+				}
+				if (attrParser.GetAttribute("max_attempts_") != "") attrs = attrs.MaxAttempts(attrParser.ConvStrToInt64(attrParser.GetAttribute("max_attempts_")));
+				if (attrParser.GetAttribute("use_image_if_no_bounding_boxes_") != "") attrs = attrs.UseImageIfNoBoundingBoxes(attrParser.ConvStrToBool(attrParser.GetAttribute("use_image_if_no_bounding_boxes_")));
 			}
 		}
 		else
