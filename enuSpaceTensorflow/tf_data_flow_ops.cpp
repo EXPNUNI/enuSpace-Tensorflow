@@ -27,6 +27,7 @@ void* Create_AccumulatorApplyGradient(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -153,6 +154,7 @@ void* Create_AccumulatorNumAccumulated(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -233,6 +235,7 @@ void* Create_AccumulatorSetGlobalStep(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -337,6 +340,7 @@ void* Create_AccumulatorTakeGradient(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -447,7 +451,7 @@ void* Create_AccumulatorTakeGradient(std::string id, Json::Value pInputItem) {
 void* Create_Barrier(std::string id, Json::Value pInputItem) {
 	Barrier* pBarrier = nullptr;
 	Scope* pScope = nullptr;
-	DataTypeSlice component_types;
+	std::vector<tensorflow::DataType> vDT;
 	Barrier::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -457,6 +461,7 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -481,7 +486,8 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInitial(strPinInitial);
+				if(!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
 			}
 			else
 			{
@@ -495,10 +501,17 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				//attrParser.ConvStrToArraySliceTensorshape(attrParser.GetAttribute("shapes_"));
-				if (attrParser.GetAttribute("shapes_") != "") attrs.Shapes(attrParser.GetValue_arraySliceTensorshape("shapes_"));
-				if (attrParser.GetAttribute("capacity_") != "") attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("shapes_") != "")
+				{
+					std::vector<PartialTensorShape> v_PTS;
+					if (attrParser.GetValue_arraySliceTensorshape("shapes_", v_PTS))
+					{
+						attrs = attrs.Shapes(v_PTS);
+					}
+				}
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -508,9 +521,11 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && vDT.size() > 0)
 	{
+		DataTypeSlice component_types(vDT);
 		pBarrier = new Barrier(*pScope, component_types, attrs);
+		vDT.clear();
 		ObjectInfo* pObj = AddObjectMap(pBarrier, id, SYMBOL_BARRIER, "Barrier", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pBarrier->handle, OUTPUT_TYPE_OUTPUT, "handle");
@@ -536,6 +551,7 @@ void* Create_BarrierClose(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -584,7 +600,7 @@ void* Create_BarrierClose(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "BarrierClose::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("CancelPendingEnqueues") != "") attrs.CancelPendingEnqueues(attrParser.ConvStrToBool(attrParser.GetAttribute("CancelPendingEnqueues")));
+				if (attrParser.GetAttribute("CancelPendingEnqueues") != "") attrs = attrs.CancelPendingEnqueues(attrParser.ConvStrToBool(attrParser.GetAttribute("CancelPendingEnqueues")));
 			}
 		}
 		else
@@ -624,6 +640,7 @@ void* Create_BarrierIncompleteSize(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -706,6 +723,7 @@ void* Create_BarrierInsertMany(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -843,6 +861,7 @@ void* Create_BarrierReadySize(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -915,7 +934,7 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *phandle = nullptr;
 	Output *pnum_elements = nullptr;
-	DataTypeSlice component_types;
+	std::vector<tensorflow::DataType> vDT;
 	BarrierTakeMany::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -925,6 +944,7 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -995,7 +1015,8 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInitial(strPinInitial);
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
 			}
 			else
 			{
@@ -1008,9 +1029,9 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "BarrierTakeMany::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("allow_small_batch_") != "") attrs.AllowSmallBatch(attrParser.ConvStrToBool(attrParser.GetAttribute("allow_small_batch_")));
-				if (attrParser.GetAttribute("wait_for_incomplete_") != "") attrs.WaitForIncomplete(attrParser.ConvStrToBool(attrParser.GetAttribute("wait_for_incomplete_")));
-				if (attrParser.GetAttribute("timeout_ms_") != "") attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
+				if (attrParser.GetAttribute("allow_small_batch_") != "") attrs = attrs.AllowSmallBatch(attrParser.ConvStrToBool(attrParser.GetAttribute("allow_small_batch_")));
+				if (attrParser.GetAttribute("wait_for_incomplete_") != "") attrs = attrs.WaitForIncomplete(attrParser.ConvStrToBool(attrParser.GetAttribute("wait_for_incomplete_")));
+				if (attrParser.GetAttribute("timeout_ms_") != "") attrs = attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
 			}
 		}
 		else
@@ -1020,9 +1041,11 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope && phandle && pnum_elements)
+	if (pScope && phandle && pnum_elements && vDT.size() > 0)
 	{
+		DataTypeSlice component_types(vDT);
 		pBarrierTakeMany = new BarrierTakeMany(*pScope, *phandle, *pnum_elements, component_types, attrs);
+		vDT.clear();
 		ObjectInfo* pObj = AddObjectMap(pBarrierTakeMany, id, SYMBOL_BARRIERTAKEMANY, "BarrierTakeMany", pInputItem);
 		if (pObj)
 		{
@@ -1053,6 +1076,7 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1106,8 +1130,8 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "PriorityQueue::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -1144,6 +1168,7 @@ void* Create_DeleteSessionTensor(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1223,6 +1248,7 @@ void* Create_DynamicPartition(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1282,6 +1308,13 @@ void* Create_DynamicPartition(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+					{
+						ppartitions = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+					}
+				}
 			}
 			else
 			{
@@ -1293,7 +1326,8 @@ void* Create_DynamicPartition(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "int64")
 			{
-				num_partitions = stoll(strPinInitial);
+				if(!strPinInitial.empty())
+					num_partitions = stoll(strPinInitial);
 			}
 			else
 			{
@@ -1310,10 +1344,21 @@ void* Create_DynamicPartition(std::string id, Json::Value pInputItem) {
 
 	if (pScope && pdata && ppartitions)
 	{
-		pDynamicPartition = new DynamicPartition(*pScope, *pdata, *ppartitions, num_partitions);
-		ObjectInfo* pObj = AddObjectMap(pDynamicPartition, id, SYMBOL_DYNAMICPARTITION, "DynamicPartition", pInputItem);
-		if (pObj)
-			AddOutputInfo(pObj, &pDynamicPartition->outputs, OUTPUT_TYPE_OUTPUTLIST, "outputs");
+		if (pScope->ok())
+		{
+			pDynamicPartition = new DynamicPartition(*pScope, *pdata, *ppartitions, num_partitions);
+			ObjectInfo* pObj = AddObjectMap(pDynamicPartition, id, SYMBOL_DYNAMICPARTITION, "DynamicPartition", pInputItem);
+			if (pObj)
+			{
+				AddOutputInfo(pObj, &pDynamicPartition->outputs, OUTPUT_TYPE_OUTPUTLIST, "outputs");
+			}
+
+			if (pScope->ok() == false)
+			{
+				std::string msg = string_format("error : Create DynamicPartition(%s) Object create failed. (Scope fail)", id.c_str());
+				PrintMessage(msg);
+			}
+		}
 	}
 	else
 	{
@@ -1336,6 +1381,7 @@ void* Create_DynamicStitch(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1427,7 +1473,8 @@ void* Create_DynamicStitch(std::string id, Json::Value pInputItem) {
 void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 	FIFOQueue* pFIFOQueue = nullptr;
 	Scope* pScope = nullptr;
-	DataTypeSlice component_types;
+	DataTypeSlice* pcomponent_types = nullptr;
+	std::vector<tensorflow::DataType> vDT;
 	FIFOQueue::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1437,6 +1484,7 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1461,7 +1509,23 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInitial(strPinInitial);
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pcomponent_types = (DataTypeSlice*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if(!strPinInitial.empty())
+						GetDatatypeSliceFromInitial(strPinInitial, vDT);
+				}
 			}
 			else
 			{
@@ -1475,10 +1539,17 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				//attrParser.ConvStrToArraySliceTensorshape(attrParser.GetAttribute("shapes_"));
-				if (attrParser.GetAttribute("shapes_") != "") attrs.Shapes(attrParser.GetValue_arraySliceTensorshape("shapes_"));
-				if (attrParser.GetAttribute("capacity_") != "") attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("shapes_") != "")
+				{
+					std::vector<PartialTensorShape> v_PTS;
+					if (attrParser.GetValue_arraySliceTensorshape("shapes_", v_PTS))
+					{
+						attrs = attrs.Shapes(v_PTS);
+					}
+				}
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -1488,9 +1559,18 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && (pcomponent_types || vDT.size() > 0))
 	{
-		pFIFOQueue = new FIFOQueue(*pScope, component_types, attrs);
+		DataTypeSlice component_types(vDT);
+		if (pcomponent_types)
+		{
+			pFIFOQueue = new FIFOQueue(*pScope, *pcomponent_types, attrs);
+		}
+		else
+		{
+			pFIFOQueue = new FIFOQueue(*pScope, component_types, attrs);
+		}
+		vDT.clear();
 		ObjectInfo* pObj = AddObjectMap(pFIFOQueue, id, SYMBOL_FIFOQUEUE, "FIFOQueue", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pFIFOQueue->handle, OUTPUT_TYPE_OUTPUT, "handle");
@@ -1515,6 +1595,7 @@ void* Create_GetSessionHandle(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1594,6 +1675,7 @@ void* Create_GetSessionHandleV2(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1674,6 +1756,7 @@ void* Create_GetSessionTensor(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1760,8 +1843,8 @@ void* Create_GetSessionTensor(std::string id, Json::Value pInputItem) {
 void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 	PaddingFIFOQueue* pPaddingFIFOQueue = nullptr;
 	Scope* pScope = nullptr;
-	DataTypeSlice component_types;
 	PaddingFIFOQueue::Attrs attrs;
+	std::vector<tensorflow::DataType> vDT;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1770,6 +1853,7 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1794,7 +1878,8 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInitial(strPinInitial);
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
 			}
 			else
 			{
@@ -1808,10 +1893,17 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				//attrParser.ConvStrToArraySliceTensorshape(attrParser.GetAttribute("shapes_"));
-				if(attrParser.GetAttribute("shapes_") != "") attrs.Shapes(attrParser.GetValue_arraySliceTensorshape("shapes_"));
-				if (attrParser.GetAttribute("capacity_") != "") attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("shapes_") != "")
+				{
+					std::vector<PartialTensorShape> v_PTS;
+					if (attrParser.GetValue_arraySliceTensorshape("shapes_", v_PTS))
+					{
+						attrs = attrs.Shapes(v_PTS);
+					}
+				}
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -1821,9 +1913,11 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && vDT.size() > 0)
 	{
+		DataTypeSlice component_types(vDT);
 		pPaddingFIFOQueue = new PaddingFIFOQueue(*pScope, component_types, attrs);
+		vDT.clear();
 		ObjectInfo* pObj = AddObjectMap(pPaddingFIFOQueue, id, SYMBOL_PADDINGFIFOQUEUE, "PaddingFIFOQueue", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pPaddingFIFOQueue->handle, OUTPUT_TYPE_OUTPUT, "handle");
@@ -1849,6 +1943,7 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1873,7 +1968,9 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<PartialTensorShape>")
 			{
-				shapes = GetArrayShapeFromInitial(strPinInitial);
+				std::vector<PartialTensorShape> vec_PTS;
+				 GetArrayShapeFromInitial(strPinInitial, vec_PTS);
+				 shapes = vec_PTS;
 			}
 			else
 			{
@@ -1886,10 +1983,10 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "PriorityQueue::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("component_types_") != "") attrs.ComponentTypes(attrParser.ConvStrToDataTypeSlice("component_types_"));
-				if (attrParser.GetAttribute("capacity_") != "") attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("component_types_") != "") attrs = attrs.ComponentTypes(attrParser.ConvStrToDataTypeSlice("component_types_"));
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -1927,6 +2024,7 @@ void* Create_QueueClose(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1975,7 +2073,7 @@ void* Create_QueueClose(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "QueueClose::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("cancel_pending_enqueues_") != "") attrs.CancelPendingEnqueues(attrParser.ConvStrToInt64(attrParser.GetAttribute("cancel_pending_enqueues_")));
+				if (attrParser.GetAttribute("cancel_pending_enqueues_") != "") attrs = attrs.CancelPendingEnqueues(attrParser.ConvStrToBool(attrParser.GetAttribute("cancel_pending_enqueues_")));
 			}
 		}
 		else
@@ -2005,7 +2103,7 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 	QueueDequeue* pQueueDequeue = nullptr;
 	Scope* pScope = nullptr;
 	Output* phandle = nullptr;
-	DataTypeSlice component_types;
+	std::vector<tensorflow::DataType> vDT;
 	QueueDequeue::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2015,6 +2113,7 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2062,7 +2161,8 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInitial(strPinInitial);
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
 			}
 			else
 			{
@@ -2075,7 +2175,7 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "QueueDequeue::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("timeout_ms_") != "") attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
+				if (attrParser.GetAttribute("timeout_ms_") != "") attrs = attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
 			}
 		}
 		else
@@ -2085,9 +2185,11 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope && phandle)
+	if (pScope && phandle && vDT.size() > 0)
 	{
+		DataTypeSlice component_types(vDT);
 		pQueueDequeue = new QueueDequeue(*pScope, *phandle, component_types, attrs);
+		vDT.clear();
 		ObjectInfo* pObj = AddObjectMap(pQueueDequeue, id, SYMBOL_QUEUEDEQUEUE, "QueueDequeue", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pQueueDequeue->components, OUTPUT_TYPE_OUTPUTLIST, "components");
@@ -2105,7 +2207,7 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* phandle = nullptr;
 	Output* pn = nullptr;
-	DataTypeSlice component_types;
+	std::vector<tensorflow::DataType> vDT;
 	QueueDequeueMany::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2115,6 +2217,7 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2185,7 +2288,8 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInitial(strPinInitial);
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
 			}
 			else
 			{
@@ -2198,7 +2302,7 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "QueueDequeueMany::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("timeout_ms_") != "") attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
+				if (attrParser.GetAttribute("timeout_ms_") != "") attrs = attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
 			}
 		}
 		else
@@ -2208,9 +2312,11 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope && phandle && pn)
+	if (pScope && phandle && pn && vDT.size() > 0)
 	{
+		DataTypeSlice component_types(vDT);
 		pQueueDequeueMany = new QueueDequeueMany(*pScope, *phandle, *pn, component_types, attrs);
+		vDT.clear();
 		ObjectInfo* pObj = AddObjectMap(pQueueDequeueMany, id, SYMBOL_QUEUEDEQUEUEMANY, "QueueDequeueMany", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pQueueDequeueMany->components, OUTPUT_TYPE_OUTPUTLIST, "components");
@@ -2228,7 +2334,7 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* phandle = nullptr;
 	Output *pn = nullptr;
-	DataTypeSlice component_types;
+	std::vector<tensorflow::DataType> vDT;
 	QueueDequeueUpTo::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2238,6 +2344,7 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2308,7 +2415,8 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInitial(strPinInitial);
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
 			}
 			else
 			{
@@ -2321,7 +2429,7 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "QueueDequeueUpTo::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("timeout_ms_") != "") attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
+				if (attrParser.GetAttribute("timeout_ms_") != "") attrs = attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
 			}
 		}
 		else
@@ -2331,9 +2439,11 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope && phandle && pn)
+	if (pScope && phandle && pn && vDT.size() > 0)
 	{
+		DataTypeSlice component_types(vDT);
 		pQueueDequeueUpTo = new QueueDequeueUpTo(*pScope, *phandle, *pn, component_types, attrs);
+		vDT.clear();
 		ObjectInfo* pObj = AddObjectMap(pQueueDequeueUpTo, id, SYMBOL_QUEUEDEQUEUEUPTO, "QueueDequeueUpTo", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pQueueDequeueUpTo->components, OUTPUT_TYPE_OUTPUTLIST, "components");
@@ -2360,6 +2470,7 @@ void* Create_QueueEnqueue(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2431,7 +2542,7 @@ void* Create_QueueEnqueue(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "QueueEnqueue::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("timeout_ms_") != "") attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
+				if (attrParser.GetAttribute("timeout_ms_") != "") attrs = attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
 			}
 		}
 		else
@@ -2446,7 +2557,13 @@ void* Create_QueueEnqueue(std::string id, Json::Value pInputItem) {
 		pQueueEnqueue = new QueueEnqueue(*pScope, *phandle, *components, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQueueEnqueue, id, SYMBOL_QUEUEENQUEUE, "QueueEnqueue", pInputItem);
 		if (pObj)
-			AddOutputInfo(pObj, &pQueueEnqueue->operation, OUTPUT_TYPE_OPERATION, "operation");
+		{
+			
+//			Node* test = pQueueEnqueue->operation.node();
+//			Output* OUT1 = new Output(test);
+			AddOutputInfo(pObj, &pQueueEnqueue->operation, OUTPUT_TYPE_OUTPUT, "operation");
+		}
+			//AddOutputInfo(pObj, &pQueueEnqueue->operation, OUTPUT_TYPE_OPERATION, "operation");
 	}
 	else
 	{
@@ -2470,6 +2587,7 @@ void* Create_QueueEnqueueMany(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2541,7 +2659,7 @@ void* Create_QueueEnqueueMany(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "QueueEnqueueMany::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("timeout_ms_") != "") attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
+				if (attrParser.GetAttribute("timeout_ms_") != "") attrs = attrs.TimeoutMs(attrParser.ConvStrToInt64(attrParser.GetAttribute("timeout_ms_")));
 			}
 		}
 		else
@@ -2578,6 +2696,7 @@ void* Create_QueueSize(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2641,7 +2760,7 @@ void* Create_QueueSize(std::string id, Json::Value pInputItem) {
 void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 	RandomShuffleQueue* pRandomShuffleQueue = nullptr;
 	Scope* pScope = nullptr;
-	DataTypeSlice component_types;
+	std::vector<tensorflow::DataType> vDT;
 	RandomShuffleQueue::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2651,6 +2770,7 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2675,7 +2795,8 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				component_types = GetDatatypeSliceFromInitial(strPinInitial);
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
 			}
 			else
 			{
@@ -2688,13 +2809,20 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "RandomShuffleQueue::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("shapes_") != "") attrs.Shapes(attrParser.GetValue_arraySliceTensorshape("shapes_"));
-				if (attrParser.GetAttribute("capacity_") != "") attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
-				if (attrParser.GetAttribute("min_after_dequeue_") != "") attrs.MinAfterDequeue(attrParser.ConvStrToInt64(attrParser.GetAttribute("min_after_dequeue_")));
-				if (attrParser.GetAttribute("seed_") != "") attrs.Seed(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed_")));
-				if (attrParser.GetAttribute("seed2_") != "") attrs.Seed2(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed2_")));
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("shapes_") != "")
+				{
+					std::vector<PartialTensorShape> v_PTS;
+					if (attrParser.GetValue_arraySliceTensorshape("shapes_", v_PTS))
+					{
+						attrs = attrs.Shapes(v_PTS);
+					}
+				}
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("min_after_dequeue_") != "") attrs = attrs.MinAfterDequeue(attrParser.ConvStrToInt64(attrParser.GetAttribute("min_after_dequeue_")));
+				if (attrParser.GetAttribute("seed_") != "") attrs = attrs.Seed(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed_")));
+				if (attrParser.GetAttribute("seed2_") != "") attrs = attrs.Seed2(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed2_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -2704,9 +2832,11 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && vDT.size() > 0)
 	{
+		DataTypeSlice component_types(vDT);
 		pRandomShuffleQueue = new RandomShuffleQueue(*pScope, component_types, attrs);
+		vDT.clear();
 		ObjectInfo* pObj = AddObjectMap(pRandomShuffleQueue, id, SYMBOL_RANDOMSHUFFLEQUEUE, "RandomShuffleQueue", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pRandomShuffleQueue->handle, OUTPUT_TYPE_OUTPUT, "handle");
@@ -2732,6 +2862,7 @@ void* Create_RecordInput(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2769,11 +2900,11 @@ void* Create_RecordInput(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "RecordInput::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("file_random_seed_") != "") attrs.FileRandomSeed(attrParser.ConvStrToInt64(attrParser.GetAttribute("file_random_seed_")));
-				if (attrParser.GetAttribute("file_shuffle_shift_ratio_") != "") attrs.FileShuffleShiftRatio(attrParser.ConvStrToFloat(attrParser.GetAttribute("file_shuffle_shift_ratio_")));
-				if (attrParser.GetAttribute("file_buffer_size_") != "") attrs.FileBufferSize(attrParser.ConvStrToInt64(attrParser.GetAttribute("file_buffer_size_")));
-				if (attrParser.GetAttribute("file_parallelism_") != "") attrs.FileParallelism(attrParser.ConvStrToInt64(attrParser.GetAttribute("file_parallelism_")));
-				if (attrParser.GetAttribute("batch_size_") != "") attrs.BatchSize(attrParser.ConvStrToInt64(attrParser.GetAttribute("batch_size_")));
+				if (attrParser.GetAttribute("file_random_seed_") != "") attrs = attrs.FileRandomSeed(attrParser.ConvStrToInt64(attrParser.GetAttribute("file_random_seed_")));
+				if (attrParser.GetAttribute("file_shuffle_shift_ratio_") != "") attrs = attrs.FileShuffleShiftRatio(attrParser.ConvStrToFloat(attrParser.GetAttribute("file_shuffle_shift_ratio_")));
+				if (attrParser.GetAttribute("file_buffer_size_") != "") attrs = attrs.FileBufferSize(attrParser.ConvStrToInt64(attrParser.GetAttribute("file_buffer_size_")));
+				if (attrParser.GetAttribute("file_parallelism_") != "") attrs = attrs.FileParallelism(attrParser.ConvStrToInt64(attrParser.GetAttribute("file_parallelism_")));
+				if (attrParser.GetAttribute("batch_size_") != "") attrs = attrs.BatchSize(attrParser.ConvStrToInt64(attrParser.GetAttribute("batch_size_")));
 			}
 		}
 		else
@@ -2815,6 +2946,7 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2999,6 +3131,7 @@ void* Create_SparseAccumulatorTakeGradient(std::string id, Json::Value pInputIte
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3121,6 +3254,7 @@ void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3174,8 +3308,8 @@ void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem
 			if (strPinInterface == "SparseConditionalAccumulator::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -3213,6 +3347,7 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3261,8 +3396,8 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Stage::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -3301,6 +3436,7 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3365,10 +3501,10 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "TensorArray::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("element_shape_") != "") attrs.ElementShape(attrParser.GetValue_PartialTensorShape("element_shape_"));
-				if (attrParser.GetAttribute("dynamic_size_") != "") attrs.DynamicSize(attrParser.ConvStrToBool(attrParser.GetAttribute("dynamic_size_")));
-				if (attrParser.GetAttribute("clear_after_read_") != "") attrs.ClearAfterRead(attrParser.ConvStrToBool(attrParser.GetAttribute("clear_after_read_")));
-				if (attrParser.GetAttribute("tensor_array_name_") != "") attrs.TensorArrayName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("tensor_array_name_")));
+				if (attrParser.GetAttribute("element_shape_") != "") attrs = attrs.ElementShape(attrParser.GetValue_PartialTensorShape("element_shape_"));
+				if (attrParser.GetAttribute("dynamic_size_") != "") attrs = attrs.DynamicSize(attrParser.ConvStrToBool(attrParser.GetAttribute("dynamic_size_")));
+				if (attrParser.GetAttribute("clear_after_read_") != "") attrs = attrs.ClearAfterRead(attrParser.ConvStrToBool(attrParser.GetAttribute("clear_after_read_")));
+				if (attrParser.GetAttribute("tensor_array_name_") != "") attrs = attrs.TensorArrayName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("tensor_array_name_")));
 			}
 		}
 		else
@@ -3408,6 +3544,7 @@ void* Create_TensorArrayClose(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3488,6 +3625,7 @@ void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3575,7 +3713,7 @@ void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "TensorArrayConcat::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("element_shape_except0_") != "") attrs.ElementShapeExcept0(attrParser.GetValue_PartialTensorShape("element_shape_except0_"));
+				if (attrParser.GetAttribute("element_shape_except0_") != "") attrs = attrs.ElementShapeExcept0(attrParser.GetValue_PartialTensorShape("element_shape_except0_"));
 			}
 		}
 		else
@@ -3619,6 +3757,7 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3729,7 +3868,7 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "TensorArrayGather::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("element_shape_") != "") attrs.ElementShape(attrParser.GetValue_PartialTensorShape("element_shape_"));
+				if (attrParser.GetAttribute("element_shape_") != "") attrs = attrs.ElementShape(attrParser.GetValue_PartialTensorShape("element_shape_"));
 			}
 		}
 		else
@@ -3770,6 +3909,7 @@ void* Create_TensorArrayGrad(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3888,6 +4028,7 @@ void* Create_TensorArrayRead(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4032,6 +4173,7 @@ void* Create_TensorArrayScatter(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4181,6 +4323,7 @@ void* Create_TensorArraySize(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4286,6 +4429,7 @@ void* Create_TensorArraySplit(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4437,6 +4581,7 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4576,7 +4721,7 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 void* Create_Unstage(std::string id, Json::Value pInputItem) {
 	Unstage* pUnstage = nullptr;
 	Scope* pScope = nullptr;
-	DataTypeSlice dtypes;
+	std::vector<tensorflow::DataType> vDT;
 	Unstage::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4586,6 +4731,7 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4610,7 +4756,8 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				dtypes = GetDatatypeSliceFromInitial(strPinInitial);
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
 			}
 			else
 			{
@@ -4623,8 +4770,8 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Unstage::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
+				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
 			}
 		}
 		else
@@ -4634,9 +4781,11 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope)
+	if (pScope && vDT.size() > 0)
 	{
+		DataTypeSlice dtypes(vDT);
 		pUnstage = new Unstage(*pScope, dtypes, attrs);
+		vDT.clear();
 		ObjectInfo* pObj = AddObjectMap(pUnstage, id, SYMBOL_UNSTAGE, "Unstage", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pUnstage->values, OUTPUT_TYPE_OUTPUTLIST, "values");
