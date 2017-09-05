@@ -37,8 +37,8 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -150,8 +150,8 @@ void* Create_DecodeJSONExample(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -230,8 +230,8 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -352,8 +352,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -482,7 +482,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataTypeSlice")
 			{
-				sparse_types = GetDatatypeSliceFromInitial(strPinInitial);
+				//sparse_types = GetDatatypeSliceFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -494,7 +494,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<PartialTensorShape>")
 			{
-				dense_shapes = GetArrayShapeFromInitial(strPinInitial);
+				//dense_shapes = GetArrayShapeFromInitial(strPinInitial);
 			}
 			else
 			{
@@ -558,8 +558,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -768,7 +768,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 				}
 				if (attrParser.GetAttribute("context_dense_shapes_") != "")
 				{
-					attrs.ContextDenseShapes(attrParser.GetValue_arraySliceTensorshape("context_dense_shapes_"));
+					//attrs.ContextDenseShapes(attrParser.GetValue_arraySliceTensorshape("context_dense_shapes_"));
 				}
 				if (attrParser.GetAttribute("feature_list_sparse_types_") != "")
 				{
@@ -776,7 +776,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 				}
 				if (attrParser.GetAttribute("feature_list_dense_shapes_") != "")
 				{
-					attrs.FeatureListDenseShapes(attrParser.GetValue_arraySliceTensorshape("feature_list_dense_shapes_"));
+					//attrs.FeatureListDenseShapes(attrParser.GetValue_arraySliceTensorshape("feature_list_dense_shapes_"));
 				}
 				
 			}
@@ -843,8 +843,8 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -940,8 +940,8 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}

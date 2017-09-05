@@ -12,6 +12,9 @@
 #include "utility_functions.h"
 #include "enuSpaceToTensorflow.h"
 #include "AttributeParser.h"
+#include "../../../core/util/sparse/sparse_tensor.h"
+
+
 
 void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 	AddManySparseToTensorsMap* pAddManySparseToTensorsMap = nullptr;
@@ -38,8 +41,8 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -124,9 +127,9 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("container_")!="")
-					attrs.Container(attrParser.GetValue_StringPiece("container_"));
+					attrs.container_ =(attrParser.GetValue_StringPiece("container_"));
 				if (attrParser.GetAttribute("shared_name_") != "")
-					attrs.SharedName(attrParser.GetValue_StringPiece("shared_name_"));
+					attrs.shared_name_ =attrParser.GetValue_StringPiece("shared_name_");
 			}
 		}
 		else
@@ -177,8 +180,8 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -277,6 +280,7 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 	if (pScope && sparse_indices && sparse_values && sparse_shape)
 	{
 		pAddSparseToTensorsMap = new AddSparseToTensorsMap(*pScope, *sparse_indices, *sparse_values, *sparse_shape, attrs);
+		
 		ObjectInfo* pObj = AddObjectMap(pAddSparseToTensorsMap, id, SYMBOL_ADDSPARSETOTENSORSMAP, "AddSparseToTensorsMap", pInputItem);
 		if (pObj)
 		{
@@ -314,8 +318,8 @@ void* Create_DeserializeManySparse(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -348,7 +352,7 @@ void* Create_DeserializeManySparse(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "out_type")
+		else if (strPinName == "dtype")
 		{
 			if (strPinInterface == "DataType")
 			{
@@ -414,8 +418,8 @@ void* Create_SerializeManySparse(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -541,8 +545,8 @@ void* Create_SerializeSparse(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -629,12 +633,22 @@ void* Create_SerializeSparse(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && sparse_indices && sparse_values && sparse_shape)
 	{
+		/*
+		auto indices = Const(*pScope, {{0,0},{1,2}});
+		auto values = Const(*pScope, { {2,3} });
+		auto shape = Const(*pScope, { {3,4} });
+		*/
 		pSerializeSparse = new SerializeSparse(*pScope, *sparse_indices, *sparse_values, *sparse_shape);
 		ObjectInfo* pObj = AddObjectMap(pSerializeSparse, id, SYMBOL_SERIALIZESPARSE, "SerializeSparse", pInputItem);
 		if (pObj)
 		{
-			AddOutputInfo(pObj, &pSerializeSparse->serialized_sparse, OUTPUT_TYPE_OUTPUT, "serialized_sparse");
+			if (&pSerializeSparse->serialized_sparse)
+			{
+				AddOutputInfo(pObj, &pSerializeSparse->serialized_sparse, OUTPUT_TYPE_OUTPUT, "serialized_sparse");
+			}
+
 		}
+		
 	}
 	else
 	{
@@ -672,8 +686,8 @@ void* Create_SparseAdd(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -894,8 +908,8 @@ void* Create_SparseAddGrad(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1046,8 +1060,8 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1197,8 +1211,8 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1417,8 +1431,8 @@ void* Create_SparseDenseCwiseAdd(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1568,8 +1582,8 @@ void* Create_SparseDenseCwiseDiv(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1719,8 +1733,8 @@ void* Create_SparseDenseCwiseMul(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -1871,8 +1885,8 @@ void* Create_SparseReduceSum(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2032,8 +2046,8 @@ void* Create_SparseReduceSumSparse(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2193,8 +2207,8 @@ void* Create_SparseReorder(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2321,8 +2335,8 @@ void* Create_SparseReshape(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2409,6 +2423,11 @@ void* Create_SparseReshape(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && input_indices && input_shape && new_shape)
 	{
+		//reshape인경우 input_shape 이 사이즈와 newshape 사이즈와 같다.
+		//input_shape 3*4 이면 12에 한하여 newshape 2*6 or 4*3등을 한다.
+
+
+
 		pSparseReshape = new SparseReshape(*pScope, *input_indices, *input_shape, *new_shape);
 		ObjectInfo* pObj = AddObjectMap(pSparseReshape, id, SYMBOL_SPARSERESHAPE, "SparseReshape", pInputItem);
 		if (pObj)
@@ -2449,8 +2468,8 @@ void* Create_SparseSoftmax(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2579,8 +2598,8 @@ void* Create_SparseSparseMaximum(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2779,8 +2798,8 @@ void* Create_SparseSparseMinimum(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -2978,8 +2997,8 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -3147,8 +3166,8 @@ void* Create_SparseTensorDenseAdd(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -3259,6 +3278,7 @@ void* Create_SparseTensorDenseAdd(std::string id, Json::Value pInputItem) {
 	if (pScope && a_indices &&a_values && a_shape&&b)
 	{
 		pSparseTensorDenseAdd = new SparseTensorDenseAdd(*pScope, *a_indices, *a_values, *a_shape,*b);
+	
 		ObjectInfo* pObj = AddObjectMap(pSparseTensorDenseAdd, id, SYMBOL_SPARSETENSORDENSEADD, "SparseTensorDenseAdd", pInputItem);
 		if (pObj)
 		{
@@ -3299,8 +3319,8 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -3460,10 +3480,33 @@ void* Create_SparseToDense(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "sparse_indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							sparse_indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
 			}
 			else
 			{
@@ -3596,8 +3639,8 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}

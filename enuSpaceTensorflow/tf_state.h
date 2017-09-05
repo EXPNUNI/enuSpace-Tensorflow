@@ -26,5 +26,5 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem);
 void* Create_Variable(std::string id, Json::Value pInputItem);
 
 void* Create_Const(std::string id, Json::Value pInputItem);
-
+void* Create_Const_ex(std::string id, Json::Value pInputItem);
 #endif

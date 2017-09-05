@@ -37,8 +37,8 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -128,8 +128,8 @@ void* Create_DecodeBase64(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -208,8 +208,8 @@ void* Create_EncodeBase64(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -297,8 +297,8 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -409,8 +409,8 @@ void* Create_StringJoin(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -496,8 +496,8 @@ void* Create_StringSplit(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -600,8 +600,8 @@ void* Create_StringToHashBucket(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -691,8 +691,8 @@ void* Create_StringToHashBucketFast(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -784,8 +784,8 @@ void* Create_StringToHashBucketStrong(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -893,8 +893,8 @@ void* Create_Substr(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "scope")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "tensorflow::Scope")
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
 			{
 				pScope = m_pScope;
 			}
@@ -904,7 +904,7 @@ void* Create_Substr(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "pInput")
+		else if (strPinName == "input")
 		{
 			if (strPinInterface == "Input")
 			{
