@@ -100,7 +100,7 @@ void* Create_Assert(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Assert::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("summarize_") != "") attrs.Summarize(attrParser.ConvStrToInt64(attrParser.GetAttribute("summarize_")));
+				if (attrParser.GetAttribute("summarize_") != "") attrs = attrs.Summarize(attrParser.ConvStrToInt64(attrParser.GetAttribute("summarize_")));
 			}
 		}
 		else
@@ -394,9 +394,9 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Assert::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("message_") != "") attrs.Message(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("message_")));
-				if (attrParser.GetAttribute("first_n_") != "") attrs.FirstN(attrParser.ConvStrToInt64(attrParser.GetAttribute("first_n_")));
-				if (attrParser.GetAttribute("summarize_") != "") attrs.Summarize(attrParser.ConvStrToInt64(attrParser.GetAttribute("summarize_")));
+				if (attrParser.GetAttribute("message_") != "") attrs = attrs.Message(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("message_")));
+				if (attrParser.GetAttribute("first_n_") != "") attrs = attrs.FirstN(attrParser.ConvStrToInt64(attrParser.GetAttribute("first_n_")));
+				if (attrParser.GetAttribute("summarize_") != "") attrs = attrs.Summarize(attrParser.ConvStrToInt64(attrParser.GetAttribute("summarize_")));
 			}
 		}
 		else
@@ -587,9 +587,16 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "TensorSummary::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("description_") != "") attrs.Description(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("description_")));
-				if (attrParser.GetAttribute("labels_") != "") attrs.Labels(attrParser.ConvStrToArraySliceString(attrParser.GetAttribute("labels_")));
-				if (attrParser.GetAttribute("display_name_") != "") attrs.DisplayName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("display_name_")));
+				if (attrParser.GetAttribute("description_") != "") attrs = attrs.Description(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("description_")));
+				if (attrParser.GetAttribute("labels_") != "")
+				{
+					std::vector<std::string> sVec;
+					if (GetStringVectorFromInitial(attrParser.GetAttribute("labels_"), sVec))
+					{
+						attrs = attrs.Labels(sVec);
+					}
+				}
+				if (attrParser.GetAttribute("display_name_") != "") attrs = attrs.DisplayName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("display_name_")));
 			}
 		}
 		else
