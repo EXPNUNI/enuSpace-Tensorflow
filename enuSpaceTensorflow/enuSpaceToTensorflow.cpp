@@ -1009,6 +1009,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#Const", SYMBOL_CONST));
 	m_SymbolList.insert(std::pair<std::string, int>("#Input_ex", SYMBOL_INPUT_EX));
 	m_SymbolList.insert(std::pair<std::string, int>("#RandomNormal_ex", SYMBOL_RANDOMNORMAL_EX));
+	m_SymbolList.insert(std::pair<std::string, int>("#Const_ex", SYMBOL_CONST_EX));
 }
 
 int GetSymbolType(std::string strSymbolName)
@@ -1490,6 +1491,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_CONST: {		pCreate = Create_Const(id, pInputItem);	break;	}
 	case SYMBOL_INPUT_EX: {		pCreate = Create_Input_ex(id, pInputItem);	break;	}
 	case SYMBOL_RANDOMNORMAL_EX: {		pCreate = Create_RandomNormal_ex(id, pInputItem);	break;	}
+	case SYMBOL_CONST_EX: {		pCreate = Create_Const_ex(id, pInputItem);	break;	}
 	}
 	return pCreate;
 }

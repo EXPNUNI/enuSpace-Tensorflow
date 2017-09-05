@@ -277,7 +277,7 @@ bool GetStringVectorFromInitial(std::string strinitial, std::vector<std::string>
 	std::string val;
 	for (std::string::size_type i = 0; i < strinitial.size(); i++)
 	{
-		if (strinitial[i] == ';' || strinitial[i] == ',')
+		if (strinitial[i] == ';' )
 		{
 			trim(val);
 			arrayvals.push_back(val);
