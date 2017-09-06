@@ -18,6 +18,8 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 	ObjectInfo* pSessionObj = nullptr;
 	FetchInfo* pFetchInfo = nullptr;
 
+	std::string  device = "/cpu:0";		// device set interface
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -105,12 +107,35 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		// device set interface
+		else if (strPinName == "device")
+		{
+			if (strPinInterface == "device" && !strPinInitial.empty())
+			{
+				device = strPinInitial;
+			}
+		}
 	}
 
 	if (pSession == nullptr)
 	{
 		std::string msg = string_format("error : ClientSession(%s) Object create failed.", id.c_str());
 		PrintMessage(msg);
+	}
+	else
+	{
+		// device set interface
+		GraphDef def;
+		m_pScope->ToGraphDef(&def);
+
+		for (int i = 0; i < def.node_size(); ++i) 
+		{
+			auto node = def.mutable_node(i);
+			if (node->device().empty()) 
+			{
+				node->set_device(device);
+			}
+		}
 	}
 
 	return pSession;
