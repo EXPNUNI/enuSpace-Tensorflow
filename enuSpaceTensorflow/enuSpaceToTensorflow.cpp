@@ -699,6 +699,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#CropAndResize", SYMBOL_CROPANDRESIZE));
 	m_SymbolList.insert(std::pair<std::string, int>("#CropAndResizeGradBoxes", SYMBOL_CROPANDRESIZEGRADBOXES));
 	m_SymbolList.insert(std::pair<std::string, int>("#CropAndResizeGradImage", SYMBOL_CROPANDRESIZEGRADIMAGE));
+	m_SymbolList.insert(std::pair<std::string, int>("#DecodeBmp", SYMBOL_DECODEBMP));
 	m_SymbolList.insert(std::pair<std::string, int>("#DecodeGif", SYMBOL_DECODEGIF));
 	m_SymbolList.insert(std::pair<std::string, int>("#DecodeJpeg", SYMBOL_DECODEJPEG));
 	m_SymbolList.insert(std::pair<std::string, int>("#DecodePng", SYMBOL_DECODEPNG));
@@ -1185,6 +1186,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_CROPANDRESIZE: {		pCreate = Create_CropAndResize(id, pInputItem);	break;	}
 	case SYMBOL_CROPANDRESIZEGRADBOXES: {		pCreate = Create_CropAndResizeGradBoxes(id, pInputItem);	break;	}
 	case SYMBOL_CROPANDRESIZEGRADIMAGE: {		pCreate = Create_CropAndResizeGradImage(id, pInputItem);	break;	}
+	case SYMBOL_DECODEBMP: {		pCreate = Create_DecodeBmp(id, pInputItem);	break;	}
 	case SYMBOL_DECODEGIF: {		pCreate = Create_DecodeGif(id, pInputItem);	break;	}
 	case SYMBOL_DECODEJPEG: {		pCreate = Create_DecodeJpeg(id, pInputItem);	break;	}
 	case SYMBOL_DECODEPNG: {		pCreate = Create_DecodePng(id, pInputItem);	break;	}
@@ -1200,6 +1202,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_RESIZEBILINEAR: {		pCreate = Create_ResizeBilinear(id, pInputItem);	break;	}
 	case SYMBOL_RESIZENEARESTNEIGHBOR: {		pCreate = Create_ResizeNearestNeighbor(id, pInputItem);	break;	}
 	case SYMBOL_SAMPLEDISTORTEDBOUNDINGBOX: {		pCreate = Create_SampleDistortedBoundingBox(id, pInputItem);	break;	}
+	case SYMBOL_SAMPLEDISTORTEDBOUNDINGBOXV2: {		pCreate = Create_SampleDistortedBoundingBoxV2(id, pInputItem);	break;	}
 	case SYMBOL_FIXEDLENGTHRECORDREADER: {		pCreate = Create_FixedLengthRecordReader(id, pInputItem);	break;	}
 	case SYMBOL_IDENTITYREADER: {		pCreate = Create_IdentityReader(id, pInputItem);	break;	}
 	case SYMBOL_MATCHINGFILES: {		pCreate = Create_MatchingFiles(id, pInputItem);	break;	}

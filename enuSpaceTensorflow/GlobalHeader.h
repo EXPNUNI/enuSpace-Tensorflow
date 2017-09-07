@@ -487,6 +487,8 @@
 #define SYMBOL_ISFINITE 		500
 #define SYMBOL_COSH 		501
 #define SYMBOL_SINH 		502
+#define SYMBOL_DECODEBMP 		503
+#define SYMBOL_SAMPLEDISTORTEDBOUNDINGBOXV2		504
 
 //////////////////////////////////////////////////////////////////////////
 //lwh add symbol
