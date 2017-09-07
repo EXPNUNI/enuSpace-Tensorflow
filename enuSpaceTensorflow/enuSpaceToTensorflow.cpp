@@ -585,6 +585,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#OneHot", SYMBOL_ONEHOT));
 	m_SymbolList.insert(std::pair<std::string, int>("#OnesLike", SYMBOL_ONESLIKE));
 	m_SymbolList.insert(std::pair<std::string, int>("#Pad", SYMBOL_PAD));
+	m_SymbolList.insert(std::pair<std::string, int>("#PadV2", SYMBOL_PADV2));
 	m_SymbolList.insert(std::pair<std::string, int>("#ParallelConcat", SYMBOL_PARALLELCONCAT));
 	m_SymbolList.insert(std::pair<std::string, int>("#Placeholder", SYMBOL_PLACEHOLDER));
 //	m_SymbolList.insert(std::pair<std::string, int>("#PlaceholderV2", SYMBOL_PLACEHOLDERV2));
@@ -1070,6 +1071,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_ONEHOT: {		pCreate = Create_OneHot(id, pInputItem);	break;	}
 	case SYMBOL_ONESLIKE: {		pCreate = Create_OnesLike(id, pInputItem);	break;	}
 	case SYMBOL_PAD: {		pCreate = Create_Pad(id, pInputItem);	break;	}
+	case SYMBOL_PADV2: {		pCreate = Create_PadV2(id, pInputItem);	break;	}
 	case SYMBOL_PARALLELCONCAT: {		pCreate = Create_ParallelConcat(id, pInputItem);	break;	}
 	case SYMBOL_PLACEHOLDER: {		pCreate = Create_Placeholder(id, pInputItem);	break;	}
 //	case SYMBOL_PLACEHOLDERV2: {		pCreate = Create_PlaceholderV2(id, pInputItem);	break;	}

@@ -4254,6 +4254,132 @@ void* Create_Pad(std::string id, Json::Value pInputItem) {
 
 	return pPad;
 }
+void* Create_PadV2(std::string id, Json::Value pInputItem) {
+	PadV2* pPadV2 = nullptr;
+	Scope* pScope = nullptr;
+	Output* pInput = nullptr;
+	Output* paddings = nullptr;
+	Output* constant_values = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : PadV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "input")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pInput = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : PadV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "paddings")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							paddings = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : PadV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "constant_values")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							constant_values = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : PadV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : PadV2 pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && pInput && paddings && constant_values)
+	{
+		pPadV2 = new PadV2(*pScope, *pInput, *paddings, *constant_values);
+		ObjectInfo* pObj = AddObjectMap(pPadV2, id, SYMBOL_PADV2, "PadV2", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, &pPadV2->output, OUTPUT_TYPE_OUTPUT, "output");
+	}
+	else
+	{
+		std::string msg = string_format("error : PadV2(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+
+	return pPadV2;
+}
 void* Create_ParallelConcat(std::string id, Json::Value pInputItem) {
 	ParallelConcat* pParallelConcat = nullptr;
 	Scope* pScope = nullptr;

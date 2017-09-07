@@ -492,6 +492,7 @@
 //lwh add symbol
 #define SYMBOL_DEBUGGRADIENTIDENTITY 600
 #define SYMBOL_GATHERV2	601
+#define SYMBOL_PADV2 602
 
 //////////////////////////////////////////////////////////////////////////
 //chs add symbol

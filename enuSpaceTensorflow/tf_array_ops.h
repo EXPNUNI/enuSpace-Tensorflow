@@ -42,6 +42,7 @@ void* Create_MirrorPad(std::string id, Json::Value pInputItem);
 void* Create_OneHot(std::string id, Json::Value pInputItem);
 void* Create_OnesLike(std::string id, Json::Value pInputItem);
 void* Create_Pad(std::string id, Json::Value pInputItem);
+void* Create_PadV2(std::string id, Json::Value pInputItem);
 void* Create_ParallelConcat(std::string id, Json::Value pInputItem);
 void* Create_Placeholder(std::string id, Json::Value pInputItem);
 void* Create_PlaceholderWithDefault(std::string id, Json::Value pInputItem);
