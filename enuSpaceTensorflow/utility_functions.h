@@ -64,4 +64,5 @@ void* Create_StrToOutputList(Scope& pScope, std::string strPinType, std::string 
 bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, std::vector<int64>& arrayslice, std::vector<double>& arrayVal);
 bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, std::vector<int64>& arrayslice, std::vector<std::string>& arrayStrVal);
 bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, std::vector<int64>& arrayslice, std::vector<std::complex<double>>& arrayComplexVal);
+bool isString(std::string strVal);
 

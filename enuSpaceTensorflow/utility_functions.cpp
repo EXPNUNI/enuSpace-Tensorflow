@@ -1554,5 +1554,13 @@ bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, s
 
 	return true;
 }
-
+bool isString(std::string strVal)
+{
+	bool bIsString = true;
+	for (size_t i = 0; i < strVal.size(); i++)
+	{
+		if ((strVal[i] < 0x20 && strVal[i] != 0x0A && strVal[i] != 0x0D && strVal[i] != 0x09)  || strVal[i] == 0xff) return false;
+	}
+	return bIsString;
+}
 
