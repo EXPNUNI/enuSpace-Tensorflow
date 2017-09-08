@@ -316,7 +316,16 @@ bool Task_Tensorflow()
 								tensorflow::OutputList output_list = *it_list;
 
 								std::vector<tensorflow::Tensor> outputs;
-								TF_CHECK_OK(pClientSession->Run(output_list, &outputs));
+
+								Status st;
+								st = pClientSession->Run(output_list, &outputs);
+								if (st.code() != error::OK)
+								{
+									std::string msg = string_format("error: %s.", st.error_message().c_str());
+									PrintMessage(msg);
+								}
+
+								//TF_CHECK_OK(pClientSession->Run(output_list, &outputs));
 								
 								int iSize = outputs.size();
 								int iMax = 0;
