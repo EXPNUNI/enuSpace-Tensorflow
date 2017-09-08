@@ -457,57 +457,57 @@ bool Task_Tensorflow()
 										{
 											auto flat = it->flat<uint8>();
 											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
+											*((int*)pData + i + iOffset) = flat(i);
 										}
 										else if (iType == DT_UINT16 || iType == DT_QUINT16)
 										{
 											auto flat = it->flat<uint16>();
 											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
+											*((int*)pData + i + iOffset) = flat(i);
 										}
 										else if (iType == DT_INT8 || iType == DT_QINT8)
 										{
 											auto flat = it->flat<int8>();
 											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
+											*((int*)pData + i + iOffset) = flat(i);
 										}
 										else if (iType == DT_INT16 || iType == DT_QINT16)
 										{
 											auto flat = it->flat<int16>();
 											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
+											*((int*)pData + i + iOffset) = flat(i);
 										}
 										else if (iType == DT_INT32 || iType == DT_QINT32)
 										{
 											auto flat = it->flat<int32>();
 											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
+											*((int*)pData + i + iOffset) = flat(i);
 										}
 										else if (iType == DT_INT64)
 										{
 											auto flat = it->flat<int64>();
 											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
+											*((int*)pData + i + iOffset) = flat(i);
 										}
 										else if (iType == DT_BOOL)
 										{
 											auto flat = it->flat<bool>();
 											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((bool*)pData + i) = flat(i);
+											*((bool*)pData + i + iOffset) = flat(i);
 										}
 										else if (iType == DT_COMPLEX64)
 										{
 											auto flat = it->flat<complex64>();
 											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
-											*((float*)pData + i * 2) = flat(i).real();
-											*((float*)pData + i * 2 + 1) = flat(i).imag();
+											*((float*)pData + (i + iOffset) * 2) = flat(i).real();
+											*((float*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
 										}
 										else if (iType == DT_COMPLEX128)
 										{
 											auto flat = it->flat<complex128>();
 											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
-											*((double*)pData + i * 2) = flat(i).real();
-											*((double*)pData + i * 2 + 1) = flat(i).imag();
+											*((double*)pData + (i + iOffset) * 2) = flat(i).real();
+											*((double*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
 										}
 										else if (iType == DT_STRING)
 										{
@@ -525,7 +525,7 @@ bool Task_Tensorflow()
 													strTmp += strings::Printf("%02x;", i, flat(i)[j]);
 												}
 												if (i<idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
-												((std::string*)pData + i)->assign(strTmp.c_str());
+												((std::string*)pData + i+ iOffset)->assign(strTmp.c_str());
 											}
 										}
 									}
