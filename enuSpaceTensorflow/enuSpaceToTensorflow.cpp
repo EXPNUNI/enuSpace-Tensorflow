@@ -175,92 +175,112 @@ bool Task_Tensorflow()
 									int idis = 10;
 									for (int i = 0; i < iNum; i++)
 									{
-										if (iType == DT_DOUBLE)
+										switch (iType)
 										{
-											auto flat = it->flat<double>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+											case DT_DOUBLE :
+											{
+												auto flat = it->flat<double>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
 
-											*((double*)pData + i) = flat(i);
-										}
-										else if (iType == DT_FLOAT)
-										{
-											auto flat = it->flat<float>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
-											*((float*)pData + i) = flat(i);
-										}
-										else if (iType == DT_UINT8 || iType == DT_QUINT8)
-										{
-											auto flat = it->flat<uint8>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
-										}
-										else if (iType == DT_UINT16 || iType == DT_QUINT16)
-										{
-											auto flat = it->flat<uint16>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
-										}
-										else if (iType == DT_INT8 || iType == DT_QINT8)
-										{
-											auto flat = it->flat<int8>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
-										}
-										else if (iType == DT_INT16 || iType == DT_QINT16)
-										{
-											auto flat = it->flat<int16>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
-										}
-										else if (iType == DT_INT32 || iType == DT_QINT32)
-										{
-											auto flat = it->flat<int32>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
-										}
-										else if (iType == DT_INT64)
-										{
-											auto flat = it->flat<int64>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i) = flat(i);
-										}
-										else if (iType == DT_BOOL)
-										{
-											auto flat = it->flat<bool>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((bool*)pData + i) = flat(i);
-										}
-										else if (iType == DT_COMPLEX64)
-										{
-											auto flat = it->flat<complex64>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
-											*((float*)pData + i * 2) = flat(i).real();
-											*((float*)pData + i * 2 + 1) = flat(i).imag();
-										}
-										else if (iType == DT_COMPLEX128)
-										{
-											auto flat = it->flat<complex128>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
-											*((double*)pData + i * 2) = flat(i).real();
-											*((double*)pData + i * 2 + 1) = flat(i).imag();
-										}
-										else if (iType == DT_STRING)
-										{
-											auto flat = it->flat<std::string>();
-											if (isString(flat(i)))
-											{
-												if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
-												((std::string*)pData + i)->assign(flat(i));
+												*((double*)pData + i) = flat(i);
+												break;
 											}
-											else
+											case DT_FLOAT:
 											{
-												std::string strTmp = "";
-												for (size_t j = 0; j < flat(i).size(); j++)
+												auto flat = it->flat<float>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+												*((float*)pData + i) = flat(i);
+												break;
+											}
+											case DT_UINT8:
+											case DT_QUINT8:
+											{
+												auto flat = it->flat<uint8>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i) = flat(i);
+												break;
+											}
+											case DT_UINT16:
+											case DT_QUINT16:
+											{
+												auto flat = it->flat<uint16>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i) = flat(i);
+												break;
+											}
+											case DT_INT8:
+											case DT_QINT8:
+											{
+												auto flat = it->flat<int8>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i) = flat(i);
+												break;
+											}
+											case DT_INT16:
+											case DT_QINT16:
+											{
+												auto flat = it->flat<int16>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i) = flat(i);
+												break;
+											}
+											case DT_INT32:
+											case DT_QINT32:
+											{
+												auto flat = it->flat<int32>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i) = flat(i);
+												break;
+											}
+											case DT_INT64:
+											{
+												auto flat = it->flat<int64>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i) = flat(i);
+												break;
+											}
+											case DT_BOOL:
+											{
+												auto flat = it->flat<bool>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((bool*)pData + i) = flat(i);
+												break;
+											}
+											case DT_COMPLEX64:
+											{
+												auto flat = it->flat<complex64>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+												*((float*)pData + i * 2) = flat(i).real();
+												*((float*)pData + i * 2 + 1) = flat(i).imag();
+												break;
+											}
+											case DT_COMPLEX128:
+											{
+												auto flat = it->flat<complex128>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+												*((double*)pData + i * 2) = flat(i).real();
+												*((double*)pData + i * 2 + 1) = flat(i).imag();
+												break;
+											}
+											case DT_STRING:
+											{
+												auto flat = it->flat<std::string>();
+												if (isString(flat(i)))
 												{
-													strTmp += strings::Printf("%02x", i, flat(i)[j]);
+													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
+													((std::string*)pData + i)->assign(flat(i));
 												}
-												if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
-												((std::string*)pData + i)->assign(strTmp.c_str());
+												else
+												{
+													std::string strTmp = "";
+													for (size_t j = 0; j < flat(i).size(); j++)
+													{
+														strTmp += strings::Printf("%02x", i, flat(i)[j]);
+													}
+													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
+													((std::string*)pData + i)->assign(strTmp.c_str());
+												}
+												break;
 											}
 										}
 									}
@@ -433,99 +453,120 @@ bool Task_Tensorflow()
 
 									for (int i = 0; i < iNum; i++)
 									{
-										if (iType == DT_DOUBLE)
+										switch (iType)
 										{
-											auto flat = it->flat<double>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+											case DT_DOUBLE:
+											{
+												auto flat = it->flat<double>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
 
-											*((double*)pData + i + iOffset) = flat(i);
-										}
-										else if (iType == DT_FLOAT)
-										{
-											auto flat = it->flat<float>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
-											*((float*)pData + i + iOffset) = flat(i);
-										}
-										else if (iType == DT_BFLOAT16)
-										{
-											auto flat = it->flat<bfloat16>();
-											if (i < idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
-											//*((float*)pData + i + iOffset) = flat(i);
-											BFloat16ToFloat(&flat(i), ((float*)pData + i + iOffset),1);
-										}
-										else if (iType == DT_UINT8 || iType == DT_QUINT8)
-										{
-											auto flat = it->flat<uint8>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i + iOffset) = flat(i);
-										}
-										else if (iType == DT_UINT16 || iType == DT_QUINT16)
-										{
-											auto flat = it->flat<uint16>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i + iOffset) = flat(i);
-										}
-										else if (iType == DT_INT8 || iType == DT_QINT8)
-										{
-											auto flat = it->flat<int8>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i + iOffset) = flat(i);
-										}
-										else if (iType == DT_INT16 || iType == DT_QINT16)
-										{
-											auto flat = it->flat<int16>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i + iOffset) = flat(i);
-										}
-										else if (iType == DT_INT32 || iType == DT_QINT32)
-										{
-											auto flat = it->flat<int32>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i + iOffset) = flat(i);
-										}
-										else if (iType == DT_INT64)
-										{
-											auto flat = it->flat<int64>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((int*)pData + i + iOffset) = flat(i);
-										}
-										else if (iType == DT_BOOL)
-										{
-											auto flat = it->flat<bool>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-											*((bool*)pData + i + iOffset) = flat(i);
-										}
-										else if (iType == DT_COMPLEX64)
-										{
-											auto flat = it->flat<complex64>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
-											*((float*)pData + (i + iOffset) * 2) = flat(i).real();
-											*((float*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
-										}
-										else if (iType == DT_COMPLEX128)
-										{
-											auto flat = it->flat<complex128>();
-											if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
-											*((double*)pData + (i + iOffset) * 2) = flat(i).real();
-											*((double*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
-										}
-										else if (iType == DT_STRING)
-										{
-											auto flat = it->flat<std::string>();
-											if (isString(flat(i)))
-											{
-												if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
-												((std::string*)pData + i)->assign(flat(i));
+												*((double*)pData + i + iOffset) = flat(i);
+												break;
 											}
-											else
+											case DT_FLOAT:
 											{
-												std::string strTmp = "";
-												for (size_t j = 0; j < flat(i).size(); j++)
+												auto flat = it->flat<float>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+												*((float*)pData + i + iOffset) = flat(i);
+												break;
+											}
+											case DT_BFLOAT16:
+											{
+												auto flat = it->flat<bfloat16>();
+												if (i < idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+												//*((float*)pData + i + iOffset) = flat(i);
+												BFloat16ToFloat(&flat(i), ((float*)pData + i + iOffset), 1);
+												break;
+											}
+											case DT_UINT8:
+											case DT_QUINT8:
+											{
+												auto flat = it->flat<uint8>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i + iOffset) = flat(i);
+												break;
+											}
+											case DT_UINT16:
+											case DT_QUINT16:
+											{
+												auto flat = it->flat<uint16>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i + iOffset) = flat(i);
+												break;
+											}
+											case DT_INT8 :
+											case DT_QINT8:
+											{
+												auto flat = it->flat<int8>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i + iOffset) = flat(i);
+												break;
+											}
+											case DT_INT16 :
+											case DT_QINT16 :
+											{
+												auto flat = it->flat<int16>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i + iOffset) = flat(i);
+												break;
+											}
+											case DT_INT32 :
+											case DT_QINT32 :
+											{
+												auto flat = it->flat<int32>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i + iOffset) = flat(i);
+												break;
+											}
+											case DT_INT64 :
+											{
+												auto flat = it->flat<int64>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((int*)pData + i + iOffset) = flat(i);
+												break;
+											}
+											case DT_BOOL :
+											{
+												auto flat = it->flat<bool>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+												*((bool*)pData + i + iOffset) = flat(i);
+												break;
+											}
+											case DT_COMPLEX64 :
+											{
+												auto flat = it->flat<complex64>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+												*((float*)pData + (i + iOffset) * 2) = flat(i).real();
+												*((float*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
+												break;
+											}
+											case DT_COMPLEX128 :
+											{
+												auto flat = it->flat<complex128>();
+												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+												*((double*)pData + (i + iOffset) * 2) = flat(i).real();
+												*((double*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
+												break;
+											}
+											case DT_STRING :
+											{
+												auto flat = it->flat<std::string>();
+												if (isString(flat(i)))
 												{
-													strTmp += strings::Printf("%02x;", i, flat(i)[j]);
+													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
+													((std::string*)pData + i + iOffset)->assign(flat(i));
 												}
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
-												((std::string*)pData + i+ iOffset)->assign(strTmp.c_str());
+												else
+												{
+													std::string strTmp = "";
+													for (size_t j = 0; j < flat(i).size(); j++)
+													{
+														strTmp += strings::Printf("%02x;", i, flat(i)[j]);
+													}
+													if (i<idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
+													((std::string*)pData + i + iOffset)->assign(strTmp.c_str());
+												}
+												break;
 											}
 										}
 									}
