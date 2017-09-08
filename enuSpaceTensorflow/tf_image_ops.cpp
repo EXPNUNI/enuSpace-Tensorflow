@@ -85,6 +85,12 @@ void* Create_AdjustContrast(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pcontrast_factor = (Output*)Create_StrToOutput(*m_pScope,"DT_FLOAT","",strPinInitial);
+				}
+
 			}
 			else
 			{
@@ -187,6 +193,11 @@ void* Create_AdjustHue(std::string id, Json::Value pInputItem) {
 							pdelta = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pdelta = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -291,6 +302,11 @@ void* Create_AdjustSaturation(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pscale = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -330,6 +346,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 	Output *pbox_ind = nullptr;
 	Output *pcrop_size = nullptr;
 	CropAndResize::Attrs attrs;
+	std::string method_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -358,7 +375,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "images")
+		else if (strPinName == "image")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -397,6 +414,11 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pboxes = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -419,6 +441,11 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 							pbox_ind = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pbox_ind = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -443,6 +470,11 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pcrop_size = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -455,7 +487,11 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "CropAndResize::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("method_") != "") attrs = attrs.Method(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_")));
+				if (attrParser.GetAttribute("method_") != "")
+				{
+					method_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_"));
+					attrs = attrs.Method(method_);
+				}
 				if (attrParser.GetAttribute("extrapolation_value_") != "") attrs = attrs.ExtrapolationValue(attrParser.ConvStrToFloat(attrParser.GetAttribute("extrapolation_value_")));
 			}
 		}
@@ -491,6 +527,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 	Output *pboxes = nullptr;
 	Output *pbox_ind = nullptr;
 	CropAndResizeGradBoxes::Attrs attrs;
+	std::string method_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -542,7 +579,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "images")
+		else if (strPinName == "image")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -581,6 +618,11 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pboxes = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -604,6 +646,11 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pbox_ind = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -616,7 +663,8 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "CropAndResizeGradBoxes::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("method_") != "") attrs = attrs.Method(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_")));
+				method_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_"));
+				if (attrParser.GetAttribute("method_") != "") attrs = attrs.Method(method_);
 			}
 		}
 		else
@@ -651,6 +699,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 	Output *pbox_ind = nullptr;
 	Output *pimage_size = nullptr;
 	DataType T;
+	std::string method_ = "";
 	CropAndResizeGradImage::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -719,6 +768,11 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pboxes = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -742,6 +796,11 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pbox_ind = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -764,6 +823,11 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 							pimage_size = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pimage_size = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -793,7 +857,11 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "CropAndResizeGradImage::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("method_") != "") attrs = attrs.Method(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_")));
+				if (attrParser.GetAttribute("method_") != "")
+				{
+					method_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_"));
+					attrs = attrs.Method(method_);
+				}
 			}
 		}
 		else
@@ -898,12 +966,100 @@ void* Create_DecodeGif(std::string id, Json::Value pInputItem) {
 	}
 	return pDecodeGif;
 }
+void* Create_DecodeBmp(std::string id, Json::Value pInputItem) {
+	DecodeBmp* pDecodeBmp = nullptr;
+	Scope* pScope = nullptr;
+	Output *pcontents = nullptr;
+	DecodeBmp::Attrs attrs;
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : DecodeBmp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "contents")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pcontents = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : DecodeBmp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "DecodeBmp::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("channels_") != "") attrs = attrs.Channels(attrParser.ConvStrToInt64(attrParser.GetAttribute("channels_")));
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : DecodeBmp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && pcontents)
+	{
+		pDecodeBmp = new DecodeBmp(*pScope, *pcontents,attrs);
+		ObjectInfo* pObj = AddObjectMap(pDecodeBmp, id, SYMBOL_DECODEBMP, "DecodeBmp", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pDecodeBmp->image, OUTPUT_TYPE_OUTPUT, "image");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : DecodeBmp(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pDecodeBmp;
+}
 
 void* Create_DecodeJpeg(std::string id, Json::Value pInputItem) {
 	DecodeJpeg* pDecodeJpeg = nullptr;
 	Scope* pScope = nullptr;
 	Output *pcontents = nullptr;
 	DecodeJpeg::Attrs attrs;
+	std::string dct_method_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -961,11 +1117,15 @@ void* Create_DecodeJpeg(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("channels_") != "") attrs = attrs.Channels(attrParser.ConvStrToInt64(attrParser.GetAttribute("channels_")));
-				if (attrParser.GetAttribute("ratio_") != "") attrs = attrs.Channels(attrParser.ConvStrToInt64(attrParser.GetAttribute("ratio_")));
+				if (attrParser.GetAttribute("ratio_") != "") attrs = attrs.Ratio(attrParser.ConvStrToInt64(attrParser.GetAttribute("ratio_")));
 				if (attrParser.GetAttribute("fancy_upscaling_") != "") attrs = attrs.FancyUpscaling(attrParser.ConvStrToBool(attrParser.GetAttribute("fancy_upscaling_")));
 				if (attrParser.GetAttribute("try_recover_truncated_") != "") attrs = attrs.TryRecoverTruncated(attrParser.ConvStrToBool(attrParser.GetAttribute("try_recover_truncated_")));
 				if (attrParser.GetAttribute("acceptable_fraction_") != "") attrs = attrs.AcceptableFraction(attrParser.ConvStrToFloat(attrParser.GetAttribute("acceptable_fraction_")));
-				if (attrParser.GetAttribute("dct_method_") != "") attrs = attrs.DctMethod(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("dct_method_")));
+				if (attrParser.GetAttribute("dct_method_") != "")
+				{
+					dct_method_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("dct_method_"));
+					attrs = attrs.DctMethod(dct_method_);
+				}
 			}
 		}
 		else
@@ -1054,7 +1214,7 @@ void* Create_DecodePng(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("channels_") != "") attrs = attrs.Channels(attrParser.ConvStrToInt64(attrParser.GetAttribute("channels_")));
-				if (attrParser.GetAttribute("dtype_") != "") attrs = attrs.Channels(attrParser.ConvStrToDataType(attrParser.GetAttribute("dtype_")));
+				if (attrParser.GetAttribute("dtype_") != "") attrs = attrs.Dtype(attrParser.ConvStrToDataType(attrParser.GetAttribute("dtype_")));
 			}
 		}
 		else
@@ -1153,6 +1313,11 @@ void* Create_DrawBoundingBoxes(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pboxes = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1189,6 +1354,9 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pimage = nullptr;
 	EncodeJpeg::Attrs attrs;
+	std::string format_ = "";
+	std::string density_unit_ = "";
+	std::string xmp_metadata_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1233,10 +1401,6 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-				else
-				{
-
-				}
 			}
 			else
 			{
@@ -1249,15 +1413,27 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "EncodeJpeg::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("format_") != "") attrs = attrs.Format(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("format_")));
+				if (attrParser.GetAttribute("format_") != "")
+				{
+					format_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("format_"));
+					attrs = attrs.Format(format_);
+				}
 				if (attrParser.GetAttribute("quality_") != "") attrs = attrs.Quality(attrParser.ConvStrToInt64(attrParser.GetAttribute("quality_")));
 				if (attrParser.GetAttribute("progressive_") != "") attrs = attrs.Progressive(attrParser.ConvStrToBool(attrParser.GetAttribute("progressive_")));
 				if (attrParser.GetAttribute("optimize_size_") != "") attrs = attrs.OptimizeSize(attrParser.ConvStrToBool(attrParser.GetAttribute("optimize_size_")));
 				if (attrParser.GetAttribute("chroma_downsampling_") != "") attrs = attrs.ChromaDownsampling(attrParser.ConvStrToBool(attrParser.GetAttribute("chroma_downsampling_")));
-				if (attrParser.GetAttribute("density_unit_") != "") attrs = attrs.DensityUnit(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("density_unit_")));
+				if (attrParser.GetAttribute("density_unit_") != "")
+				{
+					density_unit_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("density_unit_"));
+					attrs = attrs.DensityUnit(density_unit_);
+				}
 				if (attrParser.GetAttribute("x_density_") != "") attrs = attrs.XDensity(attrParser.ConvStrToInt64(attrParser.GetAttribute("x_density_")));
 				if (attrParser.GetAttribute("y_density_") != "") attrs = attrs.YDensity(attrParser.ConvStrToInt64(attrParser.GetAttribute("y_density_")));
-				if (attrParser.GetAttribute("xmp_metadata_") != "") attrs = attrs.XmpMetadata(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("xmp_metadata_")));
+				if (attrParser.GetAttribute("xmp_metadata_") != "")
+				{
+					xmp_metadata_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("xmp_metadata_"));
+					attrs = attrs.XmpMetadata(xmp_metadata_);
+				}
 			}
 		}
 		else
@@ -1446,6 +1622,11 @@ void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						psize = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1468,6 +1649,11 @@ void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem) {
 							poffsets = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						poffsets = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -2384,4 +2570,160 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 		PrintMessage(msg);
 	}
 	return pSampleDistortedBoundingBox;
+}
+void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem) {
+	SampleDistortedBoundingBoxV2* pSampleDistortedBoundingBoxV2 = nullptr;
+	Scope* pScope = nullptr;
+	Output *pimage_size = nullptr;
+	Output *pbounding_boxes = nullptr;
+	Output *pmin_object_covered = nullptr;
+	SampleDistortedBoundingBoxV2::Attrs attrs;
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : SampleDistortedBoundingBoxV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "image_size")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pimage_size = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SampleDistortedBoundingBoxV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "bounding_boxes")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pbounding_boxes = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SampleDistortedBoundingBoxV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "min_object_covered")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pmin_object_covered = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SampleDistortedBoundingBoxV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "SampleDistortedBoundingBoxV2::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("seed_") != "") attrs = attrs.Seed(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed_")));
+				if (attrParser.GetAttribute("seed2_") != "") attrs = attrs.Seed2(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed2_")));
+				if (attrParser.GetAttribute("aspect_ratio_range_") != "")
+				{
+					std::vector<float> fVec;
+					if (GetFloatVectorFromInitial(attrParser.GetAttribute("aspect_ratio_range_"), fVec))
+					{
+						attrs = attrs.AspectRatioRange(fVec);
+					}
+				}
+				if (attrParser.GetAttribute("area_range_") != "")
+				{
+					std::vector<float> fVec;
+					if (GetFloatVectorFromInitial(attrParser.GetAttribute("area_range_"), fVec))
+					{
+						attrs = attrs.AreaRange(fVec);
+					}
+				}
+				if (attrParser.GetAttribute("max_attempts_") != "") attrs = attrs.MaxAttempts(attrParser.ConvStrToInt64(attrParser.GetAttribute("max_attempts_")));
+				if (attrParser.GetAttribute("use_image_if_no_bounding_boxes_") != "") attrs = attrs.UseImageIfNoBoundingBoxes(attrParser.ConvStrToBool(attrParser.GetAttribute("use_image_if_no_bounding_boxes_")));
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : SampleDistortedBoundingBoxV2 pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && pimage_size && pbounding_boxes)
+	{
+		pSampleDistortedBoundingBoxV2 = new SampleDistortedBoundingBoxV2(*pScope, *pimage_size, *pbounding_boxes, *pmin_object_covered, attrs);
+		ObjectInfo* pObj = AddObjectMap(pSampleDistortedBoundingBoxV2, id, SYMBOL_SAMPLEDISTORTEDBOUNDINGBOXV2, "SampleDistortedBoundingBoxV2", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pSampleDistortedBoundingBoxV2->begin, OUTPUT_TYPE_OUTPUT, "begin");
+			AddOutputInfo(pObj, &pSampleDistortedBoundingBoxV2->size, OUTPUT_TYPE_OUTPUT, "size");
+			AddOutputInfo(pObj, &pSampleDistortedBoundingBoxV2->bboxes, OUTPUT_TYPE_OUTPUT, "bboxes");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : SampleDistortedBoundingBoxV2(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pSampleDistortedBoundingBoxV2;
 }
