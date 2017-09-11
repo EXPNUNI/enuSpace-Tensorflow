@@ -482,8 +482,9 @@
 #define SYMBOL_SPARSEAPPLYPROXIMALGRADIENTDESCENT 		451
 #define SYMBOL_SPARSEAPPLYRMSPROP 		452
 #define SYMBOL_FACT 		453
-//////////////////////////////////////////////////
-//ksh add symbol
+
+//////////////////////////////////////////////////////////////////////////
+// [v1.3] Add Symbol
 #define SYMBOL_ISFINITE 		500
 #define SYMBOL_COSH 		501
 #define SYMBOL_SINH 		502
@@ -491,19 +492,19 @@
 #define SYMBOL_SAMPLEDISTORTEDBOUNDINGBOXV2		504
 #define SYMBOL_QUANTIZEDRESIZEBILINEAR		505
 
-//////////////////////////////////////////////////////////////////////////
-//lwh add symbol
 #define SYMBOL_DEBUGGRADIENTIDENTITY 600
 #define SYMBOL_GATHERV2	601
 #define SYMBOL_PADV2 602
+#define SYMBOL_FEEDTYPE	603
 
 //////////////////////////////////////////////////////////////////////////
-//chs add symbol
-#define  SYMBOL_CONST_EX 700
-//////////////////////////////////////////////////
+// [extension] Add symbol
 #define SYMBOL_CONST				454
 #define SYMBOL_INPUT_EX				455
 #define SYMBOL_RANDOMNORMAL_EX		456
+
+#define SYMBOL_CONST_EX				700
+//////////////////////////////////////////////////////////////////////////
 
 #define OUTPUT_TYPE_OUTPUT			1
 #define OUTPUT_TYPE_OUTPUTLIST		2
@@ -546,6 +547,7 @@ struct Fetch_Output
 {
 	std::vector<ObjectInfo*> fetch_object;				// ClientSession 객체의 fetch_output에 연결된 객체의 리스트
 	std::vector<tensorflow::Output> fetch_outputs;		// ClientSession 객체의 fetch_output에 연결된 객체의 output 리스트
+	std::vector<tensorflow::Operation> run_outputs;		// ClientSession 객체의 run_output에 연결된 객체의 operation 리스트
 	std::vector<std::string> pin_names;					// 입력핀의 이름
 };
 
@@ -559,14 +561,16 @@ struct Fetch_OutputList
 struct FetchInfo
 {
 	ObjectInfo* pSession;							// ClientSession 객체
+	std::unordered_map<Output, Input::Initializer, OutputHash>* pFeedType;	// feedtype
 
 	Fetch_Output output;
 	Fetch_OutputList output_list;
 
-public:FetchInfo()
-{
-	pSession = nullptr;
-}
+	public:FetchInfo()
+	{
+		pSession = nullptr;
+		pFeedType = nullptr;
+	}
 };
 
 extern std::map<std::string, ObjectInfo* > m_ObjectMapList;

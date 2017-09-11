@@ -100,13 +100,26 @@ bool Task_Tensorflow()
 				{
 					if (pTar->pSession->type == SYMBOL_CLIENTSESSION)
 					{
+						// Operation 角青 肺流
+						ClientSession* pClientSession = (ClientSession*)pTar->pSession->pObject;
+						std::vector<tensorflow::Tensor> oper_outputs;
+						Status oper_st;
+						oper_st = pClientSession->Run({}, {}, pTar->output.run_outputs, &oper_outputs);
+
+						// Output 角青 肺流 
 						if (pTar->output.fetch_object.size() > 0)
 						{
-							ClientSession* pClientSession = (ClientSession*)pTar->pSession->pObject;
 							std::vector<tensorflow::Tensor> outputs;
 
 							Status st;
-							st = pClientSession->Run(pTar->output.fetch_outputs, &outputs);
+							if (pTar->pFeedType == nullptr)
+							{
+								std::unordered_map<Output, Input::Initializer, OutputHash> feedType{};
+								st = pClientSession->Run(feedType, pTar->output.fetch_outputs, &outputs);
+							}
+							else
+								st = pClientSession->Run(*pTar->pFeedType, pTar->output.fetch_outputs, &outputs);
+
 							if (st.code() != error::OK)
 							{
 								std::string msg = string_format("error: %s.", st.error_message().c_str());
@@ -323,8 +336,6 @@ bool Task_Tensorflow()
 						// OutputList 角青 肺流
 						if (pTar->output_list.fetch_object.size() > 0)
 						{
-							ClientSession* pClientSession = (ClientSession*)pTar->pSession->pObject;
-
 							vObjIt = pTar->output_list.fetch_object.begin();
 							pinname = pTar->output_list.pin_names.begin();
 
@@ -1273,7 +1284,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_EXTRACTGLIMPSE: {		pCreate = Create_ExtractGlimpse(id, pInputItem);	break;	}
 	case SYMBOL_HSVTORGB: {		pCreate = Create_HSVToRGB(id, pInputItem);	break;	}
 	case SYMBOL_NONMAXSUPPRESSION: {		pCreate = Create_NonMaxSuppression(id, pInputItem);	break;	}
-	case SYMBOL_QUANTIZEDRESIZEBILINEAR: {		pCreate = Create_QuantizedResizeBilinear(id, pInputItem);	break;	}
+	case SYMBOL_QUANTIZEDRESIZEBILINEAR : {		pCreate = Create_QuantizedResizeBilinear(id, pInputItem);	break;	}
 	case SYMBOL_RGBTOHSV: {		pCreate = Create_RGBToHSV(id, pInputItem);	break;	}
 	case SYMBOL_RESIZEAREA: {		pCreate = Create_ResizeArea(id, pInputItem);	break;	}
 	case SYMBOL_RESIZEBICUBIC: {		pCreate = Create_ResizeBicubic(id, pInputItem);	break;	}
