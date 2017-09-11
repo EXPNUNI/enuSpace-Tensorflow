@@ -803,6 +803,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#ResizeBilinear", SYMBOL_RESIZEBILINEAR));
 	m_SymbolList.insert(std::pair<std::string, int>("#ResizeNearestNeighbor", SYMBOL_RESIZENEARESTNEIGHBOR));
 	m_SymbolList.insert(std::pair<std::string, int>("#SampleDistortedBoundingBox", SYMBOL_SAMPLEDISTORTEDBOUNDINGBOX));
+	m_SymbolList.insert(std::pair<std::string, int>("#SampleDistortedBoundingBoxV2", SYMBOL_SAMPLEDISTORTEDBOUNDINGBOXV2));
 	m_SymbolList.insert(std::pair<std::string, int>("#FixedLengthRecordReader", SYMBOL_FIXEDLENGTHRECORDREADER));
 	m_SymbolList.insert(std::pair<std::string, int>("#IdentityReader", SYMBOL_IDENTITYREADER));
 	m_SymbolList.insert(std::pair<std::string, int>("#MatchingFiles", SYMBOL_MATCHINGFILES));

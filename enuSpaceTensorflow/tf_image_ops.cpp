@@ -2371,6 +2371,11 @@ void* Create_ResizeBicubic(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						psize = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2482,6 +2487,11 @@ void* Create_ResizeBilinear(std::string id, Json::Value pInputItem) {
 							psize = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						psize = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -2595,6 +2605,11 @@ void* Create_ResizeNearestNeighbor(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						psize = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2640,6 +2655,8 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 	Output *pimage_size = nullptr;
 	Output *pbounding_boxes = nullptr;
 	SampleDistortedBoundingBox::Attrs attrs;
+	std::vector<float> aspect_ratio_range_;
+	std::vector<float> area_range_;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2684,6 +2701,11 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pimage_size = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2707,6 +2729,11 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pbounding_boxes = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2724,18 +2751,16 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 				if (attrParser.GetAttribute("min_object_covered_") != "") attrs = attrs.MinObjectCovered(attrParser.ConvStrToFloat(attrParser.GetAttribute("min_object_covered_")));
 				if (attrParser.GetAttribute("aspect_ratio_range_") != "")
 				{
-					std::vector<float> fVec;
-					if (GetFloatVectorFromInitial(attrParser.GetAttribute("aspect_ratio_range_"), fVec))
+					if (GetFloatVectorFromInitial(attrParser.GetAttribute("aspect_ratio_range_"), aspect_ratio_range_))
 					{
-						attrs = attrs.AspectRatioRange(fVec);
+						attrs = attrs.AspectRatioRange(aspect_ratio_range_);
 					}
 				}
 				if (attrParser.GetAttribute("area_range_") != "")
 				{
-					std::vector<float> fVec;
-					if (GetFloatVectorFromInitial(attrParser.GetAttribute("area_range_"), fVec))
+					if (GetFloatVectorFromInitial(attrParser.GetAttribute("area_range_"), area_range_))
 					{
-						attrs = attrs.AreaRange(fVec);
+						attrs = attrs.AreaRange(area_range_);
 					}
 				}
 				if (attrParser.GetAttribute("max_attempts_") != "") attrs = attrs.MaxAttempts(attrParser.ConvStrToInt64(attrParser.GetAttribute("max_attempts_")));
@@ -2774,6 +2799,8 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 	Output *pbounding_boxes = nullptr;
 	Output *pmin_object_covered = nullptr;
 	SampleDistortedBoundingBoxV2::Attrs attrs;
+	std::vector<float> aspect_ratio_range_;
+	std::vector<float> area_range_;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2818,6 +2845,11 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pimage_size = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2840,6 +2872,11 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 							pbounding_boxes = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pbounding_boxes = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -2864,6 +2901,11 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pmin_object_covered = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2880,18 +2922,16 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 				if (attrParser.GetAttribute("seed2_") != "") attrs = attrs.Seed2(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed2_")));
 				if (attrParser.GetAttribute("aspect_ratio_range_") != "")
 				{
-					std::vector<float> fVec;
-					if (GetFloatVectorFromInitial(attrParser.GetAttribute("aspect_ratio_range_"), fVec))
+					if (GetFloatVectorFromInitial(attrParser.GetAttribute("aspect_ratio_range_"), aspect_ratio_range_))
 					{
-						attrs = attrs.AspectRatioRange(fVec);
+						attrs = attrs.AspectRatioRange(aspect_ratio_range_);
 					}
 				}
 				if (attrParser.GetAttribute("area_range_") != "")
 				{
-					std::vector<float> fVec;
-					if (GetFloatVectorFromInitial(attrParser.GetAttribute("area_range_"), fVec))
+					if (GetFloatVectorFromInitial(attrParser.GetAttribute("area_range_"), area_range_))
 					{
-						attrs = attrs.AreaRange(fVec);
+						attrs = attrs.AreaRange(area_range_);
 					}
 				}
 				if (attrParser.GetAttribute("max_attempts_") != "") attrs = attrs.MaxAttempts(attrParser.ConvStrToInt64(attrParser.GetAttribute("max_attempts_")));
@@ -2905,7 +2945,7 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 		}
 	}
 
-	if (pScope && pimage_size && pbounding_boxes)
+	if (pScope && pimage_size && pbounding_boxes  && pmin_object_covered)
 	{
 		pSampleDistortedBoundingBoxV2 = new SampleDistortedBoundingBoxV2(*pScope, *pimage_size, *pbounding_boxes, *pmin_object_covered, attrs);
 		ObjectInfo* pObj = AddObjectMap(pSampleDistortedBoundingBoxV2, id, SYMBOL_SAMPLEDISTORTEDBOUNDINGBOXV2, "SampleDistortedBoundingBoxV2", pInputItem);
