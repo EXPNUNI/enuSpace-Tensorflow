@@ -23,6 +23,7 @@ void* Create_EncodePng(std::string id, Json::Value pInputItem);
 void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem);
 void* Create_HSVToRGB(std::string id, Json::Value pInputItem);
 void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem);
+void* Create_QuantizedResizeBilinear(std::string id, Json::Value pInputItem);
 void* Create_RGBToHSV(std::string id, Json::Value pInputItem);
 void* Create_ResizeArea(std::string id, Json::Value pInputItem);
 void* Create_ResizeBicubic(std::string id, Json::Value pInputItem);

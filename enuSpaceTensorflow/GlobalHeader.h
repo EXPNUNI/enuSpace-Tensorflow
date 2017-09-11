@@ -489,6 +489,7 @@
 #define SYMBOL_SINH 		502
 #define SYMBOL_DECODEBMP 		503
 #define SYMBOL_SAMPLEDISTORTEDBOUNDINGBOXV2		504
+#define SYMBOL_QUANTIZEDRESIZEBILINEAR		505
 
 //////////////////////////////////////////////////////////////////////////
 //lwh add symbol

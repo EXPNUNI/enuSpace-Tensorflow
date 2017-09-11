@@ -785,6 +785,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#ExtractGlimpse", SYMBOL_EXTRACTGLIMPSE));
 	m_SymbolList.insert(std::pair<std::string, int>("#HSVToRGB", SYMBOL_HSVTORGB));
 	m_SymbolList.insert(std::pair<std::string, int>("#NonMaxSuppression", SYMBOL_NONMAXSUPPRESSION));
+	m_SymbolList.insert(std::pair<std::string, int>("#QuantizedResizeBilinear", SYMBOL_QUANTIZEDRESIZEBILINEAR));
 	m_SymbolList.insert(std::pair<std::string, int>("#RGBToHSV", SYMBOL_RGBTOHSV));
 	m_SymbolList.insert(std::pair<std::string, int>("#ResizeArea", SYMBOL_RESIZEAREA));
 	m_SymbolList.insert(std::pair<std::string, int>("#ResizeBicubic", SYMBOL_RESIZEBICUBIC));
@@ -1272,6 +1273,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_EXTRACTGLIMPSE: {		pCreate = Create_ExtractGlimpse(id, pInputItem);	break;	}
 	case SYMBOL_HSVTORGB: {		pCreate = Create_HSVToRGB(id, pInputItem);	break;	}
 	case SYMBOL_NONMAXSUPPRESSION: {		pCreate = Create_NonMaxSuppression(id, pInputItem);	break;	}
+	case SYMBOL_QUANTIZEDRESIZEBILINEAR: {		pCreate = Create_QuantizedResizeBilinear(id, pInputItem);	break;	}
 	case SYMBOL_RGBTOHSV: {		pCreate = Create_RGBToHSV(id, pInputItem);	break;	}
 	case SYMBOL_RESIZEAREA: {		pCreate = Create_ResizeArea(id, pInputItem);	break;	}
 	case SYMBOL_RESIZEBICUBIC: {		pCreate = Create_ResizeBicubic(id, pInputItem);	break;	}

@@ -1826,6 +1826,11 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pboxes = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1848,6 +1853,11 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 							pscores = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pscores = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -1872,6 +1882,11 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pmax_output_size = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1884,7 +1899,7 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "NonMaxSuppression::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("timeout_ms_") != "") attrs = attrs.IouThreshold(attrParser.ConvStrToFloat(attrParser.GetAttribute("iou_threshold_")));
+				if (attrParser.GetAttribute("iou_threshold_") != "") attrs = attrs.IouThreshold(attrParser.ConvStrToFloat(attrParser.GetAttribute("iou_threshold_")));
 			}
 		}
 		else
@@ -1989,6 +2004,182 @@ void* Create_RGBToHSV(std::string id, Json::Value pInputItem) {
 	}
 	return pRGBToHSV;
 }
+void* Create_QuantizedResizeBilinear(std::string id, Json::Value pInputItem) {
+	QuantizedResizeBilinear* pQuantizedResizeBilinear = nullptr;
+	Scope* pScope = nullptr;
+	Output *pimages = nullptr;
+	Output *psize = nullptr;
+	Output *pmin = nullptr;
+	Output *pmax = nullptr;
+	QuantizedResizeBilinear::Attrs attrs;
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : QuantizedResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "images")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pimages = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : QuantizedResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "size")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							psize = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						psize = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : QuantizedResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "min")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pmin = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pmin = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : QuantizedResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "max")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pmax = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pmax = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : QuantizedResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "ResizeArea::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("align_corners_") != "") attrs = attrs.AlignCorners(attrParser.ConvStrToBool(attrParser.GetAttribute("align_corners_")));
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : QuantizedResizeBilinear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && pimages && psize &&pmin  && pmax)
+	{
+		pQuantizedResizeBilinear = new QuantizedResizeBilinear(*pScope, *pimages, *psize, *pmin, *pmax, attrs);
+		ObjectInfo* pObj = AddObjectMap(pQuantizedResizeBilinear, id, SYMBOL_QUANTIZEDRESIZEBILINEAR, "QuantizedResizeBilinear", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pQuantizedResizeBilinear->out_max, OUTPUT_TYPE_OUTPUT, "out_max");
+			AddOutputInfo(pObj, &pQuantizedResizeBilinear->out_min, OUTPUT_TYPE_OUTPUT, "out_min");
+			AddOutputInfo(pObj, &pQuantizedResizeBilinear->resized_images, OUTPUT_TYPE_OUTPUT, "resized_images");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : QuantizedResizeBilinear(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pQuantizedResizeBilinear;
+}
 
 void* Create_ResizeArea(std::string id, Json::Value pInputItem) {
 	ResizeArea* pResizeArea = nullptr;
@@ -2062,6 +2253,11 @@ void* Create_ResizeArea(std::string id, Json::Value pInputItem) {
 							psize = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						psize = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
