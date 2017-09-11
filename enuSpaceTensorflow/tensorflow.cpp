@@ -707,6 +707,12 @@ extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar
 		return true;
 	else if (strFromType == L"string" && strToType == L"string")
 		return true;
+	else if (strFromType == L"Tensor" && strToType == L"Input")
+		return true;
+	else if (strFromType == L"Input::Initializer" && strToType == L"Input")
+		return true;
+	else if (strFromType == L"Input::Initializer" && strToType == L"Input::Initializer")
+		return true;
 
 	else if (strFromType == L"ops::Variable" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
 		return true;
@@ -729,6 +735,8 @@ extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar
 
 	else if (strFromType == L"ops::ApplyGradientDescent" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
 		return true;
+
+	
 
 	else
 		return false;

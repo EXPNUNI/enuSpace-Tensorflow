@@ -18,7 +18,7 @@ void* Create_Output(std::string id, Json::Value pInputItem);
 void* Create_Scope(std::string id, Json::Value pInputItem);
 void* Create_Status(std::string id, Json::Value pInputItem);
 void* Create_Tensor(std::string id, Json::Value pInputItem);
-
+void* Create_FeedType(std::string id, Json::Value pInputItem);
 void* Create_Input_ex(std::string id, Json::Value pInputItem);
 
 #endif

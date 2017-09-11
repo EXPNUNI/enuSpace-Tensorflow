@@ -736,6 +736,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#Scope", SYMBOL_SCOPE));
 	m_SymbolList.insert(std::pair<std::string, int>("#Status", SYMBOL_STATUS));
 	m_SymbolList.insert(std::pair<std::string, int>("#Tensor", SYMBOL_TENSOR));
+	m_SymbolList.insert(std::pair<std::string, int>("#FeedType", SYMBOL_FEEDTYPE));
 	m_SymbolList.insert(std::pair<std::string, int>("#AccumulatorApplyGradient", SYMBOL_ACCUMULATORAPPLYGRADIENT));
 	m_SymbolList.insert(std::pair<std::string, int>("#AccumulatorNumAccumulated", SYMBOL_ACCUMULATORNUMACCUMULATED));
 	m_SymbolList.insert(std::pair<std::string, int>("#AccumulatorSetGlobalStep", SYMBOL_ACCUMULATORSETGLOBALSTEP));
@@ -802,8 +803,8 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#ResizeBicubic", SYMBOL_RESIZEBICUBIC));
 	m_SymbolList.insert(std::pair<std::string, int>("#ResizeBilinear", SYMBOL_RESIZEBILINEAR));
 	m_SymbolList.insert(std::pair<std::string, int>("#ResizeNearestNeighbor", SYMBOL_RESIZENEARESTNEIGHBOR));
-	m_SymbolList.insert(std::pair<std::string, int>("#SampleDistortedBoundingBox", SYMBOL_SAMPLEDISTORTEDBOUNDINGBOX));
 	m_SymbolList.insert(std::pair<std::string, int>("#SampleDistortedBoundingBoxV2", SYMBOL_SAMPLEDISTORTEDBOUNDINGBOXV2));
+	m_SymbolList.insert(std::pair<std::string, int>("#SampleDistortedBoundingBox", SYMBOL_SAMPLEDISTORTEDBOUNDINGBOX));
 	m_SymbolList.insert(std::pair<std::string, int>("#FixedLengthRecordReader", SYMBOL_FIXEDLENGTHRECORDREADER));
 	m_SymbolList.insert(std::pair<std::string, int>("#IdentityReader", SYMBOL_IDENTITYREADER));
 	m_SymbolList.insert(std::pair<std::string, int>("#MatchingFiles", SYMBOL_MATCHINGFILES));
@@ -1225,6 +1226,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_SCOPE: {		pCreate = Create_Scope(id, pInputItem);	break;	}
 	case SYMBOL_STATUS: {		pCreate = Create_Status(id, pInputItem);	break;	}
 	case SYMBOL_TENSOR: {		pCreate = Create_Tensor(id, pInputItem);	break;	}
+	case SYMBOL_FEEDTYPE: {		pCreate = Create_FeedType(id, pInputItem);	break;	}
 	case SYMBOL_ACCUMULATORAPPLYGRADIENT: {		pCreate = Create_AccumulatorApplyGradient(id, pInputItem);	break;	}
 	case SYMBOL_ACCUMULATORNUMACCUMULATED: {		pCreate = Create_AccumulatorNumAccumulated(id, pInputItem);	break;	}
 	case SYMBOL_ACCUMULATORSETGLOBALSTEP: {		pCreate = Create_AccumulatorSetGlobalStep(id, pInputItem);	break;	}
