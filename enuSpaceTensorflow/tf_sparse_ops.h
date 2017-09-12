@@ -32,4 +32,9 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem);
 void* Create_SparseToDense(std::string id, Json::Value pInputItem);
 void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem);
 
+void* Create_SparseFillEmptyRows(std::string id, Json::Value pInputItem);
+void* Create_SparseFillEmptyRowsGrad(std::string id, Json::Value pInputItem);
+void* Create_SparseReduceMax(std::string id, Json::Value pInputItem);
+void* Create_SparseReduceMaxSparse(std::string id, Json::Value pInputItem);
+void* Create_SparseSlice(std::string id, Json::Value pInputItem);
 #endif

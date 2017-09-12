@@ -23,7 +23,7 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 	Output* sparse_values = nullptr;
 	Output* sparse_shape = nullptr;
 	AddManySparseToTensorsMap::Attrs attrs;
-
+	std::string temp1, temp2;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -126,10 +126,17 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "AddManySparseToTensorsMap::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_")!="")
-					attrs.container_ =(attrParser.GetValue_StringPiece("container_"));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					temp1 = attrParser.GetValue_StringPiece("container_");
+					attrs.container_ = temp1;
+				}
 				if (attrParser.GetAttribute("shared_name_") != "")
-					attrs.shared_name_ =attrParser.GetValue_StringPiece("shared_name_");
+				{
+					temp2 = attrParser.GetValue_StringPiece("shared_name_");
+					attrs.shared_name_ = temp2;
+				}
+					//attrs= attrs.SharedName(attrParser.GetValue_StringPiece("shared_name_"));
 			}
 		}
 		else
@@ -266,9 +273,9 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("container_") != "")
-					attrs.Container(attrParser.GetValue_StringPiece("container_"));
+					attrs = attrs.Container(attrParser.GetValue_StringPiece("container_"));
 				if (attrParser.GetAttribute("shared_name_") != "")
-					attrs.SharedName(attrParser.GetValue_StringPiece("shared_name_"));
+					attrs = attrs.SharedName(attrParser.GetValue_StringPiece("shared_name_"));
 			}
 		}
 		else
@@ -1073,7 +1080,7 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "indices")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -1087,6 +1094,13 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+					{
+						indices = (OutputList*)Create_StrToOutputList(*m_pScope, "DT_INT64", "", strPinInitial);
+					}
+				}
 			}
 			else
 			{
@@ -1096,7 +1110,7 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "values")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -1110,6 +1124,13 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+					{
+						values = (OutputList*)Create_StrToOutputList(*m_pScope, "", "", strPinInitial);
+					}
+				}
 			}
 			else
 			{
@@ -1119,7 +1140,7 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "shapes")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -1133,6 +1154,13 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+					{
+						shapes = (OutputList*)Create_StrToOutputList(*m_pScope, "DT_INT64", "", strPinInitial);
+					}
+				}
 			}
 			else
 			{
@@ -1144,11 +1172,7 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "int64")
 			{
-				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
-				if (pObj)
-				{
-					concat_dim = stoll(strPinInitial);
-				}
+				concat_dim = stoll(strPinInitial);
 			}
 			else
 			{
@@ -1164,6 +1188,14 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && indices && values && shapes)
 	{
+
+		std::vector<Output>::iterator itr = shapes->begin();
+		for (itr; itr != shapes->end();itr++)
+		{
+			Output* pOutput = (Output*)&itr;
+			
+		}
+
 		pSparseConcat = new SparseConcat(*pScope, *indices, *values, *shapes,concat_dim);
 		ObjectInfo* pObj = AddObjectMap(pSparseConcat, id, SYMBOL_SPARSECONCAT, "SparseConcat", pInputItem);
 		if (pObj)
@@ -1994,7 +2026,7 @@ void* Create_SparseReduceSum(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if(attrParser.GetAttribute("keep_dims_")!="")
-					attrs.KeepDims(attrParser.GetValue_bool("keep_dims_"));
+					attrs =  attrs.KeepDims(attrParser.GetValue_bool("keep_dims_"));
 			}
 		}
 		else
@@ -2155,7 +2187,7 @@ void* Create_SparseReduceSumSparse(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("keep_dims_")!="")
-					attrs.KeepDims(attrParser.GetValue_bool("keep_dims_"));
+					attrs = attrs.KeepDims(attrParser.GetValue_bool("keep_dims_"));
 			}
 		}
 		else
@@ -3039,6 +3071,7 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 				if (pObj)
 				{
 					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					
 					if (pOutputObj)
 					{
 						if (pOutputObj->pOutput)
@@ -3104,11 +3137,7 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "int64")
 			{
-				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
-				if (pObj)
-				{
-					num_split = stoll(strPinInitial);
-				}
+				num_split = stoll(strPinInitial);
 			}
 			else
 			{
@@ -3124,14 +3153,19 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && split_dim &&indices&&values&&shape)
 	{
-		pSparseSplit = new SparseSplit(*pScope, *split_dim, *indices,*values,*shape,num_split);
+		//index가 3*2에서 2를 추출하여 shape의 차원수를 체크하여 2인지를 체크한다. 예외처리해야한다.
+		//세션런 이후 텐서가 변화되므로 생성시 비교체크하는것은 의미가 없다.
+
+		pSparseSplit = new SparseSplit(*pScope, *split_dim, *indices, *values, *shape, num_split);
 		ObjectInfo* pObj = AddObjectMap(pSparseSplit, id, SYMBOL_SPARSESPLIT, "SparseSplit", pInputItem);
 		if (pObj)
 		{
-			AddOutputInfo(pObj, &pSparseSplit->output_indices, OUTPUT_TYPE_OUTPUT, "output_indices");
-			AddOutputInfo(pObj, &pSparseSplit->output_values, OUTPUT_TYPE_OUTPUT, "output_values");
-			AddOutputInfo(pObj, &pSparseSplit->output_shape, OUTPUT_TYPE_OUTPUT, "output_shape");
+			AddOutputInfo(pObj, &pSparseSplit->output_indices, OUTPUT_TYPE_OUTPUTLIST, "output_indices");
+			AddOutputInfo(pObj, &pSparseSplit->output_values, OUTPUT_TYPE_OUTPUTLIST, "output_values");
+			AddOutputInfo(pObj, &pSparseSplit->output_shape, OUTPUT_TYPE_OUTPUTLIST, "output_shape");
 		}
+
+		
 	}
 	else
 	{
@@ -3427,8 +3461,8 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "SparseTensorDenseMatMul::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if(attrParser.GetAttribute("adjoint_a_")!="") attrs.AdjointA(attrParser.GetValue_bool("adjoint_a_"));
-				if (attrParser.GetAttribute("adjoint_b_") != "") attrs.AdjointB(attrParser.GetValue_bool("adjoint_b_"));
+				if(attrParser.GetAttribute("adjoint_a_")!="") attrs = attrs.AdjointA(attrParser.GetValue_bool("adjoint_a_"));
+				if (attrParser.GetAttribute("adjoint_b_") != "") attrs = attrs.AdjointB(attrParser.GetValue_bool("adjoint_b_"));
 			}
 		}
 		else
@@ -3589,7 +3623,7 @@ void* Create_SparseToDense(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if(attrParser.GetAttribute("validate_indices_")!="") 
-					attrs.ValidateIndices(attrParser.GetValue_bool("validate_indices_"));
+					attrs = attrs.ValidateIndices(attrParser.GetValue_bool("validate_indices_"));
 			}
 		}
 		else
@@ -3621,7 +3655,8 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 	Output* sparse_handles = nullptr;
 	DataType dtype;
 	TakeManySparseFromTensorsMap::Attrs attrs;
-
+	std::string temp1 = "";
+	std::string temp2 = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -3695,10 +3730,19 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 			if (strPinInterface == "TakeManySparseFromTensorsMap::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if(attrParser.GetAttribute("container_")!="")
-					attrs.Container(attrParser.GetValue_StringPiece("container_"));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					temp1 = attrParser.GetValue_StringPiece("container_");
+					attrs = attrs.Container(temp1);
+
+				}
+					
 				if (attrParser.GetAttribute("shared_name_") != "")
-					attrs.SharedName(attrParser.GetValue_StringPiece("shared_name_"));
+				{
+					temp2 = attrParser.GetValue_StringPiece("shared_name_");
+					attrs = attrs.SharedName(temp2);
+				}
+					
 			}
 		}
 		else
@@ -3725,4 +3769,770 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 		PrintMessage(msg);
 	}
 	return pTakeManySparseFromTensorsMap;
+}
+
+void* Create_SparseFillEmptyRows(std::string id, Json::Value pInputItem)
+{
+	SparseFillEmptyRows* pSparseFillEmptyRows = nullptr;
+	Scope* pScope = nullptr;
+	Output* indices = nullptr;
+	Output* values = nullptr;
+	Output* dense_shape = nullptr;
+	Output* default_value = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "values")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dense_shape")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "default_value")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+	if (pScope && indices && values&&dense_shape &&default_value)
+	{
+		pSparseFillEmptyRows = new SparseFillEmptyRows(*pScope, *indices, *values, *dense_shape, *default_value);
+		ObjectInfo* pObj = AddObjectMap(pSparseFillEmptyRows, id, SYMBOL_SPARSEFILLEMPTYROWS, "SparseFillEmptyRows", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pSparseFillEmptyRows->output_indices, OUTPUT_TYPE_OUTPUT, "output_indices");
+			AddOutputInfo(pObj, &pSparseFillEmptyRows->output_values, OUTPUT_TYPE_OUTPUT, "output_values");
+			AddOutputInfo(pObj, &pSparseFillEmptyRows->empty_row_indicator, OUTPUT_TYPE_OUTPUT, "empty_row_indicator");
+			AddOutputInfo(pObj, &pSparseFillEmptyRows->reverse_index_map, OUTPUT_TYPE_OUTPUT, "reverse_index_map");
+
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : SparseFillEmptyRows(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pSparseFillEmptyRows;
+}
+
+void* Create_SparseFillEmptyRowsGrad(std::string id, Json::Value pInputItem)
+{
+	SparseFillEmptyRowsGrad* pSparseFillEmptyRowsGrad = nullptr;
+	Scope* pScope = nullptr;
+	Output* reverse_index_map = nullptr;
+	Output* grad_values = nullptr;
+
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "reverse_index_map")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							reverse_index_map = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "grad_values")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							grad_values = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+	if (pScope && reverse_index_map && grad_values)
+	{
+		pSparseFillEmptyRowsGrad = new SparseFillEmptyRowsGrad(*pScope, *reverse_index_map, *grad_values);
+		ObjectInfo* pObj = AddObjectMap(pSparseFillEmptyRowsGrad, id, SYMBOL_SPARSEFILLEMPTYROWS, "SparseFillEmptyRows", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pSparseFillEmptyRowsGrad->d_values, OUTPUT_TYPE_OUTPUT, "d_values");
+			AddOutputInfo(pObj, &pSparseFillEmptyRowsGrad->d_default_value, OUTPUT_TYPE_OUTPUT, "d_default_value");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : SparseFillEmptyRowsGrad(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pSparseFillEmptyRowsGrad;
+}
+
+void* Create_SparseReduceMax(std::string id, Json::Value pInputItem)
+{
+	SparseReduceMax* pSparseReduceMax = nullptr;
+	Scope* pScope = nullptr;
+	Output* input_indices = nullptr;
+	Output* input_values = nullptr;
+	Output* input_shape = nullptr;
+	Output* reduction_axes = nullptr;
+	SparseReduceMax::Attrs attrs;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "input_indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							input_indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "input_values")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							input_values = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "input_shape")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							input_shape = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "reduction_axes")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							reduction_axes = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "SparseReduceMax::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("keep_dims_") != "")
+					attrs = attrs.KeepDims(attrParser.GetValue_bool("validate_indices_"));
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+	if (pScope && input_indices && input_values &&input_shape &&reduction_axes)
+	{
+		pSparseReduceMax = new SparseReduceMax(*pScope, *input_indices, *input_values,*input_shape,*reduction_axes,attrs);
+		ObjectInfo* pObj = AddObjectMap(pSparseReduceMax, id, SYMBOL_SPARSEREDUCEMAX, "SparseReduceMax", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pSparseReduceMax->output, OUTPUT_TYPE_OUTPUT, "output");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : SparseReduceMax(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pSparseReduceMax;
+}
+
+void* Create_SparseReduceMaxSparse(std::string id, Json::Value pInputItem)
+{
+	SparseReduceMaxSparse* pSparseReduceMaxSparse = nullptr;
+	Scope* pScope = nullptr;
+	Output* input_indices = nullptr;
+	Output* input_values = nullptr;
+	Output* input_shape = nullptr;
+	Output* reduction_axes = nullptr;
+	SparseReduceMaxSparse::Attrs attrs;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "input_indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							input_indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "input_values")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							input_values = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "input_shape")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							input_shape = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "reduction_axes")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							reduction_axes = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "SparseReduceMax::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("keep_dims_") != "")
+					attrs = attrs.KeepDims(attrParser.GetValue_bool("validate_indices_"));
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+	if (pScope && input_indices && input_values &&input_shape &&reduction_axes)
+	{
+		pSparseReduceMaxSparse = new SparseReduceMaxSparse(*pScope, *input_indices, *input_values, *input_shape, *reduction_axes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pSparseReduceMaxSparse, id, SYMBOL_SPARSEREDUCEMAXSPARSE, "SparseReduceMax", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pSparseReduceMaxSparse->output_indices, OUTPUT_TYPE_OUTPUT, "output_indices");
+			AddOutputInfo(pObj, &pSparseReduceMaxSparse->output_values, OUTPUT_TYPE_OUTPUT, "output_values");
+			AddOutputInfo(pObj, &pSparseReduceMaxSparse->output_shape, OUTPUT_TYPE_OUTPUT, "output_shape");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : SparseReduceMaxSparse(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pSparseReduceMaxSparse;
+}
+
+void* Create_SparseSlice(std::string id, Json::Value pInputItem)
+{
+	SparseSlice* pSparseSlice = nullptr;
+	Scope* pScope = nullptr;
+	Output* indices = nullptr;
+	Output* values = nullptr;
+	Output* shape = nullptr;
+	Output* start = nullptr;
+	Output* size = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "values")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							values = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "shape")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							shape = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "start")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							start = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "size")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							size = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+	if (pScope && indices && values &&shape &&start&&size)
+	{
+		pSparseSlice = new SparseSlice(*pScope, *indices, *values, *shape, *start, *size);
+		ObjectInfo* pObj = AddObjectMap(pSparseSlice, id, SYMBOL_SPARSESLICE, "SparseSlice", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pSparseSlice->output_indices, OUTPUT_TYPE_OUTPUT, "output_indices");
+			AddOutputInfo(pObj, &pSparseSlice->output_values, OUTPUT_TYPE_OUTPUT, "output_values");
+			AddOutputInfo(pObj, &pSparseSlice->output_shape, OUTPUT_TYPE_OUTPUT, "output_shape");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : SparseSlice(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pSparseSlice;
 }

@@ -1104,6 +1104,11 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#Input_ex", SYMBOL_INPUT_EX));
 	m_SymbolList.insert(std::pair<std::string, int>("#RandomNormal_ex", SYMBOL_RANDOMNORMAL_EX));
 	m_SymbolList.insert(std::pair<std::string, int>("#Const_ex", SYMBOL_CONST_EX));
+	m_SymbolList.insert(std::pair<std::string, int>("#SparseFillEmptyRows", SYMBOL_SPARSEFILLEMPTYROWS));
+	m_SymbolList.insert(std::pair<std::string, int>("#SparseFillEmptyRowsGrad", SYMBOL_SPARSEFILLEMPTYROWSGRAD));
+	m_SymbolList.insert(std::pair<std::string, int>("#SparseReduceMax", SYMBOL_SPARSEREDUCEMAX));
+	m_SymbolList.insert(std::pair<std::string, int>("#SparseReduceMaxSparse", SYMBOL_SPARSEREDUCEMAXSPARSE));
+	m_SymbolList.insert(std::pair<std::string, int>("#SparseSlice", SYMBOL_SPARSESLICE));
 }
 
 int GetSymbolType(std::string strSymbolName)
@@ -1593,6 +1598,12 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_INPUT_EX: {		pCreate = Create_Input_ex(id, pInputItem);	break;	}
 	case SYMBOL_RANDOMNORMAL_EX: {		pCreate = Create_RandomNormal_ex(id, pInputItem);	break;	}
 	case SYMBOL_CONST_EX: {		pCreate = Create_Const_ex(id, pInputItem);	break;	}
+	case SYMBOL_SPARSEFILLEMPTYROWS: {		pCreate = Create_SparseFillEmptyRows(id, pInputItem);	break;	}
+	case SYMBOL_SPARSEFILLEMPTYROWSGRAD: {		pCreate = Create_SparseFillEmptyRowsGrad(id, pInputItem);	break;	}
+	case SYMBOL_SPARSEREDUCEMAX: {		pCreate = Create_SparseReduceMax(id, pInputItem);	break;	}
+	case SYMBOL_SPARSEREDUCEMAXSPARSE: {		pCreate = Create_SparseReduceMaxSparse(id, pInputItem);	break;	}
+	case SYMBOL_SPARSESLICE: {		pCreate = Create_SparseSlice(id, pInputItem);	break;	}
+
 	}
 	return pCreate;
 }

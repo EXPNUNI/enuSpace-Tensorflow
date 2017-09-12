@@ -503,7 +503,12 @@
 #define SYMBOL_INPUT_EX				455
 #define SYMBOL_RANDOMNORMAL_EX		456
 
-#define SYMBOL_CONST_EX				700
+#define SYMBOL_CONST_EX					700
+#define SYMBOL_SPARSEFILLEMPTYROWS		701
+#define SYMBOL_SPARSEFILLEMPTYROWSGRAD	702
+#define SYMBOL_SPARSEREDUCEMAX			703
+#define	SYMBOL_SPARSEREDUCEMAXSPARSE	704
+#define	SYMBOL_SPARSESLICE				705
 //////////////////////////////////////////////////////////////////////////
 
 #define OUTPUT_TYPE_OUTPUT			1
