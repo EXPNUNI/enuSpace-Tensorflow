@@ -333,11 +333,72 @@ void* Create_Input_Initializer(std::string id, Json::Value pInputItem) {
 }
 
 void* Create_InputList(std::string id, Json::Value pInputItem) {
-	InputList* pInputList = nullptr;
 	Scope* pScope = nullptr;
+	InputList* pInputList = nullptr;
+	OutputList outputlist;
+	int iCheck_Pintype = 0;
 
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
 
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
 
+		if (strPinName == "outputlist")
+		{
+			if (strInSymbolPinInterface == "Output" || strInSymbolPinInterface == "OutputList")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
+						{
+							outputlist.push_back(*((Output*)pOutputObj->pOutput));
+						}
+						else if (pOutputObj->type == OUTPUT_TYPE_OUTPUTLIST)
+						{
+							OutputList* outputcopylist = (OutputList*)pOutputObj->pOutput;
+							outputlist.reserve(outputlist.size() + outputcopylist->size());
+							outputlist.insert(outputlist.end(), outputcopylist->begin(), outputcopylist->end());
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : PadV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : Input pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (!outputlist.empty())
+	{
+		pInputList = new InputList(outputlist);
+		ObjectInfo* pObj = AddObjectMap(pInputList, id, SYMBOL_INPUTLIST, "output", pInputItem);
+	}
+	else
+	{
+		std::string msg = string_format("error : Input(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
 
 	return pInputList;
 }

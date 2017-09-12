@@ -104,7 +104,9 @@ bool Task_Tensorflow()
 						ClientSession* pClientSession = (ClientSession*)pTar->pSession->pObject;
 						std::vector<tensorflow::Tensor> oper_outputs;
 						Status oper_st;
-						oper_st = pClientSession->Run({}, {}, pTar->output.run_outputs, &oper_outputs);
+
+						if (pTar->output.run_outputs.size() > 0)
+							oper_st = pClientSession->Run({}, {}, pTar->output.run_outputs, &oper_outputs);
 
 						// Output 실행 로직 
 						if (pTar->output.fetch_object.size() > 0)

@@ -695,7 +695,7 @@ void* Create_Concat(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "values")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -4475,6 +4475,8 @@ void* Create_Placeholder(std::string id, Json::Value pInputItem) {
 	Placeholder* pPlaceholder = nullptr;
 	Scope* pScope = nullptr;
 	DataType dtype;
+	Placeholder::Attrs attrs;
+
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4521,7 +4523,17 @@ void* Create_Placeholder(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "Placeholder::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("shape_") != "")
+				{
+					attrs.shape_ = attrParser.ConvStrToPartialTensorShape(attrParser.GetAttribute("shape_"));
+				}
+			}
+		}
 		else
 		{
 			std::string msg = string_format("warning : Placeholder pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
@@ -4531,7 +4543,7 @@ void* Create_Placeholder(std::string id, Json::Value pInputItem) {
 
 	if (pScope)
 	{
-		pPlaceholder = new Placeholder(*pScope, dtype);
+		pPlaceholder = new Placeholder(*pScope, dtype, attrs);
 		ObjectInfo* pObj = AddObjectMap(pPlaceholder, id, SYMBOL_PLACEHOLDER, "Placeholder", pInputItem);
 		if (pObj)
 		{
