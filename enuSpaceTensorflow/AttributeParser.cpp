@@ -74,9 +74,15 @@ bool CAttributeParser::ConvStrToBool(std::string strValue)
 		return false;
 }
 
-long long CAttributeParser::ConvStrToInt64(std::string strValue)
+int64 CAttributeParser::ConvStrToInt64(std::string strValue)
 {
-	return std::stoll(strValue);
+	int64 ints = 0;
+
+	if (strValue !="")
+	{
+		ints = std::stoll(strValue);
+	}
+	return ints;
 }
 
 float CAttributeParser::ConvStrToFloat(std::string strValue)
@@ -85,6 +91,7 @@ float CAttributeParser::ConvStrToFloat(std::string strValue)
 }
 std::string CAttributeParser::ConvStrToStringPiece(std::string attrValue)
 {
+	attrValue = trim(attrValue);
 	return attrValue;
 }
 
