@@ -262,7 +262,10 @@ void* Create_Input(std::string id, Json::Value pInputItem) {
 	if (pTensor)
 	{
 		pInput = new Input(*pTensor);
+		Output* pOut = new Output(pInput->node());
 		ObjectInfo* pObj = AddObjectMap(pInput, id, SYMBOL_INPUT, "Input", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, pOut, OUTPUT_TYPE_OUTPUT, "output");
 	}
 	else
 	{
@@ -378,13 +381,13 @@ void* Create_InputList(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : PadV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				std::string msg = string_format("warning : InputList - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
 				PrintMessage(msg);
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : Input pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			std::string msg = string_format("warning : InputList pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
 			PrintMessage(msg);
 		}
 	}
@@ -393,10 +396,12 @@ void* Create_InputList(std::string id, Json::Value pInputItem) {
 	{
 		pInputList = new InputList(outputlist);
 		ObjectInfo* pObj = AddObjectMap(pInputList, id, SYMBOL_INPUTLIST, "output", pInputItem);
+ 		if (pObj)
+ 			AddOutputInfo(pObj, pInputList, OUTPUT_TYPE_OUTPUTLIST, "output");
 	}
 	else
 	{
-		std::string msg = string_format("error : Input(%s) Object create failed.", id.c_str());
+		std::string msg = string_format("error : InputList(%s) Object create failed.", id.c_str());
 		PrintMessage(msg);
 	}
 
@@ -452,23 +457,7 @@ void* Create_Tensor(std::string id, Json::Value pInputItem) {
 		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
 		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
 
-		if (strPinName == "shape")
-		{
-			if (strPinInterface == "TensorShape")
-			{
-				std::vector<int64> arrayslice;
-				std::vector<int64> arraydims;
-				GetArrayDimsFromShape(strPinInitial, arraydims, arrayslice);
-				gtl::ArraySlice< int64 > arraySlice(arraydims);
-				shape = TensorShape(arraySlice);
-			}
-			else
-			{
-				std::string msg = string_format("warning : Tensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
-			}
-		}
-		else if (strPinName == "dtype")
+		if (strPinName == "dtype")
 		{
 			if (!strPinInitial.empty())
 			{
@@ -513,6 +502,9 @@ void* Create_Input_ex(std::string id, Json::Value pInputItem)
 	Input* pInput = nullptr;
 	tensorflow::TensorShape shape;
 	tensorflow::DataType dtype;
+	std::string strinitvalues;
+	std::string strdatatype;
+	Tensor* pTensor;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -529,42 +521,28 @@ void* Create_Input_ex(std::string id, Json::Value pInputItem)
 		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
 		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
 
-		if (strPinName == "shape")
+		if (strPinName == "dtype")
 		{
-			if (strPinInterface == "TensorShape")
+			if (!strPinInitial.empty())
 			{
-				std::vector<int64> arrayslice;
-				std::vector<int64> arraydims;
-				GetArrayDimsFromShape(strPinInitial, arraydims, arrayslice);
-				gtl::ArraySlice< int64 > arraySlice(arraydims);
-				shape = TensorShape(arraySlice);
+				dtype = GetDatatypeFromInitial(strPinInitial);
+				if (dtype == DT_INVALID)
+				{
+					std::string msg = string_format("warning : Input_ex - %s(%s) unknown dtype", id.c_str(), strPinName.c_str());
+					PrintMessage(msg);
+				}
+				strdatatype = strPinInitial;
 			}
 			else
 			{
-				std::string msg = string_format("warning : Input_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				std::string msg = string_format("warning : Input_ex - %s(%s) dtype is not initialized", id.c_str(), strPinName.c_str());
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "dtype")
+		else if (strPinName == "initvalues")
 		{
-			if (strPinInterface == "DataType")
-			{
-				if (strPinInitial == "double")
-					dtype = DT_DOUBLE;
-				else if (strPinInitial == "float")
-					dtype = DT_FLOAT;
-				else if (strPinInitial == "int")
-					dtype = DT_INT32;
-				else if (strPinInitial == "bool")
-					dtype = DT_BOOL;
-				else if (strPinInitial == "string")
-					dtype = DT_STRING;
-				else
-				{
-					std::string msg = string_format("warning : Input_ex - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
-				}
-			}
+			if (!strPinInitial.empty())
+				strinitvalues = strPinInitial;
 		}
 		else
 		{
@@ -573,10 +551,14 @@ void* Create_Input_ex(std::string id, Json::Value pInputItem)
 		}
 	}
 
-	Tensor tensor(dtype, shape);
-
-	pInput = new Input(tensor);
-	ObjectInfo* pObj = AddObjectMap(pInput, id, SYMBOL_INPUT_EX, "Input", pInputItem);
+	if (dtype != DT_INVALID)
+	{
+		pTensor = Create_StrToTensor(strdatatype, "", strinitvalues);
+		pInput = new Input(*pTensor);
+		ObjectInfo* pObj = AddObjectMap(pInput, id, SYMBOL_INPUT_EX, "Input", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, pInput, OUTPUT_TYPE_OUTPUT, "output");
+	}
 
 	return pInput;
 }
