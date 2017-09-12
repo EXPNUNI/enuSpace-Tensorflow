@@ -290,7 +290,7 @@ bool Task_Tensorflow()
 													std::string strTmp = "";
 													for (size_t j = 0; j < flat(i).size(); j++)
 													{
-														strTmp += strings::Printf("%02x", i, flat(i)[j]);
+														strTmp += strings::Printf("%02x", flat(i)[j]);
 													}
 													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
 													((std::string*)pData + i)->assign(strTmp.c_str());
@@ -574,7 +574,7 @@ bool Task_Tensorflow()
 													std::string strTmp = "";
 													for (size_t j = 0; j < flat(i).size(); j++)
 													{
-														strTmp += strings::Printf("%02x;", i, flat(i)[j]);
+														strTmp += strings::Printf("%02x;", flat(i)[j]);
 													}
 													if (i<idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
 													((std::string*)pData + i + iOffset)->assign(strTmp.c_str());
