@@ -104,7 +104,9 @@ bool Task_Tensorflow()
 						ClientSession* pClientSession = (ClientSession*)pTar->pSession->pObject;
 						std::vector<tensorflow::Tensor> oper_outputs;
 						Status oper_st;
-						oper_st = pClientSession->Run({}, {}, pTar->output.run_outputs, &oper_outputs);
+
+						if (pTar->output.run_outputs.size() > 0)
+							oper_st = pClientSession->Run({}, {}, pTar->output.run_outputs, &oper_outputs);
 
 						// Output 실행 로직 
 						if (pTar->output.fetch_object.size() > 0)
@@ -280,7 +282,7 @@ bool Task_Tensorflow()
 												auto flat = it->flat<std::string>();
 												if (isString(flat(i)))
 												{
-													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
+													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i).c_str()));
 													((std::string*)pData + i)->assign(flat(i));
 												}
 												else
@@ -288,7 +290,7 @@ bool Task_Tensorflow()
 													std::string strTmp = "";
 													for (size_t j = 0; j < flat(i).size(); j++)
 													{
-														strTmp += strings::Printf("%02x", i, flat(i)[j]);
+														strTmp += strings::Printf("%02x", flat(i).c_str()[j]);
 													}
 													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
 													((std::string*)pData + i)->assign(strTmp.c_str());
@@ -565,14 +567,14 @@ bool Task_Tensorflow()
 												if (isString(flat(i)))
 												{
 													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
-													((std::string*)pData + i + iOffset)->assign(flat(i));
+													((std::string*)pData + i + iOffset)->assign(flat(i).c_str());
 												}
 												else
 												{
 													std::string strTmp = "";
 													for (size_t j = 0; j < flat(i).size(); j++)
 													{
-														strTmp += strings::Printf("%02x;", i, flat(i)[j]);
+														strTmp += strings::Printf("%02x;", flat(i).c_str()[j]);
 													}
 													if (i<idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
 													((std::string*)pData + i + iOffset)->assign(strTmp.c_str());
