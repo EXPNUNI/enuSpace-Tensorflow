@@ -77,11 +77,11 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 							pFeedType = (std::unordered_map<Output, Input::Initializer, OutputHash>*)pfetchObj->pObject;
 							pFetchInfo->pFeedType = pFeedType;						
 						}
-					}
-					else
-					{
-						std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed (lookup output map).", id.c_str(), strPinName.c_str());
-						PrintMessage(msg);
+						else
+						{
+							std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed (lookup output map).", id.c_str(), strPinName.c_str());
+							PrintMessage(msg);
+						}
 					}
 				}
 			}
@@ -110,17 +110,11 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 								pFetchInfo->output_list.fetch_outputs.push_back(*(OutputList*)pOutputObj->pOutput);
 								pFetchInfo->output_list.pin_names.push_back(strInSymbolPinName);
 							}
-
 							else
 							{
 								std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed (lookup type is not output).", id.c_str(), strPinName.c_str());
 								PrintMessage(msg);
 							}
-						}
-						else
-						{
-							std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed (lookup output map).", id.c_str(), strPinName.c_str());
-							PrintMessage(msg);
 						}
 					}
 				}
@@ -148,7 +142,7 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 								pFetchInfo->output.run_outputs.push_back(*(Operation*)pOutputObj->pOutput);
 								pFetchInfo->output.pin_names.push_back(strInSymbolPinName);
 							}
-							if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
+							else if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
 							{
 								std::string msg = string_format("warning : ClientSession - %s(%s) not support output object.", id.c_str(), strPinName.c_str());
 								PrintMessage(msg);
@@ -411,6 +405,73 @@ void* Create_InputList(std::string id, Json::Value pInputItem) {
 void* Create_Operation(std::string id, Json::Value pInputItem) {
 	Operation* pOperation = nullptr;
 	Scope* pScope = nullptr;
+	Output* pInput = nullptr;
+	int n_count = 0;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "operation")
+		{
+			if (strPinInterface == "Operation")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
+						{
+							pInput = (Output*)pObj->pObject;
+							n_count++;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : Operation - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : Operation pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pInput && n_count == 1)
+	{
+		pOperation = new Operation(pInput->node());
+		ObjectInfo* pObj = AddObjectMap(pOperation, id, SYMBOL_OPERATION, "output", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, pOperation, OUTPUT_TYPE_OPERATION, "output");
+	}
+	else if (n_count > 1)
+	{
+		std::string msg = string_format("error : Operation(%s) more than one transfer is not supported.", id.c_str());
+		PrintMessage(msg);
+	}
+	else
+	{
+		std::string msg = string_format("error : Operation(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	
 	return pOperation;
 }
 

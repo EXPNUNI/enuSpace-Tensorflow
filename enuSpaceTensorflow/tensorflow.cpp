@@ -187,7 +187,6 @@ extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMess
 
 extern "C" __declspec(dllexport) int GetTaskType();
 extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar_t* pToType);
-extern "C" __declspec(dllexport) bool IsTaskStopWhenModify();
 
 extern "C" __declspec(dllexport) bool OnInit();
 extern "C" __declspec(dllexport) bool OnLoad();
@@ -685,13 +684,11 @@ void PrintMessage(std::string strMessage)
 	}
 }
 
-// TASK의 타입을 반환, TASK_TYPE_FLOWCOMPONENT_PAGE 개별 페이지에 대하여 객체의 연결 정보를 전달받음.
 extern "C" __declspec(dllexport) int GetTaskType()
 {
 	return TASK_TYPE_FLOW_COMPONENT_PAGE;
 }
 
-// 각 객체의 연결선 허용 타입(auto-interface)에 따른 플래그 반환.
 extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar_t* pToType)
 {
 	CString strFromType = pFromType;
@@ -716,6 +713,20 @@ extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar
 		return true;
 	else if (strFromType == L"Input::Initializer" && strToType == L"Input::Initializer")
 		return true;
+	else if (strFromType == L"Output" && strToType == L"OutputList")
+		return true;
+	else if (strFromType == L"OutputList" && strToType == L"OutputList")
+		return true;
+	else if (strFromType == L"Operation" && strToType == L"std::vector(tensorflow::Operation)")
+		return true;
+	else if (strFromType == L"Operation" && strToType == L"std::vector(tensorflow::Output)")
+		return true;
+	else if (strFromType == L"Input" && strToType == L"Operation")
+		return true;
+	else if (strFromType == L"Output" && strToType == L"Operation")
+		return true;
+	else if (strFromType == L"Tensor" && strToType == L"Operation")
+		return true;
 
 	else if (strFromType == L"ops::Variable" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
 		return true;
@@ -739,14 +750,10 @@ extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar
 	else if (strFromType == L"ops::ApplyGradientDescent" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
 		return true;
 
+	
+
 	else
 		return false;
-}
-
-// tensorflow 객체 추가, 제거 등 편집시 TASK의 기동 설정
-extern "C" __declspec(dllexport) bool IsTaskStopWhenModify()
-{
-	return true;
 }
 
 extern "C" __declspec(dllexport) bool OnLoad()

@@ -104,9 +104,13 @@ bool Task_Tensorflow()
 						ClientSession* pClientSession = (ClientSession*)pTar->pSession->pObject;
 						std::vector<tensorflow::Tensor> oper_outputs;
 						Status oper_st;
-
-						if (pTar->output.run_outputs.size() > 0)
-							oper_st = pClientSession->Run({}, {}, pTar->output.run_outputs, &oper_outputs);
+						oper_st = pClientSession->Run({}, {}, pTar->output.run_outputs, &oper_outputs);
+						if (oper_st.code() != error::OK)
+						{
+							std::string msg = string_format("error: %s.", oper_st.error_message().c_str());
+							PrintMessage(msg);
+							return true;
+						}
 
 						// Output 실행 로직 
 						if (pTar->output.fetch_object.size() > 0)
@@ -282,7 +286,7 @@ bool Task_Tensorflow()
 												auto flat = it->flat<std::string>();
 												if (isString(flat(i)))
 												{
-													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i).c_str()));
+													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
 													((std::string*)pData + i)->assign(flat(i));
 												}
 												else
@@ -290,7 +294,7 @@ bool Task_Tensorflow()
 													std::string strTmp = "";
 													for (size_t j = 0; j < flat(i).size(); j++)
 													{
-														strTmp += strings::Printf("%02x", flat(i).c_str()[j]);
+														strTmp += strings::Printf("%02x", i, flat(i)[j]);
 													}
 													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
 													((std::string*)pData + i)->assign(strTmp.c_str());
@@ -567,14 +571,14 @@ bool Task_Tensorflow()
 												if (isString(flat(i)))
 												{
 													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
-													((std::string*)pData + i + iOffset)->assign(flat(i).c_str());
+													((std::string*)pData + i + iOffset)->assign(flat(i));
 												}
 												else
 												{
 													std::string strTmp = "";
 													for (size_t j = 0; j < flat(i).size(); j++)
 													{
-														strTmp += strings::Printf("%02x;", flat(i).c_str()[j]);
+														strTmp += strings::Printf("%02x;", i, flat(i)[j]);
 													}
 													if (i<idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
 													((std::string*)pData + i + iOffset)->assign(strTmp.c_str());
@@ -1106,11 +1110,6 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#Input_ex", SYMBOL_INPUT_EX));
 	m_SymbolList.insert(std::pair<std::string, int>("#RandomNormal_ex", SYMBOL_RANDOMNORMAL_EX));
 	m_SymbolList.insert(std::pair<std::string, int>("#Const_ex", SYMBOL_CONST_EX));
-	m_SymbolList.insert(std::pair<std::string, int>("#SparseFillEmptyRows", SYMBOL_SPARSEFILLEMPTYROWS));
-	m_SymbolList.insert(std::pair<std::string, int>("#SparseFillEmptyRowsGrad", SYMBOL_SPARSEFILLEMPTYROWSGRAD));
-	m_SymbolList.insert(std::pair<std::string, int>("#SparseReduceMax", SYMBOL_SPARSEREDUCEMAX));
-	m_SymbolList.insert(std::pair<std::string, int>("#SparseReduceMaxSparse", SYMBOL_SPARSEREDUCEMAXSPARSE));
-	m_SymbolList.insert(std::pair<std::string, int>("#SparseSlice", SYMBOL_SPARSESLICE));
 }
 
 int GetSymbolType(std::string strSymbolName)
@@ -1600,12 +1599,6 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_INPUT_EX: {		pCreate = Create_Input_ex(id, pInputItem);	break;	}
 	case SYMBOL_RANDOMNORMAL_EX: {		pCreate = Create_RandomNormal_ex(id, pInputItem);	break;	}
 	case SYMBOL_CONST_EX: {		pCreate = Create_Const_ex(id, pInputItem);	break;	}
-	case SYMBOL_SPARSEFILLEMPTYROWS: {		pCreate = Create_SparseFillEmptyRows(id, pInputItem);	break;	}
-	case SYMBOL_SPARSEFILLEMPTYROWSGRAD: {		pCreate = Create_SparseFillEmptyRowsGrad(id, pInputItem);	break;	}
-	case SYMBOL_SPARSEREDUCEMAX: {		pCreate = Create_SparseReduceMax(id, pInputItem);	break;	}
-	case SYMBOL_SPARSEREDUCEMAXSPARSE: {		pCreate = Create_SparseReduceMaxSparse(id, pInputItem);	break;	}
-	case SYMBOL_SPARSESLICE: {		pCreate = Create_SparseSlice(id, pInputItem);	break;	}
-
 	}
 	return pCreate;
 }
