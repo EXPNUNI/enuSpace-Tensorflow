@@ -488,13 +488,19 @@ bool GetArrayShapeFromInitial(std::string strinitial, std::vector<PartialTensorS
 			else if (strinitial[i] == '}')
 			{
 				if (val != "")
+				{
 					arraydims.push_back(stoll(val));
+					val = "";
+					std::string msg = string_format("test %d", arraydims.size());
+					PrintMessage(msg);
+					PartialTensorShape partts(arraydims);
+					vec_PTS.push_back(partts);
+					arraydims.clear();
+				}
+				
 				bOpen = false;
-				std::string msg = string_format("test %d", arraydims.size());
-				PrintMessage(msg);
-				PartialTensorShape partts(arraydims);
-				vec_PTS.push_back(partts);
-				arraydims.clear();
+				
+				
 
 			}
 			else
@@ -503,16 +509,26 @@ bool GetArrayShapeFromInitial(std::string strinitial, std::vector<PartialTensorS
 			}
 		}
 	}
+
+	if (bOpen == true)
+	{
+		vec_PTS.clear();
+	}
+	/*
 	if (val.length() > 0)  //사용자가 마지막 구분자를 닫지않았다.
 	{
 		if (arraydims.size() != 0)
 		{
+			if ()
+			{
+			}
 			arraydims.push_back(stoll(val));
 			PartialTensorShape partts(arraydims);
 			vec_PTS.push_back(partts);
 			arraydims.clear();
 		}
 	}
+	*/
 	int isize = vec_PTS.size();
 
 	std::string msg = string_format("vec_pts %d", isize);
