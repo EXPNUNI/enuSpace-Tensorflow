@@ -102,16 +102,7 @@ bool Task_Tensorflow()
 					{
 						// Operation 角青 肺流
 						ClientSession* pClientSession = (ClientSession*)pTar->pSession->pObject;
-						std::vector<tensorflow::Tensor> oper_outputs;
-						Status oper_st;
-						oper_st = pClientSession->Run({}, {}, pTar->output.run_outputs, &oper_outputs);
-						if (oper_st.code() != error::OK)
-						{
-							std::string msg = string_format("error: %s.", oper_st.error_message().c_str());
-							PrintMessage(msg);
-							return true;
-						}
-
+				
 						// Output 角青 肺流 
 						if (pTar->output.fetch_object.size() > 0)
 						{
@@ -121,10 +112,10 @@ bool Task_Tensorflow()
 							if (pTar->pFeedType == nullptr)
 							{
 								std::unordered_map<Output, Input::Initializer, OutputHash> feedType{};
-								st = pClientSession->Run(feedType, pTar->output.fetch_outputs, &outputs);
+								st = pClientSession->Run(feedType, pTar->output.fetch_outputs, pTar->output.run_outputs, &outputs);
 							}
 							else
-								st = pClientSession->Run(*pTar->pFeedType, pTar->output.fetch_outputs, &outputs);
+								st = pClientSession->Run(*pTar->pFeedType, pTar->output.fetch_outputs, pTar->output.run_outputs, &outputs);
 
 							if (st.code() != error::OK)
 							{
@@ -354,16 +345,22 @@ bool Task_Tensorflow()
 
 								std::vector<tensorflow::Tensor> outputs;
 
+
 								Status st;
-								st = pClientSession->Run(output_list, &outputs);
+								if (pTar->pFeedType == nullptr)
+								{
+									std::unordered_map<Output, Input::Initializer, OutputHash> feedType{};
+									st = pClientSession->Run(feedType, output_list, pTar->output.run_outputs,&outputs);
+								}
+								else
+									st = pClientSession->Run(*pTar->pFeedType, output_list, pTar->output.run_outputs, &outputs);
+
 								if (st.code() != error::OK)
 								{
 									std::string msg = string_format("error: %s.", st.error_message().c_str());
 									PrintMessage(msg);
 								}
-
-								//TF_CHECK_OK(pClientSession->Run(output_list, &outputs));
-								
+																
 								int iSize = outputs.size();
 								int iMax = 0;
 								int iType = DEF_UNKNOWN;
