@@ -33,4 +33,4 @@ OutputInfo* LookupFromOutputMap(ObjectInfo* pObjectInfo, std::string strname);
 void AddSymbolList();
 int GetSymbolType(std::string strSymbolName);
 void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem);
-
+std::string GetCategoryName(int iSymbol);

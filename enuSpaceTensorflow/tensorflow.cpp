@@ -195,6 +195,7 @@ extern "C" __declspec(dllexport) bool OnTask();
 
 extern "C" __declspec(dllexport) void OnEditComponent(wchar_t* pStrSymbolName, wchar_t* pStrID);
 extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, wchar_t* pStrID);
+extern "C" __declspec(dllexport) bool OnShowHelp(wchar_t* pStrSymbolName);
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -838,5 +839,26 @@ extern "C" __declspec(dllexport) void OnEditComponent(wchar_t* pStrSymbolName, w
 extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, wchar_t* pStrID)
 {
 
+}
+
+// HELP Interface
+extern "C" __declspec(dllexport) bool OnShowHelp(wchar_t* pStrSymbolName)
+{
+	CString strComponent = pStrSymbolName;
+	int SymbolType = GetSymbolType(CStringToString(strComponent));
+	if (SymbolType == SYMBOL_NONE)
+	{
+		return false;
+	}
+
+	strComponent.MakeLower();
+	strComponent.Remove(L'#');
+	CString strAddress;
+
+	CString strCategory = StringToCString(GetCategoryName(SymbolType));
+
+	strAddress.Format(L"https://expnuni.gitbooks.io/enuspacetensorflow/content/%s/%s.html", strCategory, strComponent);
+	ShellExecute(NULL, L"open", L"chrome.exe", strAddress, NULL, SW_SHOW);
+	return true;
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
