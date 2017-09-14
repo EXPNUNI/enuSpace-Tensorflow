@@ -1593,7 +1593,6 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_SPARSEAPPLYPROXIMALGRADIENTDESCENT: {		pCreate = Create_SparseApplyProximalGradientDescent(id, pInputItem);	break;	}
 	case SYMBOL_SPARSEAPPLYRMSPROP: {		pCreate = Create_SparseApplyRMSProp(id, pInputItem);	break;	}
 	case SYMBOL_CONST: {		pCreate = Create_Const(id, pInputItem);	break;	}
-	case SYMBOL_INPUT_EX: {		pCreate = Create_Input_ex(id, pInputItem);	break;	}
 	case SYMBOL_RANDOMNORMAL_EX: {		pCreate = Create_RandomNormal_ex(id, pInputItem);	break;	}
 	case SYMBOL_CONST_EX: {		pCreate = Create_Const_ex(id, pInputItem);	break;	}
 	}

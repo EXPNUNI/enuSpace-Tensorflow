@@ -500,7 +500,6 @@
 //////////////////////////////////////////////////////////////////////////
 // [extension] Add symbol
 #define SYMBOL_CONST				454
-#define SYMBOL_INPUT_EX				455
 #define SYMBOL_RANDOMNORMAL_EX		456
 
 #define SYMBOL_CONST_EX					700

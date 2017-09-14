@@ -728,6 +728,10 @@ extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar
 		return true;
 	else if (strFromType == L"Tensor" && strToType == L"Operation")
 		return true;
+	else if (strFromType == L"InputList" && strToType == L"std::vector(tensorflow::Output)")
+		return true;
+	else if (strFromType == L"Input" && strToType == L"std::vector(tensorflow::Output)")
+		return true;
 
 	else if (strFromType == L"ops::Variable" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
 		return true;

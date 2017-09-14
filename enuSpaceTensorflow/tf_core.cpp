@@ -206,69 +206,6 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 	return pSession;
 }
 
-void* Create_Input(std::string id, Json::Value pInputItem) {
-	Output* pOutput = nullptr;
-	Input* pInput = nullptr;
-	Tensor* pTensor = nullptr;
-
-	int iSize = (int)pInputItem.size();
-	for (int subindex = 0; subindex < iSize; ++subindex)
-	{
-		Json::Value ItemValue = pInputItem[subindex];
-
-		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
-		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
-		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
-		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
-		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
-		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
-		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
-		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
-		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
-
-		if (strPinName == "input")
-		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strInSymbolName == "#Tensor" && strInSymbolPinInterface == "Tensor" && strPinInterface == "Tensor")
-			{
-				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
-				if (pObj)
-				{
-					if (pObj->type == SYMBOL_TENSOR)
-					{
-						pTensor = (Tensor*)pObj->pObject;
-					}
-				}
-			}
-			else
-			{
-				std::string msg = string_format("warning : Input - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
-			}
-		}
-		else
-		{
-			std::string msg = string_format("warning : Input pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
-		}
-	}
-
-	if (pTensor)
-	{
-		pInput = new Input(*pTensor);
-		Output* pOut = new Output(pInput->node());
-		ObjectInfo* pObj = AddObjectMap(pInput, id, SYMBOL_INPUT, "Input", pInputItem);
-		if (pObj)
-			AddOutputInfo(pObj, pOut, OUTPUT_TYPE_OUTPUT, "output");
-	}
-	else
-	{
-		std::string msg = string_format("error : Input(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
-	}
-	return pInput;
-}
-
 void* Create_Input_Initializer(std::string id, Json::Value pInputItem) {
 	Input::Initializer* pInput_Initializer = nullptr;
 	Scope* pScope = nullptr;
@@ -331,7 +268,7 @@ void* Create_Input_Initializer(std::string id, Json::Value pInputItem) {
 
 void* Create_InputList(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
-	InputList* pInputList = nullptr;
+	OutputList* pInputList = nullptr;
 	OutputList outputlist;
 	int iCheck_Pintype = 0;
 
@@ -388,7 +325,7 @@ void* Create_InputList(std::string id, Json::Value pInputItem) {
 
 	if (!outputlist.empty())
 	{
-		pInputList = new InputList(outputlist);
+		pInputList = new OutputList(outputlist);
 		ObjectInfo* pObj = AddObjectMap(pInputList, id, SYMBOL_INPUTLIST, "output", pInputItem);
  		if (pObj)
  			AddOutputInfo(pObj, pInputList, OUTPUT_TYPE_OUTPUTLIST, "output");
@@ -435,7 +372,7 @@ void* Create_Operation(std::string id, Json::Value pInputItem) {
 					{
 						if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
 						{
-							pInput = (Output*)pObj->pObject;
+							pInput = (Output*)pOutputObj->pOutput;
 							n_count++;
 						}
 					}
@@ -478,6 +415,67 @@ void* Create_Operation(std::string id, Json::Value pInputItem) {
 void* Create_Output(std::string id, Json::Value pInputItem) {
 	Output* pOutput = nullptr;
 	Scope* pScope = nullptr;
+	Input* pInput = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "input")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pInput = (Input*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : Output - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : Output pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pInput)
+	{
+		pOutput = new Output(pInput->node());
+		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_OUTPUT, "Output", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
+	}
+	else
+	{
+		std::string msg = string_format("error : Output(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+
 	return pOutput;
 }
 
@@ -558,14 +556,15 @@ void* Create_Tensor(std::string id, Json::Value pInputItem) {
 }
 
 
-void* Create_Input_ex(std::string id, Json::Value pInputItem)
+void* Create_Input(std::string id, Json::Value pInputItem)
 {
 	Input* pInput = nullptr;
 	tensorflow::TensorShape shape;
 	tensorflow::DataType dtype;
 	std::string strinitvalues;
 	std::string strdatatype;
-	Tensor* pTensor;
+	Tensor* pTensor = nullptr;
+	Output* pOutput = nullptr;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -602,8 +601,26 @@ void* Create_Input_ex(std::string id, Json::Value pInputItem)
 		}
 		else if (strPinName == "initvalues")
 		{
-			if (!strPinInitial.empty())
+			if(strInSymbolPinInterface == "Tensor")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					if (pObj->type == SYMBOL_TENSOR)
+					{
+						pTensor = (Tensor*)pObj->pObject;
+					}
+				}
+			}
+			else if (!strPinInitial.empty())
+			{
 				strinitvalues = strPinInitial;
+			}
+			else
+			{
+				std::string msg = string_format("warning : Input - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
 		}
 		else
 		{
@@ -612,13 +629,27 @@ void* Create_Input_ex(std::string id, Json::Value pInputItem)
 		}
 	}
 
-	if (dtype != DT_INVALID)
+	if (pTensor)
+	{
+		pInput = new Input(*pTensor);
+		pOutput = new Output(pInput->node());
+		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_INPUT, "output", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
+	}
+	else if(strinitvalues != "" && dtype)
 	{
 		pTensor = Create_StrToTensor(strdatatype, "", strinitvalues);
 		pInput = new Input(*pTensor);
-		ObjectInfo* pObj = AddObjectMap(pInput, id, SYMBOL_INPUT_EX, "Input", pInputItem);
+		pOutput = new Output(pInput->node());
+		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_INPUT, "output", pInputItem);
 		if (pObj)
-			AddOutputInfo(pObj, pInput, OUTPUT_TYPE_OUTPUT, "output");
+			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
+	}
+	else
+	{
+		std::string msg = string_format("error : Input(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
 	}
 
 	return pInput;
@@ -715,4 +746,173 @@ void* Create_FeedType(std::string id, Json::Value pInputItem)
 		AddObjectMap(pFeedType, id, SYMBOL_FEEDTYPE, "output", pInputItem);
 	}
 	return pFeedType;
+}
+
+void* Create_Const(std::string id, Json::Value pInputItem)
+{
+	Scope* pScope = nullptr;
+	Output* pOutput = new Output();
+	Tensor* pTensor = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : Const - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "val")
+		{
+			if (strInSymbolPinName == "" && strPinInterface == "Input::Initializer")
+			{
+				std::vector<int64> array_slice;
+				std::vector<int64> arraydims;
+				GetArrayDimsFromShape(strPinShape, arraydims, array_slice);
+
+				if (strPinType == "double")
+				{
+					std::vector<double> arrayvals;
+					GetDoubleVectorFromInitial(strPinInitial, arrayvals);
+
+					gtl::ArraySlice< int64 > arraySlice(arraydims);
+					pTensor = new Tensor(DT_DOUBLE, TensorShape(arraySlice));
+
+					int i = 0;
+					for (std::vector<double>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+					{
+						pTensor->flat<double>()(i) = *it;
+						i++;
+					}
+					arraySlice.clear();
+					arrayvals.clear();
+				}
+				else if (strPinType == "float")
+				{
+					std::vector<float> arrayvals;
+					GetFloatVectorFromInitial(strPinInitial, arrayvals);
+
+					gtl::ArraySlice< int64 > arraySlice(arraydims);
+					pTensor = new Tensor(DT_FLOAT, TensorShape(arraySlice));
+
+					int i = 0;
+					for (std::vector<float>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+					{
+						pTensor->flat<float>()(i) = *it;
+						i++;
+					}
+					arraySlice.clear();
+					arrayvals.clear();
+				}
+				else if (strPinType == "int")
+				{
+					std::vector<int> arrayvals;
+					GetIntVectorFromInitial(strPinInitial, arrayvals);
+
+					gtl::ArraySlice< int64 > arraySlice(arraydims);
+					pTensor = new Tensor(DT_INT32, TensorShape(arraySlice));
+
+					int i = 0;
+					for (std::vector<int>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+					{
+						pTensor->flat<int>()(i) = *it;
+						i++;
+					}
+					arraySlice.clear();
+					arrayvals.clear();
+				}
+				else if (strPinType == "bool")
+				{
+					std::vector<bool> arrayvals;
+					GetBoolVectorFromInitial(strPinInitial, arrayvals);
+
+					gtl::ArraySlice< int64 > arraySlice(arraydims);
+					pTensor = new Tensor(DT_BOOL, TensorShape(arraySlice));
+
+					int i = 0;
+					for (std::vector<bool>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+					{
+						pTensor->flat<bool>()(i) = *it;
+						i++;
+					}
+					arraySlice.clear();
+					arrayvals.clear();
+				}
+				else if (strPinType == "string")
+				{
+					std::vector<std::string> arrayvals;
+					GetStringVectorFromInitial(strPinInitial, arrayvals);
+
+					gtl::ArraySlice< int64 > arraySlice(arraydims);
+					pTensor = new Tensor(DT_STRING, TensorShape(arraySlice));
+
+					int i = 0;
+					for (std::vector<std::string>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+					{
+						pTensor->flat<std::string>()(i) = *it;
+						i++;
+					}
+					arraySlice.clear();
+					arrayvals.clear();
+				}
+				else
+				{
+					std::string msg = string_format("warning : Const - %s(val-initvalue) transfer information missed.", id.c_str());
+					PrintMessage(msg);
+				}
+
+				array_slice.clear();
+				arraydims.clear();
+			}
+		}
+	}
+	if (pScope == nullptr)
+	{
+		std::string msg = string_format("warning : Const - %s(scope) transfer information missed.", id.c_str());
+		PrintMessage(msg);
+	}
+	if (pTensor == nullptr)
+	{
+		std::string msg = string_format("warning : Const - %s(val) transfer information missed.", id.c_str());
+		PrintMessage(msg);
+	}
+
+	if (pScope && pTensor)
+	{
+		*pOutput = Const(*pScope, *pTensor);
+		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_CONST, "Const", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
+		// pObj->pOutput = pOutput;
+	}
+	else
+	{
+		std::string msg = string_format("error : Const(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+
+	if (pTensor)
+		delete pTensor;
+
+	return pOutput;
 }
