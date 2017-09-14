@@ -1104,7 +1104,6 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#SparseApplyRMSProp", SYMBOL_SPARSEAPPLYRMSPROP));
 	m_SymbolList.insert(std::pair<std::string, int>("#Fact", SYMBOL_FACT));
 	m_SymbolList.insert(std::pair<std::string, int>("#Const", SYMBOL_CONST));
-	m_SymbolList.insert(std::pair<std::string, int>("#Input_ex", SYMBOL_INPUT_EX));
 	m_SymbolList.insert(std::pair<std::string, int>("#RandomNormal_ex", SYMBOL_RANDOMNORMAL_EX));
 	m_SymbolList.insert(std::pair<std::string, int>("#Const_ex", SYMBOL_CONST_EX));
 }
@@ -2082,7 +2081,6 @@ std::string GetCategoryName(int iSymbol)
 	case SYMBOL_SPARSEAPPLYPROXIMALGRADIENTDESCENT:
 	case SYMBOL_SPARSEAPPLYRMSPROP:
 	case SYMBOL_CONST:
-	case SYMBOL_INPUT_EX:
 	case SYMBOL_RANDOMNORMAL_EX:
 	case SYMBOL_CONST_EX:
 		return "training-ops";
