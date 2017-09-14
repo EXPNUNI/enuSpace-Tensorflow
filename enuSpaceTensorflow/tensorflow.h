@@ -65,11 +65,13 @@ public:
 struct arrayInfo
 {
 	int size;
+	int position;								// enuSpace ¹öÁ¯ (added v3.15)
 	wchar_t dimension[DEF_LABELTEXT_LEN];
 
 public:arrayInfo()
 {
 	size = 0;
+	position = 0;
 	wcscpy_s(dimension, L"");
 }
 };
