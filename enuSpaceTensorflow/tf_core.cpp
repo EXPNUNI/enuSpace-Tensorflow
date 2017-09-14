@@ -916,3 +916,215 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 
 	return pOutput;
 }
+
+void* Create_Const_ex(std::string id, Json::Value pInputItem)
+{
+	Scope* pScope = nullptr;
+	Output* pOutput = new Output();
+	Tensor* pTensor = nullptr;
+	DataType dtype = DT_DOUBLE;
+	std::string strVal = "";
+	std::string strShape = "";
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();                        // val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();                        // double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();                  // 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();               // ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();                  // ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();         // ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();   // ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();               // tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();                     // [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : Const_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtype")
+		{
+			if (strPinInterface == "DataType")
+			{
+				dtype = GetDatatypeFromInitial(strPinInitial);
+			}
+			else
+			{
+				std::string msg = string_format("warning : Const_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "val")
+		{
+			if (strInSymbolPinName == "" && strPinInterface == "Input::Initializer")
+			{
+				strVal = strPinInitial;
+				strShape = strPinShape;
+			}
+			else
+			{
+				std::string msg = string_format("warning : Const_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+	}
+
+	if (strVal != "")
+	{
+		std::vector<int64> array_slice;
+		std::vector<int64> arraydims;
+		GetArrayDimsFromShape(strShape, arraydims, array_slice);
+
+		if (dtype == DT_DOUBLE)
+		{
+			std::vector<double> arrayvals;
+			GetDoubleVectorFromInitial(strVal, arrayvals);
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_DOUBLE, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<double>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<double>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
+		}
+		else if (dtype == DT_FLOAT)
+		{
+			std::vector<float> arrayvals;
+			GetFloatVectorFromInitial(strVal, arrayvals);
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_FLOAT, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<float>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<float>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
+		}
+		else if (dtype == DT_INT32)
+		{
+			std::vector<int> arrayvals;
+			GetIntVectorFromInitial(strVal, arrayvals);
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_INT32, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<int>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<int>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
+		}
+		else if (dtype == DT_INT64)
+		{
+			std::vector<int64> arrayvals;
+			GetInt64VectorFromInitial(strVal, arrayvals);
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_INT64, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<int64>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<int64>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
+		}
+		else if (dtype == DT_BOOL)
+		{
+			std::vector<bool> arrayvals;
+			GetBoolVectorFromInitial(strVal, arrayvals);
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_BOOL, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<bool>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<bool>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
+		}
+		else if (dtype == DT_STRING)
+		{
+			std::vector<std::string> arrayvals;
+			GetStringVectorFromInitial(strVal, arrayvals);
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_STRING, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<std::string>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<std::string>()(i) = *it;
+				i++;
+			}
+			arraySlice.clear();
+			arrayvals.clear();
+		}
+		else
+		{
+			std::string msg = string_format("warning : Const_ex - %s(val-initvalue) transfer information missed.", id.c_str());
+			PrintMessage(msg);
+		}
+
+		array_slice.clear();
+		arraydims.clear();
+	}
+
+	if (pScope == nullptr)
+	{
+		std::string msg = string_format("warning : Const_ex - %s(scope) transfer information missed.", id.c_str());
+		PrintMessage(msg);
+	}
+	if (pTensor == nullptr)
+	{
+		std::string msg = string_format("warning : Const_ex - %s(val) transfer information missed.", id.c_str());
+		PrintMessage(msg);
+	}
+
+	if (pScope && pTensor)
+	{
+		*pOutput = Const(*pScope, *pTensor);
+		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_CONST, "Const", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
+		// pObj->pOutput = pOutput;
+	}
+	else
+	{
+		std::string msg = string_format("error : Const_ex(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+
+	if (pTensor)
+		delete pTensor;
+
+	return pOutput;
+}
