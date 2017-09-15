@@ -1226,7 +1226,9 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 	DataType out_type = DT_DOUBLE;
 	DataType internal_type = DT_DOUBLE;
 
+
 	int iSize = (int)pInputItem.size();
+	
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -1256,7 +1258,7 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "indices")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -1264,10 +1266,21 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
 					if (pOutputObj)
 					{
-						if (pOutputObj->pOutput)
+						if (pOutputObj->type == OUTPUT_TYPE_OUTPUTLIST)
 						{
-							indices = (OutputList*)pOutputObj->pOutput;
+							if (pOutputObj->pOutput)
+							{
+								indices = (OutputList*)pOutputObj->pOutput;
+							}
 						}
+
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+					{
+						indices = (OutputList*)Create_StrToOutputList(*m_pScope, "DT_INT64", "", strPinInitial);
 					}
 				}
 			}
@@ -1279,7 +1292,7 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "values")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -1293,6 +1306,13 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+					{
+						values = (OutputList*)Create_StrToOutputList(*m_pScope, "DT_STRING", "", strPinInitial);
+					}
+				}
 			}
 			else
 			{
@@ -1302,7 +1322,7 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "shapes")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -1316,6 +1336,43 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+					{
+						shapes = (OutputList*)Create_StrToOutputList(*m_pScope, "DT_INT64", "", strPinInitial);
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dense_inputs")
+		{
+			if (strPinInterface == "InputList")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							dense_inputs = (OutputList*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+					{
+						dense_inputs = (OutputList*)Create_StrToOutputList(*m_pScope, "DT_STRING", "", strPinInitial);
+					}
+				}
 			}
 			else
 			{
@@ -1327,17 +1384,13 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "bool")
 			{
-				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
-				if (pObj)
+				if (strPinInitial == "true" || strPinInitial == "TRUE" || strPinInitial == "True")
 				{
-					if (strPinInitial =="true")
-					{
-						hashed_output = true;
-					}
-					else if (strPinInitial == "false")
-					{
-						hashed_output = false;
-					}
+					hashed_output = true;
+				}
+				else
+				{
+					hashed_output = false;
 				}
 			}
 			else
@@ -1350,11 +1403,12 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "int64")
 			{
-				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
-				if (pObj)
+				if (strPinInitial!="")
 				{
 					num_buckets = stoll(strPinInitial);
 				}
+				
+				
 			}
 			else
 			{
@@ -1366,11 +1420,11 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "int64")
 			{
-				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
-				if (pObj)
+				if (strPinInitial !="")
 				{
 					hash_key = stoll(strPinInitial);
 				}
+				
 			}
 			else
 			{
@@ -1399,7 +1453,7 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-			
+
 				internal_type = GetDatatypeFromInitial(strPinInitial);
 				if (internal_type == DT_INVALID)
 				{
@@ -1419,9 +1473,12 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 			PrintMessage(msg);
 		}
 	}
+
 	if (pScope && indices && values && shapes && dense_inputs)
 	{
-		pSparseCross = new SparseCross(*pScope, *indices, *values, *shapes, *dense_inputs, hashed_output, num_buckets, hash_key, out_type, internal_type);
+		int i = indices->size();
+
+		pSparseCross = new SparseCross(*pScope, *indices, *values, *shapes, *dense_inputs, false, num_buckets, hash_key, out_type, internal_type);
 		ObjectInfo* pObj = AddObjectMap(pSparseCross, id, SYMBOL_SPARSECROSS, "SparseCross", pInputItem);
 		if (pObj)
 		{
@@ -3843,7 +3900,7 @@ void* Create_SparseFillEmptyRows(std::string id, Json::Value pInputItem)
 					{
 						if (pOutputObj->pOutput)
 						{
-							indices = (Output*)pOutputObj->pOutput;
+							values = (Output*)pOutputObj->pOutput;
 						}
 					}
 				}
@@ -3866,7 +3923,7 @@ void* Create_SparseFillEmptyRows(std::string id, Json::Value pInputItem)
 					{
 						if (pOutputObj->pOutput)
 						{
-							indices = (Output*)pOutputObj->pOutput;
+							dense_shape = (Output*)pOutputObj->pOutput;
 						}
 					}
 				}
@@ -3889,7 +3946,7 @@ void* Create_SparseFillEmptyRows(std::string id, Json::Value pInputItem)
 					{
 						if (pOutputObj->pOutput)
 						{
-							indices = (Output*)pOutputObj->pOutput;
+							default_value = (Output*)pOutputObj->pOutput;
 						}
 					}
 				}

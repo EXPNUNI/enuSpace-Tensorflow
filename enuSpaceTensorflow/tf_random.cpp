@@ -115,9 +115,9 @@ void* Create_Multinomial(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.seed_ = attrParser.GetValue_int64("seed_");
+					attrs = attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.seed2_ = attrParser.GetValue_int64("seed2_");
+					attrs = attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -302,9 +302,9 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.seed_ = attrParser.GetValue_int64("seed_");
+					attrs = attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.seed2_ = attrParser.GetValue_int64("seed2_");
+					attrs = attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -433,9 +433,9 @@ void* Create_RandomGamma(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.seed_ = attrParser.GetValue_int64("seed_");
+					attrs = attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.seed2_ = attrParser.GetValue_int64("seed2_");
+					attrs = attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -549,9 +549,9 @@ void* Create_RandomNormal(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.seed_ = attrParser.GetValue_int64("seed_");
+					attrs = attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.seed2_ = attrParser.GetValue_int64("seed2_");
+					attrs = attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 			else
 			{
@@ -683,9 +683,9 @@ void* Create_RandomPoisson(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.seed_ = attrParser.GetValue_int64("seed_");
+					attrs = attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.seed2_ = attrParser.GetValue_int64("seed2_");
+					attrs = attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -787,9 +787,9 @@ void* Create_RandomShuffle(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.seed_ = attrParser.GetValue_int64("seed_");
+					attrs = attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.seed2_ = attrParser.GetValue_int64("seed2_");	
+					attrs = attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -896,9 +896,9 @@ void* Create_RandomUniform(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.seed_ = attrParser.GetValue_int64("seed_");
+					attrs = attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.seed2_ = attrParser.GetValue_int64("seed2_");
+					attrs = attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -1035,9 +1035,9 @@ void* Create_RandomUniformInt(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.seed_ = attrParser.GetValue_int64("seed_");
+					attrs = attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.seed2_ = attrParser.GetValue_int64("seed2_");
+					attrs = attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -1145,9 +1145,9 @@ void* Create_TruncatedNormal(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.seed_ = attrParser.GetValue_int64("seed_");
+					attrs = attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.seed2_ = attrParser.GetValue_int64("seed2_");
+					attrs = attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 		}
 		else
@@ -1253,9 +1253,9 @@ void* Create_RandomNormal_ex(std::string id, Json::Value pInputItem)
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.seed_ = attrParser.GetValue_int64("seed_");
+					attrs = attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.seed2_ = attrParser.GetValue_int64("seed2_");
+					attrs = attrs.Seed2(attrParser.GetValue_int64("seed2_"));
 			}
 			else
 			{

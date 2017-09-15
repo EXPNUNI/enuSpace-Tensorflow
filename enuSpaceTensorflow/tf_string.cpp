@@ -17,9 +17,11 @@
 void* Create_AsString(std::string id, Json::Value pInputItem) {
 	AsString* pAsString = nullptr;
 	Scope* pScope = nullptr;
-	Output* pinput = nullptr;
+	Input* pinput = nullptr;
+	Output* pOuput = nullptr;
 	AsString::Attrs attrs;
 
+	Input* Tempinput = nullptr;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -60,7 +62,9 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 					{
 						if (pOutputObj->pOutput)
 						{
-							pinput = (Output*)pOutputObj->pOutput;
+							Tempinput = new Input(*(Output*)pOutputObj->pOutput);
+							pinput = Tempinput;
+							
 						}
 					}
 				}
@@ -103,6 +107,10 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 		std::string msg = string_format("error : AsString(%s) Object create failed.", id.c_str());
 		PrintMessage(msg);
 	}
+	if (Tempinput)
+		delete Tempinput;
+
+	delete pinput;
 	return pAsString;
 }
 
