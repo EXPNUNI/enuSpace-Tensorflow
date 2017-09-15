@@ -187,6 +187,7 @@ extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMess
 
 extern "C" __declspec(dllexport) int GetTaskType();
 extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar_t* pToType);
+extern "C" __declspec(dllexport) bool IsTaskStopWhenModify();
 
 extern "C" __declspec(dllexport) bool OnInit();
 extern "C" __declspec(dllexport) bool OnLoad();
@@ -759,6 +760,11 @@ extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar
 
 	else
 		return false;
+}
+
+extern "C" __declspec(dllexport) bool IsTaskStopWhenModify()
+{
+	return true;
 }
 
 extern "C" __declspec(dllexport) bool OnLoad()
