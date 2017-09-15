@@ -18,7 +18,6 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 	AsString* pAsString = nullptr;
 	Scope* pScope = nullptr;
 	Input* pinput = nullptr;
-	Output* pOuput = nullptr;
 	AsString::Attrs attrs;
 
 	Input* Tempinput = nullptr;
@@ -109,8 +108,6 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 	}
 	if (Tempinput)
 		delete Tempinput;
-
-	delete pinput;
 	return pAsString;
 }
 
@@ -255,7 +252,7 @@ void* Create_EncodeBase64(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "EncodeBase64::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("pad_") != "")attrs.Pad(attrParser.GetValue_bool("pad_"));
+				if (attrParser.GetAttribute("pad_") != "")attrs = attrs.Pad(attrParser.GetValue_bool("pad_"));
 			}
 		}
 		else
@@ -287,7 +284,7 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 	Output* pInput = nullptr;
 	Output* reduction_indices = nullptr;
 	ReduceJoin::Attrs attrs;
-
+	std::string strTemp ="";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -367,8 +364,13 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "ReduceJoin::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("keep_dims_") != "")attrs.KeepDims(attrParser.GetValue_bool("keep_dims_"));
-				if (attrParser.GetAttribute("separator_") != "")attrs.Separator(attrParser.GetValue_StringPiece("separator_"));
+				if (attrParser.GetAttribute("keep_dims_") != "")
+					attrs =attrs.KeepDims(attrParser.GetValue_bool("keep_dims_"));
+				if (attrParser.GetAttribute("separator_") != "")
+				{
+					strTemp =attrParser.GetValue_StringPiece("separator_");
+					attrs = attrs.Separator(strTemp);
+				}
 			}
 		}
 		else
@@ -399,7 +401,7 @@ void* Create_StringJoin(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	OutputList* pInputs = nullptr;
 	StringJoin::Attrs attrs;
-
+	std::string temp1 = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -456,7 +458,11 @@ void* Create_StringJoin(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "StringJoin::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("separator_") != "")attrs.Separator(attrParser.GetValue_StringPiece("separator_"));
+				if (attrParser.GetAttribute("separator_") != "")
+				{
+					temp1 = attrParser.GetValue_StringPiece("separator_");
+					attrs = attrs.Separator(temp1);
+				}
 			}
 		}
 		else

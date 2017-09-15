@@ -169,7 +169,8 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 	Output* sparse_values = nullptr;
 	Output* sparse_shape = nullptr;
 	AddSparseToTensorsMap::Attrs attrs;
-
+	std::string strTemp1 = "";
+	std::string strTemp2 = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -273,9 +274,17 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("container_") != "")
-					attrs = attrs.Container(attrParser.GetValue_StringPiece("container_"));
+				{
+					strTemp1 = attrParser.GetValue_StringPiece("container_");
+					attrs = attrs.Container(strTemp1);
+					
+				}
 				if (attrParser.GetAttribute("shared_name_") != "")
-					attrs = attrs.SharedName(attrParser.GetValue_StringPiece("shared_name_"));
+				{
+					strTemp2 = attrParser.GetValue_StringPiece("shared_name_");
+					attrs = attrs.SharedName(strTemp2);
+				}
+				
 			}
 		}
 		else
