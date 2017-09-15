@@ -456,7 +456,7 @@ void* Create_DestroyTemporaryVariable(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* ref = nullptr;
 	StringPiece var_name;
-
+	std::string temp1 ="";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -512,7 +512,8 @@ void* Create_DestroyTemporaryVariable(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "StringPiece")
 			{
-				var_name = strPinInitial;
+				temp1 = strPinInitial;
+				var_name = temp1;
 			}
 			else
 			{
@@ -1732,6 +1733,7 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 	PartialTensorShape shape;
 	DataType dtype;
 	TemporaryVariable::Attrs attrs;
+	std::string strTemp;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1800,7 +1802,8 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("var_name_") !="")
 				{
-					attrs = attrs.VarName(attrParser.GetValue_StringPiece("var_name_"));
+					strTemp = attrParser.GetValue_StringPiece("var_name_");
+					attrs = attrs.VarName(strTemp);
 				}
 			}
 		}
