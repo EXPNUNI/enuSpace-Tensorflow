@@ -434,35 +434,40 @@ void* Create_Output(std::string id, Json::Value pInputItem) {
 		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
 		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
 
-		if (strPinName == "output")
+		if (strPinName == "input")
 		{
 			if (strPinInterface == "Output")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					if (pObj->type == SYMBOL_OUTPUT)
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
 					{
-						OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
-						if (pOutputObj)
+						if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
 						{
-							if (pOutputObj->pOutput)
-							{
-								pInOutput = (Output*)pOutputObj->pOutput;
-							}
+							pInOutput = (Output*)pOutputObj->pOutput;
+						}
+						else if (pOutputObj->type == OUTPUT_TYPE_OPERATION)
+						{
+							pOperation = (Operation*)pOutputObj->pOutput;
+						}
+						else
+						{
+							std::string msg = string_format("warning : Output - %s(%s) pin type only support output, operation.", id.c_str(), strPinName.c_str());
+							PrintMessage(msg);
 						}
 					}
-					else if (pObj->type == SYMBOL_OPERATION)
+					else
 					{
-						OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
-						if (pOutputObj)
-						{
-							if (pOutputObj->pOutput)
-							{
-								pOperation = (Operation*)pOutputObj->pOutput;
-							}
-						}
+						std::string msg = string_format("warning : Output - %s(%s) could not find form output map.", id.c_str(), strPinName.c_str());
+						PrintMessage(msg);
 					}
+				}
+				else
+				{
+					std::string msg = string_format("warning : Output - %s(%s)  could not find form object map.", id.c_str(), strPinName.c_str());
+					PrintMessage(msg);
 				}
 			}
 			else
@@ -486,7 +491,7 @@ void* Create_Output(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BatchToSpace - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				std::string msg = string_format("warning : Output - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
 				PrintMessage(msg);
 			}
 		}
@@ -497,12 +502,20 @@ void* Create_Output(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pInOutput->node())
+	if (pInOutput)
 	{
-		pOutput = new Output(pInOutput->node());
-		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_OUTPUT, "Output", pInputItem);
-		if (pObj)
-			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
+		if (pInOutput->node())
+		{
+			pOutput = new Output(pInOutput->node());
+			ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_OUTPUT, "Output", pInputItem);
+			if (pObj)
+				AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
+		}
+		else
+		{
+			std::string msg = string_format("warning : Output(%s) input pin object node is null.", id.c_str());
+			PrintMessage(msg);
+		}
 	}
 	else if (pOperation)
 	{
