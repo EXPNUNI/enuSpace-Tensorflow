@@ -289,7 +289,7 @@ void* Create_InputList(std::string id, Json::Value pInputItem) {
 
 		if (strPinName == "outputlist")
 		{
-			if (strInSymbolPinInterface == "Output" || strInSymbolPinInterface == "OutputList")
+			if (strInSymbolPinInterface == "Input" || strInSymbolPinInterface == "Output" || strInSymbolPinInterface == "OutputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -415,8 +415,10 @@ void* Create_Operation(std::string id, Json::Value pInputItem) {
 void* Create_Output(std::string id, Json::Value pInputItem) {
 	Output* pOutput = nullptr;
 	Scope* pScope = nullptr;
-	Input* pInput = nullptr;
-
+	Output* pInOutput = nullptr;
+	Operation* pOperation = nullptr;
+	int index = 0;
+	
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -432,20 +434,33 @@ void* Create_Output(std::string id, Json::Value pInputItem) {
 		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
 		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
 
-		if (strPinName == "input")
+		if (strPinName == "output")
 		{
-			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "Input")
+			if (strPinInterface == "Output")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
 				{
-					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
-					if (pOutputObj)
+					if (pObj->type == SYMBOL_OUTPUT)
 					{
-						if (pOutputObj->pOutput)
+						OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+						if (pOutputObj)
 						{
-							pInput = (Input*)pOutputObj->pOutput;
+							if (pOutputObj->pOutput)
+							{
+								pInOutput = (Output*)pOutputObj->pOutput;
+							}
+						}
+					}
+					else if (pObj->type == SYMBOL_OPERATION)
+					{
+						OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+						if (pOutputObj)
+						{
+							if (pOutputObj->pOutput)
+							{
+								pOperation = (Operation*)pOutputObj->pOutput;
+							}
 						}
 					}
 				}
@@ -456,6 +471,25 @@ void* Create_Output(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
+		else if (strPinName == "index")
+		{
+			if (strPinInterface == "int32")
+			{
+				if (strPinInitial == "")
+				{
+					index = 0;
+				}
+				else
+				{
+					index = stoll(strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : BatchToSpace - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
 		else
 		{
 			std::string msg = string_format("warning : Output pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
@@ -463,9 +497,16 @@ void* Create_Output(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pInput)
+	if (pInOutput->node())
 	{
-		pOutput = new Output(pInput->node());
+		pOutput = new Output(pInOutput->node());
+		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_OUTPUT, "Output", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
+	}
+	else if (pOperation)
+	{
+		pOutput = new Output(*pOperation, index);
 		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_OUTPUT, "Output", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
@@ -490,6 +531,65 @@ void* Create_Scope(std::string id, Json::Value pInputItem) {
 void* Create_Status(std::string id, Json::Value pInputItem) {
 	Status* pStatus = nullptr;
 	Scope* pScope = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "status")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Status")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pStatus = (Status*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : Status - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : Status pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pStatus)
+	{
+		ObjectInfo* pObj = AddObjectMap(pStatus, id, SYMBOL_STATUS, "Status", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, pStatus, OUTPUT_TYPE_OUTPUT, "output");
+	}
+	else
+	{
+		std::string msg = string_format("error : Status(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+
 	return pStatus;
 }
 
@@ -632,19 +732,17 @@ void* Create_Input(std::string id, Json::Value pInputItem)
 	if (pTensor)
 	{
 		pInput = new Input(*pTensor);
-		pOutput = new Output(pInput->node());
-		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_INPUT, "output", pInputItem);
+		ObjectInfo* pObj = AddObjectMap(pInput, id, SYMBOL_INPUT, "input", pInputItem);
 		if (pObj)
-			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
+			AddOutputInfo(pObj, pInput, OUTPUT_TYPE_INPUT, "input");
 	}
 	else if(strinitvalues != "" && dtype)
 	{
 		pTensor = Create_StrToTensor(strdatatype, "", strinitvalues);
 		pInput = new Input(*pTensor);
-		pOutput = new Output(pInput->node());
-		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_INPUT, "output", pInputItem);
+		ObjectInfo* pObj = AddObjectMap(pInput, id, SYMBOL_INPUT, "input", pInputItem);
 		if (pObj)
-			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
+			AddOutputInfo(pObj, pInput, OUTPUT_TYPE_INPUT, "input");
 	}
 	else
 	{

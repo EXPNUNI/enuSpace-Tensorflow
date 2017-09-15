@@ -510,6 +510,7 @@
 #define	SYMBOL_SPARSESLICE				705
 //////////////////////////////////////////////////////////////////////////
 
+#define OUTPUT_TYPE_INPUT			0
 #define OUTPUT_TYPE_OUTPUT			1
 #define OUTPUT_TYPE_OUTPUTLIST		2
 #define OUTPUT_TYPE_OPERATION		3
