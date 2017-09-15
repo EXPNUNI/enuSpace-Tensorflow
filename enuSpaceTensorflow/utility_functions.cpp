@@ -625,7 +625,6 @@ PartialTensorShape GetPartialShapeFromInitial(std::string strinitial)
 					arraydims.push_back(stoll(val));
 					val = "";
 				}
-				
 			}
 			else if (strinitial[i] == ';')
 			{
@@ -634,7 +633,6 @@ PartialTensorShape GetPartialShapeFromInitial(std::string strinitial)
 					arraydims.push_back(stoll(val));
 					val = "";
 				}
-			
 			}
 			else
 			{
@@ -645,22 +643,19 @@ PartialTensorShape GetPartialShapeFromInitial(std::string strinitial)
 		{
 			if (strinitial[i] == ';' || strinitial[i] == ',')
 			{
-				if (val != 0)
+				if (val != "")
 				{
 					arraydims.push_back(stoll(val));
 					val = "";
-				}
-				
-				
+				}				
 			}
 			else if (strinitial[i] == '}')
 			{
-				if (val != 0)
+				if (val != "")
 				{
 					arraydims.push_back(stoll(val));
 					val = "";
 				}
-				
 			}
 			else if (strinitial[i] == '{')
 			{
@@ -683,6 +678,7 @@ PartialTensorShape GetPartialShapeFromInitial(std::string strinitial)
 	
 	return tempTS;
 }
+
 void* Create_StrToOutputList(Scope& pScope, std::string strPinType, std::string strPinShape, std::string strPinInitial)
 {
 	OutputList* pOutputList = new OutputList();
