@@ -434,7 +434,7 @@ void* Create_Output(std::string id, Json::Value pInputItem) {
 		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
 		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
 
-		if (strPinName == "input")
+		if (strPinName == "output")
 		{
 			if (strPinInterface == "Output")
 			{
