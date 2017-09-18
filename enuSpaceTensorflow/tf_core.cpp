@@ -201,6 +201,97 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 				node->set_device(device);
 			}
 		}
+
+		////////////////////////////////////////////////////////////////////////////////////
+		// init variables
+		std::map<std::string, ObjectInfo*>::iterator vit;
+		for (vit = m_ObjectMapList.begin(); vit != m_ObjectMapList.end(); ++vit)
+		{
+			ObjectInfo* pTar = vit->second;
+			if (pTar)
+			{
+				if (pTar->type == SYMBOL_VARIABLE)
+				{
+					tensorflow::DataType dtype = DT_DOUBLE;
+					std::string strdatatype;
+					std::string initvalues;
+					bool bRun = false;
+
+					int iSize = (int)pTar->param.size();
+					for (int subindex = 0; subindex < iSize; ++subindex)
+					{
+						Json::Value ItemValue = pTar->param[subindex];
+
+						std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+						std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+						std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+						std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+						std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+						std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+						std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+						std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+						std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+						if (strPinName == "initvalues")
+						{
+							if (strPinInterface == "Input")
+							{
+								ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+								if (pObj)
+								{
+									if (pObj->type == SYMBOL_CONST)
+									{
+										Output *pOutput = (Output*)(pObj->pObject);
+
+										std::vector< Output > init_obj;
+										std::vector<tensorflow::Tensor> outputs;
+										auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
+										init_obj.push_back(assign);
+										pSession->Run(init_obj, &outputs);
+										bRun = true;
+										break;
+									}
+								}
+								else
+								{
+									initvalues = strPinInitial;
+								}
+							}
+						}
+						else if (strPinName == "dtype")
+						{
+							if (!strPinInitial.empty())
+							{
+								strdatatype = strPinInitial;
+							}
+							else
+							{
+								std::string msg = string_format("warning : init variable - %s(%s) dtype is not initialized", id.c_str(), strPinName.c_str());
+								PrintMessage(msg);
+							}
+						}
+					}
+
+					if (bRun == false)
+					{
+						if (!initvalues.empty() && !strdatatype.empty())
+						{
+							Output* pOutput = nullptr;
+							pOutput = (Output*)Create_StrToOutput(*m_pScope, strdatatype, "", initvalues);
+							if (pOutput)
+							{
+								std::vector< Output > init_obj;
+								std::vector<tensorflow::Tensor> outputs;
+								auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
+								init_obj.push_back(assign);
+								pSession->Run(init_obj, &outputs);
+							}
+						}
+					}
+				}
+			}
+		}
+		////////////////////////////////////////////////////////////////////////////////////
 	}
 
 	return pSession;

@@ -1830,6 +1830,7 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 	return pTemporaryVariable;
 }
 
+
 void* Create_Variable(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	tensorflow::ops::Variable* pOutput = nullptr;
@@ -1874,7 +1875,6 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 				{
 					shape = GetPartialShapeFromInitial(strPinInitial);
 				}
-
 			}
 			else
 			{
@@ -1910,6 +1910,20 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 					attrs = attrs.Container(attrParser.GetValue_StringPiece("SharedName_"));
 			}
 		}
+		else if (strPinName == "initvalues")
+		{
+			if (strPinInterface == "Input")
+			{
+				// 초기화 루틴은 ClientSession 생성부에서 처리 수행함.
+			}
+		}
+		else if (strPinName == "updatevalues")
+		{
+			if (strPinInterface == "Input")
+			{
+				
+			}
+		}
 		else
 		{
 			std::string msg = string_format("warning : Variable pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
@@ -1921,6 +1935,7 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 	{	
 		
 		pOutput = new Variable(*pScope, shape, dtype, attrs);
+
 		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_VARIABLE, "Variable", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pOutput->ref, OUTPUT_TYPE_OUTPUT, "ref");
