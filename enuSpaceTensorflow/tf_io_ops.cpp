@@ -208,6 +208,11 @@ void* Create_MatchingFiles(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						ppattern = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
