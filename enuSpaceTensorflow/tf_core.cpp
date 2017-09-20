@@ -12,6 +12,57 @@
 #include "utility_functions.h"
 #include "enuSpaceToTensorflow.h"
 
+// ClientSession에 연결된 연결선 정보를 따라서 Fect 벡터리스트에 추가하여 실행시 각 객체의 값을 업데이트 수행함
+void AddPrevFetchObject(ObjectInfo* pfetchObj, FetchInfo* pFetchInfo)
+{
+	if (pfetchObj)
+	{
+		int iSize = (int)pfetchObj->param.size();
+		for (int subindex = 0; subindex < iSize; ++subindex)
+		{
+			Json::Value ItemValue = pfetchObj->param[subindex];
+
+			std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+			std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+			std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+			std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+			std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+			std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+			std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+			std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+			std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+			if (strInSymbolId.empty() == false && strInSymbolPinName.empty() == false)
+			{
+				ObjectInfo* pPrevfetchObj = LookupFromObjectMap(strInSymbolId);
+				if (pPrevfetchObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pPrevfetchObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
+						{
+							// 이전에 추가한 객체인지 확인후 리스트에 추가 수행.
+							const std::map<std::string, ObjectInfo*>::const_iterator aLookup = pFetchInfo->output.fetch_object_map.find(strInSymbolId);
+							const bool bExists = aLookup != pFetchInfo->output.fetch_object_map.end();
+							if (bExists == false)
+							{
+								pFetchInfo->output.fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pPrevfetchObj));
+								pFetchInfo->output.fetch_object.push_back(pPrevfetchObj);
+								pFetchInfo->output.fetch_outputs.push_back(*(Output*)pOutputObj->pOutput);
+								pFetchInfo->output.pin_names.push_back(strInSymbolPinName);
+
+								// 이전 심볼에 대하여 OUTPUT 객체이면 추가 수행.
+								AddPrevFetchObject(pPrevfetchObj, pFetchInfo);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	ClientSession* pSession = nullptr;
@@ -100,12 +151,17 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 						{
 							if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
 							{
+								pFetchInfo->output.fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pfetchObj));
 								pFetchInfo->output.fetch_object.push_back(pfetchObj);
 								pFetchInfo->output.fetch_outputs.push_back(*(Output*)pOutputObj->pOutput);
 								pFetchInfo->output.pin_names.push_back(strInSymbolPinName);
+
+								// 이전 심볼에 대하여 OUTPUT 객체이면 추가 수행.
+								AddPrevFetchObject(pfetchObj, pFetchInfo);
 							}
 							else if (pOutputObj->type == OUTPUT_TYPE_OUTPUTLIST)
 							{
+								pFetchInfo->output.fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pfetchObj));
 								pFetchInfo->output_list.fetch_object.push_back(pfetchObj);
 								pFetchInfo->output_list.fetch_outputs.push_back(*(OutputList*)pOutputObj->pOutput);
 								pFetchInfo->output_list.pin_names.push_back(strInSymbolPinName);
