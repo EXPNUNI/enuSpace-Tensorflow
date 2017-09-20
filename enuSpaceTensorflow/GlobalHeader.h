@@ -551,6 +551,7 @@ public:ObjectInfo()
 
 struct Fetch_Output
 {
+	std::map<std::string, ObjectInfo* > fetch_object_map;
 	std::vector<ObjectInfo*> fetch_object;				// ClientSession 객체의 fetch_output에 연결된 객체의 리스트
 	std::vector<tensorflow::Output> fetch_outputs;		// ClientSession 객체의 fetch_output에 연결된 객체의 output 리스트
 	std::vector<tensorflow::Operation> run_outputs;		// ClientSession 객체의 run_output에 연결된 객체의 operation 리스트
@@ -559,6 +560,7 @@ struct Fetch_Output
 
 struct Fetch_OutputList
 {
+	std::map<std::string, ObjectInfo* > fetch_object_map;
 	std::vector<ObjectInfo*> fetch_object;				// ClientSession 객체의 fetch_output에 연결된 객체의 리스트
 	std::vector<tensorflow::OutputList> fetch_outputs;	// ClientSession 객체의 fetch_output에 연결된 객체의 output 리스트
 	std::vector<std::string> pin_names;					// 입력핀의 이름
