@@ -9,6 +9,7 @@
 
 void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem);
 void* Create_IdentityReader(std::string id, Json::Value pInputItem);
+void* Create_LMDBReader(std::string id, Json::Value pInputItem);
 void* Create_MatchingFiles(std::string id, Json::Value pInputItem);
 void* Create_MergeV2Checkpoints(std::string id, Json::Value pInputItem);
 void* Create_ReadFile(std::string id, Json::Value pInputItem);

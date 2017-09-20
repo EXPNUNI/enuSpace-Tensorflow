@@ -277,15 +277,15 @@ bool Task_Tensorflow()
 												auto flat = it->flat<std::string>();
 												if (isString(flat(i)))
 												{
-													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
-													((std::string*)pData + i)->assign(flat(i));
+													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i).c_str()));
+													((std::string*)pData + i)->assign(flat(i).c_str());
 												}
 												else
 												{
 													std::string strTmp = "";
 													for (size_t j = 0; j < flat(i).size(); j++)
 													{
-														strTmp += strings::Printf("%02x", i, flat(i)[j]);
+														strTmp += strings::Printf("%02x", i, flat(i).c_str()[j]);
 													}
 													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
 													((std::string*)pData + i)->assign(strTmp.c_str());
@@ -567,8 +567,8 @@ bool Task_Tensorflow()
 												auto flat = it->flat<std::string>();
 												if (isString(flat(i)))
 												{
-													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i)));
-													((std::string*)pData + i + iOffset)->assign(flat(i));
+													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i).c_str()));
+													((std::string*)pData + i + iOffset)->assign(flat(i).c_str());
 												}
 												else
 												{
@@ -810,6 +810,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#SampleDistortedBoundingBox", SYMBOL_SAMPLEDISTORTEDBOUNDINGBOX));
 	m_SymbolList.insert(std::pair<std::string, int>("#FixedLengthRecordReader", SYMBOL_FIXEDLENGTHRECORDREADER));
 	m_SymbolList.insert(std::pair<std::string, int>("#IdentityReader", SYMBOL_IDENTITYREADER));
+	m_SymbolList.insert(std::pair<std::string, int>("#LMDBReader", SYMBOL_LMDBREADER));
 	m_SymbolList.insert(std::pair<std::string, int>("#MatchingFiles", SYMBOL_MATCHINGFILES));
 	m_SymbolList.insert(std::pair<std::string, int>("#MergeV2Checkpoints", SYMBOL_MERGEV2CHECKPOINTS));
 	m_SymbolList.insert(std::pair<std::string, int>("#ReadFile", SYMBOL_READFILE));
@@ -1299,6 +1300,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_SAMPLEDISTORTEDBOUNDINGBOXV2: {		pCreate = Create_SampleDistortedBoundingBoxV2(id, pInputItem);	break;	}
 	case SYMBOL_FIXEDLENGTHRECORDREADER: {		pCreate = Create_FixedLengthRecordReader(id, pInputItem);	break;	}
 	case SYMBOL_IDENTITYREADER: {		pCreate = Create_IdentityReader(id, pInputItem);	break;	}
+	case SYMBOL_LMDBREADER: {		pCreate = Create_LMDBReader(id, pInputItem);	break;	}
 	case SYMBOL_MATCHINGFILES: {		pCreate = Create_MatchingFiles(id, pInputItem);	break;	}
 	case SYMBOL_MERGEV2CHECKPOINTS: {		pCreate = Create_MergeV2Checkpoints(id, pInputItem);	break;	}
 	case SYMBOL_READFILE: {		pCreate = Create_ReadFile(id, pInputItem);	break;	}
@@ -1778,6 +1780,7 @@ std::string GetCategoryName(int iSymbol)
 		return "image-ops";
 	case SYMBOL_FIXEDLENGTHRECORDREADER:
 	case SYMBOL_IDENTITYREADER:
+	case SYMBOL_LMDBREADER:
 	case SYMBOL_MATCHINGFILES:
 	case SYMBOL_MERGEV2CHECKPOINTS:
 	case SYMBOL_READFILE:

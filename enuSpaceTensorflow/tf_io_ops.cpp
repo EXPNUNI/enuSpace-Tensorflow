@@ -19,6 +19,8 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 	int64 record_bytes = 0;
 	FixedLengthRecordReader::Attrs attrs;
 	int iSize = (int)pInputItem.size();
+	std::string container_ = "";
+	std::string shared_name_ = "";
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -67,8 +69,16 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 				if (attrParser.GetAttribute("header_bytes_") != "") attrs = attrs.HeaderBytes(attrParser.ConvStrToInt64(attrParser.GetAttribute("header_bytes_")));
 				if (attrParser.GetAttribute("footer_bytes_") != "") attrs = attrs.FooterBytes(attrParser.ConvStrToInt64(attrParser.GetAttribute("footer_bytes_")));
 				if (attrParser.GetAttribute("hop_bytes_") != "") attrs = attrs.HopBytes(attrParser.ConvStrToInt64(attrParser.GetAttribute("hop_bytes_")));
-				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_"));
+					attrs = attrs.Container(container_);
+				}
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_"));
+					attrs = attrs.SharedName(shared_name_);
+				}
 			}
 		}
 		else
@@ -100,6 +110,8 @@ void* Create_IdentityReader(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	IdentityReader::Attrs attrs;
 	int iSize = (int)pInputItem.size();
+	std::string container_ = "";
+	std::string shared_name_ = "";
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -132,8 +144,16 @@ void* Create_IdentityReader(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "IdentityReader::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_"));
+					attrs = attrs.Container(container_);
+				}
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_"));
+					attrs = attrs.SharedName(shared_name_);
+				}
 			}
 		}
 		else
@@ -158,6 +178,80 @@ void* Create_IdentityReader(std::string id, Json::Value pInputItem) {
 		PrintMessage(msg);
 	}
 	return pIdentityReader;
+}
+void* Create_LMDBReader(std::string id, Json::Value pInputItem) {
+	LMDBReader* pLMDBReaderReader = nullptr;
+	Scope* pScope = nullptr;
+	LMDBReader::Attrs attrs;
+	int iSize = (int)pInputItem.size();
+	std::string container_ = "";
+	std::string shared_name_ = "";
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : LMDBReader - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "LMDBReader::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_"));
+					attrs = attrs.Container(container_);
+				}
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_"));
+					attrs = attrs.SharedName(shared_name_);
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : LMDBReader pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope)
+	{
+		pLMDBReaderReader = new LMDBReader(*pScope, attrs);
+		ObjectInfo* pObj = AddObjectMap(pLMDBReaderReader, id, SYMBOL_LMDBREADER, "LMDBReader", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pLMDBReaderReader->reader_handle, OUTPUT_TYPE_OUTPUT, "reader_handle");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : LMDBReader(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pLMDBReaderReader;
 }
 
 void* Create_MatchingFiles(std::string id, Json::Value pInputItem) {
