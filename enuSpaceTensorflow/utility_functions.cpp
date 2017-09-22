@@ -491,8 +491,8 @@ bool GetArrayShapeFromInitial(std::string strinitial, std::vector<PartialTensorS
 				{
 					arraydims.push_back(stoll(val));
 					val = "";
-					std::string msg = string_format("test %d", arraydims.size());
-					PrintMessage(msg);
+//					std::string msg = string_format("test %d", arraydims.size());
+//					PrintMessage(msg);
 					PartialTensorShape partts(arraydims);
 					vec_PTS.push_back(partts);
 					arraydims.clear();
@@ -531,8 +531,8 @@ bool GetArrayShapeFromInitial(std::string strinitial, std::vector<PartialTensorS
 	*/
 	int isize = vec_PTS.size();
 
-	std::string msg = string_format("vec_pts %d", isize);
-	PrintMessage(msg);
+//	std::string msg = string_format("vec_pts %d", isize);
+//	PrintMessage(msg);
 	arraydims.clear();
 
 	return 	true;
@@ -1250,6 +1250,32 @@ bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, s
 		int iDim = 0;
 		int iMaxDim = 0;
 		std::vector<int> idims;
+		int iPos = 0;
+		iPos = strVal.find("true");
+		while(iPos != -1)
+		{
+			strVal.replace(iPos, 4, "1");
+			iPos = strVal.find("true");
+		}
+		iPos = strVal.find("false");
+		while (iPos != -1)
+		{
+			strVal.replace(iPos, 5, "0");
+			iPos = strVal.find("false");
+		}
+		iPos = strVal.find("FALSE");
+		while (iPos != -1)
+		{
+			strVal.replace(iPos, 5, "0");
+			iPos = strVal.find("FALSE");
+		}
+		iPos = strVal.find("TRUE");
+		while (iPos != -1)
+		{
+			strVal.replace(iPos, 4, "1");
+			iPos = strVal.find("TRUE");
+		}
+
 		for (std::string::size_type i = 0; i < strVal.size(); i++)
 		{
 			if (strVal[i] == '{')
