@@ -19,7 +19,7 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 	Output* precords = nullptr;
 	OutputList* precord_defaults = nullptr;
 	DecodeCSV::Attrs attrs;
-
+	std::string Temp1 = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -101,9 +101,13 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("field_delim_")!="")
 				{
-					attrs.FieldDelim(attrParser.GetValue_StringPiece("field_delim_"));
+					Temp1 = attrParser.GetValue_StringPiece("field_delim_");
+					attrs= attrs.FieldDelim(Temp1);
 				}
-				
+				if (attrParser.GetAttribute("use_quote_delim_") != "")
+				{
+					attrs =attrs.UseQuoteDelim(attrParser.GetValue_bool("use_quote_delim_"));
+				}
 			}
 		}
 		else
