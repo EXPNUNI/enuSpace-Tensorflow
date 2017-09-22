@@ -715,7 +715,11 @@ void* Create_Switch(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						data = (Output*)Create_StrToOutput(*m_pScope, "", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -739,7 +743,11 @@ void* Create_Switch(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						pred = (Output*)Create_StrToOutput(*m_pScope, "DT_BOOL", "", strPinInitial);
+				}
 			}
 			else
 			{
