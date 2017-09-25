@@ -435,7 +435,7 @@ void* Create_FixedUnigramCandidateSampler(std::string id, Json::Value pInputItem
 				}
 				if (attrParser.GetAttribute("unigrams_") != "")
 				{
-					attrs.Unigrams(attrParser.ConvStrToArraySlicefloat(attrParser.GetAttribute("unigrams_")));
+//					attrs.Unigrams(attrParser.ConvStrToArraySlicefloat(attrParser.GetAttribute("unigrams_")));
 				}
 				if (attrParser.GetAttribute("seed_") != "")
 				{
