@@ -82,6 +82,511 @@ bool Init_Tensorflow(std::string config_doc, std::string page_name)
 	return true;
 }
 
+void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Output* pOutput)
+{
+	std::vector<std::string>::iterator pinname;
+	std::vector<ObjectInfo*>::iterator vObjIt;
+	std::map<std::string, FetchInfo*>::iterator vit;
+
+	if (pTar->output.fetch_object.size() > 0)
+	{
+		std::vector<tensorflow::Tensor> outputs;
+
+		Status st;
+		st = pClientSession->Run(pTar->FeedType, pOutput->fetch_outputs, pOutput->run_outputs, &outputs);
+				
+		if (st.code() != error::OK)
+		{
+			std::string msg = string_format("error: %s.", st.error_message().c_str());
+			PrintMessage(msg);
+		}
+		else
+		{
+			vObjIt = pOutput->fetch_object.begin();
+			pinname = pOutput->pin_names.begin();
+
+			// result msg
+			for (std::vector<tensorflow::Tensor>::iterator it = outputs.begin(); it != outputs.end(); it++)
+			{
+				ObjectInfo* pObjet = *vObjIt;
+				std::string strpinname = *pinname;
+
+				int iNum = it->NumElements();
+				int iType = it->dtype();
+				int iArraySize = iNum;
+
+				void* pData = nullptr;
+				int iDataType = DEF_UNKNOWN;
+
+				switch (iType)
+				{
+				case DT_DOUBLE:
+					pData = new double[iNum];
+					iDataType = DEF_DOUBLE;
+					break;
+				case DT_FLOAT:
+					pData = new float[iNum];
+					iDataType = DEF_FLOAT;
+					break;
+				case DT_UINT8:
+				case DT_UINT16:
+				case DT_INT8:
+				case DT_INT16:
+				case DT_INT32:
+				case DT_INT64:
+					pData = new int[iNum];
+					iDataType = DEF_INT;
+					break;
+				case DT_BOOL:
+					pData = new bool[iNum];
+					iDataType = DEF_BOOL;
+					break;
+				case DT_COMPLEX64:
+					pData = new float[2 * iNum];
+					iDataType = DEF_FLOAT;
+					iArraySize = iNum * 2;
+					break;
+				case DT_COMPLEX128:
+					pData = new double[2 * iNum];
+					iDataType = DEF_DOUBLE;
+					iArraySize = iNum * 2;
+					break;
+				case DT_STRING:
+					pData = new std::string[iNum];
+					iDataType = DEF_STRING;
+					break;
+				default:
+					PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()));
+					break;
+				}
+
+				int idis = 10;
+				for (int i = 0; i < iNum; i++)
+				{
+					switch (iType)
+					{
+					case DT_DOUBLE:
+					{
+						auto flat = it->flat<double>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+
+						*((double*)pData + i) = flat(i);
+						break;
+					}
+					case DT_FLOAT:
+					{
+						auto flat = it->flat<float>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+						*((float*)pData + i) = flat(i);
+						break;
+					}
+					case DT_UINT8:
+					case DT_QUINT8:
+					{
+						auto flat = it->flat<uint8>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i) = flat(i);
+						break;
+					}
+					case DT_UINT16:
+					case DT_QUINT16:
+					{
+						auto flat = it->flat<uint16>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i) = flat(i);
+						break;
+					}
+					case DT_INT8:
+					case DT_QINT8:
+					{
+						auto flat = it->flat<int8>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i) = flat(i);
+						break;
+					}
+					case DT_INT16:
+					case DT_QINT16:
+					{
+						auto flat = it->flat<int16>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i) = flat(i);
+						break;
+					}
+					case DT_INT32:
+					case DT_QINT32:
+					{
+						auto flat = it->flat<int32>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i) = flat(i);
+						break;
+					}
+					case DT_INT64:
+					{
+						auto flat = it->flat<int64>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i) = flat(i);
+						break;
+					}
+					case DT_BOOL:
+					{
+						auto flat = it->flat<bool>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((bool*)pData + i) = flat(i);
+						break;
+					}
+					case DT_COMPLEX64:
+					{
+						auto flat = it->flat<complex64>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+						*((float*)pData + i * 2) = flat(i).real();
+						*((float*)pData + i * 2 + 1) = flat(i).imag();
+						break;
+					}
+					case DT_COMPLEX128:
+					{
+						auto flat = it->flat<complex128>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+						*((double*)pData + i * 2) = flat(i).real();
+						*((double*)pData + i * 2 + 1) = flat(i).imag();
+						break;
+					}
+					case DT_STRING:
+					{
+						auto flat = it->flat<std::string>();
+						if (isString(flat(i)))
+						{
+							if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i).c_str()));
+							((std::string*)pData + i)->assign(flat(i).c_str());
+						}
+						else
+						{
+							std::string strTmp = "";
+							for (size_t j = 0; j < flat(i).size(); j++)
+							{
+								strTmp += strings::Printf("%02x", i, flat(i).c_str()[j]);
+							}
+							if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
+							((std::string*)pData + i)->assign(strTmp.c_str());
+						}
+						break;
+					}
+					}
+				}
+
+				if (pData)
+				{
+					std::string strdim;
+					TensorShape shape = it->shape();
+					int idim = shape.dims();
+					for (int i = 0; i < idim; i++)
+					{
+						int64 idim = shape.dim_size(i);
+						strdim += strings::Printf("[%d]", idim);
+					}
+
+					std::string strVariable;
+					if (iType == DT_COMPLEX64 || iType == DT_COMPLEX128)
+						strVariable = pObjet->id + ".result_" + strpinname + strdim + "[2]";
+					else
+						strVariable = pObjet->id + ".result_" + strpinname + strdim;
+
+					SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
+
+					if (iType == DT_STRING)
+						delete[](std::string*)pData;
+					else
+						delete[] pData;
+				}
+
+				vObjIt++;
+				pinname++;
+
+				std::string strvalue = it->DebugString();
+				PrintMessage(strvalue);
+			}
+		}
+	}
+}
+
+void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_OutputList* pOutput)
+{
+	std::vector<std::string>::iterator pinname;
+	std::vector<ObjectInfo*>::iterator vObjIt;
+	std::map<std::string, FetchInfo*>::iterator vit;
+
+	if (pOutput->fetch_object.size() > 0)
+	{
+		vObjIt = pOutput->fetch_object.begin();
+		pinname = pOutput->pin_names.begin();
+
+		for (std::vector<tensorflow::OutputList>::iterator it_list = pOutput->fetch_outputs.begin(); it_list != pOutput->fetch_outputs.end(); it_list++)
+		{
+			ObjectInfo* pObjet = *vObjIt;
+			std::string strpinname = *pinname;
+
+			tensorflow::OutputList output_list = *it_list;
+
+			std::vector<tensorflow::Tensor> outputs;
+
+			Status st;
+			st = pClientSession->Run(pTar->FeedType, output_list, pTar->output.run_outputs, &outputs);
+			
+			if (st.code() != error::OK)
+			{
+				std::string msg = string_format("error: %s.", st.error_message().c_str());
+				PrintMessage(msg);
+			}
+
+			int iSize = outputs.size();
+			int iMax = 0;
+			int iType = DEF_UNKNOWN;
+			std::string strdim;
+			for (std::vector<tensorflow::Tensor>::iterator it = outputs.begin(); it != outputs.end(); it++)
+			{
+				int iNum = it->NumElements();
+				int iInType = it->dtype();
+
+				if (iNum > iMax)
+				{
+					iMax = iNum;
+
+					std::string strIndim;
+					TensorShape shape = it->shape();
+					int idim = shape.dims();
+					for (int i = 0; i < idim; i++)
+					{
+						int64 idim = shape.dim_size(i);
+						strIndim += strings::Printf("[%d]", idim);
+					}
+
+					strdim = strIndim;
+				}
+
+
+				if (iType == DEF_UNKNOWN)
+				{
+					iType = iInType;
+				}
+				else if (iType != iInType)
+				{
+					std::string msg = string_format("error : ClientSession output value type is multi. (%s)", pObjet->id.c_str());
+					PrintMessage(msg);
+				}
+			}
+
+			strdim = strings::Printf("[%d]", iSize) + strdim;
+
+			int iArraySize = iSize*iMax;
+
+			void* pData = nullptr;
+			int iDataType = DEF_UNKNOWN;
+
+			switch (iType)
+			{
+			case DT_DOUBLE:
+				pData = new double[iArraySize];
+				iDataType = DEF_DOUBLE;
+				break;
+			case DT_FLOAT:
+			case DT_BFLOAT16:
+				pData = new float[iArraySize];
+				iDataType = DEF_FLOAT;
+				break;
+			case DT_UINT8:
+			case DT_UINT16:
+			case DT_QINT8:
+			case DT_QINT16:
+			case DT_QINT32:
+			case DT_QUINT8:
+			case DT_QUINT16:
+			case DT_INT8:
+			case DT_INT16:
+			case DT_INT32:
+			case DT_INT64:
+				pData = new int[iArraySize];
+				iDataType = DEF_INT;
+				break;
+			case DT_BOOL:
+				pData = new bool[iArraySize];
+				iDataType = DEF_BOOL;
+				break;
+			case DT_COMPLEX64:
+				pData = new float[2 * iArraySize];
+				iDataType = DEF_FLOAT;
+				iArraySize = iArraySize * 2;
+				break;
+			case DT_COMPLEX128:
+				pData = new double[2 * iArraySize];
+				iDataType = DEF_DOUBLE;
+				iArraySize = iArraySize * 2;
+				break;
+			case DT_STRING:
+				pData = new std::string[iArraySize];
+				iDataType = DEF_STRING;
+				break;
+			default:
+				PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()));
+				break;
+			}
+
+			int iOffset = 0;
+			int iCount = 0;
+			for (std::vector<tensorflow::Tensor>::iterator it = outputs.begin(); it != outputs.end(); it++)
+			{
+				int iNum = it->NumElements();
+				int iType = it->dtype();
+
+				iOffset = iCount*iMax;
+				iCount++;
+
+				int idis = 10;
+
+				for (int i = 0; i < iNum; i++)
+				{
+					switch (iType)
+					{
+					case DT_DOUBLE:
+					{
+						auto flat = it->flat<double>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+
+						*((double*)pData + i + iOffset) = flat(i);
+						break;
+					}
+					case DT_FLOAT:
+					{
+						auto flat = it->flat<float>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+						*((float*)pData + i + iOffset) = flat(i);
+						break;
+					}
+					case DT_BFLOAT16:
+					{
+						auto flat = it->flat<bfloat16>();
+						if (i < idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+						//*((float*)pData + i + iOffset) = flat(i);
+						BFloat16ToFloat(&flat(i), ((float*)pData + i + iOffset), 1);
+						break;
+					}
+					case DT_UINT8:
+					case DT_QUINT8:
+					{
+						auto flat = it->flat<uint8>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i + iOffset) = flat(i);
+						break;
+					}
+					case DT_UINT16:
+					case DT_QUINT16:
+					{
+						auto flat = it->flat<uint16>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i + iOffset) = flat(i);
+						break;
+					}
+					case DT_INT8:
+					case DT_QINT8:
+					{
+						auto flat = it->flat<int8>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i + iOffset) = flat(i);
+						break;
+					}
+					case DT_INT16:
+					case DT_QINT16:
+					{
+						auto flat = it->flat<int16>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i + iOffset) = flat(i);
+						break;
+					}
+					case DT_INT32:
+					case DT_QINT32:
+					{
+						auto flat = it->flat<int32>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i + iOffset) = flat(i);
+						break;
+					}
+					case DT_INT64:
+					{
+						auto flat = it->flat<int64>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((int*)pData + i + iOffset) = flat(i);
+						break;
+					}
+					case DT_BOOL:
+					{
+						auto flat = it->flat<bool>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						*((bool*)pData + i + iOffset) = flat(i);
+						break;
+					}
+					case DT_COMPLEX64:
+					{
+						auto flat = it->flat<complex64>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+						*((float*)pData + (i + iOffset) * 2) = flat(i).real();
+						*((float*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
+						break;
+					}
+					case DT_COMPLEX128:
+					{
+						auto flat = it->flat<complex128>();
+						if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+						*((double*)pData + (i + iOffset) * 2) = flat(i).real();
+						*((double*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
+						break;
+					}
+					case DT_STRING:
+					{
+						auto flat = it->flat<std::string>();
+						if (isString(flat(i)))
+						{
+							if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i).c_str()));
+							((std::string*)pData + i + iOffset)->assign(flat(i).c_str());
+						}
+						else
+						{
+							std::string strTmp = "";
+							for (size_t j = 0; j < flat(i).size(); j++)
+							{
+								strTmp += strings::Printf("%02x;", i, flat(i)[j]);
+							}
+							if (i<idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
+							((std::string*)pData + i + iOffset)->assign(strTmp.c_str());
+						}
+						break;
+					}
+					}
+				}
+
+				std::string strvalue = it->DebugString();
+				PrintMessage(strvalue);
+			}
+
+			if (pData)
+			{
+				std::string strVariable;
+				if (iType == DT_COMPLEX64 || iType == DT_COMPLEX128)
+					strVariable = pObjet->id + ".result_" + strpinname + strdim + "[2]";
+				else
+					strVariable = pObjet->id + ".result_" + strpinname + strdim;
+
+				SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
+
+				if (iType == DT_STRING)
+					delete[](std::string*)pData;
+				else
+					delete[] pData;
+			}
+
+			vObjIt++;
+			pinname++;
+		}
+	}
+}
+
 bool Task_Tensorflow()
 {
 	std::vector<std::string>::iterator pinname;
@@ -102,513 +607,12 @@ bool Task_Tensorflow()
 					{
 						// Operation 角青 肺流
 						ClientSession* pClientSession = (ClientSession*)pTar->pSession->pObject;
-				
+
 						// Output 角青 肺流 
-						if (pTar->output.fetch_object.size() > 0)
-						{
-							std::vector<tensorflow::Tensor> outputs;
-
-							Status st;
-							if (pTar->pFeedType == nullptr)
-							{
-								std::unordered_map<Output, Input::Initializer, OutputHash> feedType{};
-								st = pClientSession->Run(feedType, pTar->output.fetch_outputs, pTar->output.run_outputs, &outputs);
-							}
-							else
-								st = pClientSession->Run(*pTar->pFeedType, pTar->output.fetch_outputs, pTar->output.run_outputs, &outputs);
-
-							if (st.code() != error::OK)
-							{
-								std::string msg = string_format("error: %s.", st.error_message().c_str());
-								PrintMessage(msg);
-							}
-							else
-							{
-								vObjIt = pTar->output.fetch_object.begin();
-								pinname = pTar->output.pin_names.begin();
-
-								// result msg
-								for (std::vector<tensorflow::Tensor>::iterator it = outputs.begin(); it != outputs.end(); it++)
-								{
-									ObjectInfo* pObjet = *vObjIt;
-									std::string strpinname = *pinname;
-
-									int iNum = it->NumElements();
-									int iType = it->dtype();
-									int iArraySize = iNum;
-
-									void* pData = nullptr;
-									int iDataType = DEF_UNKNOWN;
-
-									switch (iType)
-									{
-									case DT_DOUBLE:
-										pData = new double[iNum];
-										iDataType = DEF_DOUBLE;
-										break;
-									case DT_FLOAT:
-										pData = new float[iNum];
-										iDataType = DEF_FLOAT;
-										break;
-									case DT_UINT8:
-									case DT_UINT16:
-									case DT_INT8:
-									case DT_INT16:
-									case DT_INT32:
-									case DT_INT64:
-										pData = new int[iNum];
-										iDataType = DEF_INT;
-										break;
-									case DT_BOOL:
-										pData = new bool[iNum];
-										iDataType = DEF_BOOL;
-										break;
-									case DT_COMPLEX64:
-										pData = new float[2 * iNum];
-										iDataType = DEF_FLOAT;
-										iArraySize = iNum * 2;
-										break;
-									case DT_COMPLEX128:
-										pData = new double[2 * iNum];
-										iDataType = DEF_DOUBLE;
-										iArraySize = iNum * 2;
-										break;
-									case DT_STRING:
-										pData = new std::string[iNum];
-										iDataType = DEF_STRING;
-										break;
-									default:
-										PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()));
-										break;
-									}
-
-									int idis = 10;
-									for (int i = 0; i < iNum; i++)
-									{
-										switch (iType)
-										{
-											case DT_DOUBLE :
-											{
-												auto flat = it->flat<double>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
-
-												*((double*)pData + i) = flat(i);
-												break;
-											}
-											case DT_FLOAT:
-											{
-												auto flat = it->flat<float>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
-												*((float*)pData + i) = flat(i);
-												break;
-											}
-											case DT_UINT8:
-											case DT_QUINT8:
-											{
-												auto flat = it->flat<uint8>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i) = flat(i);
-												break;
-											}
-											case DT_UINT16:
-											case DT_QUINT16:
-											{
-												auto flat = it->flat<uint16>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i) = flat(i);
-												break;
-											}
-											case DT_INT8:
-											case DT_QINT8:
-											{
-												auto flat = it->flat<int8>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i) = flat(i);
-												break;
-											}
-											case DT_INT16:
-											case DT_QINT16:
-											{
-												auto flat = it->flat<int16>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i) = flat(i);
-												break;
-											}
-											case DT_INT32:
-											case DT_QINT32:
-											{
-												auto flat = it->flat<int32>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i) = flat(i);
-												break;
-											}
-											case DT_INT64:
-											{
-												auto flat = it->flat<int64>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i) = flat(i);
-												break;
-											}
-											case DT_BOOL:
-											{
-												auto flat = it->flat<bool>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((bool*)pData + i) = flat(i);
-												break;
-											}
-											case DT_COMPLEX64:
-											{
-												auto flat = it->flat<complex64>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
-												*((float*)pData + i * 2) = flat(i).real();
-												*((float*)pData + i * 2 + 1) = flat(i).imag();
-												break;
-											}
-											case DT_COMPLEX128:
-											{
-												auto flat = it->flat<complex128>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
-												*((double*)pData + i * 2) = flat(i).real();
-												*((double*)pData + i * 2 + 1) = flat(i).imag();
-												break;
-											}
-											case DT_STRING:
-											{
-												auto flat = it->flat<std::string>();
-												if (isString(flat(i)))
-												{
-													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i).c_str()));
-													((std::string*)pData + i)->assign(flat(i).c_str());
-												}
-												else
-												{
-													std::string strTmp = "";
-													for (size_t j = 0; j < flat(i).size(); j++)
-													{
-														strTmp += strings::Printf("%02x", i, flat(i).c_str()[j]);
-													}
-													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
-													((std::string*)pData + i)->assign(strTmp.c_str());
-												}
-												break;
-											}
-										}
-									}
-
-									if (pData)
-									{
-										std::string strdim;
-										TensorShape shape = it->shape();
-										int idim = shape.dims();
-										for (int i = 0; i < idim; i++)
-										{
-											int64 idim = shape.dim_size(i);
-											strdim += strings::Printf("[%d]", idim);
-										}
-
-										std::string strVariable;
-										if (iType == DT_COMPLEX64 || iType == DT_COMPLEX128)
-											strVariable = pObjet->id + ".result_" + strpinname + strdim + "[2]";
-										else
-											strVariable = pObjet->id + ".result_" + strpinname + strdim;
-
-										SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
-
-										if (iType == DT_STRING)
-											delete[](std::string*)pData;
-										else
-											delete[] pData;
-									}
-
-									vObjIt++;
-									pinname++;
-
-									std::string strvalue = it->DebugString();
-									PrintMessage(strvalue);
-								}
-							}
-
-						}
+						ClientRunOutput(pClientSession, pTar, &pTar->output);
 
 						// OutputList 角青 肺流
-						if (pTar->output_list.fetch_object.size() > 0)
-						{
-							vObjIt = pTar->output_list.fetch_object.begin();
-							pinname = pTar->output_list.pin_names.begin();
-
-							for (std::vector<tensorflow::OutputList>::iterator it_list = pTar->output_list.fetch_outputs.begin(); it_list != pTar->output_list.fetch_outputs.end(); it_list++)
-							{
-								ObjectInfo* pObjet = *vObjIt;
-								std::string strpinname = *pinname;
-
-								tensorflow::OutputList output_list = *it_list;
-
-								std::vector<tensorflow::Tensor> outputs;
-
-
-								Status st;
-								if (pTar->pFeedType == nullptr)
-								{
-									std::unordered_map<Output, Input::Initializer, OutputHash> feedType{};
-									st = pClientSession->Run(feedType, output_list, pTar->output.run_outputs,&outputs);
-								}
-								else
-									st = pClientSession->Run(*pTar->pFeedType, output_list, pTar->output.run_outputs, &outputs);
-
-								if (st.code() != error::OK)
-								{
-									std::string msg = string_format("error: %s.", st.error_message().c_str());
-									PrintMessage(msg);
-								}
-																
-								int iSize = outputs.size();
-								int iMax = 0;
-								int iType = DEF_UNKNOWN;
-								std::string strdim;
-								for (std::vector<tensorflow::Tensor>::iterator it = outputs.begin(); it != outputs.end(); it++)
-								{
-									int iNum = it->NumElements();
-									int iInType = it->dtype();
-
-									if (iNum > iMax)
-									{
-										iMax = iNum;
-
-										std::string strIndim;
-										TensorShape shape = it->shape();
-										int idim = shape.dims();
-										for (int i = 0; i < idim; i++)
-										{
-											int64 idim = shape.dim_size(i);
-											strIndim += strings::Printf("[%d]", idim);
-										}
-
-										strdim = strIndim;
-									}
-
-
-									if (iType == DEF_UNKNOWN)
-									{
-										iType = iInType;
-									}
-									else if (iType != iInType)
-									{
-										std::string msg = string_format("error : ClientSession output value type is multi. (%s)", pObjet->id.c_str());
-										PrintMessage(msg);
-									}
-								}
-
-								strdim = strings::Printf("[%d]", iSize) + strdim;
-
-								int iArraySize = iSize*iMax;
-
-								void* pData = nullptr;
-								int iDataType = DEF_UNKNOWN;
-
-								switch (iType)
-								{
-								case DT_DOUBLE:
-									pData = new double[iArraySize];
-									iDataType = DEF_DOUBLE;
-									break;
-								case DT_FLOAT:
-								case DT_BFLOAT16:
-									pData = new float[iArraySize];
-									iDataType = DEF_FLOAT;
-									break;
-								case DT_UINT8:
-								case DT_UINT16:
-								case DT_QINT8:
-								case DT_QINT16:
-								case DT_QINT32:
-								case DT_QUINT8:
-								case DT_QUINT16:
-								case DT_INT8:
-								case DT_INT16:
-								case DT_INT32:
-								case DT_INT64:
-									pData = new int[iArraySize];
-									iDataType = DEF_INT;
-									break;
-								case DT_BOOL:
-									pData = new bool[iArraySize];
-									iDataType = DEF_BOOL;
-									break;
-								case DT_COMPLEX64:
-									pData = new float[2 * iArraySize];
-									iDataType = DEF_FLOAT;
-									iArraySize = iArraySize * 2;
-									break;
-								case DT_COMPLEX128:
-									pData = new double[2 * iArraySize];
-									iDataType = DEF_DOUBLE;
-									iArraySize = iArraySize * 2;
-									break;
-								case DT_STRING:
-									pData = new std::string[iArraySize];
-									iDataType = DEF_STRING;
-									break;
-								default:
-									PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()));
-									break;
-								}
-
-								int iOffset = 0;
-								int iCount = 0;
-								for (std::vector<tensorflow::Tensor>::iterator it = outputs.begin(); it != outputs.end(); it++)
-								{
-									int iNum = it->NumElements();
-									int iType = it->dtype();
-
-									iOffset = iCount*iMax;
-									iCount++;
-
-									int idis = 10;
-
-									for (int i = 0; i < iNum; i++)
-									{
-										switch (iType)
-										{
-											case DT_DOUBLE:
-											{
-												auto flat = it->flat<double>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
-
-												*((double*)pData + i + iOffset) = flat(i);
-												break;
-											}
-											case DT_FLOAT:
-											{
-												auto flat = it->flat<float>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
-												*((float*)pData + i + iOffset) = flat(i);
-												break;
-											}
-											case DT_BFLOAT16:
-											{
-												auto flat = it->flat<bfloat16>();
-												if (i < idis) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
-												//*((float*)pData + i + iOffset) = flat(i);
-												BFloat16ToFloat(&flat(i), ((float*)pData + i + iOffset), 1);
-												break;
-											}
-											case DT_UINT8:
-											case DT_QUINT8:
-											{
-												auto flat = it->flat<uint8>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i + iOffset) = flat(i);
-												break;
-											}
-											case DT_UINT16:
-											case DT_QUINT16:
-											{
-												auto flat = it->flat<uint16>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i + iOffset) = flat(i);
-												break;
-											}
-											case DT_INT8 :
-											case DT_QINT8:
-											{
-												auto flat = it->flat<int8>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i + iOffset) = flat(i);
-												break;
-											}
-											case DT_INT16 :
-											case DT_QINT16 :
-											{
-												auto flat = it->flat<int16>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i + iOffset) = flat(i);
-												break;
-											}
-											case DT_INT32 :
-											case DT_QINT32 :
-											{
-												auto flat = it->flat<int32>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i + iOffset) = flat(i);
-												break;
-											}
-											case DT_INT64 :
-											{
-												auto flat = it->flat<int64>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((int*)pData + i + iOffset) = flat(i);
-												break;
-											}
-											case DT_BOOL :
-											{
-												auto flat = it->flat<bool>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
-												*((bool*)pData + i + iOffset) = flat(i);
-												break;
-											}
-											case DT_COMPLEX64 :
-											{
-												auto flat = it->flat<complex64>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
-												*((float*)pData + (i + iOffset) * 2) = flat(i).real();
-												*((float*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
-												break;
-											}
-											case DT_COMPLEX128 :
-											{
-												auto flat = it->flat<complex128>();
-												if (i<idis) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
-												*((double*)pData + (i + iOffset) * 2) = flat(i).real();
-												*((double*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
-												break;
-											}
-											case DT_STRING :
-											{
-												auto flat = it->flat<std::string>();
-												if (isString(flat(i)))
-												{
-													if (i < idis) PrintMessage(strings::Printf("[%d] = %s", i, flat(i).c_str()));
-													((std::string*)pData + i + iOffset)->assign(flat(i).c_str());
-												}
-												else
-												{
-													std::string strTmp = "";
-													for (size_t j = 0; j < flat(i).size(); j++)
-													{
-														strTmp += strings::Printf("%02x;", i, flat(i)[j]);
-													}
-													if (i<idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
-													((std::string*)pData + i + iOffset)->assign(strTmp.c_str());
-												}
-												break;
-											}
-										}
-									}
-
-									std::string strvalue = it->DebugString();
-									PrintMessage(strvalue);
-								}
-
-								if (pData)
-								{
-									std::string strVariable;
-									if (iType == DT_COMPLEX64 || iType == DT_COMPLEX128)
-										strVariable = pObjet->id + ".result_" + strpinname + strdim + "[2]";
-									else
-										strVariable = pObjet->id + ".result_" + strpinname + strdim;
-
-									SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
-
-									if (iType == DT_STRING)
-										delete[](std::string*)pData;
-									else
-										delete[] pData;
-								}
-
-								vObjIt++;
-								pinname++;
-							}
-						}
+						ClientRunOutputList(pClientSession, pTar, &pTar->output_list);
 					}
 				}
 				else
@@ -628,6 +632,7 @@ bool Task_Tensorflow()
 
 	return true;
 }
+
 
 bool Unload_Tensorflow()
 {

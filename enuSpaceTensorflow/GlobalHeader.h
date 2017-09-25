@@ -523,11 +523,11 @@ struct OutputInfo
 {
 	int type;						// 노드의 ouput 타입
 	void* pOutput;					// 노드의 output 주소
-public:OutputInfo()
-{
-	type = OUTPUT_TYPE_OUTPUT;
-	pOutput = nullptr;
-}
+	public:OutputInfo()
+	{
+		type = OUTPUT_TYPE_OUTPUT;
+		pOutput = nullptr;
+	}
 };
 
 struct ObjectInfo
@@ -541,17 +541,16 @@ struct ObjectInfo
 	tensorflow::Scope* pScope;		// 그래픽 로직 블럭에 연결된 SCOPE 객체 포인터
 	std::map<std::string, OutputInfo*> pMapOutputs;		// 그래픽 로직 블럭의 클래스의 Output 멤버 포인터 맵 리스트
 
-public:ObjectInfo()
-{
-	type = SYMBOL_NONE;
-	pObject = nullptr;
-	pScope = nullptr;
-}
+	public:ObjectInfo()
+	{
+		type = SYMBOL_NONE;
+		pObject = nullptr;
+		pScope = nullptr;
+	}
 };
 
 struct Fetch_Output
 {
-	std::map<std::string, ObjectInfo* > fetch_object_map;
 	std::vector<ObjectInfo*> fetch_object;				// ClientSession 객체의 fetch_output에 연결된 객체의 리스트
 	std::vector<tensorflow::Output> fetch_outputs;		// ClientSession 객체의 fetch_output에 연결된 객체의 output 리스트
 	std::vector<tensorflow::Operation> run_outputs;		// ClientSession 객체의 run_output에 연결된 객체의 operation 리스트
@@ -560,7 +559,6 @@ struct Fetch_Output
 
 struct Fetch_OutputList
 {
-	std::map<std::string, ObjectInfo* > fetch_object_map;
 	std::vector<ObjectInfo*> fetch_object;				// ClientSession 객체의 fetch_output에 연결된 객체의 리스트
 	std::vector<tensorflow::OutputList> fetch_outputs;	// ClientSession 객체의 fetch_output에 연결된 객체의 output 리스트
 	std::vector<std::string> pin_names;					// 입력핀의 이름
@@ -569,17 +567,32 @@ struct Fetch_OutputList
 struct FetchInfo
 {
 	ObjectInfo* pSession;							// ClientSession 객체
-	std::unordered_map<Output, Input::Initializer, OutputHash>* pFeedType;	// feedtype
+	ClientSession::FeedType FeedType;				// feedtype
 
 	Fetch_Output output;
 	Fetch_OutputList output_list;
 
+	std::map<std::string, ObjectInfo* > fetch_object_map;	// 연결선 MAP 관리.
+	// Fetch_Output output_value;								// 연결선을 따라서 값을 업데이트 하는 객체 리스트
+	// Fetch_OutputList output_value_list;						// 연결선을 따라서 값을 업데이트 하는 객체 리스트
+
 	public:FetchInfo()
 	{
 		pSession = nullptr;
-		pFeedType = nullptr;
 	}
 };
+
+struct FeedTypeObject
+{
+	Output *pOutput;
+	Input::Initializer *pInitializer;
+	public:FeedTypeObject()
+	{
+		pOutput = nullptr;
+		pInitializer = nullptr;
+	}
+};
+
 
 extern std::map<std::string, ObjectInfo* > m_ObjectMapList;
 extern std::map<std::string, FetchInfo* > m_RunMapList;

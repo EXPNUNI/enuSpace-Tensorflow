@@ -43,14 +43,33 @@ void AddPrevFetchObject(ObjectInfo* pfetchObj, FetchInfo* pFetchInfo)
 						if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
 						{
 							// 이전에 추가한 객체인지 확인후 리스트에 추가 수행.
-							const std::map<std::string, ObjectInfo*>::const_iterator aLookup = pFetchInfo->output.fetch_object_map.find(strInSymbolId);
-							const bool bExists = aLookup != pFetchInfo->output.fetch_object_map.end();
+							const std::map<std::string, ObjectInfo*>::const_iterator aLookup = pFetchInfo->fetch_object_map.find(strInSymbolId);
+							const bool bExists = aLookup != pFetchInfo->fetch_object_map.end();
 							if (bExists == false)
 							{
-								pFetchInfo->output.fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pPrevfetchObj));
+								pFetchInfo->fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pPrevfetchObj));
+
 								pFetchInfo->output.fetch_object.push_back(pPrevfetchObj);
 								pFetchInfo->output.fetch_outputs.push_back(*(Output*)pOutputObj->pOutput);
 								pFetchInfo->output.pin_names.push_back(strInSymbolPinName);
+
+								// 이전 심볼에 대하여 OUTPUT 객체이면 추가 수행.
+								AddPrevFetchObject(pPrevfetchObj, pFetchInfo);
+							}
+						}
+						else if (pOutputObj->type == OUTPUT_TYPE_OUTPUTLIST)
+						{
+							// 이전에 추가한 객체인지 확인후 리스트에 추가 수행.
+							const std::map<std::string, ObjectInfo*>::const_iterator aLookup = pFetchInfo->fetch_object_map.find(strInSymbolId);
+
+							const bool bExists = aLookup != pFetchInfo->fetch_object_map.end();
+							if (bExists == false)
+							{
+								//pFetchInfo->fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pPrevfetchObj));
+
+								//pFetchInfo->output_value_list.fetch_object.push_back(pPrevfetchObj);
+								//pFetchInfo->output_value_list.fetch_outputs.push_back(*(OutputList*)pOutputObj->pOutput);
+								//pFetchInfo->output_value_list.pin_names.push_back(strInSymbolPinName);
 
 								// 이전 심볼에 대하여 OUTPUT 객체이면 추가 수행.
 								AddPrevFetchObject(pPrevfetchObj, pFetchInfo);
@@ -68,7 +87,6 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 	ClientSession* pSession = nullptr;
 	ObjectInfo* pSessionObj = nullptr;
 	FetchInfo* pFetchInfo = nullptr;
-	std::unordered_map<Output, Input::Initializer, OutputHash>* pFeedType = nullptr;
 
 	std::string  device = "/cpu:0";      // device set interface
 
@@ -125,8 +143,8 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 					{
 						if (pfetchObj->type == SYMBOL_FEEDTYPE)
 						{
-							pFeedType = (std::unordered_map<Output, Input::Initializer, OutputHash>*)pfetchObj->pObject;
-							pFetchInfo->pFeedType = pFeedType;						
+							FeedTypeObject* pFeedType = (FeedTypeObject*)pfetchObj->pObject;
+							pFetchInfo->FeedType.insert({ *pFeedType->pOutput, *pFeedType->pInitializer });
 						}
 						else
 						{
@@ -151,7 +169,8 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 						{
 							if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
 							{
-								pFetchInfo->output.fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pfetchObj));
+								pFetchInfo->fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pfetchObj));
+
 								pFetchInfo->output.fetch_object.push_back(pfetchObj);
 								pFetchInfo->output.fetch_outputs.push_back(*(Output*)pOutputObj->pOutput);
 								pFetchInfo->output.pin_names.push_back(strInSymbolPinName);
@@ -161,7 +180,8 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 							}
 							else if (pOutputObj->type == OUTPUT_TYPE_OUTPUTLIST)
 							{
-								pFetchInfo->output.fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pfetchObj));
+								pFetchInfo->fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pfetchObj));
+
 								pFetchInfo->output_list.fetch_object.push_back(pfetchObj);
 								pFetchInfo->output_list.fetch_outputs.push_back(*(OutputList*)pOutputObj->pOutput);
 								pFetchInfo->output_list.pin_names.push_back(strInSymbolPinName);
@@ -195,6 +215,8 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 						{
 							if (pOutputObj->type == OUTPUT_TYPE_OPERATION)
 							{
+								pFetchInfo->fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pfetchObj));
+
 								pFetchInfo->output.run_outputs.push_back(*(Operation*)pOutputObj->pOutput);
 								pFetchInfo->output.pin_names.push_back(strInSymbolPinName);
 							}
@@ -237,7 +259,7 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 			}
 		}
 	}
-
+	
 	if (pSession == nullptr)
 	{
 		std::string msg = string_format("error : ClientSession(%s) Object create failed.", id.c_str());
@@ -245,6 +267,9 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
+		if (m_pScope->ok() == false)
+			return pSession;
+
 		// device set interface
 		GraphDef def;
 		m_pScope->ToGraphDef(&def);
@@ -993,18 +1018,15 @@ void* Create_FeedType(std::string id, Json::Value pInputItem)
 
 	if (pinput && initializer)
 	{
-		// pFeedType = new ClientSession::FeedType(*pinput, *initializer, outputhash);
-		//pFeedType->insert(ClientSession::FeedType::value_type(*pinput, *initializer));
-
-		ClientSession::FeedType* pFeedType;
-		pFeedType = new ClientSession::FeedType();
-
-		pFeedType->insert({ *pinput, *initializer });
+		FeedTypeObject* pFeedType = new FeedTypeObject;
+		pFeedType->pOutput = pinput;
+		pFeedType->pInitializer = initializer;
 
 		AddObjectMap(pFeedType, id, SYMBOL_FEEDTYPE, "output", pInputItem);
 	}
 	return pFeedType;
 }
+
 
 void* Create_Const(std::string id, Json::Value pInputItem)
 {
