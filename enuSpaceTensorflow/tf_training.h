@@ -47,5 +47,6 @@ void* Create_SparseApplyMomentum(std::string id, Json::Value pInputItem);
 void* Create_SparseApplyProximalAdagrad(std::string id, Json::Value pInputItem);
 void* Create_SparseApplyProximalGradientDescent(std::string id, Json::Value pInputItem);
 void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem);
+void* Create_GradientDescentOptimizer(std::string id, Json::Value pInputItem);
 
 #endif
