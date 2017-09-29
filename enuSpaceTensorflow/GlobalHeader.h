@@ -523,10 +523,12 @@ struct OutputInfo
 {
 	int type;						// 노드의 ouput 타입
 	void* pOutput;					// 노드의 output 주소
+	bool bConnect;
 	public:OutputInfo()
 	{
 		type = OUTPUT_TYPE_OUTPUT;
 		pOutput = nullptr;
+		bConnect = false;
 	}
 };
 
