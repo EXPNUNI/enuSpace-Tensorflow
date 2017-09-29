@@ -13,8 +13,8 @@
 #include "enuSpaceToTensorflow.h"
 
 #include "AttributeParser.h"
-#include "gradient_descent_optimizer.h"
-#include "optimizer.h"
+// #include "gradient_descent_optimizer.h"
+// #include "optimizer.h"
 
 void* Create_ApplyAdadelta(std::string id, Json::Value pInputItem) {
 	ApplyAdadelta* pApplyAdadelta = nullptr;

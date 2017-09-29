@@ -9,10 +9,12 @@
 
 #include "GlobalHeader.h"
 #include "tensorflow.h"
-#include "utility_functions.h"
+
 #include "enuSpaceToTensorflow.h"
 #include "AttributeParser.h"
 #include "../../../core/lib/gtl/array_slice.h"
+#include "utility_functions.h"
+//#include "utilTest.h"
 
 void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 	AvgPool* pAvgPool = nullptr;
@@ -20,9 +22,11 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 	Output* value = nullptr;
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	AvgPool::Attrs attrs;
 
+
+	std::string strTemp;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -79,6 +83,7 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<int>")
 			{
+				v_ksize.clear();
 				 GetIntVectorFromInitial(strPinInitial, v_ksize);
 
 			}
@@ -119,7 +124,11 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
+					
 			}
 		}
 		else
@@ -157,9 +166,9 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 	Output* value = nullptr;
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	AvgPool3D::Attrs attrs;
-
+	std:string strTemp ="";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -256,7 +265,10 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -296,7 +308,8 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 	Output* grad = nullptr;
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
+	std::string strTemp = "";
 	AvgPool3DGrad::Attrs attrs;
 
 	int iSize = (int)pInputItem.size();
@@ -419,7 +432,10 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -458,7 +474,7 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 	Output* value = nullptr;
 	Output* bias = nullptr;
 	BiasAdd::Attrs attrs;
-
+	std::string strTemp ="";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -540,7 +556,10 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));;
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 
 			}
 		}
@@ -557,7 +576,6 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 		if (pObj)
 		{
 			AddOutputInfo(pObj, &pBiasAdd->output, OUTPUT_TYPE_OUTPUT, "output");
-
 		}
 
 	}
@@ -575,7 +593,7 @@ void* Create_BiasAddGrad(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* out_backprop = nullptr;
 	BiasAddGrad::Attrs attrs;
-
+	std:string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -604,7 +622,7 @@ void* Create_BiasAddGrad(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "value")
+		else if (strPinName == "out_backprop")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -633,8 +651,11 @@ void* Create_BiasAddGrad(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "BiasAddGrad::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("data_format_")!="")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				if (attrParser.GetAttribute("data_format_") != "")
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -668,9 +689,9 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 	Output* pInput = nullptr;
 	Output* filter = nullptr;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	Conv2D::Attrs attrs;
-
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -776,9 +797,12 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("use_cudnn_on_gpu_") != "")
-					attrs.UseCudnnOnGpu(attrParser.GetValue_bool("use_cudnn_on_gpu_"));
+					attrs =attrs.UseCudnnOnGpu(attrParser.GetValue_bool("use_cudnn_on_gpu_"));
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -798,7 +822,6 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 			AddOutputInfo(pObj, &pConv2D->output, OUTPUT_TYPE_OUTPUT, "output");
 		}
 		strides.clear();
-
 	}
 	else
 	{
@@ -816,7 +839,8 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 	Output* filter_sizes = nullptr;
 	Output* out_backprop = nullptr;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
+	std::string strTemp = "";
 	Conv2DBackpropFilter::Attrs attrs;
 
 	int iSize = (int)pInputItem.size();
@@ -947,9 +971,12 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("use_cudnn_on_gpu_") != "")
-					attrs.UseCudnnOnGpu(attrParser.GetValue_bool("use_cudnn_on_gpu_"));
+					attrs =attrs.UseCudnnOnGpu(attrParser.GetValue_bool("use_cudnn_on_gpu_"));
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -987,8 +1014,9 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 	Output* filter = nullptr;
 	Output* out_backprop = nullptr;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	Conv2DBackpropInput::Attrs attrs;
+	std::string strTemp = "";
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1018,7 +1046,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "input")
+		else if (strPinName == "input_sizes")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -1118,9 +1146,12 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("use_cudnn_on_gpu_") != "")
-					attrs.UseCudnnOnGpu(attrParser.GetValue_bool("use_cudnn_on_gpu_"));
+					attrs =attrs.UseCudnnOnGpu(attrParser.GetValue_bool("use_cudnn_on_gpu_"));
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -1157,9 +1188,9 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 	Output* pInput = nullptr;
 	Output* filter = nullptr;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	Conv3D::Attrs attrs;
-
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1265,7 +1296,10 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -1303,9 +1337,9 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 	Output* filter_sizes = nullptr;
 	Output* out_backprop = nullptr;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	Conv3DBackpropFilterV2::Attrs attrs;
-
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1434,7 +1468,10 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -1472,9 +1509,9 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 	Output* filter = nullptr;
 	Output* out_backprop = nullptr;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	Conv3DBackpropInputV2::Attrs attrs;
-
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1503,7 +1540,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "input")
+		else if (strPinName == "input_sizes")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -1603,7 +1640,10 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -1640,8 +1680,9 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 	Output* pInput = nullptr;
 	Output* filter = nullptr;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	DepthwiseConv2dNative::Attrs attrs;
+	std::string strTemp = "";
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1748,7 +1789,10 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -1786,9 +1830,9 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 	Output* filter_sizes = nullptr;
 	Output* out_backprop = nullptr;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	DepthwiseConv2dNativeBackpropFilter::Attrs attrs;
-
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1917,7 +1961,10 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -1956,9 +2003,9 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 	Output* filter = nullptr;
 	Output* out_backprop = nullptr;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	DepthwiseConv2dNativeBackpropInput::Attrs attrs;
-
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2087,7 +2134,10 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 		}
 		else
@@ -2126,7 +2176,7 @@ void* Create_Dilation2D(std::string id, Json::Value pInputItem) {
 	Output* filter = nullptr;
 	std::vector<int> v_strides;
 	std::vector<int> v_rates;
-	StringPiece padding;
+	std::string padding;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2278,7 +2328,7 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 	Output* out_backprop = nullptr;
 	std::vector<int> v_strides;
 	std::vector<int> v_rates;
-	StringPiece padding;
+	std::string padding;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2453,7 +2503,7 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 	Output* out_backprop = nullptr;
 	std::vector<int> v_strides;
 	std::vector<int> v_rates;
-	StringPiece padding;
+	std::string padding;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2778,15 +2828,15 @@ void* Create_FractionalAvgPool(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("pseudo_random_") != "")
-					attrs.PseudoRandom(attrParser.GetValue_bool("pseudo_random_"));
+					attrs = attrs.PseudoRandom(attrParser.GetValue_bool("pseudo_random_"));
 				if (attrParser.GetAttribute("overlapping_") != "")
-					attrs.Overlapping(attrParser.GetValue_bool("overlapping_"));
+					attrs =attrs.Overlapping(attrParser.GetValue_bool("overlapping_"));
 				if (attrParser.GetAttribute("deterministic_") != "")
-					attrs.Deterministic(attrParser.GetValue_bool("deterministic_"));
+					attrs = attrs.Deterministic(attrParser.GetValue_bool("deterministic_"));
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.Seed(attrParser.GetValue_int64("seed_"));
+					attrs =attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.Seed2(attrParser.GetValue_bool("seed2_"));
+					attrs =attrs.Seed2(attrParser.GetValue_bool("seed2_"));
 			}
 		}
 		else
@@ -2896,15 +2946,15 @@ void* Create_FractionalMaxPool(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("pseudo_random_") != "")
-					attrs.PseudoRandom(attrParser.GetValue_bool("pseudo_random_"));
+					attrs =attrs.PseudoRandom(attrParser.GetValue_bool("pseudo_random_"));
 				if (attrParser.GetAttribute("overlapping_") != "")
-					attrs.Overlapping(attrParser.GetValue_bool("overlapping_"));
+					attrs =attrs.Overlapping(attrParser.GetValue_bool("overlapping_"));
 				if (attrParser.GetAttribute("deterministic_") != "")
-					attrs.Deterministic(attrParser.GetValue_bool("deterministic_"));
+					attrs =attrs.Deterministic(attrParser.GetValue_bool("deterministic_"));
 				if (attrParser.GetAttribute("seed_") != "")
-					attrs.Seed(attrParser.GetValue_int64("seed_"));
+					attrs =attrs.Seed(attrParser.GetValue_int64("seed_"));
 				if (attrParser.GetAttribute("seed2_") != "")
-					attrs.Seed2(attrParser.GetValue_bool("seed2_"));
+					attrs = attrs.Seed2(attrParser.GetValue_bool("seed2_"));
 			}
 		}
 		else
@@ -2945,7 +2995,7 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 	Output* mean = nullptr;
 	Output* variance = nullptr;
 	FusedBatchNorm::Attrs attrs;
-
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -3100,11 +3150,14 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("epsilon_") != "")
-					attrs.Epsilon(attrParser.GetValue_float("epsilon_"));
+					attrs =attrs.Epsilon(attrParser.GetValue_float("epsilon_"));
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 				if (attrParser.GetAttribute("is_training_") != "")
-					attrs.IsTraining(attrParser.GetValue_bool("is_training_"));
+					attrs =attrs.IsTraining(attrParser.GetValue_bool("is_training_"));
 			}
 		}
 		else
@@ -3145,7 +3198,7 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 	Output* reserve_space_1 = nullptr;
 	Output* reserve_space_2 = nullptr;
 	FusedBatchNormGrad::Attrs attrs;
-
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -3300,11 +3353,14 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("epsilon_") != "")
-					attrs.Epsilon(attrParser.GetValue_float("epsilon_"));
+					attrs=attrs.Epsilon(attrParser.GetValue_float("epsilon_"));
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 				if (attrParser.GetAttribute("is_training_") != "")
-					attrs.IsTraining(attrParser.GetValue_bool("is_training_"));
+					attrs =attrs.IsTraining(attrParser.GetValue_bool("is_training_"));
 			}
 		}
 		else
@@ -3344,7 +3400,7 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 	Output* filter = nullptr;
 	StringPiece mode;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -3518,7 +3574,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 	Output* filter = nullptr;
 	StringPiece mode;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	FusedResizeAndPadConv2D::Attrs attrs;
 
 	int iSize = (int)pInputItem.size();
@@ -3687,7 +3743,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("resize_align_corners_") != "")
-					attrs.ResizeAlignCorners(attrParser.GetValue_bool("resize_align_corners_"));
+					attrs =attrs.ResizeAlignCorners(attrParser.GetValue_bool("resize_align_corners_"));
 			}
 			else
 			{
@@ -3986,13 +4042,13 @@ void* Create_LRN(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("depth_radius_") != "")
-					attrs.DepthRadius(attrParser.GetValue_int64("depth_radius_"));
+					attrs =attrs.DepthRadius(attrParser.GetValue_int64("depth_radius_"));
 				if (attrParser.GetAttribute("bias_") != "")
-					attrs.Bias(attrParser.GetValue_float("bias_"));
+					attrs =attrs.Bias(attrParser.GetValue_float("bias_"));
 				if (attrParser.GetAttribute("alpha_") != "")
-					attrs.Alpha(attrParser.GetValue_float("alpha_"));
+					attrs=attrs.Alpha(attrParser.GetValue_float("alpha_"));
 				if (attrParser.GetAttribute("beta_") != "")
-					attrs.Beta(attrParser.GetValue_float("beta_"));
+					attrs =attrs.Beta(attrParser.GetValue_float("beta_"));
 			}
 		}
 		else
@@ -4106,9 +4162,9 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 	Output* pinput = nullptr;
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	MaxPool::Attrs attrs;
-
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -4203,7 +4259,10 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 			else
 			{
@@ -4247,9 +4306,9 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 	Output* pinput = nullptr;
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	MaxPool3D::Attrs attrs;
-
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -4344,7 +4403,10 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs =attrs.DataFormat(strTemp);
+				}
 			}
 			else
 			{
@@ -4390,7 +4452,8 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 	Output* grad = nullptr;
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
+	std::string strTemp = "";
 	MaxPool3DGrad::Attrs attrs;
 
 	int iSize = (int)pInputItem.size();
@@ -4535,7 +4598,10 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 			else
 			{
@@ -4581,8 +4647,9 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 	Output* grad = nullptr;
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	MaxPool3DGradGrad::Attrs attrs;
+	std::string strTemp = "";
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4688,7 +4755,8 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<int>")
 			{
-				GetIntVectorFromInitial(strPinInitial, v_ksize);
+				std::vector<int> arrays;
+				GetIntVectorFromInitial(strPinInitial, arrays);
 			}
 			else
 			{
@@ -4726,7 +4794,10 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 			else
 			{
@@ -4772,9 +4843,9 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 	Output* grad = nullptr;
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	MaxPoolGradGrad::Attrs attrs;
-
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -4917,7 +4988,10 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("data_format_") != "")
-					attrs.DataFormat(attrParser.GetValue_StringPiece("data_format_"));
+				{
+					strTemp = attrParser.GetValue_StringPiece("data_format_");
+					attrs = attrs.DataFormat(strTemp);
+				}
 			}
 			else
 			{
@@ -5234,7 +5308,7 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("Targmax_") != "")
-					attrs.Targmax(attrParser.GetValue_DataType("Targmax_"));
+					attrs =attrs.Targmax(attrParser.GetValue_DataType("Targmax_"));
 
 			}
 		}
@@ -6352,7 +6426,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("out_type_") != "")
-					attrs.OutType(attrParser.GetValue_DataType("out_type_"));
+					attrs = attrs.OutType(attrParser.GetValue_DataType("out_type_"));
 			}
 			else
 			{
@@ -6683,7 +6757,7 @@ void* Create_QuantizedRelu(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("out_type_") != "")
-					attrs.OutType(attrParser.GetValue_DataType("out_type_"));
+					attrs =attrs.OutType(attrParser.GetValue_DataType("out_type_"));
 			}
 			else
 			{
@@ -6832,7 +6906,7 @@ void* Create_QuantizedRelu6(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("out_type_") != "")
-					attrs.OutType(attrParser.GetValue_DataType("out_type_"));
+					attrs =attrs.OutType(attrParser.GetValue_DataType("out_type_"));
 			}
 			else
 			{
@@ -7006,7 +7080,7 @@ void* Create_QuantizedReluX(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("out_type_") != "")
-					attrs.OutType(attrParser.GetValue_DataType("out_type_"));
+					attrs = attrs.OutType(attrParser.GetValue_DataType("out_type_"));
 			}
 			else
 			{
@@ -7740,10 +7814,8 @@ void* Create_TopK(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("Sorted_") !="")
 				{
-					attrs.Sorted(attrParser.GetValue_bool("Sorted_"));
+					attrs = attrs.Sorted(attrParser.GetValue_bool("Sorted_"));
 				}
-				
-				
 			}
 		}
 		else
