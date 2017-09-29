@@ -497,6 +497,7 @@
 #define SYMBOL_GATHERV2	601
 #define SYMBOL_PADV2 602
 #define SYMBOL_FEEDTYPE	603
+#define SYMBOL_SCATTERNDNONALIASINGADD	604
 
 //////////////////////////////////////////////////////////////////////////
 // [extension] Add symbol

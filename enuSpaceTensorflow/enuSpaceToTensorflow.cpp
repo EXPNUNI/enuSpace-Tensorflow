@@ -718,6 +718,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#Reverse", SYMBOL_REVERSE));
 	m_SymbolList.insert(std::pair<std::string, int>("#ReverseSequence", SYMBOL_REVERSESEQUENCE));
 	m_SymbolList.insert(std::pair<std::string, int>("#ScatterNd", SYMBOL_SCATTERND));
+	m_SymbolList.insert(std::pair<std::string, int>("#ScatterNdNonAliasingAdd", SYMBOL_SCATTERNDNONALIASINGADD));
 	m_SymbolList.insert(std::pair<std::string, int>("#SetDiff1D", SYMBOL_SETDIFF1D));
 	m_SymbolList.insert(std::pair<std::string, int>("#Shape", SYMBOL_SHAPE));
 	m_SymbolList.insert(std::pair<std::string, int>("#ShapeN", SYMBOL_SHAPEN));
@@ -1208,6 +1209,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_REVERSE: {		pCreate = Create_Reverse(id, pInputItem);	break;	}
 	case SYMBOL_REVERSESEQUENCE: {		pCreate = Create_ReverseSequence(id, pInputItem);	break;	}
 	case SYMBOL_SCATTERND: {		pCreate = Create_ScatterNd(id, pInputItem);	break;	}
+	case SYMBOL_SCATTERNDNONALIASINGADD: {		pCreate = Create_ScatterNdNonAliasingAdd(id, pInputItem);	break;	}
 	case SYMBOL_SETDIFF1D: {		pCreate = Create_SetDiff1D(id, pInputItem);	break;	}
 	case SYMBOL_SHAPE: {		pCreate = Create_Shape(id, pInputItem);	break;	}
 	case SYMBOL_SHAPEN: {		pCreate = Create_ShapeN(id, pInputItem);	break;	}
@@ -1682,6 +1684,7 @@ std::string GetCategoryName(int iSymbol)
 	case SYMBOL_REVERSE:
 	case SYMBOL_REVERSESEQUENCE:
 	case SYMBOL_SCATTERND:
+	case SYMBOL_SCATTERNDNONALIASINGADD:
 	case SYMBOL_SETDIFF1D:
 	case SYMBOL_SHAPE:
 	case SYMBOL_SHAPEN:

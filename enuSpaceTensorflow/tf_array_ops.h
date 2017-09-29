@@ -58,6 +58,7 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem);
 void* Create_Reverse(std::string id, Json::Value pInputItem);
 void* Create_ReverseSequence(std::string id, Json::Value pInputItem);
 void* Create_ScatterNd(std::string id, Json::Value pInputItem);
+void* Create_ScatterNdNonAliasingAdd(std::string id, Json::Value pInputItem);
 void* Create_SetDiff1D(std::string id, Json::Value pInputItem);
 void* Create_Shape(std::string id, Json::Value pInputItem);
 void* Create_ShapeN(std::string id, Json::Value pInputItem);

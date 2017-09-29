@@ -61,20 +61,9 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							pinput = (Output*)pOutputObj->pOutput;
-							DataType type_check = pinput->type();
-							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
-							{
-							}
-							else
-							{
-								pinput = nullptr;
-								std::string msg = string_format("warning : BatchToSpace - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
-							}
 						}
 					}
 				}
-
 			}
 			else
 			{
@@ -573,7 +562,7 @@ void* Create_CheckNumerics(std::string id, Json::Value pInputItem) {
 	CheckNumerics* pCheckNumerics = nullptr;
 	Scope* pScope = nullptr;
 	Output* ptensor = nullptr;
-	StringPiece message = "";
+	std::string message;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -939,7 +928,7 @@ void* Create_Dequantize(std::string id, Json::Value pInputItem) {
 	Output* min_range = nullptr;
 	Output* max_range = nullptr;
 	Dequantize::Attrs attrs;
-
+	std::string mode;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1045,7 +1034,8 @@ void* Create_Dequantize(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("mode_") != "")
 				{
-					attrs.mode_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("mode_"));
+					mode = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("mode_"));
+					attrs.mode_ = mode;
 				}
 			}
 		}
@@ -1660,10 +1650,7 @@ void* Create_ExtractImagePatches(std::string id, Json::Value pInputItem) {
 		gtl::ArraySlice<int> strides(v_strides);
 		gtl::ArraySlice<int> rates(v_rates);
 
-		StringPiece strpadding(padding);
-		std::string temp = strpadding.data();
-
-		pExtractImagePatches = new ExtractImagePatches(*pScope, *images, ksizes, strides, rates, strpadding);
+		pExtractImagePatches = new ExtractImagePatches(*pScope, *images, ksizes, strides, rates, padding);
 		ObjectInfo* pObj = AddObjectMap(pExtractImagePatches, id, SYMBOL_MATMUL, "ExtractImagePatches", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pExtractImagePatches->patches, OUTPUT_TYPE_OUTPUT, "patches");
@@ -1744,15 +1731,15 @@ void* Create_FakeQuantWithMinMaxArgs(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("min_") != "")
 				{
-					attrs.Min(attrParser.ConvStrToFloat(attrParser.GetAttribute("min_")));
+					attrs.min_ = attrParser.ConvStrToFloat(attrParser.GetAttribute("min_"));
 				}
 				if (attrParser.GetAttribute("max_") != "")
 				{
-					attrs.Max(attrParser.ConvStrToFloat(attrParser.GetAttribute("max_")));
+					attrs.max_ = attrParser.ConvStrToFloat(attrParser.GetAttribute("max_"));
 				}
 				if (attrParser.GetAttribute("num_bits_") != "")
 				{
-					attrs.NumBits(attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_")));
+					attrs.num_bits_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_"));
 				}
 			}
 		}
@@ -1866,15 +1853,15 @@ void* Create_FakeQuantWithMinMaxArgsGradient(std::string id, Json::Value pInputI
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("min_") != "")
 				{
-					attrs.Min(attrParser.ConvStrToFloat(attrParser.GetAttribute("min_")));
+					attrs.min_ = attrParser.ConvStrToFloat(attrParser.GetAttribute("min_"));
 				}
 				if (attrParser.GetAttribute("max_") != "")
 				{
-					attrs.Max(attrParser.ConvStrToFloat(attrParser.GetAttribute("max_")));
+					attrs.max_ = attrParser.ConvStrToFloat(attrParser.GetAttribute("max_"));
 				}
 				if (attrParser.GetAttribute("num_bits_") != "")
 				{
-					attrs.NumBits(attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_")));
+					attrs.num_bits_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_"));
 				}
 			}
 		}
@@ -2012,7 +1999,7 @@ void* Create_FakeQuantWithMinMaxVars(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("num_bits_") != "")
 				{
-					attrs.NumBits(attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_")));
+					attrs.num_bits_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_"));
 				}
 			}
 		}
@@ -2174,7 +2161,7 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("num_bits_") != "")
 				{
-					attrs.NumBits(attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_")));
+					attrs.num_bits_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_"));
 				}
 			}
 		}
@@ -2317,7 +2304,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannel(std::string id, Json::Value pInpu
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("num_bits_") != "")
 				{
-					attrs.NumBits(attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_")));
+					attrs.num_bits_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_"));
 				}
 			}
 		}
@@ -2479,11 +2466,11 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("num_bits_") != "")
 				{
-					attrs.NumBits(attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_")));
+					attrs.num_bits_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_"));
 				}
 				if (attrParser.GetAttribute("narrow_range_") != "")
 				{
-					attrs.NumBits(attrParser.ConvStrToBool(attrParser.GetAttribute("narrow_range_")));
+					attrs.narrow_range_ = attrParser.ConvStrToBool(attrParser.GetAttribute("narrow_range_"));
 				}
 			}
 		}
@@ -2703,7 +2690,7 @@ void* Create_Gather(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("validate_indices_") != "")
 				{
-					attrs.ValidateIndices(attrParser.ConvStrToBool(attrParser.GetAttribute("validate_indices_")));
+					attrs.validate_indices_ = attrParser.ConvStrToBool(attrParser.GetAttribute("validate_indices_"));
 				}
 			}
 		}
@@ -3040,7 +3027,7 @@ void* Create_ImmutableConst(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	DataType dtype;
 	PartialTensorShape shape;
-	StringPiece memory_region_name = "";
+	std::string memory_region_name;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -3299,7 +3286,7 @@ void* Create_SetDiff1D(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("out_idx_") != "")
 				{
-					attrs.OutIdx(attrParser.ConvStrToDataType(attrParser.GetAttribute("out_idx_")));
+					attrs.out_idx_ = attrParser.ConvStrToDataType(attrParser.GetAttribute("out_idx_"));
 				}
 			}
 		}
@@ -3713,7 +3700,7 @@ void* Create_MirrorPad(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* pInput = nullptr;
 	Output* paddings = nullptr;
-	StringPiece mode = "";
+	std::string mode;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -3958,7 +3945,7 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("axis_") != "")
 				{
-					attrs.Axis(attrParser.ConvStrToInt64(attrParser.GetAttribute("axis_")));
+					attrs.axis_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("axis_"));
 				}
 			}
 		}
@@ -3971,7 +3958,7 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 
 	if (pScope && indices && depth && on_value && off_value)
 	{
-		pOneHot = new OneHot(*pScope, *indices, *depth, *on_value, *off_value);
+		pOneHot = new OneHot(*pScope, *indices, *depth, *on_value, *off_value, attrs);
 		ObjectInfo* pObj = AddObjectMap(pOneHot, id, SYMBOL_ONEHOT, "OneHot", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pOneHot->output, OUTPUT_TYPE_OUTPUT, "output");
@@ -4126,7 +4113,7 @@ void* Create_Stack(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("axis_") != "")
 				{
-					attrs.Axis(attrParser.ConvStrToInt64(attrParser.GetAttribute("axis_")));
+					attrs.axis_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("axis_"));
 				}
 			}
 		}
@@ -4657,6 +4644,7 @@ void* Create_PreventGradient(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* pInput = nullptr;
 	PreventGradient::Attrs attrs;
+	std::string message;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4716,7 +4704,8 @@ void* Create_PreventGradient(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("message_") != "")
 				{
-					attrs.Message(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("message_")));
+					message = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("message_"));
+					attrs.message_ = message;
 				}
 			}
 		}
@@ -4854,15 +4843,15 @@ void* Create_QuantizeAndDequantizeV2(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("signed_input_") != "")
 				{
-					attrs.SignedInput(attrParser.ConvStrToBool(attrParser.GetAttribute("signed_input_")));
+					attrs.signed_input_ = attrParser.ConvStrToBool(attrParser.GetAttribute("signed_input_"));
 				}
 				if (attrParser.GetAttribute("num_bits_") != "")
 				{
-					attrs.SignedInput(attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_")));
+					attrs.num_bits_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("num_bits_"));
 				}
 				if (attrParser.GetAttribute("range_given_") != "")
 				{
-					attrs.SignedInput(attrParser.ConvStrToBool(attrParser.GetAttribute("range_given_")));
+					attrs.range_given_ = attrParser.ConvStrToBool(attrParser.GetAttribute("range_given_"));
 				}
 			}
 		}
@@ -4875,7 +4864,7 @@ void* Create_QuantizeAndDequantizeV2(std::string id, Json::Value pInputItem) {
 
 	if (pScope && pInput && input_min && input_max)
 	{
-		pQuantizeAndDequantizeV2 = new QuantizeAndDequantizeV2(*pScope, *pInput, *input_min, *input_max);
+		pQuantizeAndDequantizeV2 = new QuantizeAndDequantizeV2(*pScope, *pInput, *input_min, *input_max, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQuantizeAndDequantizeV2, id, SYMBOL_QUANTIZEANDDEQUANTIZEV2, "QuantizeAndDequantizeV2", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pQuantizeAndDequantizeV2->output, OUTPUT_TYPE_OUTPUT, "output");
@@ -4896,6 +4885,7 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 	Output* max_range = nullptr;
 	DataType T;
 	QuantizeV2::Attrs attrs;
+	std::string mode;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -5001,7 +4991,8 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("mode_") != "")
 				{
-					attrs.Mode(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("mode_")));
+					mode = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("mode_"));
+					attrs.mode_ = mode;
 				}
 			}
 		}
@@ -5314,23 +5305,23 @@ void* Create_QuantizedInstanceNorm(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("output_range_given_") != "")
 				{
-					attrs.OutputRangeGiven(attrParser.ConvStrToBool(attrParser.GetAttribute("output_range_given_")));
+					attrs.output_range_given_ = attrParser.ConvStrToBool(attrParser.GetAttribute("output_range_given_"));
 				}
 				if (attrParser.GetAttribute("given_y_min_") != "")
 				{
-					attrs.GivenYMin(attrParser.ConvStrToFloat(attrParser.GetAttribute("given_y_min_")));
+					attrs.given_y_min_ = attrParser.ConvStrToFloat(attrParser.GetAttribute("given_y_min_"));
 				}
 				if (attrParser.GetAttribute("given_y_max_") != "")
 				{
-					attrs.GivenYMax(attrParser.ConvStrToFloat(attrParser.GetAttribute("given_y_max_")));
+					attrs.given_y_max_ = attrParser.ConvStrToFloat(attrParser.GetAttribute("given_y_max_"));
 				}
 				if (attrParser.GetAttribute("variance_epsilon_") != "")
 				{
-					attrs.VarianceEpsilon(attrParser.ConvStrToFloat(attrParser.GetAttribute("variance_epsilon_")));
+					attrs.variance_epsilon_ = attrParser.ConvStrToFloat(attrParser.GetAttribute("variance_epsilon_"));
 				}
 				if (attrParser.GetAttribute("min_separation_") != "")
 				{
-					attrs.VarianceEpsilon(attrParser.ConvStrToFloat(attrParser.GetAttribute("min_separation_")));
+					attrs.min_separation_ = attrParser.ConvStrToFloat(attrParser.GetAttribute("min_separation_"));
 				}
 			}
 		}
@@ -5343,7 +5334,7 @@ void* Create_QuantizedInstanceNorm(std::string id, Json::Value pInputItem) {
 
 	if (pScope && x && x_min && x_max)
 	{
-		pQuantizedInstanceNorm = new QuantizedInstanceNorm(*pScope, *x, *x_min, *x_max);
+		pQuantizedInstanceNorm = new QuantizedInstanceNorm(*pScope, *x, *x_min, *x_max, attrs);
 		ObjectInfo* pObj = AddObjectMap(pQuantizedInstanceNorm, id, SYMBOL_QUANTIZEDINSTANCENORM, "QuantizedInstanceNorm", pInputItem);
 		if (pObj)
 		{
@@ -5853,23 +5844,23 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("begin_mask_") != "")
 				{
-					attrs.BeginMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("begin_mask_")));
+					attrs.begin_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("begin_mask_"));
 				}
 				if (attrParser.GetAttribute("end_mask_") != "")
 				{
-					attrs.EndMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("end_mask_")));
+					attrs.end_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("end_mask_"));
 				}
 				if (attrParser.GetAttribute("ellipsis_mask_") != "")
 				{
-					attrs.EllipsisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("ellipsis_mask_")));
+					attrs.ellipsis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("ellipsis_mask_"));
 				}
 				if (attrParser.GetAttribute("new_axis_mask_") != "")
 				{
-					attrs.NewAxisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("new_axis_mask_")));
+					attrs.new_axis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("new_axis_mask_"));
 				}
 				if (attrParser.GetAttribute("shrink_axis_mask_") != "")
 				{
-					attrs.ShrinkAxisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("shrink_axis_mask_")));
+					attrs.shrink_axis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("shrink_axis_mask_"));
 				}
 			}
 		}
@@ -5882,7 +5873,7 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 
 	if (pScope && ref && begin && end && strides && value)
 	{
-		pResourceStridedSliceAssign = new ResourceStridedSliceAssign(*pScope, *ref, *begin, *end, *strides, *value);
+		pResourceStridedSliceAssign = new ResourceStridedSliceAssign(*pScope, *ref, *begin, *end, *strides, *value, attrs);
 		ObjectInfo* pObj = AddObjectMap(pResourceStridedSliceAssign, id, SYMBOL_RESOURCESTRIDEDSLICEASSIGN, "ResourceStridedSliceAssign", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pResourceStridedSliceAssign->operation, OUTPUT_TYPE_OPERATION, "operation");
@@ -6004,7 +5995,7 @@ void* Create_ReverseSequence(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("batch_dim_") != "")
 				{
-					attrs.BatchDim(attrParser.ConvStrToInt64(attrParser.GetAttribute("batch_dim_")));
+					attrs.batch_dim_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("batch_dim_"));
 				}
 			}
 		}
@@ -6243,9 +6234,9 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope && indices && updates && updates)
+	if (pScope && indices && updates && shape)
 	{
-		pScatterNd = new ScatterNd(*pScope, *indices, *updates, *updates);
+		pScatterNd = new ScatterNd(*pScope, *indices, *updates, *shape);
 		ObjectInfo* pObj = AddObjectMap(pScatterNd, id, SYMBOL_SCATTERND, "ScatterNd", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, &pScatterNd->output, OUTPUT_TYPE_OUTPUT, "output");
@@ -6257,6 +6248,133 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 	}
 
 	return pScatterNd;
+}
+
+void* Create_ScatterNdNonAliasingAdd(std::string id, Json::Value pInputItem) {
+	ScatterNdNonAliasingAdd* pScatterNdNonAliasingAdd = nullptr;
+	Scope* pScope = nullptr;
+	Output* pinput = nullptr;
+	Output* indices = nullptr;
+	Output* updates = nullptr;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : ScatterNdNonAliasingAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "input")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							pinput = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : ScatterNdNonAliasingAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : ScatterNdNonAliasingAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "updates")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							updates = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : ScatterNdNonAliasingAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : ScatterNdNonAliasingAdd pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && pinput && indices && updates)
+	{
+		pScatterNdNonAliasingAdd = new ScatterNdNonAliasingAdd(*pScope, *pinput, *indices, *updates);
+		ObjectInfo* pObj = AddObjectMap(pScatterNdNonAliasingAdd, id, SYMBOL_SCATTERNDNONALIASINGADD, "ScatterNdNonAliasingAdd", pInputItem);
+		if (pObj)
+			AddOutputInfo(pObj, &pScatterNdNonAliasingAdd->output, OUTPUT_TYPE_OUTPUT, "output");
+	}
+	else
+	{
+		std::string msg = string_format("error : ScatterNdNonAliasingAdd(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+
+	return pScatterNdNonAliasingAdd;
 }
 void* Create_Shape(std::string id, Json::Value pInputItem) {
 	Shape* pShape = nullptr;
@@ -6322,7 +6440,7 @@ void* Create_Shape(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("out_type_") != "")
 				{
-					attrs.OutType(attrParser.ConvStrToDataType(attrParser.GetAttribute("out_type_")));
+					attrs.out_type_ = attrParser.ConvStrToDataType(attrParser.GetAttribute("out_type_"));
 				}
 			}
 		}
@@ -6384,7 +6502,7 @@ void* Create_ShapeN(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "input")
 		{
-			if (strPinInterface == "Input")
+			if (strPinInterface == "InputList")
 			{
 				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
 				if (pObj)
@@ -6412,7 +6530,7 @@ void* Create_ShapeN(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("out_type_") != "")
 				{
-					attrs.OutType(attrParser.ConvStrToDataType(attrParser.GetAttribute("out_type_")));
+					attrs.out_type_ = attrParser.ConvStrToDataType(attrParser.GetAttribute("out_type_"));
 				}
 			}
 		}
@@ -6501,7 +6619,7 @@ void* Create_Size(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("out_type_") != "")
 				{
-					attrs.OutType(attrParser.ConvStrToDataType(attrParser.GetAttribute("out_type_")));
+					attrs.out_type_ = attrParser.ConvStrToDataType(attrParser.GetAttribute("out_type_"));
 				}
 			}
 		}
@@ -7588,23 +7706,23 @@ void* Create_StridedSlice(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("begin_mask_") != "")
 				{
-					attrs.BeginMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("begin_mask_")));
+					attrs.begin_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("begin_mask_"));
 				}
 				if (attrParser.GetAttribute("end_mask_") != "")
 				{
-					attrs.EndMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("end_mask_")));
+					attrs.end_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("end_mask_"));
 				}
 				if (attrParser.GetAttribute("ellipsis_mask_") != "")
 				{
-					attrs.EllipsisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("ellipsis_mask_")));
+					attrs.ellipsis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("ellipsis_mask_"));
 				}
 				if (attrParser.GetAttribute("new_axis_mask_") != "")
 				{
-					attrs.NewAxisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("new_axis_mask_")));
+					attrs.new_axis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("new_axis_mask_"));
 				}
 				if (attrParser.GetAttribute("shrink_axis_mask_") != "")
 				{
-					attrs.ShrinkAxisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("shrink_axis_mask_")));
+					attrs.shrink_axis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("shrink_axis_mask_"));
 				}
 			}
 		}
@@ -7794,23 +7912,23 @@ void* Create_StridedSliceAssign(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("begin_mask_") != "")
 				{
-					attrs.BeginMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("begin_mask_")));
+					attrs.begin_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("begin_mask_"));
 				}
 				if (attrParser.GetAttribute("end_mask_") != "")
 				{
-					attrs.EndMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("end_mask_")));
+					attrs.end_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("end_mask_"));
 				}
 				if (attrParser.GetAttribute("ellipsis_mask_") != "")
 				{
-					attrs.EllipsisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("ellipsis_mask_")));
+					attrs.ellipsis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("ellipsis_mask_"));
 				}
 				if (attrParser.GetAttribute("new_axis_mask_") != "")
 				{
-					attrs.NewAxisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("new_axis_mask_")));
+					attrs.new_axis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("new_axis_mask_"));
 				}
 				if (attrParser.GetAttribute("shrink_axis_mask_") != "")
 				{
-					attrs.ShrinkAxisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("shrink_axis_mask_")));
+					attrs.shrink_axis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("shrink_axis_mask_"));
 				}
 			}
 		}
@@ -8000,23 +8118,23 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("begin_mask_") != "")
 				{
-					attrs.BeginMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("begin_mask_")));
+					attrs.begin_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("begin_mask_"));
 				}
 				if (attrParser.GetAttribute("end_mask_") != "")
 				{
-					attrs.EndMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("end_mask_")));
+					attrs.end_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("end_mask_"));
 				}
 				if (attrParser.GetAttribute("ellipsis_mask_") != "")
 				{
-					attrs.EllipsisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("ellipsis_mask_")));
+					attrs.ellipsis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("ellipsis_mask_"));
 				}
 				if (attrParser.GetAttribute("new_axis_mask_") != "")
 				{
-					attrs.NewAxisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("new_axis_mask_")));
+					attrs.new_axis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("new_axis_mask_"));
 				}
 				if (attrParser.GetAttribute("shrink_axis_mask_") != "")
 				{
-					attrs.ShrinkAxisMask(attrParser.ConvStrToInt64(attrParser.GetAttribute("shrink_axis_mask_")));
+					attrs.shrink_axis_mask_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("shrink_axis_mask_"));
 				}
 			}
 		}
@@ -8307,7 +8425,7 @@ void* Create_Unique(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("out_idx_") != "")
 				{
-					attrs.OutIdx(attrParser.ConvStrToDataType(attrParser.GetAttribute("out_idx_")));
+					attrs.out_idx_ = attrParser.ConvStrToDataType(attrParser.GetAttribute("out_idx_"));
 				}
 			}
 		}
@@ -8398,7 +8516,7 @@ void* Create_UniqueWithCounts(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("out_idx_") != "")
 				{
-					attrs.OutIdx(attrParser.ConvStrToDataType(attrParser.GetAttribute("out_idx_")));
+					attrs.out_idx_ = attrParser.ConvStrToDataType(attrParser.GetAttribute("out_idx_"));
 				}
 			}
 		}
@@ -8511,7 +8629,7 @@ void* Create_Unstack(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("axis_") != "")
 				{
-					attrs.Axis(attrParser.ConvStrToInt64(attrParser.GetAttribute("axis_")));
+					attrs.axis_ = attrParser.ConvStrToInt64(attrParser.GetAttribute("axis_"));
 				}
 			}
 		}
