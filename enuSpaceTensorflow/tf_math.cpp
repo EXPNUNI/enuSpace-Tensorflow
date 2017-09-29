@@ -6213,7 +6213,7 @@ void* Create_Mean(std::string id, Json::Value pInputItem) {
 
 	if (pScope && pinput && paxis)
 	{
-		pMean = new Mean(*pScope, *pinput, *paxis);
+		pMean = new Mean(*pScope, *pinput, *paxis, attrs);
 
 		ObjectInfo* pObj = AddObjectMap(pMean, id, SYMBOL_MEAN, "Mean", pInputItem);
 		if (pObj)
@@ -12233,7 +12233,7 @@ void* Create_Where3(std::string id, Json::Value pInputItem) {
 				{
 					if (!strPinInitial.empty())
 					{
-						pcondition = (Output*)Create_StrToOutput(*m_pScope,strAutoPinType, "", strPinInitial);
+						pcondition = (Output*)Create_StrToOutput(*m_pScope,"DT_BOOL", "", strPinInitial);
 					}
 				}
 			}
@@ -12287,6 +12287,13 @@ void* Create_Where3(std::string id, Json::Value pInputItem) {
 						{
 							py = (Output*)pOutputObj->pOutput;
 						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+					{
+						py = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
 					}
 				}
 			}
