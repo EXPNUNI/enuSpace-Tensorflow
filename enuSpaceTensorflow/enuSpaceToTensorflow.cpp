@@ -116,6 +116,9 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 				if (pOutputObj) 
 					bConnect = pOutputObj->bConnect;
 
+				std::string strVariable;
+				strVariable = pObjet->id + ".result_" + strpinname;
+
 				int iNum = it->NumElements();
 				int iType = it->dtype();
 				int iArraySize = iNum;
@@ -167,13 +170,13 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 
 				int idis = 10;
 				for (int i = 0; i < iNum; i++)
-				{
+				{ 
 					switch (iType)
 					{
 					case DT_DOUBLE:
 					{
 						auto flat = it->flat<double>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f", strVariable.c_str(), i, flat(i)));
 
 						*((double*)pData + i) = flat(i);
 						break;
@@ -181,7 +184,7 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 					case DT_FLOAT:
 					{
 						auto flat = it->flat<float>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f", strVariable.c_str(), i, flat(i)));
 						*((float*)pData + i) = flat(i);
 						break;
 					}
@@ -189,7 +192,7 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 					case DT_QUINT8:
 					{
 						auto flat = it->flat<uint8>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((int*)pData + i) = flat(i);
 						break;
 					}
@@ -197,7 +200,7 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 					case DT_QUINT16:
 					{
 						auto flat = it->flat<uint16>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((int*)pData + i) = flat(i);
 						break;
 					}
@@ -205,7 +208,7 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 					case DT_QINT8:
 					{
 						auto flat = it->flat<int8>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((int*)pData + i) = flat(i);
 						break;
 					}
@@ -213,7 +216,7 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 					case DT_QINT16:
 					{
 						auto flat = it->flat<int16>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((int*)pData + i) = flat(i);
 						break;
 					}
@@ -221,28 +224,28 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 					case DT_QINT32:
 					{
 						auto flat = it->flat<int32>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((int*)pData + i) = flat(i);
 						break;
 					}
 					case DT_INT64:
 					{
 						auto flat = it->flat<int64>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((int*)pData + i) = flat(i);
 						break;
 					}
 					case DT_BOOL:
 					{
 						auto flat = it->flat<bool>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((bool*)pData + i) = flat(i);
 						break;
 					}
 					case DT_COMPLEX64:
 					{
 						auto flat = it->flat<complex64>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f+%8.6fj", strVariable.c_str(), i, flat(i).real(), flat(i).imag()));
 						*((float*)pData + i * 2) = flat(i).real();
 						*((float*)pData + i * 2 + 1) = flat(i).imag();
 						break;
@@ -250,7 +253,7 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 					case DT_COMPLEX128:
 					{
 						auto flat = it->flat<complex128>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f+%8.6fj", strVariable.c_str(), i, flat(i).real(), flat(i).imag()));
 						*((double*)pData + i * 2) = flat(i).real();
 						*((double*)pData + i * 2 + 1) = flat(i).imag();
 						break;
@@ -260,7 +263,7 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 						auto flat = it->flat<std::string>();
 						if (isString(flat(i)))
 						{
-							if (i < idis && bConnect) PrintMessage(strings::Printf("[%d] = %s", i, flat(i).c_str()));
+							if (i < idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %s", strVariable.c_str(), i, flat(i).c_str()));
 							((std::string*)pData + i)->assign(flat(i).c_str());
 						}
 						else
@@ -270,12 +273,18 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 							{
 								strTmp += strings::Printf("%02x",flat(i).c_str()[j]);
 							}
-							if (i < idis && bConnect) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
+							if (i < idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %s", strVariable.c_str(), i, strTmp.c_str()));
 							((std::string*)pData + i)->assign(strTmp.c_str());
 						}
 						break;
 					}
 					}
+				}
+
+				if (bConnect)
+				{
+					std::string strvalue = strVariable + "=>" + it->DebugString();
+					PrintMessage(strvalue);
 				}
 
 				if (pData)
@@ -289,11 +298,10 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 						strdim += strings::Printf("[%d]", idim);
 					}
 
-					std::string strVariable;
 					if (iType == DT_COMPLEX64 || iType == DT_COMPLEX128)
-						strVariable = pObjet->id + ".result_" + strpinname + strdim + "[2]";
+						strVariable = strVariable + strdim + "[2]";
 					else
-						strVariable = pObjet->id + ".result_" + strpinname + strdim;
+						strVariable = strVariable + strdim;
 
 					SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
 
@@ -305,9 +313,6 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 
 				vObjIt++;
 				pinname++;
-
-				std::string strvalue = it->DebugString();
-				PrintMessage(strvalue);
 			}
 		}
 	}
@@ -434,6 +439,9 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 				break;
 			}
 
+			std::string strVariable;
+			strVariable = pObjet->id + ".result_" + strpinname;
+
 			int iOffset = 0;
 			int iCount = 0;
 			for (std::vector<tensorflow::Tensor>::iterator it = outputs.begin(); it != outputs.end(); it++)
@@ -443,7 +451,6 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 				if (pOutputObj)
 					bConnect = pOutputObj->bConnect;
 				
-
 				int iNum = it->NumElements();
 				int iType = it->dtype();
 
@@ -459,7 +466,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 					case DT_DOUBLE:
 					{
 						auto flat = it->flat<double>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f", strVariable.c_str(), i, flat(i)));
 
 						*((double*)pData + i + iOffset) = flat(i);
 						break;
@@ -467,14 +474,14 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 					case DT_FLOAT:
 					{
 						auto flat = it->flat<float>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f", strVariable.c_str(), i, flat(i)));
 						*((float*)pData + i + iOffset) = flat(i);
 						break;
 					}
 					case DT_BFLOAT16:
 					{
 						auto flat = it->flat<bfloat16>();
-						if (i < idis && bConnect) PrintMessage(strings::Printf("[%d] = %8.6f", i, flat(i)));
+						if (i < idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f", strVariable.c_str(),i, flat(i)));
 						//*((float*)pData + i + iOffset) = flat(i);
 						BFloat16ToFloat(&flat(i), ((float*)pData + i + iOffset), 1);
 						break;
@@ -483,7 +490,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 					case DT_QUINT8:
 					{
 						auto flat = it->flat<uint8>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((int*)pData + i + iOffset) = flat(i);
 						break;
 					}
@@ -491,7 +498,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 					case DT_QUINT16:
 					{
 						auto flat = it->flat<uint16>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(),i, flat(i)));
 						*((int*)pData + i + iOffset) = flat(i);
 						break;
 					}
@@ -499,7 +506,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 					case DT_QINT8:
 					{
 						auto flat = it->flat<int8>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((int*)pData + i + iOffset) = flat(i);
 						break;
 					}
@@ -507,7 +514,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 					case DT_QINT16:
 					{
 						auto flat = it->flat<int16>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((int*)pData + i + iOffset) = flat(i);
 						break;
 					}
@@ -515,28 +522,28 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 					case DT_QINT32:
 					{
 						auto flat = it->flat<int32>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((int*)pData + i + iOffset) = flat(i);
 						break;
 					}
 					case DT_INT64:
 					{
 						auto flat = it->flat<int64>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((int*)pData + i + iOffset) = flat(i);
 						break;
 					}
 					case DT_BOOL:
 					{
 						auto flat = it->flat<bool>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %d", i, flat(i)));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
 						*((bool*)pData + i + iOffset) = flat(i);
 						break;
 					}
 					case DT_COMPLEX64:
 					{
 						auto flat = it->flat<complex64>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f+%8.6fj", strVariable.c_str(), i, flat(i).real(), flat(i).imag()));
 						*((float*)pData + (i + iOffset) * 2) = flat(i).real();
 						*((float*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
 						break;
@@ -544,7 +551,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 					case DT_COMPLEX128:
 					{
 						auto flat = it->flat<complex128>();
-						if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %8.6f+%8.6fj", i, flat(i).real(), flat(i).imag()));
+						if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f+%8.6fj", strVariable.c_str(), i, flat(i).real(), flat(i).imag()));
 						*((double*)pData + (i + iOffset) * 2) = flat(i).real();
 						*((double*)pData + (i + iOffset) * 2 + 1) = flat(i).imag();
 						break;
@@ -554,7 +561,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						auto flat = it->flat<std::string>();
 						if (isString(flat(i)))
 						{
-							if (i < idis && bConnect) PrintMessage(strings::Printf("[%d] = %s", i, flat(i).c_str()));
+							if (i < idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %s", strVariable.c_str(), i, flat(i).c_str()));
 							((std::string*)pData + i + iOffset)->assign(flat(i).c_str());
 						}
 						else
@@ -564,7 +571,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 							{
 								strTmp += strings::Printf("%02x",flat(i).c_str()[j]);
 							}
-							if (i<idis && bConnect) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %s", strVariable.c_str(), i, strTmp.c_str()));
 							((std::string*)pData + i + iOffset)->assign(strTmp.c_str());
 						}
 						break;
@@ -572,17 +579,20 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 					}
 				}
 
-				std::string strvalue = it->DebugString();
-				PrintMessage(strvalue);
+				if (bConnect)
+				{
+					std::string strvalue = strVariable + "=>" + it->DebugString();
+					PrintMessage(strvalue);
+				}
+
 			}
 
 			if (pData)
 			{
-				std::string strVariable;
 				if (iType == DT_COMPLEX64 || iType == DT_COMPLEX128)
-					strVariable = pObjet->id + ".result_" + strpinname + strdim + "[2]";
+					strVariable = strVariable + strdim + "[2]";
 				else
-					strVariable = pObjet->id + ".result_" + strpinname + strdim;
+					strVariable = strVariable + strdim;
 
 				SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
 
