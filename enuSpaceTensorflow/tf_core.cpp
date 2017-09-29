@@ -171,6 +171,7 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 							{
 								pFetchInfo->fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pfetchObj));
 
+								pOutputObj->bConnect = true;
 								pFetchInfo->output.fetch_object.push_back(pfetchObj);
 								pFetchInfo->output.fetch_outputs.push_back(*(Output*)pOutputObj->pOutput);
 								pFetchInfo->output.pin_names.push_back(strInSymbolPinName);
@@ -182,6 +183,7 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 							{
 								pFetchInfo->fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pfetchObj));
 
+								pOutputObj->bConnect = true;
 								pFetchInfo->output_list.fetch_object.push_back(pfetchObj);
 								pFetchInfo->output_list.fetch_outputs.push_back(*(OutputList*)pOutputObj->pOutput);
 								pFetchInfo->output_list.pin_names.push_back(strInSymbolPinName);
