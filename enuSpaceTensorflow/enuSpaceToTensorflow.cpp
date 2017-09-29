@@ -551,7 +551,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 							std::string strTmp = "";
 							for (size_t j = 0; j < flat(i).size(); j++)
 							{
-								strTmp += strings::Printf("%02x;",flat(i).c_str()[j]);
+								strTmp += strings::Printf("%02x",flat(i).c_str()[j]);
 							}
 							if (i<idis) PrintMessage(strings::Printf("[%d] = %s", i, strTmp.c_str()));
 							((std::string*)pData + i + iOffset)->assign(strTmp.c_str());

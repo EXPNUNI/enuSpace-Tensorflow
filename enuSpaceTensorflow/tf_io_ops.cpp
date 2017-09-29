@@ -892,6 +892,11 @@ void* Create_ReaderReadUpTo(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pnum_records = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
+				}
 			}
 			else
 			{
