@@ -90,11 +90,6 @@ float CAttributeParser::ConvStrToFloat(std::string strValue)
 	return std::stof(strValue);
 }
 
-StringPiece CAttributeParser::ConvStrToStringPiece(std::string attrValue)
-{
-	StringPiece strPiece(attrValue);
-	return strPiece;
-}
 
 
 bool CAttributeParser::ConvStrToArraySliceTensorshape(std::string attrValue, std::vector<PartialTensorShape>& v_PTS)
@@ -200,10 +195,7 @@ float CAttributeParser::GetValue_float(std::string name)
 	return ConvStrToInt64(GetAttribute(name));
 }
 
-StringPiece CAttributeParser::GetValue_StringPiece(std::string name)
-{
-	return ConvStrToStringPiece(GetAttribute(name));
-}
+
 
 bool CAttributeParser::GetValue_arraySliceTensorshape(std::string name, std::vector<PartialTensorShape>& v_PTS)
 {
