@@ -89,10 +89,11 @@ float CAttributeParser::ConvStrToFloat(std::string strValue)
 {
 	return std::stof(strValue);
 }
-std::string CAttributeParser::ConvStrToStringPiece(std::string attrValue)
+
+StringPiece CAttributeParser::ConvStrToStringPiece(std::string attrValue)
 {
-	attrValue = trim(attrValue);
-	return attrValue;
+	StringPiece strPiece(attrValue);
+	return strPiece;
 }
 
 
@@ -199,7 +200,7 @@ float CAttributeParser::GetValue_float(std::string name)
 	return ConvStrToInt64(GetAttribute(name));
 }
 
-std::string CAttributeParser::GetValue_StringPiece(std::string name)
+StringPiece CAttributeParser::GetValue_StringPiece(std::string name)
 {
 	return ConvStrToStringPiece(GetAttribute(name));
 }
