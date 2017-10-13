@@ -284,7 +284,7 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 	Output* pInput = nullptr;
 	Output* reduction_indices = nullptr;
 	ReduceJoin::Attrs attrs;
-	std::string strTemp ="";
+	StringPiece strTemp ="";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -401,7 +401,7 @@ void* Create_StringJoin(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	OutputList* pInputs = nullptr;
 	StringJoin::Attrs attrs;
-	std::string temp1 = "";
+	StringPiece temp1 = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{

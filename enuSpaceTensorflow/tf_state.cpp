@@ -1733,7 +1733,7 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 	PartialTensorShape shape;
 	DataType dtype;
 	TemporaryVariable::Attrs attrs;
-	std::string strTemp;
+	StringPiece strTemp;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{

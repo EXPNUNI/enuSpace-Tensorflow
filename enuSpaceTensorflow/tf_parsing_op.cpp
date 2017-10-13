@@ -19,7 +19,7 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 	Output* precords = nullptr;
 	OutputList* precord_defaults = nullptr;
 	DecodeCSV::Attrs attrs;
-	std::string Temp1 = "";
+	StringPiece Temp1 = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
