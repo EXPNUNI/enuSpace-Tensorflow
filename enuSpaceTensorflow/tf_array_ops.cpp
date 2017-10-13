@@ -928,7 +928,7 @@ void* Create_Dequantize(std::string id, Json::Value pInputItem) {
 	Output* min_range = nullptr;
 	Output* max_range = nullptr;
 	Dequantize::Attrs attrs;
-	std::string mode;
+	StringPiece mode;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4644,7 +4644,7 @@ void* Create_PreventGradient(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* pInput = nullptr;
 	PreventGradient::Attrs attrs;
-	std::string message;
+	StringPiece message;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4885,7 +4885,7 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 	Output* max_range = nullptr;
 	DataType T;
 	QuantizeV2::Attrs attrs;
-	std::string mode;
+	StringPiece mode;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
