@@ -315,7 +315,7 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 	Output *pinput = nullptr;
 	OutputList *pdata = nullptr;
 	Print::Attrs attrs;
-	StringPiece message_;
+	std::string message_;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -398,7 +398,7 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("message_") != "")
 				{
-					message_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("message_"));
+					message_ = attrParser.GetAttribute("message_");
 					attrs = attrs.Message(message_);
 				}
 				if (attrParser.GetAttribute("first_n_") != "") attrs = attrs.FirstN(attrParser.ConvStrToInt64(attrParser.GetAttribute("first_n_")));
@@ -537,8 +537,8 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *ptensor = nullptr;
 	TensorSummary::Attrs attrs;
-	StringPiece description_;
-	StringPiece display_name_;
+	std::string description_;
+	std::string display_name_;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -598,7 +598,7 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("description_") != "")
 				{
-					description_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("description_"));
+					description_ = attrParser.GetAttribute("description_");
 					attrs = attrs.Description(description_);
 				}
 				if (attrParser.GetAttribute("labels_") != "")
@@ -606,12 +606,13 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 					std::vector<std::string> sVec;
 					if (GetStringVectorFromInitial(attrParser.GetAttribute("labels_"), sVec))
 					{
-						attrs = attrs.Labels(sVec);
+						gtl::ArraySlice<string> sVecSlice(sVec);
+						attrs = attrs.Labels(sVecSlice);
 					}
 				}
 				if (attrParser.GetAttribute("display_name_") != "")
 				{
-					display_name_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("display_name_"));
+					display_name_ = attrParser.GetAttribute("display_name_");
 					attrs = attrs.DisplayName(display_name_);
 				}
 			}
