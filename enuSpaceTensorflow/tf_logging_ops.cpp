@@ -315,6 +315,8 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 	Output *pinput = nullptr;
 	OutputList *pdata = nullptr;
 	Print::Attrs attrs;
+	StringPiece message_;
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -394,7 +396,11 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Assert::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("message_") != "") attrs = attrs.Message(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("message_")));
+				if (attrParser.GetAttribute("message_") != "")
+				{
+					message_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("message_"));
+					attrs = attrs.Message(message_);
+				}
 				if (attrParser.GetAttribute("first_n_") != "") attrs = attrs.FirstN(attrParser.ConvStrToInt64(attrParser.GetAttribute("first_n_")));
 				if (attrParser.GetAttribute("summarize_") != "") attrs = attrs.Summarize(attrParser.ConvStrToInt64(attrParser.GetAttribute("summarize_")));
 			}
@@ -456,7 +462,7 @@ void* Create_ScalarSummary(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "tag")
+		else if (strPinName == "tags")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -531,6 +537,9 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *ptensor = nullptr;
 	TensorSummary::Attrs attrs;
+	StringPiece description_;
+	StringPiece display_name_;
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -587,7 +596,11 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "TensorSummary::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("description_") != "") attrs = attrs.Description(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("description_")));
+				if (attrParser.GetAttribute("description_") != "")
+				{
+					description_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("description_"));
+					attrs = attrs.Description(description_);
+				}
 				if (attrParser.GetAttribute("labels_") != "")
 				{
 					std::vector<std::string> sVec;
@@ -596,7 +609,11 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 						attrs = attrs.Labels(sVec);
 					}
 				}
-				if (attrParser.GetAttribute("display_name_") != "") attrs = attrs.DisplayName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("display_name_")));
+				if (attrParser.GetAttribute("display_name_") != "")
+				{
+					display_name_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("display_name_"));
+					attrs = attrs.DisplayName(display_name_);
+				}
 			}
 		}
 		else
