@@ -19,7 +19,7 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Input* pinput = nullptr;
 	AsString::Attrs attrs;
-
+	std::string strTemp;
 	Input* Tempinput = nullptr;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -79,11 +79,16 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "AsString::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("precision_")!="")attrs.Precision(attrParser.GetValue_int64("precision_"));
-				if (attrParser.GetAttribute("scientific_") != "")attrs.Scientific(attrParser.GetValue_bool("scientific_"));
-				if (attrParser.GetAttribute("shortest_") != "")attrs.Shortest(attrParser.GetValue_bool("shortest_"));
-				if (attrParser.GetAttribute("width_") != "")attrs.Width(attrParser.GetValue_int64("width_"));
-				if (attrParser.GetAttribute("fill_") != "")attrs.Fill(attrParser.GetValue_StringPiece("fill_"));
+				if (attrParser.GetAttribute("precision_")!="")attrs=attrs.Precision(attrParser.GetValue_int64("precision_"));
+				if (attrParser.GetAttribute("scientific_") != "")attrs=attrs.Scientific(attrParser.GetValue_bool("scientific_"));
+				if (attrParser.GetAttribute("shortest_") != "")attrs=attrs.Shortest(attrParser.GetValue_bool("shortest_"));
+				if (attrParser.GetAttribute("width_") != "")attrs =attrs.Width(attrParser.GetValue_int64("width_"));
+				if (attrParser.GetAttribute("fill_") != "")
+				{
+					strTemp = attrParser.GetAttribute("fill_");
+					attrs.Fill(strTemp);
+				}
+
 			}
 		}
 		else
@@ -368,7 +373,7 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 					attrs =attrs.KeepDims(attrParser.GetValue_bool("keep_dims_"));
 				if (attrParser.GetAttribute("separator_") != "")
 				{
-					strTemp =attrParser.GetValue_StringPiece("separator_");
+					strTemp =attrParser.GetAttribute("separator_");
 					attrs = attrs.Separator(strTemp);
 				}
 			}
@@ -460,7 +465,7 @@ void* Create_StringJoin(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("separator_") != "")
 				{
-					temp1 = attrParser.GetValue_StringPiece("separator_");
+					temp1 = attrParser.GetAttribute("separator_");
 					attrs = attrs.Separator(temp1);
 				}
 			}

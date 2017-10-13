@@ -129,12 +129,12 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("container_") != "")
 				{
-					temp1 = attrParser.GetValue_StringPiece("container_");
+					temp1 = attrParser.GetAttribute("container_");
 					attrs.container_ = temp1;
 				}
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					temp2 = attrParser.GetValue_StringPiece("shared_name_");
+					temp2 = attrParser.GetAttribute("shared_name_");
 					attrs.shared_name_ = temp2;
 				}
 					//attrs= attrs.SharedName(attrParser.GetValue_StringPiece("shared_name_"));
@@ -276,13 +276,13 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("container_") != "")
 				{
-					strTemp1 = attrParser.GetValue_StringPiece("container_");
+					strTemp1 = attrParser.GetAttribute("container_");
 					attrs = attrs.Container(strTemp1);
 					
 				}
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					strTemp2 = attrParser.GetValue_StringPiece("shared_name_");
+					strTemp2 = attrParser.GetAttribute("shared_name_");
 					attrs = attrs.SharedName(strTemp2);
 				}
 				
@@ -3799,14 +3799,14 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("container_") != "")
 				{
-					temp1 = attrParser.GetValue_StringPiece("container_");
+					temp1 = attrParser.GetAttribute("container_");
 					attrs = attrs.Container(temp1);
 
 				}
 					
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					temp2 = attrParser.GetValue_StringPiece("shared_name_");
+					temp2 = attrParser.GetAttribute("shared_name_");
 					attrs = attrs.SharedName(temp2);
 				}
 					

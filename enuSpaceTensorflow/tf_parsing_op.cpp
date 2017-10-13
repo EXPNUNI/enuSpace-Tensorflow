@@ -101,7 +101,7 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("field_delim_")!="")
 				{
-					Temp1 = attrParser.GetValue_StringPiece("field_delim_");
+					Temp1 = attrParser.GetAttribute("field_delim_");
 					attrs= attrs.FieldDelim(Temp1);
 				}
 				if (attrParser.GetAttribute("use_quote_delim_") != "")

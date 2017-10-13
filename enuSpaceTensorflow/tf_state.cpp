@@ -1802,7 +1802,7 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("var_name_") !="")
 				{
-					strTemp = attrParser.GetValue_StringPiece("var_name_");
+					strTemp = attrParser.GetAttribute("var_name_");
 					attrs = attrs.VarName(strTemp);
 				}
 			}
@@ -1837,7 +1837,7 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 	tensorflow::PartialTensorShape shape;
 	tensorflow::DataType dtype = DT_DOUBLE;
 	tensorflow::ops::Variable::Attrs attrs;
-
+	std::string temp1, temp2;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1905,9 +1905,16 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("container_") != "")
-					attrs = attrs.Container(attrParser.GetValue_StringPiece("container_"));
+				{
+					temp1 = attrParser.GetAttribute("container_");
+					attrs = attrs.Container(temp1);
+				}
 				if (attrParser.GetAttribute("SharedName_") != "")
-					attrs = attrs.Container(attrParser.GetValue_StringPiece("SharedName_"));
+				{
+					temp2 = attrParser.GetAttribute("SharedName_");
+					attrs = attrs.Container(temp2);
+				}
+					
 			}
 		}
 		else if (strPinName == "initvalues")
