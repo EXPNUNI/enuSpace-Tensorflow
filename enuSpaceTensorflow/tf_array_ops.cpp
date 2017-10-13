@@ -928,7 +928,7 @@ void* Create_Dequantize(std::string id, Json::Value pInputItem) {
 	Output* min_range = nullptr;
 	Output* max_range = nullptr;
 	Dequantize::Attrs attrs;
-	StringPiece mode;
+	std::string mode;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1034,7 +1034,7 @@ void* Create_Dequantize(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("mode_") != "")
 				{
-					mode = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("mode_"));
+					mode = attrParser.GetAttribute("mode_");
 					attrs.mode_ = mode;
 				}
 			}
@@ -4644,7 +4644,7 @@ void* Create_PreventGradient(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* pInput = nullptr;
 	PreventGradient::Attrs attrs;
-	StringPiece message;
+	std::string message;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4704,7 +4704,7 @@ void* Create_PreventGradient(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("message_") != "")
 				{
-					message = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("message_"));
+					message = attrParser.GetAttribute("message_");
 					attrs.message_ = message;
 				}
 			}
@@ -4885,7 +4885,7 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 	Output* max_range = nullptr;
 	DataType T;
 	QuantizeV2::Attrs attrs;
-	StringPiece mode;
+	std::string mode;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4991,7 +4991,7 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("mode_") != "")
 				{
-					mode = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("mode_"));
+					mode = attrParser.GetAttribute("mode_");
 					attrs.mode_ = mode;
 				}
 			}
