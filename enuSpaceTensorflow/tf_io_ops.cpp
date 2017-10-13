@@ -19,8 +19,8 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 	int64 record_bytes = 0;
 	FixedLengthRecordReader::Attrs attrs;
 	int iSize = (int)pInputItem.size();
-	std::string container_ = "";
-	std::string shared_name_ = "";
+	StringPiece container_ = "";
+	StringPiece shared_name_ = "";
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -110,8 +110,8 @@ void* Create_IdentityReader(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	IdentityReader::Attrs attrs;
 	int iSize = (int)pInputItem.size();
-	std::string container_ = "";
-	std::string shared_name_ = "";
+	StringPiece container_ = "";
+	StringPiece shared_name_ = "";
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -184,8 +184,8 @@ void* Create_LMDBReader(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	LMDBReader::Attrs attrs;
 	int iSize = (int)pInputItem.size();
-	std::string container_ = "";
-	std::string shared_name_ = "";
+	StringPiece container_ = "";
+	StringPiece shared_name_ = "";
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];

@@ -346,7 +346,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 	Output *pbox_ind = nullptr;
 	Output *pcrop_size = nullptr;
 	CropAndResize::Attrs attrs;
-	std::string method_ = "";
+	StringPiece method_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -527,7 +527,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 	Output *pboxes = nullptr;
 	Output *pbox_ind = nullptr;
 	CropAndResizeGradBoxes::Attrs attrs;
-	std::string method_ = "";
+	StringPiece method_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -699,7 +699,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 	Output *pbox_ind = nullptr;
 	Output *pimage_size = nullptr;
 	DataType T;
-	std::string method_ = "";
+	StringPiece method_ = "";
 	CropAndResizeGradImage::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1059,7 +1059,7 @@ void* Create_DecodeJpeg(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pcontents = nullptr;
 	DecodeJpeg::Attrs attrs;
-	std::string dct_method_ = "";
+	StringPiece dct_method_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1354,9 +1354,9 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pimage = nullptr;
 	EncodeJpeg::Attrs attrs;
-	std::string format_ = "";
-	std::string density_unit_ = "";
-	std::string xmp_metadata_ = "";
+	StringPiece format_ = "";
+	StringPiece density_unit_ = "";
+	StringPiece xmp_metadata_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
