@@ -87,6 +87,11 @@ void* Create_AccumulatorApplyGradient(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						plocal_step = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -295,6 +300,11 @@ void* Create_AccumulatorSetGlobalStep(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pnew_global_step = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -400,6 +410,11 @@ void* Create_AccumulatorTakeGradient(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pnum_required = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -441,7 +456,7 @@ void* Create_AccumulatorTakeGradient(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseAccumulatorTakeGradient(%s) Object create failed.", id.c_str());
+		std::string msg = string_format("error : AccumulatorTakeGradient(%s) Object create failed.", id.c_str());
 		PrintMessage(msg);
 	}
 
@@ -454,8 +469,8 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 	std::vector<tensorflow::DataType> vDT;
 	Barrier::Attrs attrs;
 	std::vector<PartialTensorShape> v_PTS;
-	std::string container_ = "";
-	std::string sharedname_ = "";
+	StringPiece container_ = "";
+	StringPiece sharedname_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1107,7 +1122,7 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "shapes")
+		else if (strPinName == "shape")
 		{
 			if (strPinInterface == "PartialTensorShape")
 			{
@@ -1487,8 +1502,8 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 	std::vector<tensorflow::DataType> vDT;
 	FIFOQueue::Attrs attrs;
 	std::vector<PartialTensorShape> v_PTS;
-	std::string container_ = "";
-	std::string sharedname_ = "";
+	StringPiece container_ = "";
+	StringPiece sharedname_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1866,8 +1881,8 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 	PaddingFIFOQueue::Attrs attrs;
 	std::vector<tensorflow::DataType> vDT;
 	std::vector<PartialTensorShape> v_PTS;
-	std::string container_ = "";
-	std::string sharedname_ = "";
+	StringPiece container_ = "";
+	StringPiece sharedname_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1965,8 +1980,8 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	gtl::ArraySlice<PartialTensorShape> shapes;
 	PriorityQueue::Attrs attrs;
-	std::string container_ = "";
-	std::string sharedname_ = "";
+	StringPiece container_ = "";
+	StringPiece sharedname_ = "";
 	DataTypeSlice component_types_;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2808,8 +2823,8 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 	std::vector<tensorflow::DataType> vDT;
 	RandomShuffleQueue::Attrs attrs;
 	std::vector<PartialTensorShape> v_PTS;
-	std::string container_ = "";
-	std::string sharedname_ = "";
+	StringPiece container_ = "";
+	StringPiece sharedname_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
