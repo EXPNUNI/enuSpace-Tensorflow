@@ -16,6 +16,7 @@
 
 
 
+
 void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 	AddManySparseToTensorsMap* pAddManySparseToTensorsMap = nullptr;
 	Scope* pScope = nullptr;
@@ -23,7 +24,7 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 	Output* sparse_values = nullptr;
 	Output* sparse_shape = nullptr;
 	AddManySparseToTensorsMap::Attrs attrs;
-	std::string temp1, temp2;
+	StringPiece temp1, temp2;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -169,8 +170,8 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 	Output* sparse_values = nullptr;
 	Output* sparse_shape = nullptr;
 	AddSparseToTensorsMap::Attrs attrs;
-	std::string strTemp1 = "";
-	std::string strTemp2 = "";
+	StringPiece strTemp1 = "";
+	StringPiece strTemp2 = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -3721,8 +3722,8 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 	Output* sparse_handles = nullptr;
 	DataType dtype;
 	TakeManySparseFromTensorsMap::Attrs attrs;
-	std::string temp1 = "";
-	std::string temp2 = "";
+	StringPiece temp1 = "";
+	StringPiece temp2 = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
