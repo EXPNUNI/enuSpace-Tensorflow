@@ -19,8 +19,8 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 	int64 record_bytes = 0;
 	FixedLengthRecordReader::Attrs attrs;
 	int iSize = (int)pInputItem.size();
-	StringPiece container_ = "";
-	StringPiece shared_name_ = "";
+	std::string container_ = "";
+	std::string shared_name_ = "";
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -71,12 +71,12 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 				if (attrParser.GetAttribute("hop_bytes_") != "") attrs = attrs.HopBytes(attrParser.ConvStrToInt64(attrParser.GetAttribute("hop_bytes_")));
 				if (attrParser.GetAttribute("container_") != "")
 				{
-					container_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_"));
+					container_ = attrParser.GetAttribute("container_");
 					attrs = attrs.Container(container_);
 				}
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					shared_name_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_"));
+					shared_name_ = attrParser.GetAttribute("shared_name_");
 					attrs = attrs.SharedName(shared_name_);
 				}
 			}
@@ -110,8 +110,8 @@ void* Create_IdentityReader(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	IdentityReader::Attrs attrs;
 	int iSize = (int)pInputItem.size();
-	StringPiece container_ = "";
-	StringPiece shared_name_ = "";
+	std::string container_ = "";
+	std::string shared_name_ = "";
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -146,12 +146,12 @@ void* Create_IdentityReader(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("container_") != "")
 				{
-					container_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_"));
+					container_ = attrParser.GetAttribute("container_");
 					attrs = attrs.Container(container_);
 				}
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					shared_name_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_"));
+					shared_name_ = attrParser.GetAttribute("shared_name_");
 					attrs = attrs.SharedName(shared_name_);
 				}
 			}
@@ -184,8 +184,8 @@ void* Create_LMDBReader(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	LMDBReader::Attrs attrs;
 	int iSize = (int)pInputItem.size();
-	StringPiece container_ = "";
-	StringPiece shared_name_ = "";
+	std::string container_ = "";
+	std::string shared_name_ = "";
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -220,12 +220,12 @@ void* Create_LMDBReader(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("container_") != "")
 				{
-					container_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_"));
+					container_ = attrParser.GetAttribute("container_");
 					attrs = attrs.Container(container_);
 				}
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					shared_name_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_"));
+					shared_name_ = attrParser.GetAttribute("shared_name_");
 					attrs = attrs.SharedName(shared_name_);
 				}
 			}
@@ -2297,6 +2297,9 @@ void* Create_TFRecordReader(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	TFRecordReader::Attrs attrs;
 	int iSize = (int)pInputItem.size();
+	std::string container_;
+	std::string shared_name_;
+	std::string compression_type_;
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -2329,9 +2332,21 @@ void* Create_TFRecordReader(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "TFRecordReader::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
-				if (attrParser.GetAttribute("compression_type_") != "") attrs = attrs.CompressionType(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("compression_type_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs = attrs.Container(container_);
+				}
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs = attrs.SharedName(shared_name_);
+				}
+				if (attrParser.GetAttribute("compression_type_") != "")
+				{
+					compression_type_ = attrParser.GetAttribute("compression_type_");
+					attrs = attrs.CompressionType(compression_type_);
+				}
 			}
 		}
 		else
@@ -2363,6 +2378,8 @@ void* Create_TextLineReader(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	TextLineReader::Attrs attrs;
 	int iSize = (int)pInputItem.size();
+	std::string container_;
+	std::string shared_name_;
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -2396,8 +2413,16 @@ void* Create_TextLineReader(std::string id, Json::Value pInputItem) {
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("skip_header_lines_") != "") attrs = attrs.SkipHeaderLines(attrParser.ConvStrToInt64(attrParser.GetAttribute("skip_header_lines_")));
-				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs = attrs.Container(container_);
+				}
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs = attrs.SharedName(shared_name_);
+				}
 			}
 		}
 		else
@@ -2429,6 +2454,8 @@ void* Create_WholeFileReader(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	WholeFileReader::Attrs attrs;
 	int iSize = (int)pInputItem.size();
+	std::string container_;
+	std::string shared_name_;
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -2461,8 +2488,16 @@ void* Create_WholeFileReader(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "WholeFileReader::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs = attrs.Container(container_);
+				}
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs = attrs.SharedName(shared_name_);
+				}
 			}
 		}
 		else

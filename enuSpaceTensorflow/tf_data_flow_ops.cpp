@@ -469,8 +469,8 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 	std::vector<tensorflow::DataType> vDT;
 	Barrier::Attrs attrs;
 	std::vector<PartialTensorShape> v_PTS;
-	StringPiece container_ = "";
-	StringPiece sharedname_ = "";
+	std::string container_ = "";
+	std::string sharedname_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -529,12 +529,12 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
 				if (attrParser.GetAttribute("container_") != "")
 				{
-					container_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_"));
+					container_ = attrParser.GetAttribute("container_");
 					attrs.container_ = container_;
 				}
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					sharedname_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_"));
+					sharedname_ = attrParser.GetAttribute("shared_name_");
 					attrs.shared_name_ = sharedname_;
 				}
 			}
@@ -1094,6 +1094,8 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 	PartialTensorShape shape;
 	ConditionalAccumulator::Attrs attrs;
 	int iSize = (int)pInputItem.size();
+	std::string container_;
+	std::string shared_name_;
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -1155,8 +1157,16 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "PriorityQueue::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs = attrs.Container(container_);
+				}
+				if (attrParser.GetAttribute("shared_name_") != "") 
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs = attrs.SharedName(shared_name_);
+				}
 			}
 		}
 		else
@@ -1502,8 +1512,8 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 	std::vector<tensorflow::DataType> vDT;
 	FIFOQueue::Attrs attrs;
 	std::vector<PartialTensorShape> v_PTS;
-	StringPiece container_ = "";
-	StringPiece sharedname_ = "";
+	std::string container_ = "";
+	std::string sharedname_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1577,12 +1587,12 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
 				if (attrParser.GetAttribute("container_") != "")
 				{
-					 container_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_"));
+					container_ = attrParser.GetAttribute("container_");
 					attrs.container_ = container_;
 				}
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					sharedname_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_"));
+					sharedname_ = attrParser.GetAttribute("shared_name_");
 					attrs.shared_name_ = sharedname_;
 				}
 			}
@@ -1881,8 +1891,8 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 	PaddingFIFOQueue::Attrs attrs;
 	std::vector<tensorflow::DataType> vDT;
 	std::vector<PartialTensorShape> v_PTS;
-	StringPiece container_ = "";
-	StringPiece sharedname_ = "";
+	std::string container_ = "";
+	std::string sharedname_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1941,12 +1951,12 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
 				if (attrParser.GetAttribute("container_") != "")
 				{
-					container_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_"));
+					container_ = attrParser.GetAttribute("container_");
 					attrs.container_ = container_;
 				}
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					sharedname_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_"));
+					sharedname_ = attrParser.GetAttribute("shared_name_");
 					attrs.shared_name_ = sharedname_;
 				}
 			}
@@ -1980,8 +1990,8 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	gtl::ArraySlice<PartialTensorShape> shapes;
 	PriorityQueue::Attrs attrs;
-	StringPiece container_ = "";
-	StringPiece sharedname_ = "";
+	std::string container_ = "";
+	std::string sharedname_ = "";
 	DataTypeSlice component_types_;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2039,12 +2049,12 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
 				if (attrParser.GetAttribute("container_") != "")
 				{
-					container_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_"));
+					container_ = attrParser.GetAttribute("container_");
 					attrs.container_ = container_;
 				}
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					sharedname_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_"));
+					sharedname_ = attrParser.GetAttribute("shared_name_");
 					attrs.shared_name_ = sharedname_;
 				}
 			}
@@ -2823,8 +2833,8 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 	std::vector<tensorflow::DataType> vDT;
 	RandomShuffleQueue::Attrs attrs;
 	std::vector<PartialTensorShape> v_PTS;
-	StringPiece container_ = "";
-	StringPiece sharedname_ = "";
+	std::string container_ = "";
+	std::string sharedname_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2885,12 +2895,12 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 				if (attrParser.GetAttribute("seed2_") != "") attrs = attrs.Seed2(attrParser.ConvStrToInt64(attrParser.GetAttribute("seed2_")));
 				if (attrParser.GetAttribute("container_") != "")
 				{
-					container_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_"));
+					container_ = attrParser.GetAttribute("container_");
 					attrs.container_ = container_;
 				}
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					sharedname_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_"));
+					sharedname_ = attrParser.GetAttribute("shared_name_");
 					attrs.shared_name_ = sharedname_;
 				}
 			}
@@ -3316,6 +3326,8 @@ void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem
 	PartialTensorShape shape;
 	DataType dtype;
 	SparseConditionalAccumulator::Attrs attrs;
+	std::string container_ = "";
+	std::string sharedname_ = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -3378,8 +3390,16 @@ void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem
 			if (strPinInterface == "SparseConditionalAccumulator::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					sharedname_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = sharedname_;
+				}
 			}
 		}
 		else
@@ -3410,6 +3430,8 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 	OutputList* pvalues = nullptr;
 	Stage::Attrs attrs;
 	int iSize = (int)pInputItem.size();
+	std::string container_ = "";
+	std::string sharedname_ = "";
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -3466,8 +3488,16 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Stage::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					sharedname_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = sharedname_;
+				}
 			}
 		}
 		else
@@ -3499,6 +3529,7 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 	DataType dtype;
 	TensorArray::Attrs attrs;
 	int iSize = (int)pInputItem.size();
+	std::string tensor_array_name_;
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -3574,7 +3605,11 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 				if (attrParser.GetAttribute("element_shape_") != "") attrs = attrs.ElementShape(attrParser.GetValue_PartialTensorShape("element_shape_"));
 				if (attrParser.GetAttribute("dynamic_size_") != "") attrs = attrs.DynamicSize(attrParser.ConvStrToBool(attrParser.GetAttribute("dynamic_size_")));
 				if (attrParser.GetAttribute("clear_after_read_") != "") attrs = attrs.ClearAfterRead(attrParser.ConvStrToBool(attrParser.GetAttribute("clear_after_read_")));
-				if (attrParser.GetAttribute("tensor_array_name_") != "") attrs = attrs.TensorArrayName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("tensor_array_name_")));
+				if (attrParser.GetAttribute("tensor_array_name_") != "")
+				{
+					tensor_array_name_ = attrParser.GetAttribute("tensor_array_name_");
+					attrs = attrs.TensorArrayName(tensor_array_name_);
+				}
 			}
 		}
 		else
@@ -4794,6 +4829,8 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 	std::vector<tensorflow::DataType> vDT;
 	Unstage::Attrs attrs;
 	int iSize = (int)pInputItem.size();
+	std::string container_;
+	std::string shared_name_;
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -4840,8 +4877,16 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Unstage::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				if (attrParser.GetAttribute("container_") != "") attrs = attrs.Container(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("container_")));
-				if (attrParser.GetAttribute("shared_name_") != "") attrs = attrs.SharedName(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("shared_name_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs = attrs.Container(container_);
+				}
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs = attrs.SharedName(shared_name_);
+				}
 			}
 		}
 		else
