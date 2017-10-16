@@ -489,7 +489,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("method_") != "")
 				{
-					method_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_"));
+					method_ = attrParser.GetAttribute("method_");
 					attrs = attrs.Method(method_);
 				}
 				if (attrParser.GetAttribute("extrapolation_value_") != "") attrs = attrs.ExtrapolationValue(attrParser.ConvStrToFloat(attrParser.GetAttribute("extrapolation_value_")));
@@ -663,7 +663,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "CropAndResizeGradBoxes::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
-				method_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_"));
+				method_ = attrParser.GetAttribute("method_");
 				if (attrParser.GetAttribute("method_") != "") attrs = attrs.Method(method_);
 			}
 		}
@@ -859,7 +859,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("method_") != "")
 				{
-					method_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("method_"));
+					method_ = attrParser.GetAttribute("method_");
 					attrs = attrs.Method(method_);
 				}
 			}
@@ -1123,7 +1123,7 @@ void* Create_DecodeJpeg(std::string id, Json::Value pInputItem) {
 				if (attrParser.GetAttribute("acceptable_fraction_") != "") attrs = attrs.AcceptableFraction(attrParser.ConvStrToFloat(attrParser.GetAttribute("acceptable_fraction_")));
 				if (attrParser.GetAttribute("dct_method_") != "")
 				{
-					dct_method_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("dct_method_"));
+					dct_method_ = attrParser.GetAttribute("dct_method_");
 					attrs = attrs.DctMethod(dct_method_);
 				}
 			}
@@ -1415,7 +1415,7 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("format_") != "")
 				{
-					format_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("format_"));
+					format_ = attrParser.GetAttribute("format_");
 					attrs = attrs.Format(format_);
 				}
 				if (attrParser.GetAttribute("quality_") != "") attrs = attrs.Quality(attrParser.ConvStrToInt64(attrParser.GetAttribute("quality_")));
@@ -1424,14 +1424,14 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 				if (attrParser.GetAttribute("chroma_downsampling_") != "") attrs = attrs.ChromaDownsampling(attrParser.ConvStrToBool(attrParser.GetAttribute("chroma_downsampling_")));
 				if (attrParser.GetAttribute("density_unit_") != "")
 				{
-					density_unit_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("density_unit_"));
+					density_unit_ = attrParser.GetAttribute("density_unit_");
 					attrs = attrs.DensityUnit(density_unit_);
 				}
 				if (attrParser.GetAttribute("x_density_") != "") attrs = attrs.XDensity(attrParser.ConvStrToInt64(attrParser.GetAttribute("x_density_")));
 				if (attrParser.GetAttribute("y_density_") != "") attrs = attrs.YDensity(attrParser.ConvStrToInt64(attrParser.GetAttribute("y_density_")));
 				if (attrParser.GetAttribute("xmp_metadata_") != "")
 				{
-					xmp_metadata_ = attrParser.ConvStrToStringPiece(attrParser.GetAttribute("xmp_metadata_"));
+					xmp_metadata_ = attrParser.GetAttribute("xmp_metadata_");
 					attrs = attrs.XmpMetadata(xmp_metadata_);
 				}
 			}
