@@ -415,7 +415,7 @@ void* Create_FixedUnigramCandidateSampler(std::string id, Json::Value pInputItem
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("vocab_file_") != "")
 				{
-					attrs.VocabFile(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("vocab_file_")));
+					attrs.vocab_file_ = attrParser.GetAttribute("vocab_file_");
 				}
 				if (attrParser.GetAttribute("distortion_") != "")
 				{

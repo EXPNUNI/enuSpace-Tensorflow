@@ -53,7 +53,7 @@ void* Create_Abort(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("error_msg_") != "")
 				{
-					attrs.ErrorMsg(attrParser.ConvStrToStringPiece(attrParser.GetAttribute("error_msg_")));
+					attrs.error_msg_ = attrParser.GetAttribute("error_msg_");
 				}
 				if (attrParser.GetAttribute("exit_without_error_") != "")
 				{
