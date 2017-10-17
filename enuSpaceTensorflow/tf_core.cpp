@@ -157,7 +157,7 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "fetch_outputs")
 		{
-			if (strPinInterface == "std::vector(tensorflow::Output)")
+			if (strPinInterface == "std::vector<tensorflow::Output>")
 			{
 				if (pFetchInfo)
 				{
@@ -205,7 +205,7 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "run_outputs")
 		{
-			if (strPinInterface == "std::vector(tensorflow::Operation)")
+			if (strPinInterface == "std::vector<tensorflow::Operation>")
 			{
 				if (pFetchInfo)
 				{
