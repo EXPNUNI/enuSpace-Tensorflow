@@ -701,11 +701,11 @@ extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar
 		return true;
 	else if (strFromType == L"Output" && strToType == L"Output")
 		return true;
-	else if (strFromType == L"Output" && strToType == L"std::vector(tensorflow::Output)")
+	else if (strFromType == L"Output" && strToType == L"std::vector<tensorflow::Output>")
 		return true;
 	else if (strFromType == L"OutputList" && strToType == L"InputList")
 		return true;
-	else if (strFromType == L"OutputList" && strToType == L"std::vector(tensorflow::Output)")
+	else if (strFromType == L"OutputList" && strToType == L"std::vector<tensorflow::Output>")
 		return true;
 	else if (strFromType == L"string" && strToType == L"string")
 		return true;
@@ -719,9 +719,9 @@ extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar
 		return true;
 	else if (strFromType == L"OutputList" && strToType == L"OutputList")
 		return true;
-	else if (strFromType == L"Operation" && strToType == L"std::vector(tensorflow::Operation)")
+	else if (strFromType == L"Operation" && strToType == L"std::vector<tensorflow::Operation>")
 		return true;
-	else if (strFromType == L"Operation" && strToType == L"std::vector(tensorflow::Output)")
+	else if (strFromType == L"Operation" && strToType == L"std::vector<tensorflow::Output>")
 		return true;
 	else if (strFromType == L"Output" && strToType == L"Operation")
 		return true;
@@ -729,29 +729,29 @@ extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar
 		return true;
 	else if (strFromType == L"Tensor" && strToType == L"Operation")
 		return true;
-	else if (strFromType == L"InputList" && strToType == L"std::vector(tensorflow::Output)")
+	else if (strFromType == L"InputList" && strToType == L"std::vector<tensorflow::Output>")
 		return true;
 
-	else if (strFromType == L"ops::Variable" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
+	else if (strFromType == L"ops::Variable" && (strToType == L"Input" || strToType == L"std::vector<tensorflow::Output>"))
 		return true;
-	else if (strFromType == L"ops::Multiply" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
+	else if (strFromType == L"ops::Multiply" && (strToType == L"Input" || strToType == L"std::vector<tensorflow::Output>"))
 		return true;
-	else if (strFromType == L"ops::Add" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
+	else if (strFromType == L"ops::Add" && (strToType == L"Input" || strToType == L"std::vector<tensorflow::Output>"))
 		return true;
-	else if (strFromType == L"ops::Subtract" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
+	else if (strFromType == L"ops::Subtract" && (strToType == L"Input" || strToType == L"std::vector<tensorflow::Output>"))
 		return true;
-	else if (strFromType == L"ops::Div" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
+	else if (strFromType == L"ops::Div" && (strToType == L"Input" || strToType == L"std::vector<tensorflow::Output>"))
 		return true;
-	else if (strFromType == L"ops::Square" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
+	else if (strFromType == L"ops::Square" && (strToType == L"Input" || strToType == L"std::vector<tensorflow::Output>"))
 		return true;
-	else if (strFromType == L"ops::Mean" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
+	else if (strFromType == L"ops::Mean" && (strToType == L"Input" || strToType == L"std::vector<tensorflow::Output>"))
 		return true;
-	else if (strFromType == L"ops::RandomNormal" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
+	else if (strFromType == L"ops::RandomNormal" && (strToType == L"Input" || strToType == L"std::vector<tensorflow::Output>"))
 		return true;
-	else if (strFromType == L"ops::Placeholder" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
+	else if (strFromType == L"ops::Placeholder" && (strToType == L"Input" || strToType == L"std::vector<tensorflow::Output>"))
 		return true;
 
-	else if (strFromType == L"ops::ApplyGradientDescent" && (strToType == L"Input" || strToType == L"std::vector(tensorflow::Output)"))
+	else if (strFromType == L"ops::ApplyGradientDescent" && (strToType == L"Input" || strToType == L"std::vector<tensorflow::Output>"))
 		return true;
 
 	
