@@ -25,6 +25,22 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem);
 void* Create_GetSessionHandle(std::string id, Json::Value pInputItem);
 void* Create_GetSessionHandleV2(std::string id, Json::Value pInputItem);
 void* Create_GetSessionTensor(std::string id, Json::Value pInputItem);
+
+void* Create_MapClear(std::string id, Json::Value pInputItem);
+void* Create_MapIncompleteSize(std::string id, Json::Value pInputItem);
+void* Create_MapPeek(std::string id, Json::Value pInputItem);
+void* Create_MapSize(std::string id, Json::Value pInputItem);
+void* Create_MapStage(std::string id, Json::Value pInputItem);
+void* Create_MapUnstage(std::string id, Json::Value pInputItem);
+void* Create_MapUnstageNoKey(std::string id, Json::Value pInputItem);
+void* Create_OrderedMapClear(std::string id, Json::Value pInputItem);
+void* Create_OrderedMapIncompleteSize(std::string id, Json::Value pInputItem);
+void* Create_OrderedMapPeek(std::string id, Json::Value pInputItem);
+void* Create_OrderedMapSize(std::string id, Json::Value pInputItem);
+void* Create_OrderedMapStage(std::string id, Json::Value pInputItem);
+void* Create_OrderedMapUnstage(std::string id, Json::Value pInputItem);
+void* Create_OrderedMapUnstageNoKey(std::string id, Json::Value pInputItem);
+
 void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem);
 void* Create_PriorityQueue(std::string id, Json::Value pInputItem);
 void* Create_QueueClose(std::string id, Json::Value pInputItem);
@@ -40,6 +56,11 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 void* Create_SparseAccumulatorTakeGradient(std::string id, Json::Value pInputItem);
 void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem);
 void* Create_Stage(std::string id, Json::Value pInputItem);
+
+void* Create_StageClear(std::string id, Json::Value pInputItem);
+void* Create_StagePeek(std::string id, Json::Value pInputItem);
+void* Create_StageSize(std::string id, Json::Value pInputItem);
+
 void* Create_TensorArray(std::string id, Json::Value pInputItem);
 void* Create_TensorArrayClose(std::string id, Json::Value pInputItem);
 void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem);

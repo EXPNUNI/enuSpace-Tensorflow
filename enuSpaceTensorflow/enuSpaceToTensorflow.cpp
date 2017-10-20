@@ -785,6 +785,23 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#GetSessionHandle", SYMBOL_GETSESSIONHANDLE));
 	m_SymbolList.insert(std::pair<std::string, int>("#GetSessionHandleV2", SYMBOL_GETSESSIONHANDLEV2));
 	m_SymbolList.insert(std::pair<std::string, int>("#GetSessionTensor", SYMBOL_GETSESSIONTENSOR));
+
+	m_SymbolList.insert(std::pair<std::string, int>("#MapClear", SYMBOL_MAPCLEAR));
+	m_SymbolList.insert(std::pair<std::string, int>("#MapIncompleteSize", SYMBOL_MAPINCOMPLETESIZE));
+	m_SymbolList.insert(std::pair<std::string, int>("#MapPeek", SYMBOL_MAPPEEK));
+	m_SymbolList.insert(std::pair<std::string, int>("#MapSize", SYMBOL_MAPSIZE));
+	m_SymbolList.insert(std::pair<std::string, int>("#MapStage", SYMBOL_MAPSTAGE));
+	m_SymbolList.insert(std::pair<std::string, int>("#MapUnstage", SYMBOL_MAPUNSTAGE));
+	m_SymbolList.insert(std::pair<std::string, int>("#MapUnstageNoKey", SYMBOL_MAPUNSTAGENOKEY));
+	m_SymbolList.insert(std::pair<std::string, int>("#OrderedMapClear", SYMBOL_ORDEREDMAPCLEAR));
+	m_SymbolList.insert(std::pair<std::string, int>("#OrderedMapIncompleteSize", SYMBOL_ORDEREDMAPINCOMPLETESIZE));
+	m_SymbolList.insert(std::pair<std::string, int>("#OrderedMapPeek", SYMBOL_ORDEREDMAPPEEK));
+	m_SymbolList.insert(std::pair<std::string, int>("#OrderedMapSize", SYMBOL_ORDEREDMAPSIZE));
+	m_SymbolList.insert(std::pair<std::string, int>("#OrderedMapStage", SYMBOL_ORDEREDMAPSTAGE));
+	m_SymbolList.insert(std::pair<std::string, int>("#OrderedMapUnstage", SYMBOL_ORDEREDMAPUNSTAGE));
+	m_SymbolList.insert(std::pair<std::string, int>("#OrderedMapUnstageNoKey", SYMBOL_ORDEREDMAPUNSTAGENOKEY));
+	m_SymbolList.insert(std::pair<std::string, int>("#OrderedMapUnstage", SYMBOL_ORDEREDMAPUNSTAGE));
+
 	m_SymbolList.insert(std::pair<std::string, int>("#PaddingFIFOQueue", SYMBOL_PADDINGFIFOQUEUE));
 	m_SymbolList.insert(std::pair<std::string, int>("#PriorityQueue", SYMBOL_PRIORITYQUEUE));
 	m_SymbolList.insert(std::pair<std::string, int>("#QueueClose", SYMBOL_QUEUECLOSE));
@@ -800,6 +817,11 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#SparseAccumulatorTakeGradient", SYMBOL_SPARSEACCUMULATORTAKEGRADIENT));
 	m_SymbolList.insert(std::pair<std::string, int>("#SparseConditionalAccumulator", SYMBOL_SPARSECONDITIONALACCUMULATOR));
 	m_SymbolList.insert(std::pair<std::string, int>("#Stage", SYMBOL_STAGE));
+
+	m_SymbolList.insert(std::pair<std::string, int>("#StageClear", SYMBOL_STAGECLEAR));
+	m_SymbolList.insert(std::pair<std::string, int>("#StagePeek", SYMBOL_STAGEPEEK));
+	m_SymbolList.insert(std::pair<std::string, int>("#StageSize", SYMBOL_STAGESIZE));
+
 	m_SymbolList.insert(std::pair<std::string, int>("#TensorArray", SYMBOL_TENSORARRAY));
 	m_SymbolList.insert(std::pair<std::string, int>("#TensorArrayClose", SYMBOL_TENSORARRAYCLOSE));
 	m_SymbolList.insert(std::pair<std::string, int>("#TensorArrayConcat", SYMBOL_TENSORARRAYCONCAT));
@@ -1276,6 +1298,22 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_GETSESSIONHANDLE: {		pCreate = Create_GetSessionHandle(id, pInputItem);	break;	}
 	case SYMBOL_GETSESSIONHANDLEV2: {		pCreate = Create_GetSessionHandleV2(id, pInputItem);	break;	}
 	case SYMBOL_GETSESSIONTENSOR: {		pCreate = Create_GetSessionTensor(id, pInputItem);	break;	}
+
+	case SYMBOL_MAPCLEAR: {pCreate = Create_MapClear(id,pInputItem);	break; }
+	case SYMBOL_MAPINCOMPLETESIZE: { pCreate = Create_MapIncompleteSize(id,pInputItem);	break; }
+	case SYMBOL_MAPPEEK: { pCreate = Create_MapPeek(id,pInputItem);	break; }
+	case SYMBOL_MAPSIZE: { pCreate = Create_MapSize(id,pInputItem);	break; }
+	case SYMBOL_MAPSTAGE: { pCreate = Create_MapStage(id,pInputItem);	break; }
+	case SYMBOL_MAPUNSTAGE: { pCreate = Create_MapUnstage(id,pInputItem);	break; }
+	case SYMBOL_MAPUNSTAGENOKEY: { pCreate = Create_MapUnstageNoKey(id,pInputItem);	break; }
+	case SYMBOL_ORDEREDMAPCLEAR: { pCreate = Create_OrderedMapClear(id,pInputItem);	break; }
+	case SYMBOL_ORDEREDMAPINCOMPLETESIZE: { pCreate = Create_OrderedMapIncompleteSize(id, pInputItem);	break; }
+	case SYMBOL_ORDEREDMAPPEEK: { pCreate = Create_OrderedMapPeek(id,pInputItem);	break; }
+	case SYMBOL_ORDEREDMAPSIZE: { pCreate = Create_OrderedMapSize(id,pInputItem);	break; }
+	case SYMBOL_ORDEREDMAPSTAGE: { pCreate = Create_OrderedMapStage(id,pInputItem);	break; }
+	case SYMBOL_ORDEREDMAPUNSTAGE: { pCreate = Create_OrderedMapUnstage(id,pInputItem);	break; }
+	case SYMBOL_ORDEREDMAPUNSTAGENOKEY: { pCreate = Create_OrderedMapUnstageNoKey(id,pInputItem);	break; }
+
 	case SYMBOL_PADDINGFIFOQUEUE: {		pCreate = Create_PaddingFIFOQueue(id, pInputItem);	break;	}
 	case SYMBOL_PRIORITYQUEUE: {		pCreate = Create_PriorityQueue(id, pInputItem);	break;	}
 	case SYMBOL_QUEUECLOSE: {		pCreate = Create_QueueClose(id, pInputItem);	break;	}
@@ -1291,6 +1329,11 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_SPARSEACCUMULATORTAKEGRADIENT: {		pCreate = Create_SparseAccumulatorTakeGradient(id, pInputItem);	break;	}
 	case SYMBOL_SPARSECONDITIONALACCUMULATOR: {		pCreate = Create_SparseConditionalAccumulator(id, pInputItem);	break;	}
 	case SYMBOL_STAGE: {		pCreate = Create_Stage(id, pInputItem);	break;	}
+
+	case SYMBOL_STAGECLEAR: { pCreate = Create_StageClear(id, pInputItem);	break; }
+	case SYMBOL_STAGEPEEK: { pCreate = Create_StagePeek(id, pInputItem);	break; }
+	case SYMBOL_STAGESIZE: { pCreate = Create_StageSize(id, pInputItem);	break; }
+
 	case SYMBOL_TENSORARRAY: {		pCreate = Create_TensorArray(id, pInputItem);	break;	}
 	case SYMBOL_TENSORARRAYCLOSE: {		pCreate = Create_TensorArrayClose(id, pInputItem);	break;	}
 	case SYMBOL_TENSORARRAYCONCAT: {		pCreate = Create_TensorArrayConcat(id, pInputItem);	break;	}
@@ -1755,6 +1798,22 @@ std::string GetCategoryName(int iSymbol)
 	case SYMBOL_GETSESSIONHANDLE:
 	case SYMBOL_GETSESSIONHANDLEV2:
 	case SYMBOL_GETSESSIONTENSOR:
+
+	case SYMBOL_MAPCLEAR:
+	case SYMBOL_MAPINCOMPLETESIZE:
+	case SYMBOL_MAPPEEK:
+	case SYMBOL_MAPSIZE:
+	case SYMBOL_MAPSTAGE:
+	case SYMBOL_MAPUNSTAGE:
+	case SYMBOL_MAPUNSTAGENOKEY:
+	case SYMBOL_ORDEREDMAPCLEAR:
+	case SYMBOL_ORDEREDMAPINCOMPLETESIZE:
+	case SYMBOL_ORDEREDMAPPEEK:
+	case SYMBOL_ORDEREDMAPSIZE:
+	case SYMBOL_ORDEREDMAPSTAGE:
+	case SYMBOL_ORDEREDMAPUNSTAGE:
+	case SYMBOL_ORDEREDMAPUNSTAGENOKEY:
+
 	case SYMBOL_PADDINGFIFOQUEUE:
 	case SYMBOL_PRIORITYQUEUE:
 	case SYMBOL_QUEUECLOSE:
@@ -1770,6 +1829,11 @@ std::string GetCategoryName(int iSymbol)
 	case SYMBOL_SPARSEACCUMULATORTAKEGRADIENT:
 	case SYMBOL_SPARSECONDITIONALACCUMULATOR:
 	case SYMBOL_STAGE:
+
+	case SYMBOL_STAGECLEAR:
+	case SYMBOL_STAGEPEEK:
+	case SYMBOL_STAGESIZE:
+
 	case SYMBOL_TENSORARRAY:
 	case SYMBOL_TENSORARRAYCLOSE:
 	case SYMBOL_TENSORARRAYCONCAT:
