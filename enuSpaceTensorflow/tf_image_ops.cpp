@@ -25,6 +25,7 @@ void* Create_AdjustContrast(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -134,6 +135,7 @@ void* Create_AdjustHue(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -242,6 +244,7 @@ void* Create_AdjustSaturation(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -354,6 +357,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -535,6 +539,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -708,6 +713,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -899,6 +905,7 @@ void* Create_DecodeGif(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -978,6 +985,7 @@ void* Create_DecodeBmp(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -1067,6 +1075,7 @@ void* Create_DecodeJpeg(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -1164,6 +1173,7 @@ void* Create_DecodePng(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -1253,6 +1263,7 @@ void* Create_DrawBoundingBoxes(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -1364,6 +1375,7 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -1472,6 +1484,7 @@ void* Create_EncodePng(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -1562,6 +1575,7 @@ void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -1707,6 +1721,7 @@ void* Create_HSVToRGB(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -1789,6 +1804,7 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -1937,6 +1953,7 @@ void* Create_RGBToHSV(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -2019,6 +2036,7 @@ void* Create_QuantizedResizeBilinear(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -2194,6 +2212,7 @@ void* Create_ResizeArea(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -2311,6 +2330,7 @@ void* Create_ResizeBicubic(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -2428,6 +2448,7 @@ void* Create_ResizeBilinear(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -2545,6 +2566,7 @@ void* Create_ResizeNearestNeighbor(std::string id, Json::Value pInputItem) {
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -2664,6 +2686,7 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
@@ -2808,6 +2831,7 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""

@@ -808,6 +808,11 @@ void* Create_BarrierInsertMany(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pkeys = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -831,6 +836,11 @@ void* Create_BarrierInsertMany(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pkeys = (Output*)Create_StrToOutput(*m_pScope, "", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -842,7 +852,8 @@ void* Create_BarrierInsertMany(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "Input")
 			{
-				component_index = stoll(strPinInitial);
+				if(strPinInitial != "")
+					component_index = stoll(strPinInitial);
 			}
 			else
 			{
@@ -1027,6 +1038,13 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 						{
 							pnum_elements = (Output*)pOutputObj->pOutput;
 						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+					{
+						pnum_elements = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
 					}
 				}
 			}
@@ -1320,6 +1338,11 @@ void* Create_DynamicPartition(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pdata = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1453,6 +1476,11 @@ void* Create_DynamicStitch(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pindices = (OutputList*)Create_StrToOutputList(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1475,6 +1503,11 @@ void* Create_DynamicStitch(std::string id, Json::Value pInputItem) {
 							pdata = (OutputList*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pdata = (OutputList*)Create_StrToOutputList(*m_pScope, strAutoPinType, "", strPinInitial);
 				}
 			}
 			else
@@ -1883,6 +1916,1763 @@ void* Create_GetSessionTensor(std::string id, Json::Value pInputItem) {
 		PrintMessage(msg);
 	}
 	return pGetSessionTensor;
+}
+
+void* Create_MapClear(std::string id, Json::Value pInputItem) {
+	MapClear* pMapClear = nullptr;
+	Scope* pScope = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	MapClear::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial( strPinInitial,vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "MapClear::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : MapClear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && vDT.size()>0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pMapClear = new MapClear(*pScope, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pMapClear, id, SYMBOL_MAPCLEAR, "MapClear", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pMapClear->operation, OUTPUT_TYPE_OPERATION, "operation");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : MapClear(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pMapClear;
+}
+void* Create_MapIncompleteSize(std::string id, Json::Value pInputItem) {
+	MapIncompleteSize* pMapIncompleteSize = nullptr;
+	Scope* pScope = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	MapIncompleteSize::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "MapIncompleteSize::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : MapIncompleteSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pMapIncompleteSize = new MapIncompleteSize(*pScope, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pMapIncompleteSize, id, SYMBOL_MAPINCOMPLETESIZE, "MapIncompleteSize", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pMapIncompleteSize->size, OUTPUT_TYPE_OUTPUT, "size");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : MapIncompleteSize(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pMapIncompleteSize;
+}
+void* Create_MapPeek(std::string id, Json::Value pInputItem) {
+	MapPeek* pMapPeek = nullptr;
+	Scope* pScope = nullptr;
+	Output* key = nullptr;
+	Output* indices = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	MapPeek::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "key")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							key = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						key = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "MapPeek::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : MapPeek pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && key && indices && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pMapPeek = new MapPeek(*pScope, *key, *indices, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pMapPeek, id, SYMBOL_MAPPEEK, "MapPeek", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pMapPeek->values, OUTPUT_TYPE_OUTPUTLIST, "values");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : MapPeek(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pMapPeek;
+}
+void* Create_MapSize(std::string id, Json::Value pInputItem) {
+	MapSize* pMapSize = nullptr;
+	Scope* pScope = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	MapSize::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "MapSize::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : MapSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pMapSize = new MapSize(*pScope, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pMapSize, id, SYMBOL_MAPSIZE, "MapSize", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pMapSize->size, OUTPUT_TYPE_OUTPUT, "size");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : MapSize(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pMapSize;
+}
+void* Create_MapStage(std::string id, Json::Value pInputItem) {
+	MapStage* pMapStage = nullptr;
+	Scope* pScope = nullptr;
+	Output* key = nullptr;
+	Output* indices = nullptr;
+	OutputList* values = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	MapStage::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "key")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							key = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						key = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "values")
+		{
+			if (strPinInterface == "InputList")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							values = (OutputList*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						values = (OutputList*)Create_StrToOutput(*m_pScope, "", "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "MapStage::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : MapStage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && key && indices && values && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pMapStage = new MapStage(*pScope, *key, *indices, *values, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pMapStage, id, SYMBOL_MAPSTAGE, "MapStage", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pMapStage->operation, OUTPUT_TYPE_OPERATION, "operation");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : MapStage(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pMapStage;
+}
+void* Create_MapUnstage(std::string id, Json::Value pInputItem) {
+	MapUnstage* pMapUnstage = nullptr;
+	Scope* pScope = nullptr;
+	Output* key = nullptr;
+	Output* indices = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	MapUnstage::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "key")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							key = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						key = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "MapUnstage::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : MapUnstage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && key && indices && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pMapUnstage = new MapUnstage(*pScope, *key, *indices, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pMapUnstage, id, SYMBOL_MAPUNSTAGE, "MapUnstage", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pMapUnstage->values, OUTPUT_TYPE_OUTPUTLIST, "values");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : MapUnstage(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pMapUnstage;
+}
+void* Create_MapUnstageNoKey(std::string id, Json::Value pInputItem) {
+	MapUnstageNoKey* pMapUnstageNoKey = nullptr;
+	Scope* pScope = nullptr;
+	Output* key = nullptr;
+	Output* indices = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	MapUnstageNoKey::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : MapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "MapUnstageNoKey::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : MapUnstageNoKey pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && indices && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pMapUnstageNoKey = new MapUnstageNoKey(*pScope, *indices, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pMapUnstageNoKey, id, SYMBOL_MAPUNSTAGE, "MapUnstage", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pMapUnstageNoKey->key, OUTPUT_TYPE_OUTPUT, "key");
+			AddOutputInfo(pObj, &pMapUnstageNoKey->values, OUTPUT_TYPE_OUTPUTLIST, "values");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : MapUnstage(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pMapUnstageNoKey;
+}
+void* Create_OrderedMapClear(std::string id, Json::Value pInputItem) {
+	OrderedMapClear* pOrderedMapClear = nullptr;
+	Scope* pScope = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	OrderedMapClear::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "OrderedMapClear::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : OrderedMapClear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && vDT.size()>0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pOrderedMapClear = new OrderedMapClear(*pScope, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pOrderedMapClear, id, SYMBOL_ORDEREDMAPCLEAR, "OrderedMapClear", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pOrderedMapClear->operation, OUTPUT_TYPE_OPERATION, "operation");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : OrderedMapClear(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pOrderedMapClear;
+}
+void* Create_OrderedMapIncompleteSize(std::string id, Json::Value pInputItem) {
+	OrderedMapIncompleteSize* pOrderedMapIncompleteSize = nullptr;
+	Scope* pScope = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	OrderedMapIncompleteSize::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "OrderedMapIncompleteSize::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : OrderedMapIncompleteSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pOrderedMapIncompleteSize = new OrderedMapIncompleteSize(*pScope, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pOrderedMapIncompleteSize, id, SYMBOL_ORDEREDMAPINCOMPLETESIZE, "OrderedMapIncompleteSize", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pOrderedMapIncompleteSize->size, OUTPUT_TYPE_OUTPUT, "size");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : OrderedMapIncompleteSize(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pOrderedMapIncompleteSize;
+}
+void* Create_OrderedMapPeek(std::string id, Json::Value pInputItem) {
+	OrderedMapPeek* pOrderedMapPeek = nullptr;
+	Scope* pScope = nullptr;
+	Output* key = nullptr;
+	Output* indices = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	OrderedMapPeek::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "key")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							key = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						key = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "OrderedMapPeek::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : OrderedMapPeek pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && key && indices && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pOrderedMapPeek = new OrderedMapPeek(*pScope, *key, *indices, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pOrderedMapPeek, id, SYMBOL_ORDEREDMAPPEEK, "OrderedMapPeek", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pOrderedMapPeek->values, OUTPUT_TYPE_OUTPUTLIST, "values");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : OrderedMapPeek(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pOrderedMapPeek;
+}
+void* Create_OrderedMapSize(std::string id, Json::Value pInputItem) {
+	OrderedMapSize* pOrderedMapSize = nullptr;
+	Scope* pScope = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	OrderedMapSize::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "OrderedMapSize::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : OrderedMapSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pOrderedMapSize = new OrderedMapSize(*pScope, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pOrderedMapSize, id, SYMBOL_ORDEREDMAPSIZE, "OrderedMapSize", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pOrderedMapSize->size, OUTPUT_TYPE_OUTPUT, "size");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : OrderedMapSize(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pOrderedMapSize;
+}
+void* Create_OrderedMapStage(std::string id, Json::Value pInputItem) {
+	OrderedMapStage* pOrderedMapStage = nullptr;
+	Scope* pScope = nullptr;
+	Output* key = nullptr;
+	Output* indices = nullptr;
+	OutputList* values = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	OrderedMapStage::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "key")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							key = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						key = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "values")
+		{
+			if (strPinInterface == "InputList")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							values = (OutputList*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						values = (OutputList*)Create_StrToOutput(*m_pScope, "", "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "OrderedMapStage::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : OrderedMapStage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && key && indices && values && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pOrderedMapStage = new OrderedMapStage(*pScope, *key, *indices, *values, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pOrderedMapStage, id, SYMBOL_ORDEREDMAPSTAGE, "OrderedMapStage", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pOrderedMapStage->operation, OUTPUT_TYPE_OPERATION, "operation");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : OrderedMapStage(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pOrderedMapStage;
+}
+void* Create_OrderedMapUnstage(std::string id, Json::Value pInputItem) {
+	OrderedMapUnstage* pOrderedMapUnstage = nullptr;
+	Scope* pScope = nullptr;
+	Output* key = nullptr;
+	Output* indices = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	OrderedMapUnstage::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "key")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							key = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						key = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "OrderedMapUnstage::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : OrderedMapUnstage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && key && indices && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pOrderedMapUnstage = new OrderedMapUnstage(*pScope, *key, *indices, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pOrderedMapUnstage, id, SYMBOL_ORDEREDMAPUNSTAGE, "OrderedMapUnstage", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pOrderedMapUnstage->values, OUTPUT_TYPE_OUTPUTLIST, "values");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : OrderedMapUnstage(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pOrderedMapUnstage;
+}
+void* Create_OrderedMapUnstageNoKey(std::string id, Json::Value pInputItem) {
+	OrderedMapUnstageNoKey* pOrderedMapUnstageNoKey = nullptr;
+	Scope* pScope = nullptr;
+	Output* key = nullptr;
+	Output* indices = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	OrderedMapUnstageNoKey::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "indices")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							indices = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : OrderedMapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "OrderedMapUnstageNoKey::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : OrderedMapUnstageNoKey pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && indices && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pOrderedMapUnstageNoKey = new OrderedMapUnstageNoKey(*pScope, *indices, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pOrderedMapUnstageNoKey, id, SYMBOL_ORDEREDMAPUNSTAGE, "MapUnstage", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pOrderedMapUnstageNoKey->key, OUTPUT_TYPE_OUTPUT, "key");
+			AddOutputInfo(pObj, &pOrderedMapUnstageNoKey->values, OUTPUT_TYPE_OUTPUTLIST, "values");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : MapUnstage(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pOrderedMapUnstageNoKey;
 }
 
 void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
@@ -3431,7 +5221,7 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 	Stage::Attrs attrs;
 	int iSize = (int)pInputItem.size();
 	std::string container_ = "";
-	std::string sharedname_ = "";
+	std::string shared_name_ = "";
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -3488,15 +5278,17 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Stage::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
 				if (attrParser.GetAttribute("container_") != "")
 				{
 					container_ = attrParser.GetAttribute("container_");
 					attrs.container_ = container_;
 				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
-					sharedname_ = attrParser.GetAttribute("shared_name_");
-					attrs.shared_name_ = sharedname_;
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
 				}
 			}
 		}
@@ -3521,7 +5313,312 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 	}
 	return pStage;
 }
+void* Create_StageClear(std::string id, Json::Value pInputItem) {
+	StageClear* pStageClear = nullptr;
+	Scope* pScope = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	StageClear::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
 
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : StageClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : StageClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "StageClear::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : StageClear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pStageClear = new StageClear(*pScope, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pStageClear, id, SYMBOL_STAGECLEAR, "StageClear", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pStageClear->operation, OUTPUT_TYPE_OPERATION, "operation");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : MapClear(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pStageClear;
+}
+
+void* Create_StagePeek(std::string id, Json::Value pInputItem) {
+	StagePeek* pStagePeek = nullptr;
+	Scope* pScope = nullptr;
+	Output* index = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	StagePeek::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : StagePeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "index")
+		{
+			if (strPinInterface == "Input")
+			{
+				ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+				if (pObj)
+				{
+					OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+					if (pOutputObj)
+					{
+						if (pOutputObj->pOutput)
+						{
+							index = (Output*)pOutputObj->pOutput;
+						}
+					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						index = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("warning : StagePeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : StagePeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "StagePeek::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : StagePeek pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && index && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pStagePeek = new StagePeek(*pScope, *index, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pStagePeek, id, SYMBOL_STAGEPEEK, "StagePeek", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pStagePeek->values, OUTPUT_TYPE_OUTPUTLIST, "values");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : MapPeek(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pStagePeek;
+}
+void* Create_StageSize(std::string id, Json::Value pInputItem) {
+	StageSize* pStageSize = nullptr;
+	Scope* pScope = nullptr;
+	std::vector<DataType> vDT;
+	int iSize = (int)pInputItem.size();
+	StageSize::Attrs attrs;
+	std::string container_;
+	std::string shared_name_;
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strAutoPinType = ItemValue.get("pin-datatype", "").asString();						//DT_DOUBLE
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : StageSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "dtypes")
+		{
+			if (strPinInterface == "DataTypeSlice")
+			{
+				if (!strPinInitial.empty())
+					GetDatatypeSliceFromInitial(strPinInitial, vDT);
+			}
+			else
+			{
+				std::string msg = string_format("warning : StageSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "attrs")
+		{
+			if (strPinInterface == "MapClear::Attrs")
+			{
+				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
+				if (attrParser.GetAttribute("container_") != "")
+				{
+					container_ = attrParser.GetAttribute("container_");
+					attrs.container_ = container_;
+				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
+				if (attrParser.GetAttribute("shared_name_") != "")
+				{
+					shared_name_ = attrParser.GetAttribute("shared_name_");
+					attrs.shared_name_ = shared_name_;
+				}
+			}
+		}
+		else
+		{
+			std::string msg = string_format("warning : StageSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && vDT.size() > 0)
+	{
+		DataTypeSlice dtypes(vDT);
+		pStageSize = new StageSize(*pScope, dtypes, attrs);
+		ObjectInfo* pObj = AddObjectMap(pStageSize, id, SYMBOL_STAGESIZE, "StageSize", pInputItem);
+		if (pObj)
+		{
+			AddOutputInfo(pObj, &pStageSize->size, OUTPUT_TYPE_OUTPUT, "size");
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : MapSize(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
+	return pStageSize;
+}
 void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 	TensorArray* pTensorArray = nullptr;
 	Scope* pScope = nullptr;
@@ -4877,15 +6974,17 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 			if (strPinInterface == "Unstage::Attrs")
 			{
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
+				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
 				if (attrParser.GetAttribute("container_") != "")
 				{
 					container_ = attrParser.GetAttribute("container_");
-					attrs = attrs.Container(container_);
+					attrs.container_ = container_;
 				}
+				if (attrParser.GetAttribute("memory_limit_") != "") attrs = attrs.MemoryLimit(attrParser.ConvStrToInt64(attrParser.GetAttribute("memory_limit_")));
 				if (attrParser.GetAttribute("shared_name_") != "")
 				{
 					shared_name_ = attrParser.GetAttribute("shared_name_");
-					attrs = attrs.SharedName(shared_name_);
+					attrs.shared_name_ = shared_name_;
 				}
 			}
 		}
