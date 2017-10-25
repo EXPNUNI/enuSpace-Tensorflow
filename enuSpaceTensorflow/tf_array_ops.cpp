@@ -4991,8 +4991,7 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("mode_") != "")
 				{
-					mode = attrParser.GetAttribute("mode_");
-					attrs.mode_ = mode;
+					attrs.mode_ = attrParser.GetAttribute("mode_");
 				}
 			}
 		}
@@ -7234,7 +7233,7 @@ void* Create_Split(std::string id, Json::Value pInputItem) {
 		pSplit = new Split(*pScope, *axis, *value, num_split);
 		ObjectInfo* pObj = AddObjectMap(pSplit, id, SYMBOL_SPLIT, "Split", pInputItem);
 		if (pObj)
-			AddOutputInfo(pObj, &pSplit->output, OUTPUT_TYPE_OUTPUT, "output");
+			AddOutputInfo(pObj, &pSplit->output, OUTPUT_TYPE_OUTPUTLIST, "output");
 	}
 	else
 	{
@@ -7384,7 +7383,7 @@ void* Create_SplitV(std::string id, Json::Value pInputItem) {
 		pSplitV = new SplitV(*pScope, *value, *size_splits, *axis, num_split);
 		ObjectInfo* pObj = AddObjectMap(pSplitV, id, SYMBOL_SPLITV, "SplitV", pInputItem);
 		if (pObj)
-			AddOutputInfo(pObj, &pSplitV->output, OUTPUT_TYPE_OUTPUT, "output");
+			AddOutputInfo(pObj, &pSplitV->output, OUTPUT_TYPE_OUTPUTLIST, "output");
 	}
 	else
 	{
@@ -8605,7 +8604,7 @@ void* Create_Unstack(std::string id, Json::Value pInputItem) {
 		else if (strPinName == "num")
 		{
 			// 입력심볼 : #Scope, 입력심볼의 핀 : tensorflow::Scope, 연결 핀 : tensorflow::Scope
-			if (strPinInterface == "int64")
+			if (strPinInterface == "Int64")
 			{
 				if (strPinInitial == "")
 				{
@@ -8645,7 +8644,7 @@ void* Create_Unstack(std::string id, Json::Value pInputItem) {
 		pUnstack = new Unstack(*pScope, *value, num, attrs);
 		ObjectInfo* pObj = AddObjectMap(pUnstack, id, SYMBOL_UNSTACK, "Unstack", pInputItem);
 		if (pObj)
-			AddOutputInfo(pObj, &pUnstack->output, OUTPUT_TYPE_OUTPUT, "output");
+			AddOutputInfo(pObj, &pUnstack->output, OUTPUT_TYPE_OUTPUTLIST, "output");
 	}
 	else
 	{
