@@ -425,7 +425,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						case DT_DOUBLE:
 						{
 							auto flat = it->flat<double>();
-							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f", strVariable.c_str(), i, flat(i)));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %8.6f", iIndex, strVariable.c_str(), i, flat(i)));
 
 							*((double*)pData + i) = flat(i);
 							break;
@@ -433,7 +433,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						case DT_FLOAT:
 						{
 							auto flat = it->flat<float>();
-							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f", strVariable.c_str(), i, flat(i)));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %8.6f", iIndex, strVariable.c_str(), i, flat(i)));
 							*((float*)pData + i) = flat(i);
 							break;
 						}
@@ -441,7 +441,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						case DT_QUINT8:
 						{
 							auto flat = it->flat<uint8>();
-							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %d", iIndex, strVariable.c_str(), i, flat(i)));
 							*((int*)pData + i) = flat(i);
 							break;
 						}
@@ -449,7 +449,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						case DT_QUINT16:
 						{
 							auto flat = it->flat<uint16>();
-							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %d", iIndex, strVariable.c_str(), i, flat(i)));
 							*((int*)pData + i) = flat(i);
 							break;
 						}
@@ -457,7 +457,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						case DT_QINT8:
 						{
 							auto flat = it->flat<int8>();
-							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %d", iIndex, strVariable.c_str(), i, flat(i)));
 							*((int*)pData + i) = flat(i);
 							break;
 						}
@@ -465,7 +465,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						case DT_QINT16:
 						{
 							auto flat = it->flat<int16>();
-							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %d", iIndex, strVariable.c_str(), i, flat(i)));
 							*((int*)pData + i) = flat(i);
 							break;
 						}
@@ -473,28 +473,28 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						case DT_QINT32:
 						{
 							auto flat = it->flat<int32>();
-							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %d", iIndex, strVariable.c_str(), i, flat(i)));
 							*((int*)pData + i) = flat(i);
 							break;
 						}
 						case DT_INT64:
 						{
 							auto flat = it->flat<int64>();
-							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %d", iIndex, strVariable.c_str(), i, flat(i)));
 							*((int*)pData + i) = flat(i);
 							break;
 						}
 						case DT_BOOL:
 						{
 							auto flat = it->flat<bool>();
-							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %d", strVariable.c_str(), i, flat(i)));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %d", iIndex, strVariable.c_str(), i, flat(i)));
 							*((bool*)pData + i) = flat(i);
 							break;
 						}
 						case DT_COMPLEX64:
 						{
 							auto flat = it->flat<complex64>();
-							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f+%8.6fj", strVariable.c_str(), i, flat(i).real(), flat(i).imag()));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %8.6f+%8.6fj", iIndex, strVariable.c_str(), i, flat(i).real(), flat(i).imag()));
 							*((float*)pData + i * 2) = flat(i).real();
 							*((float*)pData + i * 2 + 1) = flat(i).imag();
 							break;
@@ -502,7 +502,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						case DT_COMPLEX128:
 						{
 							auto flat = it->flat<complex128>();
-							if (i<idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %8.6f+%8.6fj", strVariable.c_str(), i, flat(i).real(), flat(i).imag()));
+							if (i<idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %8.6f+%8.6fj", iIndex, strVariable.c_str(), i, flat(i).real(), flat(i).imag()));
 							*((double*)pData + i * 2) = flat(i).real();
 							*((double*)pData + i * 2 + 1) = flat(i).imag();
 							break;
@@ -512,7 +512,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 							auto flat = it->flat<std::string>();
 							if (isString(flat(i)))
 							{
-								if (i < idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %s", strVariable.c_str(), i, flat(i).c_str()));
+								if (i < idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %s", iIndex, strVariable.c_str(), i, flat(i).c_str()));
 								((std::string*)pData + i)->assign(flat(i).c_str());
 							}
 							else
@@ -522,7 +522,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 								{
 									strTmp += strings::Printf("%02x", flat(i).c_str()[j]);
 								}
-								if (i < idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %s", strVariable.c_str(), i, strTmp.c_str()));
+								if (i < idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %s", iIndex, strVariable.c_str(), i, strTmp.c_str()));
 								((std::string*)pData + i)->assign(strTmp.c_str());
 							}
 							break;
@@ -534,6 +534,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 					if (bConnect)
 					{
 						std::string strvalue = strVariable + "=>" + it->DebugString();
+						strvalue = strings::Printf("OutputList[%d] %s", iIndex, strvalue.c_str());
 						PrintMessage(strvalue);
 					}
 
@@ -549,13 +550,16 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 							strdim += strings::Printf("[%d]", idim);
 						}
 
-						if (iType == DT_COMPLEX64 || iType == DT_COMPLEX128)
-							strVariable = strVariable + strdim + "[2]";
-						else
-							strVariable = strVariable + strdim;
+						std::string strVar;
 
-						// 메모리 값 전달.(멀티용은 enuSpace에 값을 전달하지 않음)
-						// SetReShapeArrayValue(strVariable, pData, iDataType, iArraySize);
+						if (iType == DT_COMPLEX64 || iType == DT_COMPLEX128)
+							strVar = strVariable + strdim + "[2]";
+						else
+							strVar = strVariable + strdim;
+
+						// 메모리 값 하나만 전달.(멀티용은 enuSpace에 값을 전달하지 않음)
+						if (iIndex == 0)
+							SetReShapeArrayValue(strVar, pData, iDataType, iArraySize);
 
 						if (iType == DT_STRING)
 							delete[](std::string*)pData;
