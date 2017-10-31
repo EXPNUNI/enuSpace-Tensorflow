@@ -99,36 +99,11 @@ bool CAttributeParser::ConvStrToArraySliceTensorshape(std::string attrValue, std
 	return true;
 }
 
-tensorflow::DataTypeSlice CAttributeParser::ConvStrToDataTypeSlice(std::string attrValue)
+bool CAttributeParser::ConvStrToDataTypeSlice(std::string attrValue,std::vector<tensorflow::DataType>&v_dt )
 {
-	std::string val;
-	std::vector<DataType> arrayvals;
-	for (std::string::size_type i = 0; i < attrValue.size(); i++)
-	{
-		if (attrValue[i] == ',' || attrValue[i] == ';')
-		{
-			DataType dtype;
-			dtype = GetDatatypeFromInitial(val);
-			if (dtype != DT_INVALID)
-				arrayvals.push_back(dtype);
-			val = "";
-		}
-		else
-		{
-			val = val + attrValue[i];
-		}
-	}
-
-	if (val.length() > 0)
-	{
-		DataType dtype;
-		dtype = GetDatatypeFromInitial(trim(val));
-		if (dtype != DT_INVALID)
-			arrayvals.push_back(dtype);
-	}
-	DataTypeSlice DT(arrayvals);
-	arrayvals.clear();
-	return DT;
+	
+	GetDatatypeSliceFromInitial(attrValue, v_dt);
+	return true;
 }
 
 
@@ -203,9 +178,9 @@ bool CAttributeParser::GetValue_arraySliceTensorshape(std::string name, std::vec
 	 return true;
 }
 
-DataTypeSlice CAttributeParser::GetValue_DataTypeSlice(std::string name)
+bool CAttributeParser::GetValue_DataTypeSlice(std::string name, std::vector<tensorflow::DataType>&v_dt)
 {
-	return ConvStrToDataTypeSlice(GetAttribute(name));
+	return ConvStrToDataTypeSlice(GetAttribute(name),v_dt);
 }
 
 bool CAttributeParser::GetValue_arraySliceString(std::string name, std::vector<std::string>& v_string)

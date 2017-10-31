@@ -1256,6 +1256,11 @@ void* Create_Restore(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pfile_pattern = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1278,6 +1283,11 @@ void* Create_Restore(std::string id, Json::Value pInputItem) {
 							ptensor_name = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						ptensor_name = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
 				}
 			}
 			else
@@ -1387,6 +1397,11 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pfile_pattern = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1410,6 +1425,11 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						ptensor_name = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1432,6 +1452,11 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 							pshape_and_slice = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pshape_and_slice = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
 				}
 			}
 			else
@@ -1541,6 +1566,11 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pprefix = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1564,6 +1594,11 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						ptensor_names = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1586,6 +1621,11 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 							pshape_and_slices = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pshape_and_slices = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
 				}
 			}
 			else
@@ -1830,6 +1870,11 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pfilename = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1853,6 +1898,11 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						ptensor_names = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1860,7 +1910,7 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "shape_and_slices")
+		else if (strPinName == "shapes_and_slices")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -1875,6 +1925,11 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 							pshape_and_slices = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pshape_and_slices = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
 				}
 			}
 			else
@@ -1913,7 +1968,7 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 		}
 	}
 
-	if (pScope && pfilename && ptensor_names && pshape_and_slices)
+	if (pScope && pfilename && ptensor_names && pshape_and_slices && pdata )
 	{
 		pSaveSlices = new SaveSlices(*pScope, *pfilename, *ptensor_names, *pshape_and_slices, *pdata);
 		ObjectInfo* pObj = AddObjectMap(pSaveSlices, id, SYMBOL_SAVESLICES, "SaveSlices", pInputItem);
@@ -1982,6 +2037,11 @@ void* Create_SaveV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pprefix = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2005,6 +2065,11 @@ void* Create_SaveV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						ptensor_names = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2027,6 +2092,11 @@ void* Create_SaveV2(std::string id, Json::Value pInputItem) {
 							pshape_and_slices = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pshape_and_slices = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
 				}
 			}
 			else
@@ -2133,6 +2203,11 @@ void* Create_ShardedFilename(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pbasename = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2156,6 +2231,11 @@ void* Create_ShardedFilename(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pshard = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2178,6 +2258,11 @@ void* Create_ShardedFilename(std::string id, Json::Value pInputItem) {
 							pnum_shards = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pnum_shards = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
 				}
 			}
 			else
@@ -2259,6 +2344,11 @@ void* Create_ShardedFilespec(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pbasename = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2281,6 +2371,11 @@ void* Create_ShardedFilespec(std::string id, Json::Value pInputItem) {
 							pnum_shards = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pnum_shards = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
 				}
 			}
 			else
@@ -2596,6 +2691,11 @@ void* Create_WriteFile(std::string id, Json::Value pInputItem) {
 							pfilename = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pfilename = (Output*)Create_StrToOutput(*m_pScope, "DT_STRING", "", strPinInitial);
 				}
 			}
 			else
