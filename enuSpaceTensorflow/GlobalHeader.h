@@ -595,8 +595,6 @@ struct FetchInfo
 	Fetch_OutputList output_list;
 
 	std::map<std::string, ObjectInfo* > fetch_object_map;	// 연결선 MAP 관리.
-	// Fetch_Output output_value;								// 연결선을 따라서 값을 업데이트 하는 객체 리스트
-	// Fetch_OutputList output_value_list;						// 연결선을 따라서 값을 업데이트 하는 객체 리스트
 
 	public:FetchInfo()
 	{
