@@ -2049,7 +2049,7 @@ std::string GetCategoryName(int iSymbol)
 	case SYMBOL_PARSESINGLESEQUENCEEXAMPLE:
 	case SYMBOL_PARSETENSOR:
 	case SYMBOL_STRINGTONUMBER:
-		return "parsing-op";
+		return "parsing-ops";
 	case SYMBOL_MULTINOMIAL:
 	case SYMBOL_PARAMETERIZEDTRUNCATEDNORMAL:
 	case SYMBOL_RANDOMGAMMA:
