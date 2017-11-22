@@ -437,7 +437,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 					{
 						if (pOutputObj->pOutput)
 						{
-							pserialized = (Output*)pOutputObj->pOutput;
+							pdense_keys= (OutputList*)pOutputObj->pOutput;
 						}
 					}
 				}
@@ -460,7 +460,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 					{
 						if (pOutputObj->pOutput)
 						{
-							pserialized = (Output*)pOutputObj->pOutput;
+							pdense_defaults = (OutputList*)pOutputObj->pOutput;
 						}
 					}
 				}
@@ -498,6 +498,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && pserialized && pnames && psparse_keys && pdense_keys&&pdense_defaults)
 	{
+
 		DataTypeSlice sparse_types(v_sparse_types);
 		gtl::ArraySlice<PartialTensorShape> dense_shapes(v_dense_shapes);
 		pParseExample = new ParseExample(*pScope, *pserialized, *pnames, *psparse_keys, *pdense_keys, *pdense_defaults, sparse_types, dense_shapes);
