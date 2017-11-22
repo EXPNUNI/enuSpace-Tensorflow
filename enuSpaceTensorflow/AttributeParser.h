@@ -22,7 +22,7 @@ public:
 	long long ConvStrToInt64(std::string attrValue);
 	float ConvStrToFloat(std::string attrValue);
 	bool ConvStrToArraySliceTensorshape(std::string attrValue, std::vector<PartialTensorShape>& v_PTS);
-	DataTypeSlice ConvStrToDataTypeSlice(std::string attrValue);
+	bool CAttributeParser::ConvStrToDataTypeSlice(std::string attrValue, std::vector<tensorflow::DataType>&v_dt);
 	bool ConvStrToArraySliceInt(std::string attrValue, std::vector<int>& v_int);
 	bool ConvStrToArraySlicefloat(std::string attrValue, std::vector<float>& v_float);
 	bool ConvStrToArraySliceString(std::string attrValue, std::vector<std::string>& v_string);
@@ -36,7 +36,7 @@ public:
 	int64 GetValue_int64(std::string name);
 	float GetValue_float(std::string name);
 	bool GetValue_arraySliceTensorshape(std::string name, std::vector<PartialTensorShape>& v_PTS);
-	DataTypeSlice GetValue_DataTypeSlice(std::string name);
+	bool GetValue_DataTypeSlice(std::string name,std::vector<tensorflow::DataType>&v_dt);
 
 	bool GetValue_arraySliceInt(std::string name, std::vector<int>& v_int);
 	bool GetValue_arraySliceString(std::string name, std::vector<std::string>& v_string);

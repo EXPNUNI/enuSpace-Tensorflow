@@ -26,7 +26,7 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 	AvgPool::Attrs attrs;
 
 
-	StringPiece strTemp;
+	std::string strTemp;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -168,7 +168,7 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	AvgPool3D::Attrs attrs;
-	StringPiece strTemp ="";
+	std::string strTemp ="";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -197,7 +197,7 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "value")
+		else if (strPinName == "input")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -279,8 +279,9 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 	}
 	if (pScope && value)
 	{
-		gtl::ArraySlice<int> ksize(v_ksize);
+	
 		gtl::ArraySlice<int> strides(v_strides);
+		gtl::ArraySlice<int> ksize(v_ksize);
 		pAvgPool3D = new AvgPool3D(*pScope, *value, ksize, strides, padding, attrs);
 		ObjectInfo* pObj = AddObjectMap(pAvgPool3D, id, SYMBOL_AVGPOOL3D, "AvgPool3D", pInputItem);
 		if (pObj)
@@ -309,7 +310,7 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
 	std::string padding;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	AvgPool3DGrad::Attrs attrs;
 
 	int iSize = (int)pInputItem.size();
@@ -474,7 +475,7 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 	Output* value = nullptr;
 	Output* bias = nullptr;
 	BiasAdd::Attrs attrs;
-	StringPiece strTemp ="";
+	std::string strTemp ="";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -593,7 +594,7 @@ void* Create_BiasAddGrad(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* out_backprop = nullptr;
 	BiasAddGrad::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -840,7 +841,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 	Output* out_backprop = nullptr;
 	std::vector<int> v_strides;
 	std::string padding;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	Conv2DBackpropFilter::Attrs attrs;
 
 	int iSize = (int)pInputItem.size();
@@ -1016,7 +1017,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	Conv2DBackpropInput::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1190,7 +1191,7 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	Conv3D::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1339,7 +1340,7 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	Conv3DBackpropFilterV2::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1511,7 +1512,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	Conv3DBackpropInputV2::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1682,7 +1683,7 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	DepthwiseConv2dNative::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1832,7 +1833,7 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 	std::vector<int> v_strides;
 	std::string padding;
 	DepthwiseConv2dNativeBackpropFilter::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2005,7 +2006,7 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 	std::vector<int> v_strides;
 	std::string padding;
 	DepthwiseConv2dNativeBackpropInput::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2995,7 +2996,7 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 	Output* mean = nullptr;
 	Output* variance = nullptr;
 	FusedBatchNorm::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -3198,7 +3199,7 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 	Output* reserve_space_1 = nullptr;
 	Output* reserve_space_2 = nullptr;
 	FusedBatchNormGrad::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -4164,7 +4165,7 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	MaxPool::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -4308,7 +4309,7 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	MaxPool3D::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -4453,7 +4454,7 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
 	std::string padding;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	MaxPool3DGrad::Attrs attrs;
 
 	int iSize = (int)pInputItem.size();
@@ -4649,7 +4650,7 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	MaxPool3DGradGrad::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4755,8 +4756,8 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<int>")
 			{
-				std::vector<int> arrays;
-				GetIntVectorFromInitial(strPinInitial, arrays);
+				
+				GetIntVectorFromInitial(strPinInitial, v_ksize);
 			}
 			else
 			{
@@ -4845,7 +4846,7 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	MaxPoolGradGrad::Attrs attrs;
-	StringPiece strTemp = "";
+	std::string strTemp = "";
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -5037,7 +5038,7 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 	Output* argmax = nullptr;
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -5211,7 +5212,7 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 	Output* pinput = nullptr;
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 	MaxPoolWithArgmax::Attrs attrs;
 
 	int iSize = (int)pInputItem.size();
@@ -5352,7 +5353,7 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 	Output* max_input = nullptr;
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
-	StringPiece padding;
+	std::string padding;
 
 
 	int iSize = (int)pInputItem.size();

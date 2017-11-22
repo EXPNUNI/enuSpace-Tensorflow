@@ -65,12 +65,6 @@ void AddPrevFetchObject(ObjectInfo* pfetchObj, FetchInfo* pFetchInfo)
 							const bool bExists = aLookup != pFetchInfo->fetch_object_map.end();
 							if (bExists == false)
 							{
-								//pFetchInfo->fetch_object_map.insert(std::pair<std::string, ObjectInfo*>(strInSymbolId, pPrevfetchObj));
-
-								//pFetchInfo->output_value_list.fetch_object.push_back(pPrevfetchObj);
-								//pFetchInfo->output_value_list.fetch_outputs.push_back(*(OutputList*)pOutputObj->pOutput);
-								//pFetchInfo->output_value_list.pin_names.push_back(strInSymbolPinName);
-
 								// 이전 심볼에 대하여 OUTPUT 객체이면 추가 수행.
 								AddPrevFetchObject(pPrevfetchObj, pFetchInfo);
 							}
