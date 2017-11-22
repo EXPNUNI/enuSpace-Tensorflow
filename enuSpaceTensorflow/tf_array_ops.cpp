@@ -5655,6 +5655,11 @@ void* Create_Reshape(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
