@@ -1123,6 +1123,11 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#Const", SYMBOL_CONST));
 	m_SymbolList.insert(std::pair<std::string, int>("#RandomNormal_ex", SYMBOL_RANDOMNORMAL_EX));
 	m_SymbolList.insert(std::pair<std::string, int>("#Const_ex", SYMBOL_CONST_EX));
+	m_SymbolList.insert(std::pair<std::string, int>("#SparseSlice", SYMBOL_SPARSESLICE));
+	m_SymbolList.insert(std::pair<std::string, int>("#SparseFillEmptyRows", SYMBOL_SPARSEFILLEMPTYROWS));
+	m_SymbolList.insert(std::pair<std::string, int>("#SparseFillEmptyRowsGrad", SYMBOL_SPARSEFILLEMPTYROWSGRAD));
+	m_SymbolList.insert(std::pair<std::string, int>("#SparseReduceMax", SYMBOL_SPARSEREDUCEMAX));
+	m_SymbolList.insert(std::pair<std::string, int>("#SparseReduceMaxSparse", SYMBOL_SPARSEREDUCEMAXSPARSE));
 }
 
 int GetSymbolType(std::string strSymbolName)
@@ -1634,6 +1639,11 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_CONST: {		pCreate = Create_Const(id, pInputItem);	break;	}
 	case SYMBOL_RANDOMNORMAL_EX: {		pCreate = Create_RandomNormal_ex(id, pInputItem);	break;	}
 	case SYMBOL_CONST_EX: {		pCreate = Create_Const_ex(id, pInputItem);	break;	}
+	case SYMBOL_SPARSEFILLEMPTYROWS: {		pCreate = Create_SparseFillEmptyRows(id, pInputItem);	break;	}
+	case SYMBOL_SPARSEFILLEMPTYROWSGRAD: {		pCreate = Create_SparseFillEmptyRowsGrad(id, pInputItem);	break;	}
+	case SYMBOL_SPARSEREDUCEMAX: {		pCreate = Create_SparseReduceMax(id, pInputItem);	break;	}
+	case SYMBOL_SPARSEREDUCEMAXSPARSE: {		pCreate = Create_SparseReduceMaxSparse(id, pInputItem);	break;	}
+	case SYMBOL_SPARSESLICE: {		pCreate = Create_SparseSlice(id, pInputItem);	break;	}
 	}
 	return pCreate;
 }
@@ -2039,7 +2049,7 @@ std::string GetCategoryName(int iSymbol)
 	case SYMBOL_PARSESINGLESEQUENCEEXAMPLE:
 	case SYMBOL_PARSETENSOR:
 	case SYMBOL_STRINGTONUMBER:
-		return "parsing-op";
+		return "parsing-ops";
 	case SYMBOL_MULTINOMIAL:
 	case SYMBOL_PARAMETERIZEDTRUNCATEDNORMAL:
 	case SYMBOL_RANDOMGAMMA:
@@ -2074,6 +2084,11 @@ std::string GetCategoryName(int iSymbol)
 	case SYMBOL_SPARSETENSORDENSEMATMUL:
 	case SYMBOL_SPARSETODENSE:
 	case SYMBOL_TAKEMANYSPARSEFROMTENSORSMAP:
+	case SYMBOL_SPARSEFILLEMPTYROWS:
+	case SYMBOL_SPARSEFILLEMPTYROWSGRAD:
+	case SYMBOL_SPARSEREDUCEMAX:
+	case SYMBOL_SPARSEREDUCEMAXSPARSE:
+	case SYMBOL_SPARSESLICE:
 		return "sparse-ops";
 	case SYMBOL_ASSIGN:
 	case SYMBOL_ASSIGNADD:

@@ -64,6 +64,11 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pinput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -84,17 +89,13 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							crops = (Output*)pOutputObj->pOutput;
-							DataType type_check = crops->type();
-							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
-							{}
-							else
-							{
-								crops = nullptr;
-								std::string msg = string_format("warning : BatchToSpace - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
-							}
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						crops = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -132,22 +133,6 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 
 	if (pScope && pinput && crops)
 	{
-// 		TensorShape shape = TensorShape();
-// 		shape.AddDim(4);
-// 		Tensor tensor(DT_INT32, shape);
-// 		tensor.flat<int>()(0) = 4;
-// 		tensor.flat<int>()(1) = 1;
-// 		tensor.flat<int>()(2) = 1;
-// 		tensor.flat<int>()(3) = 1;
-// 		Input input1(tensor);
-// 		TensorShape shape1 = TensorShape();
-// 		shape1.AddDim(4);
-// 		Tensor tensor1(DT_INT32, shape1);
-// 		tensor1.flat<int>()(0) = 2;
-// 		tensor1.flat<int>()(1) = 1;
-// 		Input input2(tensor1);
-// 		auto A = Const(*pScope, {{{{1}}}, {{{2}}}, {{{3}}}, {{{4}}}});
-// 		auto b = Const(*pScope, { {1.f,1.f},{1.f,1.f} });
 		pBatchToSpace = new BatchToSpace(*pScope, *pinput, *crops, block_size);
 		ObjectInfo* pObj = AddObjectMap(pBatchToSpace, id, SYMBOL_BATCHTOSPACE, "BatchToSpace", pInputItem);
 		if (pObj) {
@@ -218,18 +203,13 @@ void* Create_BatchToSpaceND(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							pinput = (Output*)pOutputObj->pOutput;
-							DataType type_check = pinput->type();
-							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
-							{
-							}
-							else
-							{
-								pinput = nullptr;
-								std::string msg = string_format("warning : BatchToSpaceND - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
-							}
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pinput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 
 			}
@@ -252,18 +232,13 @@ void* Create_BatchToSpaceND(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							block_shape = (Output*)pOutputObj->pOutput;
-							DataType type_check = block_shape->type();
-							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
-							{
-							}
-							else
-							{
-								block_shape = nullptr;
-								std::string msg = string_format("warning : BatchToSpaceND - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
-							}
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						block_shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -286,18 +261,13 @@ void* Create_BatchToSpaceND(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							crops = (Output*)pOutputObj->pOutput;
-							DataType type_check = crops->type();
-							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
-							{
-							}
-							else
-							{
-								crops = nullptr;
-								std::string msg = string_format("warning : BatchToSpaceND - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
-							}
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						crops = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -476,18 +446,13 @@ void* Create_BroadcastDynamicShape(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							s0 = (Output*)pOutputObj->pOutput;
-							DataType type_check = s0->type();
-							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
-							{
-							}
-							else
-							{
-								s0 = nullptr;
-								std::string msg = string_format("warning : BroadcastDynamicShape - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
-							}
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						s0 = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -509,18 +474,13 @@ void* Create_BroadcastDynamicShape(std::string id, Json::Value pInputItem) {
 						if (pOutputObj->pOutput)
 						{
 							s1 = (Output*)pOutputObj->pOutput;
-							DataType type_check = s1->type();
-							if (type_check == DT_INT8 || type_check == DT_INT16 || type_check == DT_INT32 || type_check == DT_INT64)
-							{
-							}
-							else
-							{
-								s1 = nullptr;
-								std::string msg = string_format("warning : BroadcastDynamicShape - %s(%s) input type is not of type int.", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
-							}
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						s1 = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -607,6 +567,11 @@ void* Create_CheckNumerics(std::string id, Json::Value pInputItem) {
 							ptensor = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						ptensor = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -720,6 +685,11 @@ void* Create_Concat(std::string id, Json::Value pInputItem) {
 							axis = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -878,6 +848,11 @@ void* Create_DepthToSpace(std::string id, Json::Value pInputItem) {
 							pInput = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -1110,6 +1085,11 @@ void* Create_Diag(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						diagonal = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1187,6 +1167,11 @@ void* Create_DiagPart(std::string id, Json::Value pInputItem) {
 							pInput = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -1272,6 +1257,11 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						hypothesis_indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1294,6 +1284,11 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 							hypothesis_values = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						hypothesis_values = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -1318,6 +1313,11 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						hypothesis_shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1340,6 +1340,11 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 							truth_indices = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						truth_indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
 				}
 			}
 			else
@@ -1364,6 +1369,11 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						truth_values = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1386,6 +1396,11 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 							truth_shape = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						truth_shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
 				}
 			}
 			else
@@ -1477,6 +1492,11 @@ void* Create_ExpandDims(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1499,6 +1519,11 @@ void* Create_ExpandDims(std::string id, Json::Value pInputItem) {
 							axis = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -1717,6 +1742,11 @@ void* Create_FakeQuantWithMinMaxArgs(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1816,6 +1846,11 @@ void* Create_FakeQuantWithMinMaxArgsGradient(std::string id, Json::Value pInputI
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						gradients = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1838,6 +1873,11 @@ void* Create_FakeQuantWithMinMaxArgsGradient(std::string id, Json::Value pInputI
 							inputs = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						inputs = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -1939,6 +1979,11 @@ void* Create_FakeQuantWithMinMaxVars(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						inputs = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1962,6 +2007,11 @@ void* Create_FakeQuantWithMinMaxVars(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						min = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -1984,6 +2034,11 @@ void* Create_FakeQuantWithMinMaxVars(std::string id, Json::Value pInputItem) {
 							max = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						max = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -2078,6 +2133,11 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						gradients = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2100,6 +2160,11 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 							inputs = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						inputs = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -2124,6 +2189,11 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						min = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2146,6 +2216,11 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 							max = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						max = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -2244,6 +2319,11 @@ void* Create_FakeQuantWithMinMaxVarsPerChannel(std::string id, Json::Value pInpu
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						inputs = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2267,6 +2347,11 @@ void* Create_FakeQuantWithMinMaxVarsPerChannel(std::string id, Json::Value pInpu
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						min = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2289,6 +2374,11 @@ void* Create_FakeQuantWithMinMaxVarsPerChannel(std::string id, Json::Value pInpu
 							max = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						max = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -2383,6 +2473,11 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						gradients = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2405,6 +2500,11 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 							inputs = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						inputs = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -2429,6 +2529,11 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						min = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2451,6 +2556,11 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 							max = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						max = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -2549,6 +2659,11 @@ void* Create_Fill(std::string id, Json::Value pInputItem) {
 							dims = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						dims = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -2676,6 +2791,11 @@ void* Create_Gather(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2789,6 +2909,11 @@ void* Create_GatherNd(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2892,6 +3017,11 @@ void* Create_GatherV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2914,6 +3044,11 @@ void* Create_GatherV2(std::string id, Json::Value pInputItem) {
 							axis = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -3169,6 +3304,11 @@ void* Create_InvertPermutation(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						x = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -3365,6 +3505,11 @@ void* Create_MatrixBandPart(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -3388,6 +3533,11 @@ void* Create_MatrixBandPart(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						num_lower = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -3410,6 +3560,11 @@ void* Create_MatrixBandPart(std::string id, Json::Value pInputItem) {
 							num_upper = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						num_upper = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -3769,6 +3924,11 @@ void* Create_MirrorPad(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						paddings = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -3861,6 +4021,11 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 							indices = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -4019,6 +4184,11 @@ void* Create_OnesLike(std::string id, Json::Value pInputItem) {
 							x = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						x = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -4212,6 +4382,11 @@ void* Create_Pad(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						paddings = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -4315,6 +4490,11 @@ void* Create_PadV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						paddings = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -4337,6 +4517,11 @@ void* Create_PadV2(std::string id, Json::Value pInputItem) {
 							constant_values = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						constant_values = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -4595,6 +4780,11 @@ void* Create_PlaceholderWithDefault(std::string id, Json::Value pInputItem) {
 							pInput = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -5655,6 +5845,11 @@ void* Create_Reshape(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -5960,6 +6155,11 @@ void* Create_ReverseSequence(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						seq_lengths = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6093,6 +6293,11 @@ void* Create_Reverse(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6173,6 +6378,11 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6218,6 +6428,11 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 							shape = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -6322,6 +6537,11 @@ void* Create_ScatterNdNonAliasingAdd(std::string id, Json::Value pInputItem) {
 							indices = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -6718,6 +6938,11 @@ void* Create_Slice(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						begin = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6740,6 +6965,11 @@ void* Create_Slice(std::string id, Json::Value pInputItem) {
 							size = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						size = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -6842,6 +7072,11 @@ void* Create_SpaceToBatch(std::string id, Json::Value pInputItem) {
 							paddings = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						paddings = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -6966,6 +7201,11 @@ void* Create_SpaceToBatchND(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						block_shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6989,6 +7229,11 @@ void* Create_SpaceToBatchND(std::string id, Json::Value pInputItem) {
 							paddings = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						paddings = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -7169,7 +7414,11 @@ void* Create_Split(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7193,7 +7442,6 @@ void* Create_Split(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
 			}
 			else
 			{
@@ -7295,7 +7543,6 @@ void* Create_SplitV(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
 			}
 			else
 			{
@@ -7319,7 +7566,11 @@ void* Create_SplitV(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						size_splits = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7343,7 +7594,11 @@ void* Create_SplitV(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7618,7 +7873,6 @@ void* Create_StridedSlice(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
 			}
 			else
 			{
@@ -7642,7 +7896,11 @@ void* Create_StridedSlice(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						begin = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7666,7 +7924,11 @@ void* Create_StridedSlice(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						end = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7690,7 +7952,11 @@ void* Create_StridedSlice(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						strides = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7800,7 +8066,6 @@ void* Create_StridedSliceAssign(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
 			}
 			else
 			{
@@ -7824,7 +8089,11 @@ void* Create_StridedSliceAssign(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						begin = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7848,7 +8117,11 @@ void* Create_StridedSliceAssign(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						end = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7872,7 +8145,11 @@ void* Create_StridedSliceAssign(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						strides = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7896,7 +8173,6 @@ void* Create_StridedSliceAssign(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
 			}
 			else
 			{
@@ -8006,7 +8282,11 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -8030,7 +8310,11 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						begin = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -8054,7 +8338,11 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						end = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -8078,7 +8366,11 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						strides = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -8102,7 +8394,6 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
 			}
 			else
 			{
@@ -8231,6 +8522,11 @@ void* Create_Tile(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						multiples = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -8331,6 +8627,11 @@ void* Create_Transpose(std::string id, Json::Value pInputItem) {
 							perm = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						perm = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else

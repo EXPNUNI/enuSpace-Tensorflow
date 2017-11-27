@@ -3778,11 +3778,11 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 	PriorityQueue* pPriorityQueue = nullptr;
 	Scope* pScope = nullptr;
-	gtl::ArraySlice<PartialTensorShape> shapes;
 	PriorityQueue::Attrs attrs;
 	std::string container_ = "";
 	std::string sharedname_ = "";
-	DataTypeSlice component_types_;
+	std::vector<DataType> v_DT;
+	std::vector<PartialTensorShape> vec_PTS;
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -3816,9 +3816,7 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "gtl::ArraySlice<PartialTensorShape>")
 			{
-				std::vector<PartialTensorShape> vec_PTS;
 				 GetArrayShapeFromInitial(strPinInitial, vec_PTS);
-				 shapes = vec_PTS;
 			}
 			else
 			{
@@ -3833,8 +3831,9 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 				CAttributeParser attrParser(strPinInterface, strPinInitial);
 				if (attrParser.GetAttribute("component_types_") != "")
 				{
-					component_types_ = attrParser.ConvStrToDataTypeSlice("component_types_");
-					attrs.component_types_ = component_types_;
+					
+					attrParser.ConvStrToDataTypeSlice(attrParser.GetAttribute("component_types_"),v_DT);
+					attrs = attrs.ComponentTypes(v_DT);
 				}
 				if (attrParser.GetAttribute("capacity_") != "") attrs = attrs.Capacity(attrParser.ConvStrToInt64(attrParser.GetAttribute("capacity_")));
 				if (attrParser.GetAttribute("container_") != "")
@@ -3858,6 +3857,7 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 
 	if (pScope)
 	{
+		gtl::ArraySlice<PartialTensorShape> shapes(vec_PTS);
 		pPriorityQueue = new PriorityQueue(*pScope, shapes, attrs);
 		ObjectInfo* pObj = AddObjectMap(pPriorityQueue, id, SYMBOL_PRIORITYQUEUE, "PriorityQueue", pInputItem);
 		if (pObj)
@@ -4133,9 +4133,14 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 					{
 						if (pOutputObj->pOutput)
 						{
-							phandle = (Output*)pOutputObj->pOutput;
+							pn = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pn = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -4260,9 +4265,14 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 					{
 						if (pOutputObj->pOutput)
 						{
-							phandle = (Output*)pOutputObj->pOutput;
+							pn = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pn = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
 				}
 			}
 			else
@@ -4876,6 +4886,11 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						plocal_step = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -4898,6 +4913,11 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 							pgradient_indices = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						plocal_step = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
 				}
 			}
 			else
@@ -4922,6 +4942,11 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						plocal_step = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -4929,7 +4954,7 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 				PrintMessage(msg);
 			}
 		}
-		else if (strPinName == "gradient_values")
+		else if (strPinName == "gradient_shape")
 		{
 			if (strPinInterface == "Input")
 			{
@@ -4944,6 +4969,11 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 							pgradient_shape = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pgradient_shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
 				}
 			}
 			else
@@ -5060,6 +5090,11 @@ void* Create_SparseAccumulatorTakeGradient(std::string id, Json::Value pInputIte
 							pnum_required = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pnum_required = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
 				}
 			}
 			else
@@ -5671,6 +5706,11 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						psize = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -5887,6 +5927,11 @@ void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pflow_in = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6019,6 +6064,11 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pindices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6041,6 +6091,11 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 							pflow_in = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pflow_in = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -6171,6 +6226,11 @@ void* Create_TensorArrayGrad(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pflow_in = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6290,6 +6350,11 @@ void* Create_TensorArrayRead(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pindex = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6312,6 +6377,11 @@ void* Create_TensorArrayRead(std::string id, Json::Value pInputItem) {
 							pflow_in = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pflow_in = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -6435,6 +6505,11 @@ void* Create_TensorArrayScatter(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pindices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6480,6 +6555,11 @@ void* Create_TensorArrayScatter(std::string id, Json::Value pInputItem) {
 							pflow_in = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pflow_in = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -6584,6 +6664,11 @@ void* Create_TensorArraySize(std::string id, Json::Value pInputItem) {
 							pflow_in = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pflow_in = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -6691,6 +6776,11 @@ void* Create_TensorArraySplit(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						plengths = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6714,6 +6804,11 @@ void* Create_TensorArraySplit(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pflow_in = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6736,6 +6831,11 @@ void* Create_TensorArraySplit(std::string id, Json::Value pInputItem) {
 							pflow_in = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pflow_in = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
@@ -6843,6 +6943,11 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pindex = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6866,6 +6971,11 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pvalue = (Output*)Create_StrToOutput(*m_pScope, strAutoPinType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6888,6 +6998,11 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 							pflow_in = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pflow_in = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
 				}
 			}
 			else
