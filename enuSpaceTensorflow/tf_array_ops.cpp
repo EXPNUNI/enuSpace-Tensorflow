@@ -28,6 +28,7 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -67,7 +68,7 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						pinput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						pinput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -95,7 +96,7 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						crops = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						crops = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -170,6 +171,7 @@ void* Create_BatchToSpaceND(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -209,9 +211,8 @@ void* Create_BatchToSpaceND(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						pinput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						pinput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
-
 			}
 			else
 			{
@@ -238,7 +239,7 @@ void* Create_BatchToSpaceND(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						block_shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						block_shape = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -311,6 +312,7 @@ void* Create_Bitcast(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -346,6 +348,11 @@ void* Create_Bitcast(std::string id, Json::Value pInputItem) {
 							pInput = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -413,6 +420,7 @@ void* Create_BroadcastDynamicShape(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -452,7 +460,7 @@ void* Create_BroadcastDynamicShape(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						s0 = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						s0 = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -480,7 +488,7 @@ void* Create_BroadcastDynamicShape(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						s1 = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						s1 = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -532,6 +540,7 @@ void* Create_CheckNumerics(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -571,7 +580,7 @@ void* Create_CheckNumerics(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						ptensor = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						ptensor = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -627,6 +636,7 @@ void* Create_Concat(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -689,7 +699,7 @@ void* Create_Concat(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						axis = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -734,6 +744,7 @@ void * Create_DebugGradientIdentity(std::string id, Json::Value pInputItem)
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -769,6 +780,11 @@ void * Create_DebugGradientIdentity(std::string id, Json::Value pInputItem)
 							pinput = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pinput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -813,6 +829,7 @@ void* Create_DepthToSpace(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -852,7 +869,7 @@ void* Create_DepthToSpace(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -913,6 +930,7 @@ void* Create_Dequantize(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -949,6 +967,11 @@ void* Create_Dequantize(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -972,6 +995,11 @@ void* Create_Dequantize(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						min_range = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -994,6 +1022,11 @@ void* Create_Dequantize(std::string id, Json::Value pInputItem) {
 							max_range = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						max_range = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1049,6 +1082,7 @@ void* Create_Diag(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1088,7 +1122,7 @@ void* Create_Diag(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						diagonal = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						diagonal = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1132,6 +1166,7 @@ void* Create_DiagPart(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1171,7 +1206,7 @@ void* Create_DiagPart(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1221,6 +1256,7 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1260,7 +1296,7 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						hypothesis_indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
+						hypothesis_indices = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1288,7 +1324,7 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						hypothesis_values = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						hypothesis_values = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1316,7 +1352,7 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						hypothesis_shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
+						hypothesis_shape = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1344,7 +1380,7 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						truth_indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
+						truth_indices = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1372,7 +1408,7 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						truth_values = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						truth_values = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1400,7 +1436,7 @@ void* Create_EditDistance(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						truth_shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT64", "", strPinInitial);
+						truth_shape = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1456,6 +1492,7 @@ void* Create_ExpandDims(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1495,7 +1532,7 @@ void* Create_ExpandDims(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1523,7 +1560,7 @@ void* Create_ExpandDims(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						axis = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1571,6 +1608,7 @@ void* Create_ExtractImagePatches(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1606,6 +1644,11 @@ void* Create_ExtractImagePatches(std::string id, Json::Value pInputItem) {
 							images = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						images = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1706,6 +1749,7 @@ void* Create_FakeQuantWithMinMaxArgs(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1745,7 +1789,7 @@ void* Create_FakeQuantWithMinMaxArgs(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1810,6 +1854,7 @@ void* Create_FakeQuantWithMinMaxArgsGradient(std::string id, Json::Value pInputI
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1849,7 +1894,7 @@ void* Create_FakeQuantWithMinMaxArgsGradient(std::string id, Json::Value pInputI
 				else
 				{
 					if (!strPinInitial.empty())
-						gradients = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						gradients = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1877,7 +1922,7 @@ void* Create_FakeQuantWithMinMaxArgsGradient(std::string id, Json::Value pInputI
 				else
 				{
 					if (!strPinInitial.empty())
-						inputs = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						inputs = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -1943,6 +1988,7 @@ void* Create_FakeQuantWithMinMaxVars(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -1982,7 +2028,7 @@ void* Create_FakeQuantWithMinMaxVars(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						inputs = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						inputs = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2010,7 +2056,7 @@ void* Create_FakeQuantWithMinMaxVars(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						min = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						min = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2038,7 +2084,7 @@ void* Create_FakeQuantWithMinMaxVars(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						max = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						max = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2097,6 +2143,7 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2136,7 +2183,7 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 				else
 				{
 					if (!strPinInitial.empty())
-						gradients = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						gradients = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2164,7 +2211,7 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 				else
 				{
 					if (!strPinInitial.empty())
-						inputs = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						inputs = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2192,7 +2239,7 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 				else
 				{
 					if (!strPinInitial.empty())
-						min = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						min = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2220,7 +2267,7 @@ void* Create_FakeQuantWithMinMaxVarsGradient(std::string id, Json::Value pInputI
 				else
 				{
 					if (!strPinInitial.empty())
-						max = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						max = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2283,6 +2330,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannel(std::string id, Json::Value pInpu
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2322,7 +2370,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannel(std::string id, Json::Value pInpu
 				else
 				{
 					if (!strPinInitial.empty())
-						inputs = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						inputs = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2350,7 +2398,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannel(std::string id, Json::Value pInpu
 				else
 				{
 					if (!strPinInitial.empty())
-						min = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						min = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2378,7 +2426,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannel(std::string id, Json::Value pInpu
 				else
 				{
 					if (!strPinInitial.empty())
-						max = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						max = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2437,6 +2485,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2476,7 +2525,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 				else
 				{
 					if (!strPinInitial.empty())
-						gradients = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						gradients = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2504,7 +2553,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 				else
 				{
 					if (!strPinInitial.empty())
-						inputs = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						inputs = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2532,7 +2581,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 				else
 				{
 					if (!strPinInitial.empty())
-						min = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						min = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2560,7 +2609,7 @@ void* Create_FakeQuantWithMinMaxVarsPerChannelGradient(std::string id, Json::Val
 				else
 				{
 					if (!strPinInitial.empty())
-						max = (Output*)Create_StrToOutput(*m_pScope, "DT_FLOAT", "", strPinInitial);
+						max = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2624,6 +2673,7 @@ void* Create_Fill(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2663,7 +2713,7 @@ void* Create_Fill(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						dims = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						dims = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2687,6 +2737,11 @@ void* Create_Fill(std::string id, Json::Value pInputItem) {
 							value = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						value = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2732,6 +2787,7 @@ void* Create_Gather(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2768,6 +2824,11 @@ void* Create_Gather(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						params = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2794,7 +2855,7 @@ void* Create_Gather(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						indices = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2850,6 +2911,7 @@ void* Create_GatherNd(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2886,6 +2948,11 @@ void* Create_GatherNd(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						params = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -2912,7 +2979,7 @@ void* Create_GatherNd(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						indices = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -2958,6 +3025,7 @@ void* Create_GatherV2(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -2994,6 +3062,11 @@ void* Create_GatherV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						params = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -3020,7 +3093,7 @@ void* Create_GatherV2(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						indices = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3048,7 +3121,7 @@ void* Create_GatherV2(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						axis = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3078,7 +3151,6 @@ void* Create_GatherV2(std::string id, Json::Value pInputItem) {
 
 	return pGatherV2;
 }
-
 void* Create_Identity(std::string id, Json::Value pInputItem) {
 	Identity* pIdentity = nullptr;
 	Scope* pScope = nullptr;
@@ -3092,6 +3164,7 @@ void* Create_Identity(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3127,6 +3200,11 @@ void* Create_Identity(std::string id, Json::Value pInputItem) {
 							pInput = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3172,6 +3250,7 @@ void* Create_ImmutableConst(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3268,6 +3347,7 @@ void* Create_InvertPermutation(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3307,7 +3387,7 @@ void* Create_InvertPermutation(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						x = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						x = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3353,6 +3433,7 @@ void* Create_SetDiff1D(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3389,6 +3470,11 @@ void* Create_SetDiff1D(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						x = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -3411,6 +3497,11 @@ void* Create_SetDiff1D(std::string id, Json::Value pInputItem) {
 							y = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						y = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3469,6 +3560,7 @@ void* Create_MatrixBandPart(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3508,7 +3600,7 @@ void* Create_MatrixBandPart(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3536,7 +3628,7 @@ void* Create_MatrixBandPart(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						num_lower = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						num_lower = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3564,7 +3656,7 @@ void* Create_MatrixBandPart(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						num_upper = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						num_upper = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3608,6 +3700,7 @@ void* Create_MatrixDiag(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3643,6 +3736,11 @@ void* Create_MatrixDiag(std::string id, Json::Value pInputItem) {
 							diagonal = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						diagonal = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3685,6 +3783,7 @@ void* Create_MatrixDiagPart(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3720,6 +3819,11 @@ void* Create_MatrixDiagPart(std::string id, Json::Value pInputItem) {
 							pInput = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3763,6 +3867,7 @@ void* Create_MatrixSetDiag(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3799,6 +3904,11 @@ void* Create_MatrixSetDiag(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -3821,6 +3931,11 @@ void* Create_MatrixSetDiag(std::string id, Json::Value pInputItem) {
 							diagonal = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						diagonal = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3865,6 +3980,7 @@ void* Create_MirrorPad(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -3901,6 +4017,11 @@ void* Create_MirrorPad(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -3927,7 +4048,7 @@ void* Create_MirrorPad(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						paddings = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						paddings = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -3986,6 +4107,7 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4025,7 +4147,7 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						indices = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -4050,6 +4172,11 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						depth = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -4073,6 +4200,11 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						on_value = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -4095,6 +4227,11 @@ void* Create_OneHot(std::string id, Json::Value pInputItem) {
 							off_value = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						off_value = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -4149,6 +4286,7 @@ void* Create_OnesLike(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4188,7 +4326,7 @@ void* Create_OnesLike(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						x = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						x = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -4233,6 +4371,7 @@ void* Create_Stack(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4323,6 +4462,7 @@ void* Create_Pad(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4359,6 +4499,11 @@ void* Create_Pad(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -4385,7 +4530,7 @@ void* Create_Pad(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						paddings = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						paddings = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -4431,6 +4576,7 @@ void* Create_PadV2(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4467,6 +4613,11 @@ void* Create_PadV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -4493,7 +4644,7 @@ void* Create_PadV2(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						paddings = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						paddings = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -4521,7 +4672,7 @@ void* Create_PadV2(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						constant_values = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						constant_values = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -4566,6 +4717,7 @@ void* Create_ParallelConcat(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4658,6 +4810,7 @@ void* Create_Placeholder(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4730,7 +4883,6 @@ void* Create_Placeholder(std::string id, Json::Value pInputItem) {
 
 	return pPlaceholder;
 }
-
 void* Create_PlaceholderWithDefault(std::string id, Json::Value pInputItem) {
 	PlaceholderWithDefault* pPlaceholderWithDefault = nullptr;
 	Scope* pScope = nullptr;
@@ -4745,6 +4897,7 @@ void* Create_PlaceholderWithDefault(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4784,7 +4937,7 @@ void* Create_PlaceholderWithDefault(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						pInput = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -4844,6 +4997,7 @@ void* Create_PreventGradient(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4879,6 +5033,11 @@ void* Create_PreventGradient(std::string id, Json::Value pInputItem) {
 							pInput = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -4937,6 +5096,7 @@ void* Create_QuantizeAndDequantizeV2(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -4973,6 +5133,11 @@ void* Create_QuantizeAndDequantizeV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -4996,6 +5161,11 @@ void* Create_QuantizeAndDequantizeV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						input_min = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -5018,6 +5188,11 @@ void* Create_QuantizeAndDequantizeV2(std::string id, Json::Value pInputItem) {
 							input_max = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						input_max = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -5085,6 +5260,7 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -5121,6 +5297,11 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -5144,6 +5325,11 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						min_range = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -5166,6 +5352,11 @@ void* Create_QuantizeV2(std::string id, Json::Value pInputItem) {
 							max_range = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						max_range = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -5244,6 +5435,7 @@ void* Create_QuantizedConcat(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -5279,6 +5471,11 @@ void* Create_QuantizedConcat(std::string id, Json::Value pInputItem) {
 							concat_dim = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						concat_dim = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -5398,6 +5595,7 @@ void* Create_QuantizedInstanceNorm(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -5434,6 +5632,11 @@ void* Create_QuantizedInstanceNorm(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						x = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -5457,6 +5660,11 @@ void* Create_QuantizedInstanceNorm(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						x_min = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -5479,6 +5687,11 @@ void* Create_QuantizedInstanceNorm(std::string id, Json::Value pInputItem) {
 							x_max = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						x_max = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -5556,6 +5769,7 @@ void* Create_QuantizedReshape(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -5592,6 +5806,11 @@ void* Create_QuantizedReshape(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pTensor = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -5614,6 +5833,11 @@ void* Create_QuantizedReshape(std::string id, Json::Value pInputItem) {
 							shape = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						shape = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -5638,6 +5862,11 @@ void* Create_QuantizedReshape(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						input_min = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -5660,6 +5889,11 @@ void* Create_QuantizedReshape(std::string id, Json::Value pInputItem) {
 							input_max = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						input_max = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -5707,6 +5941,7 @@ void* Create_Rank(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -5742,6 +5977,11 @@ void* Create_Rank(std::string id, Json::Value pInputItem) {
 							pInput = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -5786,6 +6026,7 @@ void* Create_Reshape(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -5822,6 +6063,11 @@ void* Create_Reshape(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pTensor = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -5848,7 +6094,7 @@ void* Create_Reshape(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						shape = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -5896,6 +6142,7 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -5955,6 +6202,11 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						begin = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -5977,6 +6229,11 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 							end = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						end = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6001,6 +6258,11 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						strides = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6023,6 +6285,11 @@ void* Create_ResourceStridedSliceAssign(std::string id, Json::Value pInputItem) 
 							value = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						value = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6096,6 +6363,7 @@ void* Create_ReverseSequence(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -6132,6 +6400,11 @@ void* Create_ReverseSequence(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6158,7 +6431,7 @@ void* Create_ReverseSequence(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						seq_lengths = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						seq_lengths = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6234,6 +6507,7 @@ void* Create_Reverse(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -6270,6 +6544,11 @@ void* Create_Reverse(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pTensor = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6296,7 +6575,7 @@ void* Create_Reverse(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						axis = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6342,6 +6621,7 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -6381,7 +6661,7 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						indices = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6405,6 +6685,11 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 							updates = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						updates = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6432,7 +6717,7 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						shape = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6463,7 +6748,6 @@ void* Create_ScatterNd(std::string id, Json::Value pInputItem) {
 
 	return pScatterNd;
 }
-
 void* Create_ScatterNdNonAliasingAdd(std::string id, Json::Value pInputItem) {
 	ScatterNdNonAliasingAdd* pScatterNdNonAliasingAdd = nullptr;
 	Scope* pScope = nullptr;
@@ -6479,6 +6763,7 @@ void* Create_ScatterNdNonAliasingAdd(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -6515,6 +6800,11 @@ void* Create_ScatterNdNonAliasingAdd(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pinput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6541,7 +6831,7 @@ void* Create_ScatterNdNonAliasingAdd(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						indices = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						indices = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6565,6 +6855,11 @@ void* Create_ScatterNdNonAliasingAdd(std::string id, Json::Value pInputItem) {
 							updates = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						updates = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6609,6 +6904,7 @@ void* Create_Shape(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -6644,6 +6940,11 @@ void* Create_Shape(std::string id, Json::Value pInputItem) {
 							pInput = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6699,6 +7000,7 @@ void* Create_ShapeN(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -6788,6 +7090,7 @@ void* Create_Size(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -6823,6 +7126,11 @@ void* Create_Size(std::string id, Json::Value pInputItem) {
 							pInput = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6879,6 +7187,7 @@ void* Create_Slice(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -6915,6 +7224,11 @@ void* Create_Slice(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -6941,7 +7255,7 @@ void* Create_Slice(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						begin = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						begin = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -6969,7 +7283,7 @@ void* Create_Slice(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						size = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						size = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -7014,6 +7328,7 @@ void* Create_SpaceToBatch(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -7050,6 +7365,11 @@ void* Create_SpaceToBatch(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7076,7 +7396,7 @@ void* Create_SpaceToBatch(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						paddings = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						paddings = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -7141,6 +7461,7 @@ void* Create_SpaceToBatchND(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -7177,7 +7498,11 @@ void* Create_SpaceToBatchND(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						pinput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7204,7 +7529,7 @@ void* Create_SpaceToBatchND(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						block_shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						block_shape = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -7233,7 +7558,7 @@ void* Create_SpaceToBatchND(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						paddings = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						paddings = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -7277,6 +7602,7 @@ void* Create_SpaceToDepth(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -7313,7 +7639,11 @@ void* Create_SpaceToDepth(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7378,6 +7708,7 @@ void* Create_Split(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -7417,7 +7748,7 @@ void* Create_Split(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						axis = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -7441,6 +7772,11 @@ void* Create_Split(std::string id, Json::Value pInputItem) {
 							value = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						value = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -7507,6 +7843,7 @@ void* Create_SplitV(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -7543,6 +7880,11 @@ void* Create_SplitV(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						value = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7569,7 +7911,7 @@ void* Create_SplitV(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						size_splits = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						size_splits = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -7597,7 +7939,7 @@ void* Create_SplitV(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						axis = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						axis = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -7662,6 +8004,7 @@ void* Create_Squeeze(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -7698,7 +8041,11 @@ void* Create_Squeeze(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7755,6 +8102,7 @@ void* Create_StopGradient(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -7791,7 +8139,11 @@ void* Create_StopGradient(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
-
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7837,6 +8189,7 @@ void* Create_StridedSlice(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -7873,6 +8226,11 @@ void* Create_StridedSlice(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -7899,7 +8257,7 @@ void* Create_StridedSlice(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						begin = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						begin = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -7927,7 +8285,7 @@ void* Create_StridedSlice(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						end = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						end = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -7955,7 +8313,7 @@ void* Create_StridedSlice(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						strides = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						strides = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8030,6 +8388,7 @@ void* Create_StridedSliceAssign(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -8092,7 +8451,7 @@ void* Create_StridedSliceAssign(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						begin = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						begin = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8120,7 +8479,7 @@ void* Create_StridedSliceAssign(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						end = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						end = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8148,7 +8507,7 @@ void* Create_StridedSliceAssign(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						strides = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						strides = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8172,6 +8531,11 @@ void* Create_StridedSliceAssign(std::string id, Json::Value pInputItem) {
 							value = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						value = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8246,6 +8610,7 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -8285,7 +8650,7 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						shape = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						shape = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8313,7 +8678,7 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						begin = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						begin = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8341,7 +8706,7 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						end = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						end = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8369,7 +8734,7 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						strides = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						strides = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8393,6 +8758,11 @@ void* Create_StridedSliceGrad(std::string id, Json::Value pInputItem) {
 							dy = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						dy = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8463,6 +8833,7 @@ void* Create_Tile(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -8499,6 +8870,11 @@ void* Create_Tile(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						pInput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -8525,7 +8901,7 @@ void* Create_Tile(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						multiples = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						multiples = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8569,6 +8945,7 @@ void* Create_Transpose(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -8605,6 +8982,11 @@ void* Create_Transpose(std::string id, Json::Value pInputItem) {
 						}
 					}
 				}
+				else
+				{
+					if (!strPinInitial.empty())
+						x = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+				}
 			}
 			else
 			{
@@ -8631,7 +9013,7 @@ void* Create_Transpose(std::string id, Json::Value pInputItem) {
 				else
 				{
 					if (!strPinInitial.empty())
-						perm = (Output*)Create_StrToOutput(*m_pScope, "DT_INT32", "", strPinInitial);
+						perm = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8675,6 +9057,7 @@ void* Create_Unique(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -8710,6 +9093,11 @@ void* Create_Unique(std::string id, Json::Value pInputItem) {
 							x = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						x = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8766,6 +9154,7 @@ void* Create_UniqueWithCounts(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -8801,6 +9190,11 @@ void* Create_UniqueWithCounts(std::string id, Json::Value pInputItem) {
 							x = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						x = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8859,6 +9253,7 @@ void* Create_Unstack(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -8894,6 +9289,11 @@ void* Create_Unstack(std::string id, Json::Value pInputItem) {
 							value = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						value = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -8968,6 +9368,7 @@ void* Create_Where(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -9003,6 +9404,11 @@ void* Create_Where(std::string id, Json::Value pInputItem) {
 							condition = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						condition = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
@@ -9045,6 +9451,7 @@ void* Create_ZerosLike(std::string id, Json::Value pInputItem) {
 		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
 		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
 		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strPinDataType = ItemValue.get("pin-datatype", "").asString();
 		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
 		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
 		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
@@ -9080,6 +9487,11 @@ void* Create_ZerosLike(std::string id, Json::Value pInputItem) {
 							x = (Output*)pOutputObj->pOutput;
 						}
 					}
+				}
+				else
+				{
+					if (!strPinInitial.empty())
+						x = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
 				}
 			}
 			else
