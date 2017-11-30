@@ -25,6 +25,11 @@
 
 #include "include/json/json.h"
 
+#define DEF_MODE_EDIT							0
+#define DEF_MODE_FREEZE							1
+#define DEF_MODE_STEP							2
+#define DEF_MODE_RUN							3
+
 #define SYMBOL_NONE														-1
 #define SYMBOL_BATCHTOSPACE 											1
 #define SYMBOL_BATCHTOSPACEND 											2
@@ -620,5 +625,7 @@ extern Scope* m_pScope;										// set the current scope node pointer.
 
 extern std::map<std::string, int>	m_SymbolList;
 extern bool m_bShowDebugMessage;
+extern bool m_bContinusLoop;
+extern int m_iSimulationMode;
 
 #endif

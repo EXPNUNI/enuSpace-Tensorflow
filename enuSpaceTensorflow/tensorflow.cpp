@@ -833,9 +833,28 @@ extern "C" __declspec(dllexport) bool OnInit()
 	return true;
 }
 
+bool bProcessing = false;
 extern "C" __declspec(dllexport) bool OnTask()
 {
-	return Task_Tensorflow();
+	if (m_bContinusLoop == false)
+	{
+		Task_Tensorflow();
+		return true;
+	}
+	else
+	{
+		if (bProcessing == false)
+		{
+			while (m_bContinusLoop && m_iSimulationMode == DEF_MODE_RUN)
+			{
+				bProcessing = true;
+				Task_Tensorflow();
+			}
+			bProcessing = false;
+		}
+	}
+
+	return true;
 }
 
 extern "C" __declspec(dllexport) bool OnUnload()
@@ -854,7 +873,7 @@ extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, w
 
 extern "C" __declspec(dllexport) void OnModeChange(int iMode)
 {
-
+	m_iSimulationMode = iMode;
 }
 
 extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction)
@@ -872,6 +891,19 @@ extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction)
 			m_bShowDebugMessage = true;
 		else
 			m_bShowDebugMessage = false;
+	}
+	else if (strFunction.Find(L"SetInfiniteLoop") == 0)
+	{
+		CString Value = strFunction.Right(strFunction.GetLength() - 15);
+		Value.Trim();
+		Value.Trim(L"(");
+		Value.Trim(L")");
+		Value.Trim();
+		Value.MakeLower();
+		if (Value == L"true" || Value == L"1")
+			m_bContinusLoop = true;
+		else
+			m_bContinusLoop = false;
 	}
 }
 
