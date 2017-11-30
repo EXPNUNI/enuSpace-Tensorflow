@@ -193,6 +193,9 @@ extern "C" __declspec(dllexport) bool OnInit();
 extern "C" __declspec(dllexport) bool OnLoad();
 extern "C" __declspec(dllexport) bool OnUnload();
 extern "C" __declspec(dllexport) bool OnTask();
+extern "C" __declspec(dllexport) void OnModeChange(int iMode);
+extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction);
+
 
 extern "C" __declspec(dllexport) void OnEditComponent(wchar_t* pStrSymbolName, wchar_t* pStrID);
 extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, wchar_t* pStrID);
@@ -679,9 +682,9 @@ double GetValue(std::string strVariable)
 
 void PrintMessage(std::string strMessage)
 {
-	std::string strTenMessage = string_format("tensorflow -> %s", strMessage.c_str());
-	if (g_fcbPrintMessage)
+	if (g_fcbPrintMessage && m_bShowDebugMessage)
 	{
+		std::string strTenMessage = string_format("tensorflow -> %s", strMessage.c_str());
 		g_fcbPrintMessage(StringToCString(strTenMessage).GetBuffer(0));
 	}
 }
@@ -847,6 +850,29 @@ extern "C" __declspec(dllexport) void OnEditComponent(wchar_t* pStrSymbolName, w
 extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, wchar_t* pStrID)
 {
 
+}
+
+extern "C" __declspec(dllexport) void OnModeChange(int iMode)
+{
+
+}
+
+extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction)
+{
+	CString strFunction = pStrFunction;
+	if (strFunction.Find(L"ShowDebugMessage") == 0)
+	{
+		CString Value = strFunction.Right(strFunction.GetLength() - 16);
+		Value.Trim();
+		Value.Trim(L"(");
+		Value.Trim(L")");
+		Value.Trim();
+		Value.MakeLower();
+		if (Value == L"true" || Value == L"1")
+			m_bShowDebugMessage = true;
+		else
+			m_bShowDebugMessage = false;
+	}
 }
 
 // HELP Interface
