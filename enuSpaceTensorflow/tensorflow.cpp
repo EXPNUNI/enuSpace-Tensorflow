@@ -846,7 +846,7 @@ extern "C" __declspec(dllexport) bool OnTask()
 		if (g_fcbPrintMessage)
 		{
 			CString strMessage;
-			strMessage.Format(L"tensorflow -> event cycle %d", iLoopCycle);
+			strMessage.Format(L"tensorflow -> event cycle ...................%d", iLoopCycle);
 			g_fcbPrintMessage(strMessage.GetBuffer(0));
 		}
 		return true;
@@ -864,7 +864,7 @@ extern "C" __declspec(dllexport) bool OnTask()
 				if (g_fcbPrintMessage)
 				{
 					CString strMessage;
-					strMessage.Format(L"tensorflow -> continus cycle %d", iLoopCycle);
+					strMessage.Format(L"tensorflow -> contineous cycle ...................%d", iLoopCycle);
 					g_fcbPrintMessage(strMessage.GetBuffer(0));
 				}
 			}
@@ -892,6 +892,8 @@ extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, w
 extern "C" __declspec(dllexport) void OnModeChange(int iMode)
 {
 	m_iSimulationMode = iMode;
+	if (m_iSimulationMode == DEF_MODE_STEP)
+		m_bContinusLoop = false;
 }
 
 extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction)
@@ -924,10 +926,12 @@ extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction)
 			m_bContinusLoop = false;
 	}
 
-	CString strMsg;
-	strMsg.Format(L"enuSpace to ExecuteFunction call - %s", strFunction);
-	std::string message = CStringToString(strMsg);
-	PrintMessage(message);
+	if (g_fcbPrintMessage)
+	{
+		CString strMsg;
+		strMsg.Format(L"enuSpace to ExecuteFunction call - %s", strFunction);
+		g_fcbPrintMessage(strMsg.GetBuffer(0));
+	}
 }
 
 // HELP Interface
