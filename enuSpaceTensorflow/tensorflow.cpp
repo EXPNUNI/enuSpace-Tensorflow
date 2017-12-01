@@ -773,6 +773,8 @@ extern "C" __declspec(dllexport) bool OnLoad()
 	return Load_Tensorflow();
 }
 
+bool bProcessing = false;
+int iLoopCycle = 0;
 extern "C" __declspec(dllexport) bool OnInit()
 {
 	InterfaceDataMapClear();
@@ -830,15 +832,23 @@ extern "C" __declspec(dllexport) bool OnInit()
 	}
 	finder.Close();
 
+	iLoopCycle = 0;
 	return true;
 }
 
-bool bProcessing = false;
 extern "C" __declspec(dllexport) bool OnTask()
 {
 	if (m_bContinusLoop == false)
 	{
 		Task_Tensorflow();
+		iLoopCycle++;
+
+		if (g_fcbPrintMessage)
+		{
+			CString strMessage;
+			strMessage.Format(L"tensorflow -> event cycle %d", iLoopCycle);
+			g_fcbPrintMessage(strMessage.GetBuffer(0));
+		}
 		return true;
 	}
 	else
@@ -849,6 +859,14 @@ extern "C" __declspec(dllexport) bool OnTask()
 			{
 				bProcessing = true;
 				Task_Tensorflow();
+				iLoopCycle++;
+
+				if (g_fcbPrintMessage)
+				{
+					CString strMessage;
+					strMessage.Format(L"tensorflow -> continus cycle %d", iLoopCycle);
+					g_fcbPrintMessage(strMessage.GetBuffer(0));
+				}
 			}
 			bProcessing = false;
 		}
@@ -905,6 +923,11 @@ extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction)
 		else
 			m_bContinusLoop = false;
 	}
+
+	CString strMsg;
+	strMsg.Format(L"enuSpace to ExecuteFunction call - %s", strFunction);
+	std::string message = CStringToString(strMsg);
+	PrintMessage(message);
 }
 
 // HELP Interface
