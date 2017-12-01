@@ -851,6 +851,19 @@ extern "C" __declspec(dllexport) bool OnTask()
 		}
 		return true;
 	}
+	else if (m_bContinusLoop && m_iSimulationMode == DEF_MODE_STEP)
+	{
+		Task_Tensorflow();
+		iLoopCycle++;
+
+		if (g_fcbPrintMessage)
+		{
+			CString strMessage;
+			strMessage.Format(L"tensorflow -> event cycle ...................%d", iLoopCycle);
+			g_fcbPrintMessage(strMessage.GetBuffer(0));
+		}
+		return true;
+	}
 	else
 	{
 		if (bProcessing == false)
@@ -892,8 +905,6 @@ extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, w
 extern "C" __declspec(dllexport) void OnModeChange(int iMode)
 {
 	m_iSimulationMode = iMode;
-	if (m_iSimulationMode == DEF_MODE_STEP)
-		m_bContinusLoop = false;
 }
 
 extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction)
