@@ -9,3 +9,5 @@ std::map<std::string, int>	m_SymbolList;
 bool m_bShowDebugMessage = true;
 bool m_bContinusLoop = false;
 int m_iSimulationMode = DEF_MODE_EDIT;
+
+FILE* m_FileData = NULL;

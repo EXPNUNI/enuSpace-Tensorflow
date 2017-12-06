@@ -67,8 +67,26 @@ void* Create_BatchToSpace(std::string id, Json::Value pInputItem) {
 				}
 				else
 				{
-					if (!strPinInitial.empty())
-						pinput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+					std::string strPinSave = ItemValue.get("pin-save", "").asString();
+					if (strPinSave != "binary")
+					{
+						if (!strPinInitial.empty())
+							pinput = (Output*)Create_StrToOutput(*m_pScope, strPinDataType, "", strPinInitial);
+					}
+					else
+					{
+						std::string strPinBinPos = ItemValue.get("pin-binary-pos", "").asString();
+						int ipos = stoi(strPinBinPos);
+						if (ipos != -1 && m_FileData)
+						{
+							pinput = (Output*)Create_BinaryToOutput(*m_pScope, strPinType, strPinShape, m_FileData, ipos);
+						}
+						else
+						{
+							std::string msg = string_format("warning : %s(%s) binary data missed.", id.c_str(), strPinName.c_str());
+							PrintMessage(msg);
+						}
+					}
 				}
 			}
 			else

@@ -67,3 +67,5 @@ bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, s
 bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, std::vector<int64>& arrayslice, std::vector<std::complex<double>>& arrayComplexVal);
 bool isString(std::string strVal);
 
+void* Create_BinaryToOutput(Scope& pScope, std::string strPinType, std::string strPinShape, FILE* pFile, int iPos);
+Tensor* Create_BinaryToTensor(std::string strPinType, std::string strPinShape, FILE* pFile, int iPos);

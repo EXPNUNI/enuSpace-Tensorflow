@@ -798,7 +798,6 @@ extern "C" __declspec(dllexport) bool OnInit()
 		CString logic_file = finder.GetFilePath();
 
 		std::string filename = CStringToString(logic_file);
-		PrintMessage(filename);
 
 		CString str;
 		CFile pFile;
@@ -824,10 +823,27 @@ extern "C" __declspec(dllexport) bool OnInit()
 			WCHAR ext[_MAX_EXT];
 			_wsplitpath_s(logic_file, drive, dir, fname, ext);
 
+			///////////////////////////////////////////////////////////////////
+			// binary data file
+			CString datafilename;
+			datafilename.Format(L"%s%s%s.dat", drive, dir, fname);
+			if (_wfopen_s(&m_FileData, datafilename.GetBuffer(0), L"rb") != NULL)
+			{
+				m_FileData = NULL;
+			}
+
 			std::string pagename;
 			pagename = CStringToString(fname);
 
 			Init_Tensorflow(covertStr, pagename);
+
+			///////////////////////////////////////////////////////////////////
+			// binary data file close
+			if (m_FileData)
+			{
+				fclose(m_FileData);
+				m_FileData = NULL;
+			}
 		}
 	}
 	finder.Close();

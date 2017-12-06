@@ -411,6 +411,24 @@ void* Create_Input_Initializer(std::string id, Json::Value pInputItem) {
 				{
 					if (!strPinInitial.empty())
 						ptensor = Create_StrToTensor(strAutoPinType, "", strPinInitial);
+					else
+					{
+						std::string strPinSave = ItemValue.get("pin-save", "").asString();
+						if (strPinSave == "binary")
+						{
+							std::string strPinBinPos = ItemValue.get("pin-binary-pos", "").asString();
+							int ipos = stoi(strPinBinPos);
+							if (ipos != -1 && m_FileData)
+							{
+								ptensor = Create_BinaryToTensor(strPinType, strPinShape, m_FileData, ipos);
+							}
+							else
+							{
+								std::string msg = string_format("warning : %s(%s) binary data missed.", id.c_str(), strPinName.c_str());
+								PrintMessage(msg);
+							}
+						}
+					}
 				}
 			}
 			else
@@ -782,6 +800,11 @@ void* Create_Tensor(std::string id, Json::Value pInputItem) {
 	std::string strdatatype;
 	tensorflow::DataType dtype = DT_DOUBLE;
 
+	std::string strPinSave;
+	int iPinBinPos = -1;
+	std::string strBinPinType;
+	std::string strBinPinShape;
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -819,6 +842,14 @@ void* Create_Tensor(std::string id, Json::Value pInputItem) {
 		{
 			if (!strPinInitial.empty())
 				strinitvalues = strPinInitial;
+			else
+			{
+				strPinSave = ItemValue.get("pin-save", "").asString();
+				std::string strPinBinPos = ItemValue.get("pin-binary-pos", "").asString();
+				iPinBinPos = stoi(strPinBinPos);
+				strBinPinType = strPinType;
+				strBinPinShape = strPinShape;
+			}
 		}
 		else
 		{
@@ -829,13 +860,27 @@ void* Create_Tensor(std::string id, Json::Value pInputItem) {
 
 	if (dtype != DT_INVALID)
 	{
-		pTensor = Create_StrToTensor(strdatatype, "", strinitvalues);
+		if (strPinSave != "binary")
+			pTensor = Create_StrToTensor(strdatatype, "", strinitvalues);
+		else
+		{
+			if (iPinBinPos != -1 && m_FileData)
+			{
+				pTensor = Create_BinaryToTensor(strBinPinType, strBinPinShape, m_FileData, iPinBinPos);
+				AddObjectMap(pTensor, id, SYMBOL_TENSOR, "Tensor", pInputItem);
+				return pTensor;
+			}
+			else
+			{
+				std::string msg = string_format("warning : %s(%s) binary data missed.", id.c_str());
+				PrintMessage(msg);
+			}
+		}
 		AddObjectMap(pTensor, id, SYMBOL_TENSOR, "Tensor", pInputItem);
 	}
 
 	return pTensor;
 }
-
 
 void* Create_Input(std::string id, Json::Value pInputItem)
 {
@@ -846,6 +891,11 @@ void* Create_Input(std::string id, Json::Value pInputItem)
 	std::string strdatatype;
 	Tensor* pTensor = nullptr;
 	Output* pOutput = nullptr;
+
+	std::string strPinSave;
+	int iPinBinPos = -1;
+	std::string strBinPinType;
+	std::string strBinPinShape;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -899,8 +949,17 @@ void* Create_Input(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : Input - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				strPinSave = ItemValue.get("pin-save", "").asString();
+				std::string strPinBinPos = ItemValue.get("pin-binary-pos", "").asString();
+				iPinBinPos = stoi(strPinBinPos);
+				strBinPinType = strPinType;
+				strBinPinShape = strPinShape;
+
+				if (strPinBinPos != "binary")
+				{
+					std::string msg = string_format("warning : Input - %s(%s) binary information missed.", id.c_str(), strPinName.c_str());
+					PrintMessage(msg);
+				}
 			}
 		}
 		else
@@ -927,8 +986,22 @@ void* Create_Input(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : Input(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		if (strPinSave == "binary")
+		{
+			if (iPinBinPos != -1 && m_FileData)
+			{
+				pTensor = Create_BinaryToTensor(strBinPinType, strBinPinShape, m_FileData, iPinBinPos);
+				pInput = new Input(*pTensor);
+				ObjectInfo* pObj = AddObjectMap(pInput, id, SYMBOL_INPUT, "input", pInputItem);
+				if (pObj)
+					AddOutputInfo(pObj, pInput, OUTPUT_TYPE_INPUT, "input");
+			}
+			else
+			{
+				std::string msg = string_format("warning : %s(%s) binary data missed.", id.c_str());
+				PrintMessage(msg);
+			}
+		}
 	}
 
 	return pInput;
@@ -1062,103 +1135,124 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 		{
 			if (strInSymbolPinName == "" && strPinInterface == "Input::Initializer")
 			{
-				std::vector<int64> array_slice;
-				std::vector<int64> arraydims;
-				GetArrayDimsFromShape(strPinShape, arraydims, array_slice);
-
-				if (strPinType == "double")
+				std::string strPinSave = ItemValue.get("pin-save", "").asString();
+				if (strPinSave == "binary")
 				{
-					std::vector<double> arrayvals;
-					GetDoubleVectorFromInitial(strPinInitial, arrayvals);
+					std::string strPinBinPos = ItemValue.get("pin-binary-pos", "").asString();
+					int iPinBinPos = stoi(strPinBinPos);
+					std::string strBinPinType = strPinType;
+					std::string strBinPinShape = strPinShape;
 
-					gtl::ArraySlice< int64 > arraySlice(arraydims);
-					pTensor = new Tensor(DT_DOUBLE, TensorShape(arraySlice));
-
-					int i = 0;
-					for (std::vector<double>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+					if (iPinBinPos != -1 && m_FileData)
 					{
-						pTensor->flat<double>()(i) = *it;
-						i++;
+						pTensor = Create_BinaryToTensor(strBinPinType, strBinPinShape, m_FileData, iPinBinPos);
 					}
-					arraySlice.clear();
-					arrayvals.clear();
-				}
-				else if (strPinType == "float")
-				{
-					std::vector<float> arrayvals;
-					GetFloatVectorFromInitial(strPinInitial, arrayvals);
-
-					gtl::ArraySlice< int64 > arraySlice(arraydims);
-					pTensor = new Tensor(DT_FLOAT, TensorShape(arraySlice));
-
-					int i = 0;
-					for (std::vector<float>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+					else
 					{
-						pTensor->flat<float>()(i) = *it;
-						i++;
+						std::string msg = string_format("warning : Const - %s(%s) binary information missed.", id.c_str(), strPinName.c_str());
+						PrintMessage(msg);
 					}
-					arraySlice.clear();
-					arrayvals.clear();
-				}
-				else if (strPinType == "int")
-				{
-					std::vector<int> arrayvals;
-					GetIntVectorFromInitial(strPinInitial, arrayvals);
-
-					gtl::ArraySlice< int64 > arraySlice(arraydims);
-					pTensor = new Tensor(DT_INT32, TensorShape(arraySlice));
-
-					int i = 0;
-					for (std::vector<int>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
-					{
-						pTensor->flat<int>()(i) = *it;
-						i++;
-					}
-					arraySlice.clear();
-					arrayvals.clear();
-				}
-				else if (strPinType == "bool")
-				{
-					std::vector<bool> arrayvals;
-					GetBoolVectorFromInitial(strPinInitial, arrayvals);
-
-					gtl::ArraySlice< int64 > arraySlice(arraydims);
-					pTensor = new Tensor(DT_BOOL, TensorShape(arraySlice));
-
-					int i = 0;
-					for (std::vector<bool>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
-					{
-						pTensor->flat<bool>()(i) = *it;
-						i++;
-					}
-					arraySlice.clear();
-					arrayvals.clear();
-				}
-				else if (strPinType == "string")
-				{
-					std::vector<std::string> arrayvals;
-					GetStringVectorFromInitial(strPinInitial, arrayvals);
-
-					gtl::ArraySlice< int64 > arraySlice(arraydims);
-					pTensor = new Tensor(DT_STRING, TensorShape(arraySlice));
-
-					int i = 0;
-					for (std::vector<std::string>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
-					{
-						pTensor->flat<std::string>()(i) = *it;
-						i++;
-					}
-					arraySlice.clear();
-					arrayvals.clear();
 				}
 				else
 				{
-					std::string msg = string_format("warning : Const - %s(val-initvalue) transfer information missed.", id.c_str());
-					PrintMessage(msg);
-				}
+					std::vector<int64> array_slice;
+					std::vector<int64> arraydims;
+					GetArrayDimsFromShape(strPinShape, arraydims, array_slice);
 
-				array_slice.clear();
-				arraydims.clear();
+					if (strPinType == "double")
+					{
+						std::vector<double> arrayvals;
+						GetDoubleVectorFromInitial(strPinInitial, arrayvals);
+
+						gtl::ArraySlice< int64 > arraySlice(arraydims);
+						pTensor = new Tensor(DT_DOUBLE, TensorShape(arraySlice));
+
+						int i = 0;
+						for (std::vector<double>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+						{
+							pTensor->flat<double>()(i) = *it;
+							i++;
+						}
+						arraySlice.clear();
+						arrayvals.clear();
+					}
+					else if (strPinType == "float")
+					{
+						std::vector<float> arrayvals;
+						GetFloatVectorFromInitial(strPinInitial, arrayvals);
+
+						gtl::ArraySlice< int64 > arraySlice(arraydims);
+						pTensor = new Tensor(DT_FLOAT, TensorShape(arraySlice));
+
+						int i = 0;
+						for (std::vector<float>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+						{
+							pTensor->flat<float>()(i) = *it;
+							i++;
+						}
+						arraySlice.clear();
+						arrayvals.clear();
+					}
+					else if (strPinType == "int")
+					{
+						std::vector<int> arrayvals;
+						GetIntVectorFromInitial(strPinInitial, arrayvals);
+
+						gtl::ArraySlice< int64 > arraySlice(arraydims);
+						pTensor = new Tensor(DT_INT32, TensorShape(arraySlice));
+
+						int i = 0;
+						for (std::vector<int>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+						{
+							pTensor->flat<int>()(i) = *it;
+							i++;
+						}
+						arraySlice.clear();
+						arrayvals.clear();
+					}
+					else if (strPinType == "bool")
+					{
+						std::vector<bool> arrayvals;
+						GetBoolVectorFromInitial(strPinInitial, arrayvals);
+
+						gtl::ArraySlice< int64 > arraySlice(arraydims);
+						pTensor = new Tensor(DT_BOOL, TensorShape(arraySlice));
+
+						int i = 0;
+						for (std::vector<bool>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+						{
+							pTensor->flat<bool>()(i) = *it;
+							i++;
+						}
+						arraySlice.clear();
+						arrayvals.clear();
+					}
+					else if (strPinType == "string")
+					{
+						std::vector<std::string> arrayvals;
+						GetStringVectorFromInitial(strPinInitial, arrayvals);
+
+						gtl::ArraySlice< int64 > arraySlice(arraydims);
+						pTensor = new Tensor(DT_STRING, TensorShape(arraySlice));
+
+						int i = 0;
+						for (std::vector<std::string>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+						{
+							pTensor->flat<std::string>()(i) = *it;
+							i++;
+						}
+						arraySlice.clear();
+						arrayvals.clear();
+					}
+					else
+					{
+						std::string msg = string_format("warning : Const - %s(val-initvalue) transfer information missed.", id.c_str());
+						PrintMessage(msg);
+					}
+
+					array_slice.clear();
+					arraydims.clear();
+				}
 			}
 		}
 	}
@@ -1179,7 +1273,6 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_CONST, "Const", pInputItem);
 		if (pObj)
 			AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT, "output");
-		// pObj->pOutput = pOutput;
 	}
 	else
 	{
@@ -1202,6 +1295,12 @@ void* Create_Const_ex(std::string id, Json::Value pInputItem)
 	std::string strVal = "";
 	std::string strShape = "";
 	int iSize = (int)pInputItem.size();
+
+	int iPinBinPos= -1;
+	std::string strBinPinType;
+	std::string strBinPinShape;
+	std::string strPinSave;
+
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
 		Json::Value ItemValue = pInputItem[subindex];
@@ -1247,6 +1346,15 @@ void* Create_Const_ex(std::string id, Json::Value pInputItem)
 			{
 				strVal = strPinInitial;
 				strShape = strPinShape;
+
+				strPinSave = ItemValue.get("pin-save", "").asString();
+				if (strPinSave == "binary")
+				{
+					std::string strPinBinPos = ItemValue.get("pin-binary-pos", "").asString();
+					iPinBinPos = stoi(strPinBinPos);
+					strBinPinType = strPinType;
+					strBinPinShape = strPinShape;
+				}
 			}
 			else
 			{
@@ -1372,6 +1480,21 @@ void* Create_Const_ex(std::string id, Json::Value pInputItem)
 
 		array_slice.clear();
 		arraydims.clear();
+	}
+	else
+	{
+		if (strPinSave == "binary")
+		{
+			if (iPinBinPos != -1 && m_FileData)
+			{
+				pTensor = Create_BinaryToTensor(strBinPinType, strBinPinShape, m_FileData, iPinBinPos);
+			}
+			else
+			{
+				std::string msg = string_format("warning : Const_ex - %s(%s) binary information missed.", id.c_str());
+				PrintMessage(msg);
+			}
+		}
 	}
 
 	if (pScope == nullptr)

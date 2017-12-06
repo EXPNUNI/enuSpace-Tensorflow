@@ -628,4 +628,6 @@ extern bool m_bShowDebugMessage;
 extern bool m_bContinusLoop;
 extern int m_iSimulationMode;
 
+extern FILE* m_FileData;
+
 #endif
