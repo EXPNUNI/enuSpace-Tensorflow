@@ -1410,6 +1410,150 @@ void* Create_BinaryToOutput(Scope& pScope, std::string strPinType, std::string s
 	return pOutput;
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
+Tensor* Create_ArrayStrToTensor(std::string strPinType, std::string strPinShape, std::string strInitvalue)
+{
+	Tensor* pTensor = nullptr;
+	DataType itype = DT_INVALID;
+
+	if (strPinType != "")
+	{
+		if (strPinType == "double")
+			itype = DT_DOUBLE;
+		else if (strPinType == "float")
+			itype = DT_FLOAT;
+		else if (strPinType == "int")
+			itype = DT_INT32;
+		else if (strPinType == "bool")
+			itype = DT_BOOL;
+	}
+
+	switch (itype)
+	{
+	case DT_DOUBLE:
+	{
+		std::vector<int64> arrayslice;
+		std::vector<int64> arraydims;
+		if (GetArrayDimsFromShape(strPinShape, arraydims, arrayslice))
+		{
+			std::vector<double> arrayvals;
+			GetDoubleVectorFromInitial(strInitvalue, arrayvals);
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_DOUBLE, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<double>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<double>()(i) = *it;
+				i++;
+			}
+			arrayslice.clear();
+			arraydims.clear();
+			arrayvals.clear();
+			arraySlice.clear();
+		}
+		break;
+	}
+	case DT_FLOAT:
+	{
+		std::vector<int64> arrayslice;
+		std::vector<int64> arraydims;
+		if (GetArrayDimsFromShape(strPinShape, arraydims, arrayslice))
+		{
+			std::vector<float> arrayvals;
+			GetFloatVectorFromInitial(strInitvalue, arrayvals);
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_FLOAT, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<float>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<float>()(i) = *it;
+				i++;
+			}
+			arrayslice.clear();
+			arraydims.clear();
+			arrayvals.clear();
+			arraySlice.clear();
+		}
+		break;
+	}
+	case DT_INT32:
+	{
+		std::vector<int64> arrayslice;
+		std::vector<int64> arraydims;
+		if (GetArrayDimsFromShape(strPinShape, arraydims, arrayslice))
+		{
+			std::vector<int> arrayvals;
+			GetIntVectorFromInitial(strInitvalue, arrayvals);
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_INT32, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<int>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<int>()(i) = *it;
+				i++;
+			}
+			arrayslice.clear();
+			arraydims.clear();
+			arrayvals.clear();
+			arraySlice.clear();
+		}
+		break;
+	}
+	case DT_BOOL:
+	{
+		std::vector<int64> arrayslice;
+		std::vector<int64> arraydims;
+		if (GetArrayDimsFromShape(strPinShape, arraydims, arrayslice))
+		{
+			std::vector<bool> arrayvals;
+			GetBoolVectorFromInitial(strInitvalue, arrayvals);
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_BOOL, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<bool>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<bool>()(i) = *it;
+				i++;
+			}
+			arrayslice.clear();
+			arraydims.clear();
+			arrayvals.clear();
+			arraySlice.clear();
+		}
+		break;
+	}
+	default:
+	{
+		std::string msg = string_format("error : DataType (%s) is not spported in binary tensor data.", strPinType.c_str());
+		return pTensor;
+	}
+	}
+
+	return pTensor;
+}
+
+void* Create_ArrayStrToOutput(Scope& pScope, std::string strPinType, std::string strPinShape, std::string strInitvalue)
+{
+	Output* pOutput = new Output();
+
+	Tensor* pTensor = Create_ArrayStrToTensor(strPinType, strPinShape, strInitvalue);
+
+	if (pTensor)
+	{
+		*pOutput = Const(pScope, *pTensor);
+		delete pTensor;
+	}
+
+	return pOutput;
+}
+
 bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, std::vector<int64>& arrayslice, std::vector<double>& arrayVal)
 {
 	if (strVal.length() > 0)

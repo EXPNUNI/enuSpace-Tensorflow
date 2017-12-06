@@ -338,14 +338,14 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 								else
 								{
 									initvalues = strPinInitial;
+									strBinPinType = strPinType;
+									strBinPinShape = strPinShape;
 
 									strPinSave = ItemValue.get("pin-save", "").asString();
 									if (strPinSave == "binary")
 									{
 										std::string strPinBinPos = ItemValue.get("pin-binary-pos", "").asString();
 										iPinBinPos = stoi(strPinBinPos);
-										strBinPinType = strPinType;
-										strBinPinShape = strPinShape;
 									}
 								}
 							}
@@ -366,40 +366,56 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 
 					if (bRun == false)
 					{
-						if (!initvalues.empty() && !strdatatype.empty())
+						if (strPinSave == "binary")
 						{
-							Output* pOutput = nullptr;
-							pOutput = (Output*)Create_StrToOutput(*m_pScope, strdatatype, "", initvalues);
-							if (pOutput)
+							if (iPinBinPos != -1 && m_FileData)
 							{
-								std::vector< Output > init_obj;
-								std::vector<tensorflow::Tensor> outputs;
-								auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
-								init_obj.push_back(assign);
-								pSession->Run(init_obj, &outputs);
+								Output* pOutput = nullptr;
+								// float, [10]
+								pOutput = (Output*)Create_BinaryToOutput(*m_pScope, strBinPinType, strBinPinShape, m_FileData, iPinBinPos);
+								if (pOutput)
+								{
+									std::vector< Output > init_obj;
+									std::vector<tensorflow::Tensor> outputs;
+									auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
+									init_obj.push_back(assign);
+									pSession->Run(init_obj, &outputs);
+								}
+							}
+							else
+							{
+								std::string msg = string_format("warning : variable init - %s binary information missed.", id.c_str());
+								PrintMessage(msg);
 							}
 						}
 						else
 						{
-							if (strPinSave == "binary")
+							// 0;1;2;3;4, float, [10]
+							if (initvalues.find(';') != -1 && !strBinPinType.empty() && !strBinPinShape.empty())
 							{
-								if (iPinBinPos != -1 && m_FileData)
+								Output* pOutput = nullptr;
+								pOutput = (Output*)Create_ArrayStrToOutput(*m_pScope, strBinPinType, strBinPinShape, initvalues);
+								if (pOutput)
 								{
-									Output* pOutput = nullptr;
-									pOutput = (Output*)Create_BinaryToOutput(*m_pScope, strBinPinType, strBinPinShape, m_FileData, iPinBinPos);
-									if (pOutput)
-									{
-										std::vector< Output > init_obj;
-										std::vector<tensorflow::Tensor> outputs;
-										auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
-										init_obj.push_back(assign);
-										pSession->Run(init_obj, &outputs);
-									}
+									std::vector< Output > init_obj;
+									std::vector<tensorflow::Tensor> outputs;
+									auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
+									init_obj.push_back(assign);
+									pSession->Run(init_obj, &outputs);
 								}
-								else
+							}
+							// {1,2}, DT_FLOAT
+							else if (!initvalues.empty() && !strdatatype.empty())
+							{
+								Output* pOutput = nullptr;
+								pOutput = (Output*)Create_StrToOutput(*m_pScope, strdatatype, "", initvalues);
+								if (pOutput)
 								{
-									std::string msg = string_format("warning : variable init - %s binary information missed.", id.c_str());
-									PrintMessage(msg);
+									std::vector< Output > init_obj;
+									std::vector<tensorflow::Tensor> outputs;
+									auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
+									init_obj.push_back(assign);
+									pSession->Run(init_obj, &outputs);
 								}
 							}
 						}

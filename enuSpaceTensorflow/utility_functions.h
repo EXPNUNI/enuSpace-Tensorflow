@@ -69,3 +69,6 @@ bool isString(std::string strVal);
 
 void* Create_BinaryToOutput(Scope& pScope, std::string strPinType, std::string strPinShape, FILE* pFile, int iPos);
 Tensor* Create_BinaryToTensor(std::string strPinType, std::string strPinShape, FILE* pFile, int iPos);
+
+void* Create_ArrayStrToOutput(Scope& pScope, std::string strPinType, std::string strPinShape, std::string strInitvalue);
+Tensor* Create_ArrayStrToTensor(std::string strPinType, std::string strPinShape, std::string strInitvalue);
