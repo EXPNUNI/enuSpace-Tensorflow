@@ -282,6 +282,12 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 		////////////////////////////////////////////////////////////////////////////////////
 		// init variables
 		std::map<std::string, ObjectInfo*>::iterator vit;
+
+		std::string strPinSave;
+		std::string strBinPinType;
+		std::string strBinPinShape;
+		int iPinBinPos = -1;
+
 		for (vit = m_ObjectMapList.begin(); vit != m_ObjectMapList.end(); ++vit)
 		{
 			ObjectInfo* pTar = vit->second;
@@ -332,6 +338,15 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 								else
 								{
 									initvalues = strPinInitial;
+
+									strPinSave = ItemValue.get("pin-save", "").asString();
+									if (strPinSave == "binary")
+									{
+										std::string strPinBinPos = ItemValue.get("pin-binary-pos", "").asString();
+										iPinBinPos = stoi(strPinBinPos);
+										strBinPinType = strPinType;
+										strBinPinShape = strPinShape;
+									}
 								}
 							}
 						}
@@ -362,6 +377,30 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 								auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
 								init_obj.push_back(assign);
 								pSession->Run(init_obj, &outputs);
+							}
+						}
+						else
+						{
+							if (strPinSave == "binary")
+							{
+								if (iPinBinPos != -1 && m_FileData)
+								{
+									Output* pOutput = nullptr;
+									pOutput = (Output*)Create_BinaryToOutput(*m_pScope, strBinPinType, strBinPinShape, m_FileData, iPinBinPos);
+									if (pOutput)
+									{
+										std::vector< Output > init_obj;
+										std::vector<tensorflow::Tensor> outputs;
+										auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
+										init_obj.push_back(assign);
+										pSession->Run(init_obj, &outputs);
+									}
+								}
+								else
+								{
+									std::string msg = string_format("warning : variable init - %s binary information missed.", id.c_str());
+									PrintMessage(msg);
+								}
 							}
 						}
 					}
