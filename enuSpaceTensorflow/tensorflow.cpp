@@ -276,6 +276,18 @@ void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iS
 		// 요청한 변수의 데이터 타입 및 배열의 길이가 동일하다면, 값을 업데이트 수행.
 		if (pData->array.size == iSize && pData->type == iType)
 		{
+			// ArraySize는 동일하나 dimension값이 변경된경우 매모리맵의 데이터 업데이트 수행.
+			if (wcscmp(pData->array.dimension, strDim.GetBuffer(0)) != 0)
+			{
+				// enuSpace Reshape 변경을 보냄, enuSpace는 메모리 사이즈 점검후 dimension 정보만 업데이트 수행.
+				if (g_fcbSetReShapeArrayValue)
+				{
+					g_fcbSetReShapeArrayValue((wchar_t*)widestr.c_str(), pSrc, iType, iSize);
+					wcscpy_s(pData->array.dimension, strDim);
+				}
+				return;
+			}
+
 			int itemSize = 0;
 			void* pTarget = NULL;
 			switch (iType)
@@ -319,6 +331,7 @@ void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iS
 					break;
 				}
 			}
+			return;
 		}
 		// 메모리의 데이터 타입 및 배열의 사이즈가 다르다면, 맵 리스트에서 제거 수행 후 메모리 RESHAPE 후 값 업데이트 함수 호출
 		else
@@ -331,7 +344,7 @@ void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iS
 			{
 				g_fcbSetReShapeArrayValue((wchar_t*)widestr.c_str(), pSrc, iType, iSize);
 			}
-			return;
+			// 하위로직을 타고 리스트 별도 추가 수행.
 		}
 	}
 
