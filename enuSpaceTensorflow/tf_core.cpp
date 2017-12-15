@@ -390,8 +390,22 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 						}
 						else
 						{
-							// 0;1;2;3;4, float, [10]
-							if (initvalues.find(';') != -1 && !strBinPinType.empty() && !strBinPinShape.empty())
+							// initvalues = {1.0f, 2.0f}, datatype = DT_FLOAT, shape = [10] or null 
+							if (!strdatatype.empty())
+							{
+								Output* pOutput = nullptr;
+								pOutput = (Output*)Create_StrToOutput(*m_pScope, strdatatype, "", initvalues);
+								if (pOutput)
+								{
+									std::vector< Output > init_obj;
+									std::vector<tensorflow::Tensor> outputs;
+									auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
+									init_obj.push_back(assign);
+									pSession->Run(init_obj, &outputs);
+								}
+							}
+							// initvalues = 1.0;2.0 datatype= "", strBinPinType="string, int, float, bool, double", strBinPinShape = [10][10]
+							else if (strdatatype.empty())
 							{
 								Output* pOutput = nullptr;
 								pOutput = (Output*)Create_ArrayStrToOutput(*m_pScope, strBinPinType, strBinPinShape, initvalues);
@@ -404,19 +418,10 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 									pSession->Run(init_obj, &outputs);
 								}
 							}
-							// {1,2}, DT_FLOAT
-							else if (!initvalues.empty() && !strdatatype.empty())
+							else
 							{
-								Output* pOutput = nullptr;
-								pOutput = (Output*)Create_StrToOutput(*m_pScope, strdatatype, "", initvalues);
-								if (pOutput)
-								{
-									std::vector< Output > init_obj;
-									std::vector<tensorflow::Tensor> outputs;
-									auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
-									init_obj.push_back(assign);
-									pSession->Run(init_obj, &outputs);
-								}
+								std::string msg = string_format("warning : variable init - %s text information missed.", id.c_str());
+								PrintMessage(msg);
 							}
 						}
 					}

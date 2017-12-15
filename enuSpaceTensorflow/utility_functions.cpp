@@ -1425,6 +1425,8 @@ Tensor* Create_ArrayStrToTensor(std::string strPinType, std::string strPinShape,
 			itype = DT_INT32;
 		else if (strPinType == "bool")
 			itype = DT_BOOL;
+		else if (strPinType == "string")
+			itype = DT_STRING;
 	}
 
 	switch (itype)
@@ -1520,6 +1522,31 @@ Tensor* Create_ArrayStrToTensor(std::string strPinType, std::string strPinShape,
 			for (std::vector<bool>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
 			{
 				pTensor->flat<bool>()(i) = *it;
+				i++;
+			}
+			arrayslice.clear();
+			arraydims.clear();
+			arrayvals.clear();
+			arraySlice.clear();
+		}
+		break;
+	}
+	case DT_STRING:
+	{
+		std::vector<int64> arrayslice;
+		std::vector<int64> arraydims;
+		if (GetArrayDimsFromShape(strPinShape, arraydims, arrayslice))
+		{
+			std::vector<string> arrayvals;
+			GetStringVectorFromInitial(strInitvalue, arrayvals);
+
+			gtl::ArraySlice< int64 > arraySlice(arraydims);
+			pTensor = new Tensor(DT_STRING, TensorShape(arraySlice));
+
+			int i = 0;
+			for (std::vector<string>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
+			{
+				pTensor->flat<string>()(i) = *it;
 				i++;
 			}
 			arrayslice.clear();

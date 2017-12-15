@@ -1835,9 +1835,14 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	tensorflow::ops::Variable* pOutput = nullptr;
 	tensorflow::PartialTensorShape shape;
-	tensorflow::DataType dtype = DT_DOUBLE;
+	tensorflow::DataType dtype = DT_INVALID;
 	tensorflow::ops::Variable::Attrs attrs;
 	std::string temp1, temp2;
+
+	std::string strDataType;
+	std::string strDataShape;
+	std::string strInitPinType;
+	std::string strInitPinShape;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1871,10 +1876,11 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "PartialTensorShape")
 			{
-				if (strPinInitial != "")
-				{
-					shape = GetPartialShapeFromInitial(strPinInitial);
-				}
+				strDataShape = strPinInitial;
+				//if (strPinInitial != "")
+				//{
+				//	shape = GetPartialShapeFromInitial(strPinInitial);
+				//}
 			}
 			else
 			{
@@ -1886,12 +1892,13 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 		{
 			if (strPinInterface == "DataType")
 			{
-				dtype = GetDatatypeFromInitial(strPinInitial);
-				if (dtype == DT_INVALID)
-				{
-					std::string msg = string_format("warning : Variable - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
-				}
+				strDataType = strPinInitial;
+				//dtype = GetDatatypeFromInitial(strPinInitial);
+				//if (dtype == DT_INVALID)
+				//{
+				//	std::string msg = string_format("warning : Variable - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+				//	PrintMessage(msg);
+				//}
 			}
 			else
 			{
@@ -1919,6 +1926,8 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 		}
 		else if (strPinName == "initvalues")
 		{
+			strInitPinType = strPinType;
+			strInitPinShape = strPinShape;
 			if (strPinInterface == "Input")
 			{
 				// 초기화 루틴은 ClientSession 생성부에서 처리 수행함.
@@ -1940,12 +1949,52 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 
 	if (pScope)
 	{	
-		
-		pOutput = new Variable(*pScope, shape, dtype, attrs);
+		// initvalues = {1.0f, 2.0f}, datatype = DT_FLOAT, shape = [10] or null 
+		if (strInitPinType == "string" && !strDataType.empty())
+		{
+			dtype = GetDatatypeFromInitial(strDataType);
+			shape = GetPartialShapeFromInitial(strDataShape);
+			pOutput = new Variable(*pScope, shape, dtype, attrs);
+		}
+		// initvalues = 1.0f;2.0f, datatype = "", strInitPinType = "string, int, float, bool, double", strInitPinShape = [10][10]
+		else if (strDataType.empty())
+		{
+			if (strInitPinType != "")
+			{
+				if (strInitPinType == "double")
+					dtype = DT_DOUBLE;
+				else if (strInitPinType == "float")
+					dtype = DT_FLOAT;
+				else if (strInitPinType == "int")
+					dtype = DT_INT32;
+				else if (strInitPinType == "bool")
+					dtype = DT_BOOL;
+				else if (strInitPinType == "string")
+					dtype = DT_STRING;
+			}
 
-		ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_VARIABLE, "Variable", pInputItem);
-		if (pObj)
-			AddOutputInfo(pObj, &pOutput->ref, OUTPUT_TYPE_OUTPUT, "ref");
+			if (dtype != DT_INVALID)
+			{
+				shape = GetPartialShapeFromInitial(strInitPinShape);
+				pOutput = new Variable(*pScope, shape, dtype, attrs);
+			}
+			else
+			{
+				std::string msg = string_format("error : Variable(%s) Object create failed.", id.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else
+		{
+			std::string msg = string_format("error : Variable(%s) Object create failed. dtype(%s).", id.c_str(), strDataType.c_str());
+			PrintMessage(msg);
+		}
+		if (pOutput)
+		{
+			ObjectInfo* pObj = AddObjectMap(pOutput, id, SYMBOL_VARIABLE, "Variable", pInputItem);
+			if (pObj)
+				AddOutputInfo(pObj, &pOutput->ref, OUTPUT_TYPE_OUTPUT, "ref");
+		}
 	}
 	else
 	{
