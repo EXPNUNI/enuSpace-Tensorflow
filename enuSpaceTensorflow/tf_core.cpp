@@ -305,21 +305,21 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 					{
 						Json::Value ItemValue = pTar->param[subindex];
 
-						std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
-						std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
-						std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
-						std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
-						std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
-						std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
-						std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
-						std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
-						std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+						std::string strSubPinName = ItemValue.get("pin-name", "").asString();								// val
+						std::string strSubPinType = ItemValue.get("pin-type", "").asString();								// double
+						std::string strSubPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+						std::string strSubInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+						std::string strSubInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+						std::string strSubInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+						std::string strSubInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+						std::string strSubPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+						std::string strSubPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
 
-						if (strPinName == "initvalues")
+						if (strSubPinName == "initvalues")
 						{
-							if (strPinInterface == "Input")
+							if (strSubPinInterface == "Input")
 							{
-								ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+								ObjectInfo* pObj = LookupFromObjectMap(strSubInSymbolId);
 								if (pObj)
 								{
 									if (pObj->type == SYMBOL_CONST)
@@ -337,9 +337,9 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 								}
 								else
 								{
-									initvalues = strPinInitial;
-									strBinPinType = strPinType;
-									strBinPinShape = strPinShape;
+									initvalues = strSubPinInitial;
+									strBinPinType = strSubPinType;
+									strBinPinShape = strSubPinShape;
 
 									strPinSave = ItemValue.get("pin-save", "").asString();
 									if (strPinSave == "binary")
@@ -350,15 +350,15 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 								}
 							}
 						}
-						else if (strPinName == "dtype")
+						else if (strSubPinName == "dtype")
 						{
-							if (!strPinInitial.empty())
+							if (!strSubPinInitial.empty())
 							{
-								strdatatype = strPinInitial;
+								strdatatype = strSubPinInitial;
 							}
 							else
 							{
-								std::string msg = string_format("warning : init variable - %s(%s) dtype is not initialized", id.c_str(), strPinName.c_str());
+								std::string msg = string_format("warning : init variable - %s(%s) dtype is not initialized", id.c_str(), strSubPinName.c_str());
 								PrintMessage(msg);
 							}
 						}

@@ -1844,6 +1844,9 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 	std::string strInitPinType;
 	std::string strInitPinShape;
 
+	bool bInterfaceObj = false;
+	ObjectInfo* pInterfaceObj = nullptr;
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1921,23 +1924,17 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 					temp2 = attrParser.GetAttribute("SharedName_");
 					attrs = attrs.Container(temp2);
 				}
-					
 			}
 		}
 		else if (strPinName == "initvalues")
 		{
 			strInitPinType = strPinType;
 			strInitPinShape = strPinShape;
-			if (strPinInterface == "Input")
+			if (strPinInterface == "Input" && !strInSymbolId.empty())
 			{
 				// 초기화 루틴은 ClientSession 생성부에서 처리 수행함.
-			}
-		}
-		else if (strPinName == "updatevalues")
-		{
-			if (strPinInterface == "Input")
-			{
-				
+				bInterfaceObj = true;
+				pInterfaceObj = LookupFromObjectMap(strInSymbolId);
 			}
 		}
 		else
@@ -1986,8 +1983,76 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("error : Variable(%s) Object create failed. dtype(%s).", id.c_str(), strDataType.c_str());
-			PrintMessage(msg);
+			if (bInterfaceObj)
+			{
+				if (pInterfaceObj)
+				{
+					if (pInterfaceObj->type == SYMBOL_CONST)
+					{
+						// 연결된 Const의 val값의 정보를 통하여 생성할 Varaible객체의 타입 및 Shape를 취득함.
+						int iSize = (int)pInterfaceObj->param.size();
+						for (int subindex = 0; subindex < iSize; ++subindex)
+						{
+							Json::Value ItemValue = pInterfaceObj->param[subindex];
+
+							std::string strSubPinName = ItemValue.get("pin-name", "").asString();
+							if (strSubPinName == "val")
+							{
+								// double, float, int, bool, string
+								std::string strSubPinType = ItemValue.get("pin-type", "").asString();
+
+								// [2][2]
+								std::string strSubPinShape = ItemValue.get("pin-shape", "").asString();
+
+								std::vector<int64> array_slice;
+								std::vector<int64> arraydims;
+								GetArrayDimsFromShape(strSubPinShape, arraydims, array_slice);
+
+								if (strSubPinType == "double")
+									dtype = DT_DOUBLE;
+								else if (strSubPinType == "float")
+									dtype = DT_FLOAT;
+								else if (strSubPinType == "int")
+									dtype = DT_INT32;
+								else if (strSubPinType == "bool")
+									dtype = DT_BOOL;
+								else if (strSubPinType == "string")
+									dtype = DT_STRING;
+								else
+									dtype = DT_INVALID;
+
+								if (dtype != DT_INVALID)
+								{
+									PartialTensorShape PartialTS(arraydims);
+									pOutput = new Variable(*pScope, PartialTS, dtype, attrs);
+									PartialTS.Clear();
+								}
+								else
+								{
+									std::string msg = string_format("error : Variable(%s) Object create failed. input const object(%s).", id.c_str(), strSubPinType.c_str());
+									PrintMessage(msg);
+								}
+								break;
+							}
+						}
+					}
+					else
+					{
+						std::string msg = string_format("error : Variable(%s) Object create failed. not support object. use const object.", id.c_str());
+						PrintMessage(msg);
+					}
+				}
+				else
+				{
+					std::string msg = string_format("error : Variable(%s) Object create failed. interface object(%s).", id.c_str(), strDataType.c_str());
+					PrintMessage(msg);
+				}
+			}
+			else
+			{
+				std::string msg = string_format("error : Variable(%s) Object create failed. dtype(%s).", id.c_str(), strDataType.c_str());
+				PrintMessage(msg);
+			}
 		}
 		if (pOutput)
 		{
