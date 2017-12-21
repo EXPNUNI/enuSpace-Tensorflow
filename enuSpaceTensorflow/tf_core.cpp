@@ -356,11 +356,6 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 							{
 								strdatatype = strSubPinInitial;
 							}
-							else
-							{
-								std::string msg = string_format("warning : init variable - %s(%s) dtype is not initialized", id.c_str(), strSubPinName.c_str());
-								PrintMessage(msg);
-							}
 						}
 					}
 
@@ -381,10 +376,15 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 									init_obj.push_back(assign);
 									pSession->Run(init_obj, &outputs);
 								}
+								else
+								{
+									std::string msg = string_format("error : variable init - %s binary information missed 1.", pTar->id.c_str());
+									PrintMessage(msg);
+								}
 							}
 							else
 							{
-								std::string msg = string_format("warning : variable init - %s binary information missed.", id.c_str());
+								std::string msg = string_format("error : variable init - %s binary information missed 2.", pTar->id.c_str());
 								PrintMessage(msg);
 							}
 						}
@@ -403,6 +403,11 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 									init_obj.push_back(assign);
 									pSession->Run(init_obj, &outputs);
 								}
+								else
+								{
+									std::string msg = string_format("error : variable init - %s Create_StrToOutput information missed.", pTar->id.c_str());
+									PrintMessage(msg);
+								}
 							}
 							// initvalues = 1.0;2.0 datatype= "", strBinPinType="string, int, float, bool, double", strBinPinShape = [10][10]
 							else if (strdatatype.empty())
@@ -417,10 +422,15 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 									init_obj.push_back(assign);
 									pSession->Run(init_obj, &outputs);
 								}
+								else
+								{
+									std::string msg = string_format("error : variable init - %s Create_ArrayStrToOutput information missed.", pTar->id.c_str());
+									PrintMessage(msg);
+								}
 							}
 							else
 							{
-								std::string msg = string_format("warning : variable init - %s text information missed.", id.c_str());
+								std::string msg = string_format("warning : variable init - %s text information missed.", pTar->id.c_str());
 								PrintMessage(msg);
 							}
 						}
