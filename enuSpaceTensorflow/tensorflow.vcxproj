@@ -1,0 +1,1103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2605F0BB-9AAA-48A7-88D9-182685FD1923}</ProjectGuid>
+    <RootNamespace>tensorflow</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <Keyword>MFCDLLProj</Keyword>
+    <ProjectName>enu_tensorflow</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>D:\Workspace\tensorflow\tensorflow\contrib\cmake\build;D:\Workspace\tensorflow\tensorflow\core\kernels;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <ModuleDefinitionFile>.\tensorflow.def</ModuleDefinitionFile>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <ModuleDefinitionFile>.\tensorflow.def</ModuleDefinitionFile>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>.\tensorflow.def</ModuleDefinitionFile>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;ENUTENSORFLOW_EXPORTS;EIGEN_AVOID_STL_ARRAY;NOMINMAX;_WIN32_WINNT=0x0A00;LANG_CXX11;COMPILER_MSVC;OS_WIN;_MBCS;WIN64;WIN32_LEAN_AND_MEAN;NOGDI;PLATFORM_WINDOWS;TENSORFLOW_USE_EIGEN_THREADPOOL;EIGEN_HAS_C99_MATH;_ITERATOR_DEBUG_LEVEL=0;TF_COMPILE_LIBRARY;CMAKE_INTDIR="Release";_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\Workspace\tensorflow;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\external\zlib_archive;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\external\gif_archive\giflib-5.1.4;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\external\png_archive;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\external\jpeg_archive;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\external\eigen_archive;D:\Workspace\tensorflow\third_party\eigen3;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\gemmlowp\src\gemmlowp;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\jsoncpp\src\jsoncpp;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\external\farmhash_archive;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\external\farmhash_archive\util;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\external\highwayhash;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\protobuf\src\protobuf\src;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\grpc\src\grpc\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\extras\CUPTI\include;D:\Workspace\cudnn-8.0-windows10-x64-v5.1\cuda;D:\Workspace\tensorflow\third_party\gpus;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>.\tensorflow.def</ModuleDefinitionFile>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;Release\tf_core_gpu_kernels.lib;fft2d\\src\lib\fft2d.lib;wsock32.lib;ws2_32.lib;shlwapi.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64\cudart_static.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64\cuda.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64\cublas.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64\cublas_device.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64\cufft.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64\curand.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\extras\CUPTI\libx64\cupti.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64\cusolver.lib;D:\Workspace\cudnn-8.0-windows10-x64-v5.1\cuda\lib\x64\cudnn.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\tf_cc_framework.dir\Release\tf_cc_framework.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\tf_cc_ops.dir\Release\tf_cc_ops.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\tf_core_cpu.dir\Release\tf_core_cpu.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\tf_core_direct_session.dir\Release\tf_core_direct_session.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\tf_core_framework.dir\Release\tf_core_framework.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\tf_core_kernels.dir\Release\tf_core_kernels.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\tf_core_lib.dir\Release\tf_core_lib.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\tf_core_ops.dir\Release\tf_core_ops.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\Release\tf_protos_cc.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\protobuf\src\protobuf\Release\libprotobuf.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\protobuf\src\protobuf\Release\libprotoc.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\tf_cc.dir\Release\tf_cc.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\zlib\install\lib\zlibstatic.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\gif\install\lib\giflib.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\png\install\lib\libpng12_static.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\jpeg\install\lib\libjpeg.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\jsoncpp\src\jsoncpp\src\lib_json\Release\jsoncpp.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\farmhash\install\lib\farmhash.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\highwayhash\install\lib\highwayhash.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\grpc\src\grpc\Release\grpc++_unsecure.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\grpc\src\grpc\Release\grpc_unsecure.lib;D:\Workspace\tensorflow\tensorflow\contrib\cmake\build\grpc\src\grpc\Release\gpr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>copy "$(TargetDir)enu_tensorflow.dll" "C:\Users\mylif\Desktop\lesson5\Task\Tensorflow\tensorflow.dll"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AttributeParser.cpp" />
+    <ClCompile Include="enuSpaceToTensorflow.cpp" />
+    <ClCompile Include="GlobalHeader.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="tensorflow.cpp" />
+    <ClCompile Include="tf_array_ops.cpp" />
+    <ClCompile Include="tf_candidate_sampling_ops.cpp" />
+    <ClCompile Include="tf_control_flow_ops.cpp" />
+    <ClCompile Include="tf_core.cpp" />
+    <ClCompile Include="tf_data_flow_ops.cpp" />
+    <ClCompile Include="tf_image_ops.cpp" />
+    <ClCompile Include="tf_io_ops.cpp" />
+    <ClCompile Include="tf_logging_ops.cpp" />
+    <ClCompile Include="tf_math.cpp" />
+    <ClCompile Include="tf_nn.cpp" />
+    <ClCompile Include="tf_no.cpp" />
+    <ClCompile Include="tf_parsing_op.cpp" />
+    <ClCompile Include="tf_random.cpp" />
+    <ClCompile Include="tf_sparse_ops.cpp" />
+    <ClCompile Include="tf_state.cpp" />
+    <ClCompile Include="tf_string.cpp" />
+    <ClCompile Include="tf_training.cpp" />
+    <ClCompile Include="utility_functions.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AttributeParser.h" />
+    <ClInclude Include="enuSpaceToTensorflow.h" />
+    <ClInclude Include="GlobalHeader.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="tensorflow.h" />
+    <ClInclude Include="tf_array_ops.h" />
+    <ClInclude Include="tf_candidate_sampling_ops.h" />
+    <ClInclude Include="tf_control_flow_ops.h" />
+    <ClInclude Include="tf_core.h" />
+    <ClInclude Include="tf_data_flow_ops.h" />
+    <ClInclude Include="tf_image_ops.h" />
+    <ClInclude Include="tf_io_ops.h" />
+    <ClInclude Include="tf_logging_ops.h" />
+    <ClInclude Include="tf_math.h" />
+    <ClInclude Include="tf_nn.h" />
+    <ClInclude Include="tf_no.h" />
+    <ClInclude Include="tf_parsing_op.h" />
+    <ClInclude Include="tf_random.h" />
+    <ClInclude Include="tf_sparse_ops.h" />
+    <ClInclude Include="tf_state.h" />
+    <ClInclude Include="tf_string.h" />
+    <ClInclude Include="tf_training.h" />
+    <ClInclude Include="utility_functions.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\tensorflow.rc2" />
+    <None Include="tensorflow.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="tensorflow.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="..\..\tf_cc_framework.dir\Release\ops.obj" />
+    <Object Include="..\..\tf_cc_framework.dir\Release\scope.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\array_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\array_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\candidate_sampling_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\candidate_sampling_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\const_op.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\control_flow_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\control_flow_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\ctc_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\ctc_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\dataset_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\dataset_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\data_flow_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\data_flow_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\functional_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\functional_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\image_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\image_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\io_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\io_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\linalg_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\linalg_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\logging_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\logging_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\lookup_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\lookup_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\math_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\math_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\nn_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\nn_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\no_op.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\no_op_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\parsing_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\parsing_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\random_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\random_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\remote_fused_graph_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\remote_fused_graph_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\resource_variable_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\resource_variable_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\script_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\script_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\sdca_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\sdca_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\sendrecv_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\sendrecv_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\set_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\set_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\sparse_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\sparse_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\spectral_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\spectral_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\stateless_random_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\stateless_random_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\state_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\state_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\string_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\string_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\training_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\training_ops_internal.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\user_ops.obj" />
+    <Object Include="..\..\tf_cc_ops.dir\Release\user_ops_internal.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\algorithm.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\allocator_retry.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\analytical_cost_estimator.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\auto_parallel.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\bfc_allocator.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\build_graph_options.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\cluster.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\colors.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\control_flow.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\copy_tensor.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\costmodel.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\costmodel_manager.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\cupti_wrapper.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\debug.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\debugger_state_impl.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\debugger_state_interface.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\debug_gateway.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\debug_graph_utils.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\debug_io_utils.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\device.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\devices.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\device_factory.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\device_mgr.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\device_set.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\D_\Workspace\tensorflow\tensorflow\core\common_runtime\constant_folding.cc.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\D_\Workspace\tensorflow\tensorflow\core\grappler\clusters\utils.cc.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\D_\Workspace\tensorflow\tensorflow\core\grappler\costs\utils.cc.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\D_\Workspace\tensorflow\tensorflow\core\grappler\inputs\utils.cc.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\D_\Workspace\tensorflow\tensorflow\core\grappler\optimizers\constant_folding.cc.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\D_\Workspace\tensorflow\tensorflow\core\grappler\utils.cc.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\executor.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\function.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\gpu_bfc_allocator.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\gpu_debug_allocator.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\gpu_device.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\gpu_device_factory.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\gpu_event_mgr.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\gpu_init.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\gpu_stream_util.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\gpu_tracer.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\gpu_util.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\gpu_util_platform_specific.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\gradients.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\graph_constructor.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\graph_def_builder.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\graph_memory.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\graph_optimizer.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\graph_partition.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\graph_properties.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\graph_rewriter.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\graph_runner.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\grappler_item.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\grappler_item_builder.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\layout_optimizer.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\loader.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\local_device.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\measuring_cost_estimator.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\memory_optimizer.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\memory_types.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\meta_optimizer.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\mkl_layout_pass.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\mkl_tfconversion_pass.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\model_pruner.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\node_builder.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\optimization_registry.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\optimizer_cse.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\op_level_cost_estimator.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\op_types.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\parallel_concat_optimizer.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\pool_allocator.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\process_state.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\process_util.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\quantize_training.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\renamed_device.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\rendezvous_mgr.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\resource_variable_read_optimizer.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\robust_stats.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\scc.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\server_lib.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\session_state.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\shape_refiner.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\simple_graph_execution_state.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\simple_placer.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\static_schedule.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\stats_publisher_interface.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\step_stats_collector.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\subgraph.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\sycl_allocator.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\sycl_device.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\sycl_device_context.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\sycl_device_factory.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\tensor_id.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\threadpool_device.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\threadpool_device_factory.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\topological_sort.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\validate.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\virtual_cluster.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\virtual_placer.obj" />
+    <Object Include="..\..\tf_core_cpu.dir\Release\virtual_scheduler.obj" />
+    <Object Include="..\..\tf_core_direct_session.dir\Release\direct_session.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\allocation_description.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\allocator.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\allocator_registry.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\attr_value.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\attr_value_util.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\bcast.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\bfloat16.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\cancellation.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\cluster.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\command_line_flags.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\common_shape_fns.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\config.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\cost_graph.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\ctc_loss_calculator.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\debug.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\device_attributes.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\device_base.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\device_name_utils.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\device_properties.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\env_var.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\equal_graph_def.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\error_codes.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\events_writer.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\example.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\example_proto_fast_parsing.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\example_proto_helper.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\fake_input.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\feature.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\function.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\function.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\graph.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\graph_def_util.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\graph_transfer_info.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\group_iterator.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\guarded_philox_random.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\kernel_def.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\kernel_def_builder.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\load_library.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\log_memory.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\log_memory.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\lookup_interface.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\memmapped_file_system.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\memmapped_file_system.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\memmapped_file_system_writer.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\memory_types.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\mirror_pad_mode.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\naming.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\node_def.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\node_def_builder.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\node_def_util.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\op.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\op_def.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\op_def_builder.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\op_def_util.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\op_gen_lib.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\op_kernel.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\op_segment.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\padding.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\port.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\reader_base.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\remote_fused_graph_execute_info.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\rendezvous.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\reporter.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\resource_handle.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\resource_mgr.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\rewriter_config.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\saved_tensor_slice.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\saved_tensor_slice_util.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\saver.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\session.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\session_factory.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\session_options.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\shape_inference.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\stat_summarizer.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\step_stats.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\strided_slice_op.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\summary.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_bundle.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_bundle.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_description.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_format.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_reference.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_shape.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_shape.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_slice.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_slice.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_slice_reader.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_slice_reader_cache.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_slice_set.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_slice_writer.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tensor_util.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\tracking_allocator.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\types.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\types.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\unique_tensor_references.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\use_cudnn.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\util.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\versions.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\versions.pb_text.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\version_info.obj" />
+    <Object Include="..\..\tf_core_framework.dir\Release\work_sharder.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\adjust_contrast_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\adjust_hue_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\adjust_saturation_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\aggregate_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\argmax_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\as_string_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\attention_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\avgpooling_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\barrier_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\base64_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\batchtospace_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\batch_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\batch_matmul_op_complex.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\batch_matmul_op_real.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\batch_norm_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\bcast_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\best_splits_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\betainc_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\bias_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\bincount_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\bitcast_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\bucketize_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\candidate_sampler_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\captured_function.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_bfloat.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_bool.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_complex128.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_complex64.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_double.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_float.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_half.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_int16.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_int32.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_int64.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_int8.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_uint16.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cast_op_impl_uint8.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\check_numerics_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cholesky_grad.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cholesky_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\colorspace_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\concat_lib_cpu.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\concat_lib_gpu.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\concat_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\conditional_accumulator_base.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\conditional_accumulator_base_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\conditional_accumulator_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\constant_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\control_flow_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\conv_grad_filter_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\conv_grad_input_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\conv_grad_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\conv_grad_ops_3d.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\conv_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\conv_ops_3d.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\conv_ops_fused.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\conv_ops_using_gemm.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\count_extremely_random_stats_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\count_up_to_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\crop_and_resize_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cross_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\ctc_decoder_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\ctc_loss_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cuda_solvers.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cudnn_pooling_gpu.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_ops_common.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_abs.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_acos.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_add_1.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_add_2.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_asin.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_atan.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_atan2.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_ceil.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_complex.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_conj.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_cos.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_digamma.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_div.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_equal_to_1.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_equal_to_2.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_erf.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_erfc.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_exp.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_expm1.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_floor.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_floor_div.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_floor_mod.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_greater.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_greater_equal.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_igammas.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_imag.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_isfinite.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_isinf.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_isnan.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_less.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_less_equal.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_lgamma.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_log.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_log1p.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_logical_and.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_logical_not.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_logical_or.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_maximum.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_minimum.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_mod.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_mul_1.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_mul_2.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_neg.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_not_equal_to_1.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_not_equal_to_2.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_pow.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_real.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_reciprocal.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_rint.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_round.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_rsqrt.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_select.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_sigmoid.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_sign.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_sin.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_sqrt.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_square.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_squared_difference.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_sub.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_tan.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_tanh.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\cwise_op_zeta.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\debug_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\decode_csv_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\decode_image_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\decode_raw_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\decode_wav_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\deep_conv2d.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\dense_to_sparse_batch_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\dense_update_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\depthtospace_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\depthwise_conv_grad_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\depthwise_conv_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\determinant_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\diag_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\dilation_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\draw_bounding_box_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\dynamic_partition_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\dynamic_stitch_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\D_\Workspace\tensorflow\tensorflow\contrib\factorization\kernels\clustering_ops.cc.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\D_\Workspace\tensorflow\tensorflow\contrib\factorization\ops\clustering_ops.cc.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\edit_distance_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\encode_jpeg_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\encode_png_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\encode_wav_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\example_parsing_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\extract_image_patches_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\factorization_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\fact_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\fake_quant_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\fft_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\fifo_queue.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\fifo_queue_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\fill_functor.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\filter_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\finished_nodes_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\fixed_length_record_reader_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\flat_map_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\fractional_avg_pool_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\fractional_max_pool_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\fractional_pool_common.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\function_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\fused_batch_norm_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\gather_functor.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\gather_nd_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\gather_nd_op_cpu_impl_0.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\gather_nd_op_cpu_impl_1.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\gather_nd_op_cpu_impl_2.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\gather_nd_op_cpu_impl_3.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\gather_nd_op_cpu_impl_4.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\gather_nd_op_cpu_impl_5.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\gather_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\group_by_window_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\grow_tree_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\hard_routing_function_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\identity_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\identity_reader_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\immutable_constant_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\initializable_lookup_table.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\inplace_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\in_topk_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\iterator_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\k_feature_gradient_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\k_feature_routing_function_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\l2loss_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\linalg_ops_common.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\listdiff_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\logging_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\lookup_table_init_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\lookup_table_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\lookup_util.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\lrn_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\map_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\masked_matmul_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\matching_files_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\matmul_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\matrix_band_part_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\matrix_inverse_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\matrix_set_diag_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\matrix_solve_ls_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\matrix_solve_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\matrix_triangular_solve_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\maxpooling_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mfcc.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mfcc_dct.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mfcc_mel_filterbank.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mfcc_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mirror_pad_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mirror_pad_op_cpu_impl_1.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mirror_pad_op_cpu_impl_2.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mirror_pad_op_cpu_impl_3.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mirror_pad_op_cpu_impl_4.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mirror_pad_op_cpu_impl_5.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_avgpooling_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_concat_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_conv_grad_bias_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_conv_grad_filter_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_conv_grad_input_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_conv_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_fused_batch_norm_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_identity_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_lrn_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_matmul_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_maxpooling_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_pooling_ops_common.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_relu_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_reshape_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_tfconv_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\mkl_transpose_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\multinomial_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\non_max_suppression_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\no_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\ops_util.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\pack_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\padded_batch_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\padding_fifo_queue.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\padding_fifo_queue_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\pad_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\parallel_map_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\parameterized_truncated_normal_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\parse_tensor_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\pooling_ops_3d.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\pooling_ops_common.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\priority_queue.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\priority_queue_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\qr_op_complex128.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\qr_op_complex64.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\qr_op_double.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\qr_op_float.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\queue_base.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\queue_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\random_crop_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\random_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\random_poisson_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\random_shuffle_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\random_shuffle_queue_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\range_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\range_sampler.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reader_dataset_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reader_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\record_input_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\record_yielder.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reduce_join_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reduction_ops_all.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reduction_ops_any.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reduction_ops_common.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reduction_ops_max.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reduction_ops_mean.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reduction_ops_min.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reduction_ops_prod.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reduction_ops_sum.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reinterpret_string_to_float_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\relu_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\repeat_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reshape_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\resize_area_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\resize_bicubic_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\resize_bilinear_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\resize_nearest_neighbor_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\resource_variable_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\restore_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reverse_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\reverse_sequence_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\routing_function_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\routing_gradient_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sample_distorted_bounding_box_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sample_inputs_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\save_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\save_restore_tensor.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\save_restore_v2_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\scan_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\scatter_add_ndim_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\scatter_functor.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\scatter_nd_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\scatter_nd_op_cpu_impl_0.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\scatter_nd_op_cpu_impl_1.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\scatter_nd_op_cpu_impl_2.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\scatter_nd_op_cpu_impl_3.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\scatter_nd_op_cpu_impl_4.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\scatter_nd_op_cpu_impl_5.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\scatter_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sdca_internal.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sdca_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\segment_reduction_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\self_adjoint_eig_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\self_adjoint_eig_v2_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sendrecv_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sequence_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\serialize_sparse_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\session_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\set_kernels.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\shape_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\shuffle_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\skip_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\slice_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\slice_op_cpu_impl_1.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\slice_op_cpu_impl_2.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\slice_op_cpu_impl_3.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\slice_op_cpu_impl_4.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\slice_op_cpu_impl_5.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\slice_op_cpu_impl_6.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\slice_op_cpu_impl_7.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\softmax_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\softplus_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\softsign_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\spacetobatch_functor.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\spacetobatch_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\spacetodepth_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_add_grad_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_add_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_concat_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_conditional_accumulator_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_cross_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_dense_binary_op_shared.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_feature_cross_kernel.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_feature_cross_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_matmul_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_reorder_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_reshape_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_softmax_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_sparse_binary_op_shared.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_split_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_tensors_map_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_tensor_dense_add_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_tensor_dense_matmul_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_tensor_slice_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_to_dense_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\sparse_xent_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\spectrogram.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\spectrogram_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\split_lib_cpu.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\split_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\split_v_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\stack_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\stage_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\stateless_random_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\stochastic_hard_routing_function_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\stochastic_hard_routing_gradient_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\strided_slice_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\strided_slice_op_define_grad.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\strided_slice_op_inst_0.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\strided_slice_op_inst_1.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\strided_slice_op_inst_2.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\strided_slice_op_inst_3.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\strided_slice_op_inst_4.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\strided_slice_op_inst_5.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\strided_slice_op_inst_6.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\strided_slice_op_inst_7.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\string_join_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\string_split_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\string_to_hash_bucket_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\string_to_number_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\substr_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\summary_audio_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\summary_image_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\summary_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\summary_tensor_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\svd_op_complex128.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\svd_op_complex64.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\svd_op_double.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\svd_op_float.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\take_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tensor_array.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tensor_array_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tensor_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tensor_forest_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tensor_slice_dataset_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\text_line_reader_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tf_record_reader_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tile_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tile_ops_cpu_impl_1.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tile_ops_cpu_impl_2.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tile_ops_cpu_impl_3.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tile_ops_cpu_impl_4.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tile_ops_cpu_impl_5.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tile_ops_cpu_impl_6.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tile_ops_cpu_impl_7.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\topk_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\training_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\training_op_helpers.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\transpose_functor_cpu.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\transpose_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tree_predictions_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\tree_utils.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\unique_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\unpack_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\unpack_path_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\update_fertile_slots_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\utils.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\variable_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\wals_solver_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\warn_about_ints.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\where_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\whole_file_read_ops.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\window_dataset.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\word2vec_kernels.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\xent_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\xsmm_conv2d.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\zip_dataset_op.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\arena.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\base64.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\bitmap.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\block.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\block_builder.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\buffered_inputstream.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\coding.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\collection_registry.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\compression.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\cpu_feature_guard.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\cpu_info.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\crc32c.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\crc32c_accelerate.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\denormal.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\distribution_sampler.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\D_\Workspace\tensorflow\tensorflow\core\platform\cuda_libdevice_path.cc.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\D_\Workspace\tensorflow\tensorflow\core\platform\default\cuda_libdevice_path.cc.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\D_\Workspace\tensorflow\tensorflow\core\platform\default\tracing.cc.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\D_\Workspace\tensorflow\tensorflow\core\platform\env.cc.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\D_\Workspace\tensorflow\tensorflow\core\platform\env_time.cc.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\D_\Workspace\tensorflow\tensorflow\core\platform\posix\error.cc.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\D_\Workspace\tensorflow\tensorflow\core\platform\tracing.cc.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\D_\Workspace\tensorflow\tensorflow\core\platform\windows\env.cc.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\D_\Workspace\tensorflow\tensorflow\core\platform\windows\env_time.cc.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\D_\Workspace\tensorflow\tensorflow\core\platform\windows\error.cc.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\file_system.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\format.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\gif_io.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\hash.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\histogram.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\inputbuffer.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\inputstream_interface.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\iterator.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\jpeg_handle.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\jpeg_mem.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\logging.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\net.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\numbers.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\ordered_code.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\path.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\png_io.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\port.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\protobuf.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\protobuf_util.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\proto_text_util.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\random.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\random_inputstream.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\record_reader.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\record_writer.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\scanner.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\setround.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\simple_philox.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\snappy_inputbuffer.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\snappy_outputbuffer.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\status.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\strcat.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\stringpiece.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\stringprintf.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\str_util.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\table.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\table_builder.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\tensor_coding.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\threadpool.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\two_level_iterator.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\wav_io.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\weighted_picker.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\windows_file_system.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\zlib_inputstream.obj" />
+    <Object Include="..\..\tf_core_lib.dir\Release\zlib_outputbuffer.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\array_grad.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\array_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\audio_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\candidate_sampling_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\control_flow_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\ctc_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\dataset_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\data_flow_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\debug_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\fact.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\functional_grad.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\functional_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\function_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\image_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\io_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\linalg_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\logging_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\lookup_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\math_grad.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\math_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\nn_grad.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\nn_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\no_op.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\op_compatibility_lib.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\parsing_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\random_grad.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\random_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\remote_fused_graph_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\resource_variable_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\script_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\sdca_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\sendrecv_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\set_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\sparse_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\spectral_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\stateless_random_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\state_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\string_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\training_ops.obj" />
+    <Object Include="..\..\tf_core_ops.dir\Release\word2vec_ops.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\blas.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_activation.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_blas.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_diagnostics.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_dnn.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_driver.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_event.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_fft.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_gpu_executor.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_platform.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_platform_id.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_rng.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_stream.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\cuda_timer.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\demangle.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\device_description.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\dnn.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\dso_loader.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\event.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\executor_cache.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\kernel.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\kernel_spec.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\machine_manager.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\multi_platform_manager.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\numbers.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\path.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\platform.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\plugin.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\plugin_registry.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\process_state.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\rng.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\scratch_allocator.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\stream.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\stream_executor_internal.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\stream_executor_pimpl.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\temporary_device_memory.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\temporary_memory_manager.obj" />
+    <Object Include="..\..\tf_stream_executor.dir\Release\timer.obj" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
