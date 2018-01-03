@@ -442,7 +442,14 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 									std::vector<tensorflow::Tensor> outputs;
 									auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
 									init_obj.push_back(assign);
-									pSession->Run(init_obj, &outputs);
+
+									Status st;
+									st = pSession->Run(init_obj, &outputs);
+									if (st.code() != error::OK)
+									{
+										std::string msg = string_format("error: %s.", st.error_message().c_str());
+										PrintMessage(msg);
+									}
 								}
 								else
 								{
