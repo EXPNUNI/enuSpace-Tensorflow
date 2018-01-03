@@ -273,7 +273,7 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 		for (int i = 0; i < def.node_size(); ++i)
 		{
 			auto node = def.mutable_node(i);
-			if (node->device().empty())
+			if (node->device().empty()) 
 			{
 				node->set_device(device);
 			}
@@ -330,7 +330,15 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 										std::vector<tensorflow::Tensor> outputs;
 										auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
 										init_obj.push_back(assign);
-										pSession->Run(init_obj, &outputs);
+
+										Status st;
+										st = pSession->Run(init_obj, &outputs);
+										if (st.code() != error::OK)
+										{
+											std::string msg = string_format("error: %s.", st.error_message().c_str());
+											PrintMessage(msg);
+										}
+
 										bRun = true;
 										break;
 									}
@@ -361,7 +369,7 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 
 					if (bRun == false)
 					{
-						if (strPinSave == "binary")
+						if (strPinSave == "binary") 
 						{
 							if (iPinBinPos != -1 && m_FileData)
 							{
@@ -374,9 +382,16 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 									std::vector<tensorflow::Tensor> outputs;
 									auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
 									init_obj.push_back(assign);
-									pSession->Run(init_obj, &outputs);
+
+									Status st;
+									st = pSession->Run(init_obj, &outputs);
+									if (st.code() != error::OK)
+									{
+										std::string msg = string_format("error: %s.", st.error_message().c_str());
+										PrintMessage(msg);
+									}
 								}
-								else
+								else 
 								{
 									std::string msg = string_format("error : variable init - %s binary information missed 1.", pTar->id.c_str());
 									PrintMessage(msg);
@@ -401,7 +416,14 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 									std::vector<tensorflow::Tensor> outputs;
 									auto assign = Assign(*m_pScope, ((Variable*)pTar->pObject)->ref, *pOutput);
 									init_obj.push_back(assign);
-									pSession->Run(init_obj, &outputs);
+
+									Status st;
+									st = pSession->Run(init_obj, &outputs);
+									if (st.code() != error::OK)
+									{
+										std::string msg = string_format("error: %s.", st.error_message().c_str());
+										PrintMessage(msg);
+									}
 								}
 								else
 								{
@@ -1596,4 +1618,125 @@ void* Create_Const_ex(std::string id, Json::Value pInputItem)
 		delete pTensor;
 
 	return pOutput;
+}
+
+
+#include "tensorflow/cc/framework/grad_op_registry.h"
+#include "tensorflow/cc/framework/gradients.h"
+
+
+#include "tensorflow/cc/framework/gradient_checker.h"
+
+void* Create_AddSymbolicGradients(std::string id, Json::Value pInputItem)
+{
+	Scope* pScope = nullptr;
+	OutputList inputlist;
+	OutputList outputlist;
+
+	int iSize = (int)pInputItem.size();
+	for (int subindex = 0; subindex < iSize; ++subindex)
+	{
+		Json::Value ItemValue = pInputItem[subindex];
+
+		std::string strPinName = ItemValue.get("pin-name", "").asString();								// val
+		std::string strPinType = ItemValue.get("pin-type", "").asString();								// double
+		std::string strPinInitial = ItemValue.get("pin-initial", "").asString();						// 1;2;3;4
+		std::string strInSymbolName = ItemValue.get("in-symbol-name", "").asString();					// ""
+		std::string strInSymbolId = ItemValue.get("in-symbol-id", "").asString();						// ""
+		std::string strInSymbolPinName = ItemValue.get("in-symbol-pin-name", "").asString();			// ""
+		std::string strInSymbolPinInterface = ItemValue.get("in-symbol-pin-interface", "").asString();	// ""
+		std::string strPinInterface = ItemValue.get("pin-interface", "").asString();					// tensorflow::Input::Initializer 
+		std::string strPinShape = ItemValue.get("pin-shape", "").asString();							// [2][2]
+
+		if (strPinName == "scope")
+		{
+			// 입력심볼 : #Scope, 입력심볼의 핀 : Scope, 연결 핀 : Scope
+			if (strPinInterface == "Scope")
+			{
+				pScope = m_pScope;
+			}
+			else
+			{
+				std::string msg = string_format("warning : Variable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				PrintMessage(msg);
+			}
+		}
+		else if (strPinName == "outputs")
+		{
+			ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+			if (pObj)
+			{
+				OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+				if (pOutputObj)
+				{
+					if (pOutputObj->pOutput)
+					{
+						outputlist.push_back(*((Output*)pOutputObj->pOutput));
+					}
+				}
+			}
+		}
+		else if (strPinName == "inputs")
+		{
+			ObjectInfo* pObj = LookupFromObjectMap(strInSymbolId);
+			if (pObj)
+			{
+				OutputInfo* pOutputObj = LookupFromOutputMap(pObj, strInSymbolPinName);
+				if (pOutputObj)
+				{
+					if (pOutputObj->pOutput)
+					{
+						inputlist.push_back(*((Output*)pOutputObj->pOutput));
+					}
+				}
+			}
+		}
+
+		else
+		{
+			std::string msg = string_format("warning : Variable pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			PrintMessage(msg);
+		}
+	}
+
+	if (pScope && outputlist.size()>0 && inputlist.size()>0)
+	{
+		std::vector<Output> grad_outputs;
+
+		std::vector<Output> grad_inputs;
+		grad_inputs.reserve(outputlist.size());
+		for (const Output& output : outputlist)
+		{
+			grad_inputs.emplace_back(ops::OnesLike(*pScope, output));
+		}
+		Status st; 
+		st = AddSymbolicGradients(*pScope, outputlist, inputlist, grad_inputs, &grad_outputs);
+		if (st.code() != error::OK)
+		{
+			std::string msg = string_format("error: %s.", st.error_message().c_str());
+			PrintMessage(msg);
+		}
+		else
+		{
+			int iSize = grad_outputs.size();
+			if (iSize > 0)
+			{
+				ObjectInfo* pObj = AddObjectMap(&grad_outputs, id, SYMBOL_ADDSYMBOLICGRADIENTS, "AddSymbolicGradients", pInputItem);
+
+				int i = 0;
+				for (std::vector<Output>::iterator it = grad_outputs.begin(); it != grad_outputs.end(); it++)
+				{
+					std::string newid = string_format("grad_outputs[%d]", i);
+					Output* pOutput = new Output(it->node());
+					AddOutputInfo(pObj, pOutput, OUTPUT_TYPE_OUTPUT_ETC, newid);
+					i++;
+				}
+			}
+		}
+	}
+	else
+	{
+		std::string msg = string_format("error : AddSymbolicGradients(%s) Object create failed.", id.c_str());
+		PrintMessage(msg);
+	}
 }

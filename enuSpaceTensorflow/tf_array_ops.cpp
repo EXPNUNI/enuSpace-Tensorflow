@@ -8081,7 +8081,7 @@ void* Create_Squeeze(std::string id, Json::Value pInputItem) {
 					std::vector<int> v_int;
 					attrParser.ConvStrToArraySliceInt(attrParser.GetAttribute("squeeze_dims_"), v_int);
 					gtl::ArraySlice<int> arrayInt(v_int);
-					attrs.squeeze_dims_ = arrayInt;
+					// r1.5 not support // attrs.squeeze_dims_ = arrayInt;
 				}
 			}
 		}

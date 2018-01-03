@@ -534,12 +534,15 @@
 #define SYMBOL_SPARSEREDUCEMAX			703
 #define	SYMBOL_SPARSEREDUCEMAXSPARSE	704
 #define	SYMBOL_SPARSESLICE				705
+
+#define SYMBOL_ADDSYMBOLICGRADIENTS		706
 //////////////////////////////////////////////////////////////////////////
 
 #define OUTPUT_TYPE_INPUT			0
 #define OUTPUT_TYPE_OUTPUT			1
 #define OUTPUT_TYPE_OUTPUTLIST		2
 #define OUTPUT_TYPE_OPERATION		3
+#define OUTPUT_TYPE_OUTPUT_ETC		4
 
 using namespace tensorflow;
 using namespace tensorflow::ops;

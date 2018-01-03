@@ -1128,6 +1128,7 @@ void AddSymbolList()
 	m_SymbolList.insert(std::pair<std::string, int>("#SparseFillEmptyRowsGrad", SYMBOL_SPARSEFILLEMPTYROWSGRAD));
 	m_SymbolList.insert(std::pair<std::string, int>("#SparseReduceMax", SYMBOL_SPARSEREDUCEMAX));
 	m_SymbolList.insert(std::pair<std::string, int>("#SparseReduceMaxSparse", SYMBOL_SPARSEREDUCEMAXSPARSE));
+	m_SymbolList.insert(std::pair<std::string, int>("#AddSymbolicGradients", SYMBOL_ADDSYMBOLICGRADIENTS));
 }
 
 int GetSymbolType(std::string strSymbolName)
@@ -1644,6 +1645,7 @@ void* Create_Symbol(int iSymbol, std::string id, Json::Value pInputItem)
 	case SYMBOL_SPARSEREDUCEMAX: {		pCreate = Create_SparseReduceMax(id, pInputItem);	break;	}
 	case SYMBOL_SPARSEREDUCEMAXSPARSE: {		pCreate = Create_SparseReduceMaxSparse(id, pInputItem);	break;	}
 	case SYMBOL_SPARSESLICE: {		pCreate = Create_SparseSlice(id, pInputItem);	break;	}
+	case SYMBOL_ADDSYMBOLICGRADIENTS: {		pCreate = Create_AddSymbolicGradients(id, pInputItem);	break;	}
 	}
 	return pCreate;
 }
@@ -1756,6 +1758,7 @@ std::string GetCategoryName(int iSymbol)
 	case SYMBOL_STATUS:
 	case SYMBOL_TENSOR:
 	case SYMBOL_FEEDTYPE:
+	case SYMBOL_ADDSYMBOLICGRADIENTS:
 		return "core";
 	case SYMBOL_ACCUMULATORAPPLYGRADIENT:
 	case SYMBOL_ACCUMULATORNUMACCUMULATED:
@@ -2250,7 +2253,9 @@ void ObjectMapClear()
 
 			if (pTar->pObject)
 			{
-				delete pTar->pObject;
+				// AddSymbolicGradient를 통한 생성객체는 없기 때문에 제거루틴에서 제외함.
+				if (pTar->type != SYMBOL_ADDSYMBOLICGRADIENTS)
+					delete pTar->pObject;
 			}
 			pTar->pObject = nullptr;
 		}

@@ -21,5 +21,6 @@ void* Create_Tensor(std::string id, Json::Value pInputItem);
 void* Create_FeedType(std::string id, Json::Value pInputItem);
 void* Create_Const(std::string id, Json::Value pInputItem);
 void* Create_Const_ex(std::string id, Json::Value pInputItem);
+void* Create_AddSymbolicGradients(std::string id, Json::Value pInputItem);
 
 #endif
