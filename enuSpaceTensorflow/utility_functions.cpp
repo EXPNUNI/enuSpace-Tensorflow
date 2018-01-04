@@ -986,7 +986,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 		}
 
 		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_INT8, TensorShape(arraySlice));
+		pTensor = new Tensor(DT_UINT8, TensorShape(arraySlice));
 
 		int i = 0;
 		for (std::vector<uint8>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
@@ -1008,7 +1008,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 		}
 
 		gtl::ArraySlice< int64 > arraySlice(arraydims);
-		pTensor = new Tensor(DT_INT16, TensorShape(arraySlice));
+		pTensor = new Tensor(DT_UINT16, TensorShape(arraySlice));
 
 		int i = 0;
 		for (std::vector<uint16>::iterator it = arrayvals.begin(); it != arrayvals.end(); it++)
@@ -1941,6 +1941,7 @@ bool GetArrayDimsFromStrVal(std::string strVal, std::vector<int64>& arraydims, s
 
 	return true;
 }
+
 bool isString(std::string strVal)
 {
 	bool bIsString = true;
@@ -1950,4 +1951,3 @@ bool isString(std::string strVal)
 	}
 	return bIsString;
 }
-
