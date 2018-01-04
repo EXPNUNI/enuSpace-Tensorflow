@@ -126,6 +126,8 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 				void* pData = nullptr;
 				int iDataType = DEF_UNKNOWN;
 
+				bool bControlCharacter = false;
+
 				switch (iType)
 				{
 				case DT_DOUBLE:
@@ -167,6 +169,20 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 					PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()));
 					continue;
 					break;
+				}
+
+				// string의 값이 control character인지를 판단.
+				if (iType == DT_STRING)
+				{
+					auto flat = it->flat<std::string>();
+					for (int i = 0; i < iNum; i++)
+					{
+						if (isString(flat(i)) == false)
+						{
+							bControlCharacter = true;
+							break;
+						}
+					}
 				}
 
 				int idis = 10;
@@ -262,8 +278,8 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 					case DT_STRING:
 					{
 						auto flat = it->flat<std::string>();
-						if (isString(flat(i)))
-						{
+						if (bControlCharacter == false)
+						{ 
 							if (i < idis && bConnect) PrintMessage(strings::Printf("%s[%d] = %s", strVariable.c_str(), i, flat(i).c_str()));
 							((std::string*)pData + i)->assign(flat(i).c_str());
 						}
@@ -374,6 +390,8 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 					void* pData = nullptr;
 					int iDataType = DEF_UNKNOWN;
 
+					bool bControlCharacter = false;
+
 					switch (iType)
 					{
 					case DT_DOUBLE:
@@ -415,6 +433,20 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()));
 						continue;
 						break;
+					}
+
+					// string의 값이 control character인지를 판단.
+					if (iType == DT_STRING)
+					{
+						auto flat = it->flat<std::string>();
+						for (int i = 0; i < iNum; i++)
+						{
+							if (isString(flat(i)) == false)
+							{
+								bControlCharacter = true;
+								break;
+							}
+						}
 					}
 
 					int idis = 10;
@@ -510,7 +542,7 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						case DT_STRING:
 						{
 							auto flat = it->flat<std::string>();
-							if (isString(flat(i)))
+							if (bControlCharacter == false)
 							{
 								if (i < idis && bConnect) PrintMessage(strings::Printf("OutputList[%d] %s[%d] = %s", iIndex, strVariable.c_str(), i, flat(i).c_str()));
 								((std::string*)pData + i)->assign(flat(i).c_str());
