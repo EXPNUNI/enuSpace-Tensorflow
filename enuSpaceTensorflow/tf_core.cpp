@@ -409,7 +409,7 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 							if (!strdatatype.empty())
 							{
 								Output* pOutput = nullptr;
-								pOutput = (Output*)Create_StrToOutput(*m_pScope, strdatatype, "", initvalues);
+								pOutput = (Output*)Create_StrToOutput(*m_pScope, strdatatype, strBinPinShape, initvalues);
 								if (pOutput)
 								{
 									std::vector< Output > init_obj;

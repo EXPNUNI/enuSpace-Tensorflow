@@ -816,6 +816,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 				itype = DT_INT32;
 		}
 	}
+
 	if (itype == DT_STRING)
 	{
 		GetArrayDimsFromStrVal(strPinInitial, arraydims, array_slice, arrayStrVal);
@@ -828,6 +829,40 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 	{
 		GetArrayDimsFromStrVal(strPinInitial, arraydims, array_slice, arrayVal);
 	}
+
+	// pin shape가 없는 경우에는 입력 초기값을 이용한 arraydims값과 slice값 적용
+	// pin shape가 있는경우 입력 초기값과 동일한 정보인지 체크.
+	if (strPinShape.empty() == false)
+	{
+		std::vector<int64> arrayPinslice;
+		std::vector<int64> arrayPindims;
+		if (GetArrayDimsFromShape(strPinShape, arrayPindims, arrayPinslice))
+		{
+			if (!(arraydims == arrayPindims && array_slice == arrayPinslice))
+			{
+				array_slice.clear();
+				arraydims.clear();
+				arrayVal.clear();
+				arrayStrVal.clear();
+				arrayComplexVal.clear();
+
+				arrayPindims.clear();
+				arrayPinslice.clear();
+				return nullptr;
+			}
+		}
+		else
+		{
+			array_slice.clear();
+			arraydims.clear();
+			arrayVal.clear();
+			arrayStrVal.clear();
+			arrayComplexVal.clear();
+			return nullptr;
+		}
+	}
+
+
 	switch (itype)
 	{
 	case DT_DOUBLE:
@@ -1231,7 +1266,8 @@ void* Create_StrToOutput(Scope& pScope, std::string strPinType, std::string strP
 {
 	Output* pOutput = new Output();
 
-	Tensor* pTensor = Create_StrToTensor(strPinType, strPinShape, strPinInitial);
+	Tensor* pTensor = nullptr;
+	pTensor = Create_StrToTensor(strPinType, strPinShape, strPinInitial);
 
 	if (pTensor)
 	{
