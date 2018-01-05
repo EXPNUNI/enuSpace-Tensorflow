@@ -869,6 +869,7 @@
     <Object Include="..\..\tf_core_kernels.dir\Release\non_max_suppression_op.obj" />
     <Object Include="..\..\tf_core_kernels.dir\Release\no_op.obj" />
     <Object Include="..\..\tf_core_kernels.dir\Release\nth_element_op.obj" />
+    <Object Include="..\..\tf_core_kernels.dir\Release\one_hot_op.obj" />
     <Object Include="..\..\tf_core_kernels.dir\Release\ops_util.obj" />
     <Object Include="..\..\tf_core_kernels.dir\Release\outfeed_ops.obj" />
     <Object Include="..\..\tf_core_kernels.dir\Release\pack_op.obj" />

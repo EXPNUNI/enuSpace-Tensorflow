@@ -3200,5 +3200,8 @@
     <Object Include="..\..\tf_cc.dir\Release\nn_grad.obj">
       <Filter>Object Libraries</Filter>
     </Object>
+    <Object Include="..\..\tf_core_kernels.dir\Release\one_hot_op.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
   </ItemGroup>
 </Project>

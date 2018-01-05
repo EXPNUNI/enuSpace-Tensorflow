@@ -73,6 +73,13 @@ BOOL CtensorflowApp::InitInstance()
 	_wsplitpath_s(szPath, drive, dir, fname, ext);
 	g_strDllPath.Format(L"%s%s", drive, dir);
 
+	if (AllocConsole())
+	{
+		freopen("CONIN$", "rb", stdin);
+		freopen("CONOUT$", "wb", stdout);
+		freopen("CONOUT$", "wb", stderr);
+	}
+
 	return TRUE;
 }
 
@@ -919,6 +926,7 @@ extern "C" __declspec(dllexport) bool OnTask()
 
 extern "C" __declspec(dllexport) bool OnUnload()
 {
+	FreeConsole();
 	return Unload_Tensorflow();
 }
 
