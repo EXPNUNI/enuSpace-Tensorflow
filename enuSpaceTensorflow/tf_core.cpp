@@ -65,7 +65,18 @@ void AddPrevFetchObject(ObjectInfo* pfetchObj, FetchInfo* pFetchInfo)
 							const bool bExists = aLookup != pFetchInfo->fetch_object_map.end();
 							if (bExists == false)
 							{
-								// 이전 심볼에 대하여 OUTPUT 객체이면 추가 수행.
+								AddPrevFetchObject(pPrevfetchObj, pFetchInfo);
+							}
+						}
+						// OUTPUT_TYPE_OUTPUT_ETC의 타입으로 AddSymbolicGradient객체가 있음. 본 로직을 만났을 경우, 업데이트 수행은 하지 않지만 뒤로 검색은 진행함.
+						else if (pOutputObj->type == OUTPUT_TYPE_OUTPUT_ETC)
+						{
+							// 이전에 추가한 객체인지 확인후 리스트에 추가 수행.
+							const std::map<std::string, ObjectInfo*>::const_iterator aLookup = pFetchInfo->fetch_object_map.find(strInSymbolId);
+
+							const bool bExists = aLookup != pFetchInfo->fetch_object_map.end();
+							if (bExists == false)
+							{
 								AddPrevFetchObject(pPrevfetchObj, pFetchInfo);
 							}
 						}
@@ -181,6 +192,14 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 								pFetchInfo->output_list.fetch_object.push_back(pfetchObj);
 								pFetchInfo->output_list.fetch_outputs.push_back(*(OutputList*)pOutputObj->pOutput);
 								pFetchInfo->output_list.pin_names.push_back(strInSymbolPinName);
+
+								// ClientSession에 OUTPUTLIST객체를 만났을 경우에만 추가를 수행하고, 뒤에 나오는 객체에 대해서는 추가하지 않음.
+								// AddPrevFetchObject(pfetchObj, pFetchInfo);
+							}
+							// OUTPUT_TYPE_OUTPUT_ETC의 타입으로 AddSymbolicGradient객체가 있음. 본 로직을 만났을 경우, 업데이트 수행은 하지 않지만 뒤로 검색은 진행함.
+							else if (pOutputObj->type == OUTPUT_TYPE_OUTPUT_ETC)
+							{
+								AddPrevFetchObject(pfetchObj, pFetchInfo);
 							}
 							else
 							{
