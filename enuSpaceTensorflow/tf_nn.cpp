@@ -693,6 +693,8 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	Conv2D::Attrs attrs;
 	std::string strTemp = "";
+	std::vector<int> v_dialtions;
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -804,6 +806,12 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 					strTemp = attrParser.GetAttribute("data_format_");
 					attrs = attrs.DataFormat(strTemp);
 				}
+				// tensorflow r1.5 added attribute.
+				if (attrParser.GetAttribute("dilations_") != "")
+				{
+					attrParser.GetValue_arraySliceInt("dilations_", v_dialtions);
+					attrs = attrs.Dilations(v_dialtions);
+				}
 			}
 		}
 		else
@@ -843,6 +851,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	std::string strTemp = "";
 	Conv2DBackpropFilter::Attrs attrs;
+	std::vector<int> v_dialtions;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -978,6 +987,12 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 					strTemp = attrParser.GetAttribute("data_format_");
 					attrs = attrs.DataFormat(strTemp);
 				}
+				// tensorflow r1.5 added attribute.
+				if (attrParser.GetAttribute("dilations_") != "")
+				{
+					attrParser.GetValue_arraySliceInt("dilations_", v_dialtions);
+					attrs = attrs.Dilations(v_dialtions);
+				}
 			}
 		}
 		else
@@ -1018,6 +1033,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	Conv2DBackpropInput::Attrs attrs;
 	std::string strTemp = "";
+	std::vector<int> v_dialtions;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1153,6 +1169,12 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 					strTemp = attrParser.GetAttribute("data_format_");
 					attrs = attrs.DataFormat(strTemp);
 				}
+				// tensorflow r1.5 added attribute.
+				if (attrParser.GetAttribute("dilations_") != "")
+				{
+					attrParser.GetValue_arraySliceInt("dilations_", v_dialtions);
+					attrs = attrs.Dilations(v_dialtions);
+				}
 			}
 		}
 		else
@@ -1192,6 +1214,8 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	Conv3D::Attrs attrs;
 	std::string strTemp = "";
+	std::vector<int> v_dialtions;
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1301,6 +1325,12 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 					strTemp = attrParser.GetAttribute("data_format_");
 					attrs = attrs.DataFormat(strTemp);
 				}
+				// tensorflow r1.5 added attribute.
+				if (attrParser.GetAttribute("dilations_") != "")
+				{
+					attrParser.GetValue_arraySliceInt("dilations_", v_dialtions);
+					attrs = attrs.Dilations(v_dialtions);
+				}
 			}
 		}
 		else
@@ -1341,6 +1371,8 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	Conv3DBackpropFilterV2::Attrs attrs;
 	std::string strTemp = "";
+	std::vector<int> v_dialtions;
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1473,6 +1505,12 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 					strTemp = attrParser.GetAttribute("data_format_");
 					attrs = attrs.DataFormat(strTemp);
 				}
+				// tensorflow r1.5 added attribute.
+				if (attrParser.GetAttribute("dilations_") != "")
+				{
+					attrParser.GetValue_arraySliceInt("dilations_", v_dialtions);
+					attrs = attrs.Dilations(v_dialtions);
+				}
 			}
 		}
 		else
@@ -1513,6 +1551,8 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	Conv3DBackpropInputV2::Attrs attrs;
 	std::string strTemp = "";
+	std::vector<int> v_dialtions;
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1645,6 +1685,12 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 					strTemp = attrParser.GetAttribute("data_format_");
 					attrs = attrs.DataFormat(strTemp);
 				}
+				// tensorflow r1.5 added attribute.
+				if (attrParser.GetAttribute("dilations_") != "")
+				{
+					attrParser.GetValue_arraySliceInt("dilations_", v_dialtions);
+					attrs = attrs.Dilations(v_dialtions);
+				}
 			}
 		}
 		else
@@ -1684,6 +1730,7 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	DepthwiseConv2dNative::Attrs attrs;
 	std::string strTemp = "";
+	std::vector<int> v_dialtions;
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1794,6 +1841,12 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 					strTemp = attrParser.GetAttribute("data_format_");
 					attrs = attrs.DataFormat(strTemp);
 				}
+				// tensorflow r1.5 added attribute.
+				if (attrParser.GetAttribute("dilations_") != "")
+				{
+					attrParser.GetValue_arraySliceInt("dilations_", v_dialtions);
+					attrs = attrs.Dilations(v_dialtions);
+				}
 			}
 		}
 		else
@@ -1834,6 +1887,8 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 	std::string padding;
 	DepthwiseConv2dNativeBackpropFilter::Attrs attrs;
 	std::string strTemp = "";
+	std::vector<int> v_dialtions;
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1966,6 +2021,12 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 					strTemp = attrParser.GetAttribute("data_format_");
 					attrs = attrs.DataFormat(strTemp);
 				}
+				// tensorflow r1.5 added attribute.
+				if (attrParser.GetAttribute("dilations_") != "")
+				{
+					attrParser.GetValue_arraySliceInt("dilations_", v_dialtions);
+					attrs = attrs.Dilations(v_dialtions);
+				}
 			}
 		}
 		else
@@ -2007,6 +2068,8 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 	std::string padding;
 	DepthwiseConv2dNativeBackpropInput::Attrs attrs;
 	std::string strTemp = "";
+	std::vector<int> v_dialtions;
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2138,6 +2201,12 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 				{
 					strTemp = attrParser.GetAttribute("data_format_");
 					attrs = attrs.DataFormat(strTemp);
+				}
+				// tensorflow r1.5 added attribute.
+				if (attrParser.GetAttribute("dilations_") != "")
+				{
+					attrParser.GetValue_arraySliceInt("dilations_", v_dialtions);
+					attrs = attrs.Dilations(v_dialtions);
 				}
 			}
 		}
