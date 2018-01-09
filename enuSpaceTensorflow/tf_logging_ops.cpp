@@ -21,6 +21,8 @@ void* Create_Assert(std::string id, Json::Value pInputItem) {
 	Output *pcondition = nullptr;
 	OutputList *pdata = nullptr;
 	Assert::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -46,7 +48,7 @@ void* Create_Assert(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Assert - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "condition")
@@ -69,7 +71,7 @@ void* Create_Assert(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Assert - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "data")
@@ -92,7 +94,7 @@ void* Create_Assert(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Assert - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -106,7 +108,7 @@ void* Create_Assert(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Assert pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -122,7 +124,7 @@ void* Create_Assert(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Assert(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pAssert;
 }
@@ -132,6 +134,8 @@ void* Create_HistogramSummary(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *ptag = nullptr;
 	Output *pvalues = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -157,7 +161,7 @@ void* Create_HistogramSummary(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : HistogramSummary - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "tag")
@@ -180,7 +184,7 @@ void* Create_HistogramSummary(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : HistogramSummary - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "values")
@@ -203,13 +207,13 @@ void* Create_HistogramSummary(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : HistogramSummary - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : HistogramSummary pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -225,7 +229,7 @@ void* Create_HistogramSummary(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : HistogramSummary(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pHistogramSummary;
 }
@@ -234,6 +238,8 @@ void* Create_MergeSummary(std::string id, Json::Value pInputItem) {
 	MergeSummary* pMergeSummary = nullptr;
 	Scope* pScope = nullptr;
 	OutputList *pinputs = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -259,7 +265,7 @@ void* Create_MergeSummary(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MergeSummary - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "inputs")
@@ -282,13 +288,13 @@ void* Create_MergeSummary(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MergeSummary - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : MergeSummary pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -304,7 +310,7 @@ void* Create_MergeSummary(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : MergeSummary(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pMergeSummary;
 }
@@ -316,6 +322,7 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 	OutputList *pdata = nullptr;
 	Print::Attrs attrs;
 	std::string message_;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -342,7 +349,7 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Print - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -365,7 +372,7 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Print - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "data")
@@ -388,7 +395,7 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Print - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -408,7 +415,7 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Print pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -424,7 +431,7 @@ void* Create_Print(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Print(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pPrint;
 }
@@ -434,6 +441,8 @@ void* Create_ScalarSummary(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *ptag = nullptr;
 	Output *pvalues = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -459,7 +468,7 @@ void* Create_ScalarSummary(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScalarSummary - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "tags")
@@ -482,7 +491,7 @@ void* Create_ScalarSummary(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScalarSummary - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "values")
@@ -505,13 +514,13 @@ void* Create_ScalarSummary(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScalarSummary - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ScalarSummary pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -527,7 +536,7 @@ void* Create_ScalarSummary(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ScalarSummary(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pScalarSummary;
 }
@@ -539,6 +548,7 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 	TensorSummary::Attrs attrs;
 	std::string description_;
 	std::string display_name_;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -565,7 +575,7 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : TensorSummary - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "tensor")
@@ -588,7 +598,7 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : TensorSummary - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -620,7 +630,7 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : TensorSummary pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -636,7 +646,7 @@ void* Create_TensorSummary(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : TensorSummary(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pTensorSummary;
 }

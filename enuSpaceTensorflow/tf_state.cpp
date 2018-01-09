@@ -21,6 +21,7 @@ void* Create_Assign(std::string id, Json::Value pInputItem) {
 	Output* ref = nullptr;
 	Output* value = nullptr;
 	Assign::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -47,7 +48,7 @@ void* Create_Assign(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Assign - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -70,7 +71,7 @@ void* Create_Assign(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Assign - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "value")
@@ -93,7 +94,7 @@ void* Create_Assign(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Assign - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -110,7 +111,7 @@ void* Create_Assign(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Assign - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref && value)
@@ -125,7 +126,7 @@ void* Create_Assign(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Assign(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 
 	return pAssign;
@@ -137,6 +138,7 @@ void* Create_AssignAdd(std::string id, Json::Value pInputItem) {
 	Output* ref = nullptr;
 	Output* value = nullptr;
 	AssignAdd::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -163,7 +165,7 @@ void* Create_AssignAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AssignAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -186,7 +188,7 @@ void* Create_AssignAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AssignAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "value")
@@ -209,7 +211,7 @@ void* Create_AssignAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AssignAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -225,7 +227,7 @@ void* Create_AssignAdd(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : AssignAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref && value)
@@ -240,7 +242,7 @@ void* Create_AssignAdd(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : AssignAdd(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pAssignAdd;
 }
@@ -251,6 +253,7 @@ void* Create_AssignSub(std::string id, Json::Value pInputItem) {
 	Output* ref = nullptr;
 	Output* value = nullptr;
 	AssignSub::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -277,7 +280,7 @@ void* Create_AssignSub(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AssignSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -300,7 +303,7 @@ void* Create_AssignSub(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AssignSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "value")
@@ -323,7 +326,7 @@ void* Create_AssignSub(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AssignSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -339,7 +342,7 @@ void* Create_AssignSub(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : AssignSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref && value)
@@ -354,7 +357,7 @@ void* Create_AssignSub(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : AssignSub(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pAssignSub;
 }
@@ -364,6 +367,7 @@ void* Create_CountUpTo(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* ref = nullptr;
 	int64 limit =0;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -390,7 +394,7 @@ void* Create_CountUpTo(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CountUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -413,7 +417,7 @@ void* Create_CountUpTo(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CountUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "limit")
@@ -425,13 +429,13 @@ void* Create_CountUpTo(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CountUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : CountUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref)
@@ -446,7 +450,7 @@ void* Create_CountUpTo(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : CountUpTo(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pCountUpTo;
 }
@@ -457,6 +461,8 @@ void* Create_DestroyTemporaryVariable(std::string id, Json::Value pInputItem) {
 	Output* ref = nullptr;
 	StringPiece var_name;
 	std::string temp1 ="";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -482,7 +488,7 @@ void* Create_DestroyTemporaryVariable(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DestroyTemporaryVariable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -505,7 +511,7 @@ void* Create_DestroyTemporaryVariable(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DestroyTemporaryVariable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "var_name")
@@ -518,13 +524,13 @@ void* Create_DestroyTemporaryVariable(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DestroyTemporaryVariable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : DestroyTemporaryVariable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref)
@@ -540,7 +546,7 @@ void* Create_DestroyTemporaryVariable(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DestroyTemporaryVariable(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pDestroyTemporaryVariable;
 }
@@ -549,6 +555,8 @@ void* Create_IsVariableInitialized(std::string id, Json::Value pInputItem) {
 	IsVariableInitialized* pIsVariableInitialized = nullptr;
 	Scope* pScope = nullptr;
 	Output* ref = new Output();
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -574,7 +582,7 @@ void* Create_IsVariableInitialized(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : IsVariableInitialized - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -597,13 +605,13 @@ void* Create_IsVariableInitialized(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : IsVariableInitialized - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : IsVariableInitialized - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref)
@@ -618,7 +626,7 @@ void* Create_IsVariableInitialized(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : IsVariableInitialized(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pIsVariableInitialized;
 }
@@ -630,6 +638,7 @@ void* Create_ScatterAdd(std::string id, Json::Value pInputItem) {
 	Output* indices = nullptr;
 	Output* updates = nullptr;
 	ScatterAdd::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -656,7 +665,7 @@ void* Create_ScatterAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -679,7 +688,7 @@ void* Create_ScatterAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "indices")
@@ -702,7 +711,7 @@ void* Create_ScatterAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "updates")
@@ -725,7 +734,7 @@ void* Create_ScatterAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -741,7 +750,7 @@ void* Create_ScatterAdd(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ScatterAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref && indices && updates)
@@ -756,7 +765,7 @@ void* Create_ScatterAdd(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ScatterAdd(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pScatterAdd;
 }
@@ -768,6 +777,7 @@ void* Create_ScatterDiv(std::string id, Json::Value pInputItem) {
 	Output* indices = nullptr;
 	Output* updates = nullptr;
 	ScatterDiv::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -794,7 +804,7 @@ void* Create_ScatterDiv(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -817,7 +827,7 @@ void* Create_ScatterDiv(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "indices")
@@ -840,7 +850,7 @@ void* Create_ScatterDiv(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "updates")
@@ -863,7 +873,7 @@ void* Create_ScatterDiv(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -879,7 +889,7 @@ void* Create_ScatterDiv(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ScatterDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref && indices && updates)
@@ -894,7 +904,7 @@ void* Create_ScatterDiv(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ScatterDiv(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pScatterDiv;
 }
@@ -906,6 +916,7 @@ void* Create_ScatterMul(std::string id, Json::Value pInputItem) {
 	Output* indices = nullptr;
 	Output* updates = nullptr;
 	ScatterMul::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -932,7 +943,7 @@ void* Create_ScatterMul(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -955,7 +966,7 @@ void* Create_ScatterMul(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "indices")
@@ -978,7 +989,7 @@ void* Create_ScatterMul(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "updates")
@@ -1001,7 +1012,7 @@ void* Create_ScatterMul(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1017,7 +1028,7 @@ void* Create_ScatterMul(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ScatterMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref && indices && updates)
@@ -1032,7 +1043,7 @@ void* Create_ScatterMul(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ScatterMul(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pScatterMul;
 }
@@ -1044,6 +1055,7 @@ void* Create_ScatterNdAdd(std::string id, Json::Value pInputItem) {
 	Output* indices = nullptr;
 	Output* updates = nullptr;
 	ScatterNdAdd::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1070,7 +1082,7 @@ void* Create_ScatterNdAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -1093,7 +1105,7 @@ void* Create_ScatterNdAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "indices")
@@ -1116,7 +1128,7 @@ void* Create_ScatterNdAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "updates")
@@ -1139,7 +1151,7 @@ void* Create_ScatterNdAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1155,7 +1167,7 @@ void* Create_ScatterNdAdd(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ScatterNdAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref && indices && updates)
@@ -1170,7 +1182,7 @@ void* Create_ScatterNdAdd(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ScatterNdAdd(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pScatterNdAdd;
 }
@@ -1182,6 +1194,7 @@ void* Create_ScatterNdSub(std::string id, Json::Value pInputItem) {
 	Output* indices = nullptr;
 	Output* updates = nullptr;
 	ScatterNdSub::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1208,7 +1221,7 @@ void* Create_ScatterNdSub(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -1231,7 +1244,7 @@ void* Create_ScatterNdSub(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "indices")
@@ -1254,7 +1267,7 @@ void* Create_ScatterNdSub(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "updates")
@@ -1277,7 +1290,7 @@ void* Create_ScatterNdSub(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1293,7 +1306,7 @@ void* Create_ScatterNdSub(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ScatterNdSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref && indices && updates)
@@ -1308,7 +1321,7 @@ void* Create_ScatterNdSub(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ScatterNdSub(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pScatterNdSub;
 }
@@ -1320,6 +1333,7 @@ void* Create_ScatterNdUpdate(std::string id, Json::Value pInputItem) {
 	Output* indices = nullptr;
 	Output* updates = nullptr;
 	ScatterNdUpdate::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1346,7 +1360,7 @@ void* Create_ScatterNdUpdate(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdUpdate - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -1369,7 +1383,7 @@ void* Create_ScatterNdUpdate(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdUpdate - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "indices")
@@ -1392,7 +1406,7 @@ void* Create_ScatterNdUpdate(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdUpdate - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "updates")
@@ -1415,7 +1429,7 @@ void* Create_ScatterNdUpdate(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterNdUpdate - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1431,7 +1445,7 @@ void* Create_ScatterNdUpdate(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ScatterNdUpdate - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref && indices && updates)
@@ -1446,7 +1460,7 @@ void* Create_ScatterNdUpdate(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ScatterNdUpdate(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pScatterNdUpdate;
 }
@@ -1458,6 +1472,7 @@ void* Create_ScatterSub(std::string id, Json::Value pInputItem) {
 	Output* indices = nullptr;
 	Output* updates = nullptr;
 	ScatterSub::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1484,7 +1499,7 @@ void* Create_ScatterSub(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -1507,7 +1522,7 @@ void* Create_ScatterSub(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "indices")
@@ -1530,7 +1545,7 @@ void* Create_ScatterSub(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "updates")
@@ -1553,7 +1568,7 @@ void* Create_ScatterSub(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1569,7 +1584,7 @@ void* Create_ScatterSub(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ScatterSub - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref && indices && updates)
@@ -1584,7 +1599,7 @@ void* Create_ScatterSub(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ScatterSub(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pScatterSub;
 }
@@ -1596,6 +1611,7 @@ void* Create_ScatterUpdate(std::string id, Json::Value pInputItem) {
 	Output* indices = nullptr;
 	Output* updates = nullptr;
 	ScatterUpdate::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1622,7 +1638,7 @@ void* Create_ScatterUpdate(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterUpdate - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ref")
@@ -1645,7 +1661,7 @@ void* Create_ScatterUpdate(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterUpdate - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "indices")
@@ -1668,7 +1684,7 @@ void* Create_ScatterUpdate(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterUpdate - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "updates")
@@ -1691,7 +1707,7 @@ void* Create_ScatterUpdate(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ScatterUpdate - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1707,7 +1723,7 @@ void* Create_ScatterUpdate(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ScatterUpdate - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && ref && indices && updates)
@@ -1722,7 +1738,7 @@ void* Create_ScatterUpdate(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ScatterUpdate(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pScatterUpdate;
 }
@@ -1734,6 +1750,8 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 	DataType dtype;
 	TemporaryVariable::Attrs attrs;
 	StringPiece strTemp;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1759,7 +1777,7 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : TemporaryVariable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape")
@@ -1775,7 +1793,7 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : TemporaryVariable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dtype")
@@ -1786,13 +1804,13 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 				if(dtype==DT_INVALID)
 				{
 					std::string msg = string_format("warning : TemporaryVariable - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					PrintMessage(msg, msgParam);
 				}
 			}
 			else
 			{
 				std::string msg = string_format("warning : TemporaryVariable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1810,7 +1828,7 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : TemporaryVariable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope)
@@ -1825,7 +1843,7 @@ void* Create_TemporaryVariable(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : TemporaryVariable(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pTemporaryVariable;
 }
@@ -1844,6 +1862,7 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 	std::string strInitPinType;
 	std::string strInitPinShape;
 	std::string strInitPinInitial;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	bool bInterfaceObj = false;
 	ObjectInfo* pInterfaceObj = nullptr;
@@ -1873,7 +1892,7 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Variable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape")
@@ -1889,7 +1908,7 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Variable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dtype")
@@ -1901,13 +1920,13 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 				//if (dtype == DT_INVALID)
 				//{
 				//	std::string msg = string_format("warning : Variable - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-				//	PrintMessage(msg);
+				//	PrintMessage(msg, msgParam);
 				//}
 			}
 			else
 			{
 				std::string msg = string_format("warning : Variable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1942,7 +1961,7 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Variable pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1995,7 +2014,7 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 							else
 							{
 								std::string msg = string_format("error : Variable(%s) Object create failed. input const object(%s).", id.c_str(), strSubPinType.c_str());
-								PrintMessage(msg);
+								PrintMessage(msg, msgParam);
 							}
 							break;
 						}
@@ -2004,13 +2023,13 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 				else
 				{
 					std::string msg = string_format("error : Variable(%s) Object create failed. not support object. use const object.", id.c_str());
-					PrintMessage(msg);
+					PrintMessage(msg, msgParam);
 				}
 			}
 			else
 			{
 				std::string msg = string_format("error : Variable(%s) Object create failed. interface object(%s).", id.c_str(), strDataType.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		// initvalues = {1.0f, 2.0f}, datatype = DT_FLOAT, shape = [10] or null 
@@ -2025,7 +2044,7 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("waring : Variable init values empty - (%s). default value set 0", id.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 
 				dtype = GetDatatypeFromInitial(strDataType);
 				shape = GetPartialShapeFromInitial(strDataShape);
@@ -2057,13 +2076,13 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("error : Variable(%s) Object create failed.", id.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("error : Variable(%s) Object create failed. dtype(%s).", id.c_str(), strDataType.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 
 		if (pOutput)
@@ -2076,7 +2095,7 @@ void* Create_Variable(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Variable(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pOutput;
 }

@@ -18,6 +18,8 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	int64 record_bytes = 0;
 	FixedLengthRecordReader::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	std::string container_ = "";
 	std::string shared_name_ = "";
@@ -46,7 +48,7 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FixedLengthRecordReader - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "record_bytes")
@@ -59,7 +61,7 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FixedLengthRecordReader - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -85,7 +87,7 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : FixedLengthRecordReader pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -101,7 +103,7 @@ void* Create_FixedLengthRecordReader(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : FixedLengthRecordReader(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pFixedLengthRecordReader;
 }
@@ -110,6 +112,8 @@ void* Create_IdentityReader(std::string id, Json::Value pInputItem) {
 	IdentityReader* pIdentityReader = nullptr;
 	Scope* pScope = nullptr;
 	IdentityReader::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	std::string container_ = "";
 	std::string shared_name_ = "";
@@ -138,7 +142,7 @@ void* Create_IdentityReader(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : IdentityReader - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -161,7 +165,7 @@ void* Create_IdentityReader(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : IdentityReader pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -177,7 +181,7 @@ void* Create_IdentityReader(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : IdentityReader(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pIdentityReader;
 }
@@ -185,6 +189,8 @@ void* Create_LMDBReader(std::string id, Json::Value pInputItem) {
 	LMDBReader* pLMDBReaderReader = nullptr;
 	Scope* pScope = nullptr;
 	LMDBReader::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	std::string container_ = "";
 	std::string shared_name_ = "";
@@ -213,7 +219,7 @@ void* Create_LMDBReader(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : LMDBReader - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -236,7 +242,7 @@ void* Create_LMDBReader(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : LMDBReader pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -252,7 +258,7 @@ void* Create_LMDBReader(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : LMDBReader(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pLMDBReaderReader;
 }
@@ -261,6 +267,8 @@ void* Create_MatchingFiles(std::string id, Json::Value pInputItem) {
 	MatchingFiles* pMatchingFiles = nullptr;
 	Scope* pScope = nullptr;
 	Output* ppattern = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -287,7 +295,7 @@ void* Create_MatchingFiles(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MatchingFiles - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "pattern")
@@ -315,13 +323,13 @@ void* Create_MatchingFiles(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MatchingFiles - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : MatchingFiles pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -337,7 +345,7 @@ void* Create_MatchingFiles(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : MatchingFiles(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pMatchingFiles;
 }
@@ -348,6 +356,8 @@ void* Create_MergeV2Checkpoints(std::string id, Json::Value pInputItem) {
 	Output *pcheckpoint_prefixes = nullptr;
 	Output *pdestination_prefix = nullptr;
 	MergeV2Checkpoints::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -374,7 +384,7 @@ void* Create_MergeV2Checkpoints(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MergeV2Checkpoints - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "checkpoint_prefixes")
@@ -397,7 +407,7 @@ void* Create_MergeV2Checkpoints(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MergeV2Checkpoints - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "destination_prefix")
@@ -420,7 +430,7 @@ void* Create_MergeV2Checkpoints(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MergeV2Checkpoints - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -434,7 +444,7 @@ void* Create_MergeV2Checkpoints(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : MergeV2Checkpoints pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -450,7 +460,7 @@ void* Create_MergeV2Checkpoints(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : MergeV2Checkpoints(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pMergeV2Checkpoints;
 }
@@ -459,6 +469,8 @@ void* Create_ReadFile(std::string id, Json::Value pInputItem) {
 	tensorflow::ops::ReadFile* pReadFile = nullptr;
 	Scope* pScope = nullptr;
 	Output *pfilename = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -485,7 +497,7 @@ void* Create_ReadFile(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReadFile - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filename")
@@ -513,13 +525,13 @@ void* Create_ReadFile(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReadFile - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ReadFile pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -535,7 +547,7 @@ void* Create_ReadFile(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ReadFile(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pReadFile;
 }
@@ -544,6 +556,8 @@ void* Create_ReaderNumRecordsProduced(std::string id, Json::Value pInputItem) {
 	ReaderNumRecordsProduced* pReaderNumRecordsProduced = nullptr;
 	Scope* pScope = nullptr;
 	Output *preader_handle = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -570,7 +584,7 @@ void* Create_ReaderNumRecordsProduced(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderNumRecordsProduced - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "reader_handle")
@@ -593,13 +607,13 @@ void* Create_ReaderNumRecordsProduced(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderNumRecordsProduced - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ReaderNumRecordsProduced pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -615,7 +629,7 @@ void* Create_ReaderNumRecordsProduced(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ReaderNumRecordsProduced(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pReaderNumRecordsProduced;
 }
@@ -624,6 +638,8 @@ void* Create_ReaderNumWorkUnitsCompleted(std::string id, Json::Value pInputItem)
 	ReaderNumWorkUnitsCompleted* pReaderNumWorkUnitsCompleted = nullptr;
 	Scope* pScope = nullptr;
 	Output *preader_handle = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -650,7 +666,7 @@ void* Create_ReaderNumWorkUnitsCompleted(std::string id, Json::Value pInputItem)
 			else
 			{
 				std::string msg = string_format("warning : ReaderNumWorkUnitsCompleted - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "reader_handle")
@@ -673,13 +689,13 @@ void* Create_ReaderNumWorkUnitsCompleted(std::string id, Json::Value pInputItem)
 			else
 			{
 				std::string msg = string_format("warning : ReaderNumWorkUnitsCompleted - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ReaderNumWorkUnitsCompleted pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -695,7 +711,7 @@ void* Create_ReaderNumWorkUnitsCompleted(std::string id, Json::Value pInputItem)
 	else
 	{
 		std::string msg = string_format("error : ReaderNumWorkUnitsCompleted(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pReaderNumWorkUnitsCompleted;
 }
@@ -705,6 +721,8 @@ void* Create_ReaderRead(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *preader_handle = nullptr;
 	Output *pqueue_handle = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -731,7 +749,7 @@ void* Create_ReaderRead(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "reader_handle")
@@ -754,7 +772,7 @@ void* Create_ReaderRead(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "queue_handle")
@@ -777,13 +795,13 @@ void* Create_ReaderRead(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ReaderRead pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -800,7 +818,7 @@ void* Create_ReaderRead(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ReaderRead(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pReaderRead;
 }
@@ -811,6 +829,8 @@ void* Create_ReaderReadUpTo(std::string id, Json::Value pInputItem) {
 	Output *preader_handle = nullptr;
 	Output *pqueue_handle = nullptr;
 	Output *pnum_records = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -837,7 +857,7 @@ void* Create_ReaderReadUpTo(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderReadUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "reader_handle")
@@ -860,7 +880,7 @@ void* Create_ReaderReadUpTo(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderReadUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "queue_handle")
@@ -883,7 +903,7 @@ void* Create_ReaderReadUpTo(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderReadUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_records")
@@ -911,13 +931,13 @@ void* Create_ReaderReadUpTo(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderReadUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ReaderReadUpTo pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -934,7 +954,7 @@ void* Create_ReaderReadUpTo(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ReaderReadUpTo(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pReaderReadUpTo;
 }
@@ -944,6 +964,8 @@ void* Create_ReaderReset(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *preader_handle = nullptr;
 	Output *pqueue_handle = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -970,7 +992,7 @@ void* Create_ReaderReset(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderReset - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "reader_handle")
@@ -993,13 +1015,13 @@ void* Create_ReaderReset(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderReset - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ReaderReset pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1015,7 +1037,7 @@ void* Create_ReaderReset(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ReaderReset(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pReaderReset;
 }
@@ -1025,6 +1047,8 @@ void* Create_ReaderRestoreState(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *preader_handle = nullptr;
 	Output *pstate = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1051,7 +1075,7 @@ void* Create_ReaderRestoreState(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : pReaderRestoreState - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "reader_handle")
@@ -1074,7 +1098,7 @@ void* Create_ReaderRestoreState(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : pReaderRestoreState - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "state")
@@ -1097,13 +1121,13 @@ void* Create_ReaderRestoreState(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : pReaderRestoreState - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : pReaderRestoreState pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1119,7 +1143,7 @@ void* Create_ReaderRestoreState(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : pReaderRestoreState(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pReaderRestoreState;
 }
@@ -1128,6 +1152,8 @@ void* Create_ReaderSerializeState(std::string id, Json::Value pInputItem) {
 	ReaderSerializeState* pReaderSerializeState = nullptr;
 	Scope* pScope = nullptr;
 	Output *preader_handle = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1154,7 +1180,7 @@ void* Create_ReaderSerializeState(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderSerializeState - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "reader_handle")
@@ -1177,13 +1203,13 @@ void* Create_ReaderSerializeState(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReaderSerializeState - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ReaderSerializeState pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1199,7 +1225,7 @@ void* Create_ReaderSerializeState(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ReaderSerializeState(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pReaderSerializeState;
 }
@@ -1211,6 +1237,8 @@ void* Create_Restore(std::string id, Json::Value pInputItem) {
 	Output *ptensor_name = nullptr;
 	DataType dt;
 	Restore::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1237,7 +1265,7 @@ void* Create_Restore(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Restore - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "file_pattern")
@@ -1265,7 +1293,7 @@ void* Create_Restore(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Restore - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "tensor_name")
@@ -1293,7 +1321,7 @@ void* Create_Restore(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Restore - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dt")
@@ -1303,13 +1331,13 @@ void* Create_Restore(std::string id, Json::Value pInputItem) {
 				if (!(dt = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : Restore - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					PrintMessage(msg, msgParam);
 				}
 			}
 			else
 			{
 				std::string msg = string_format("warning : Restore - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1323,7 +1351,7 @@ void* Create_Restore(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Restore pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1339,7 +1367,7 @@ void* Create_Restore(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Restore(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRestore;
 }
@@ -1352,6 +1380,8 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 	Output *pshape_and_slice = nullptr;
 	DataType dt;
 	RestoreSlice::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1378,7 +1408,7 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RestoreSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "file_pattern")
@@ -1406,7 +1436,7 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RestoreSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "tensor_name")
@@ -1434,7 +1464,7 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RestoreSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape_and_slice")
@@ -1462,7 +1492,7 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RestoreSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dt")
@@ -1472,13 +1502,13 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 				if (!(dt = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : RestoreSlice - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					PrintMessage(msg, msgParam);
 				}
 			}
 			else
 			{
 				std::string msg = string_format("warning : RestoreSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1492,7 +1522,7 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : RestoreSlice pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1508,7 +1538,7 @@ void* Create_RestoreSlice(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RestoreSlice(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRestoreSlice;
 }
@@ -1521,6 +1551,8 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 	Output *pshape_and_slices = nullptr;
 	std::vector<tensorflow::DataType> vDT;
 	RestoreSlice::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1547,7 +1579,7 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RestoreV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "prefix")
@@ -1575,7 +1607,7 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RestoreV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "tensor_names")
@@ -1603,7 +1635,7 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RestoreV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape_and_slices")
@@ -1631,7 +1663,7 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RestoreV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -1644,13 +1676,13 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RestoreV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : RestoreV2 pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1668,7 +1700,7 @@ void* Create_RestoreV2(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RestoreV2(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRestoreV2;
 }
@@ -1679,6 +1711,8 @@ void* Create_Save(std::string id, Json::Value pInputItem) {
 	Output *pfilename = nullptr;
 	Output *ptensor_names = nullptr;
 	OutputList *pdata = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1705,7 +1739,7 @@ void* Create_Save(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Save - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filename")
@@ -1733,7 +1767,7 @@ void* Create_Save(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Save - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "tensor_names")
@@ -1761,7 +1795,7 @@ void* Create_Save(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Save - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "data")
@@ -1791,13 +1825,13 @@ void* Create_Save(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Save - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Save pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1813,7 +1847,7 @@ void* Create_Save(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Save(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pSave;
 }
@@ -1825,6 +1859,8 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 	Output *ptensor_names = nullptr;
 	Output *pshape_and_slices = nullptr;
 	OutputList *pdata = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1851,7 +1887,7 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : SaveSlices - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filename")
@@ -1879,7 +1915,7 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : SaveSlices - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "tensor_names")
@@ -1907,7 +1943,7 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : SaveSlices - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shapes_and_slices")
@@ -1935,7 +1971,7 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : SaveSlices - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "data")
@@ -1958,13 +1994,13 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : SaveSlices - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : SaveSlices pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1980,7 +2016,7 @@ void* Create_SaveSlices(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : SaveSlices(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pSaveSlices;
 }
@@ -1992,6 +2028,8 @@ void* Create_SaveV2(std::string id, Json::Value pInputItem) {
 	Output *ptensor_names = nullptr;
 	Output *pshape_and_slices = nullptr;
 	OutputList *ptensors = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2018,7 +2056,7 @@ void* Create_SaveV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : SaveV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "prefix")
@@ -2046,7 +2084,7 @@ void* Create_SaveV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : SaveV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "tensor_names")
@@ -2074,7 +2112,7 @@ void* Create_SaveV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : SaveV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape_and_slices")
@@ -2102,7 +2140,7 @@ void* Create_SaveV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : SaveV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "tensors")
@@ -2125,13 +2163,13 @@ void* Create_SaveV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : SaveV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : SaveV2 pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2147,7 +2185,7 @@ void* Create_SaveV2(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : SaveV2(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pSaveV2;
 }
@@ -2158,6 +2196,8 @@ void* Create_ShardedFilename(std::string id, Json::Value pInputItem) {
 	Output *pbasename = nullptr;
 	Output *pshard = nullptr;
 	Output *pnum_shards = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2184,7 +2224,7 @@ void* Create_ShardedFilename(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ShardedFilename - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "basename")
@@ -2212,7 +2252,7 @@ void* Create_ShardedFilename(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ShardedFilename - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shard")
@@ -2240,7 +2280,7 @@ void* Create_ShardedFilename(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ShardedFilename - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_shards")
@@ -2268,13 +2308,13 @@ void* Create_ShardedFilename(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ShardedFilename - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ShardedFilename pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pbasename && pshard && pnum_shards)
@@ -2289,7 +2329,7 @@ void* Create_ShardedFilename(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ShardedFilename(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pShardedFilename;
 }
@@ -2299,6 +2339,8 @@ void* Create_ShardedFilespec(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pbasename = nullptr;
 	Output *pnum_shards = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2325,7 +2367,7 @@ void* Create_ShardedFilespec(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ShardedFilespec - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "basename")
@@ -2353,7 +2395,7 @@ void* Create_ShardedFilespec(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ShardedFilespec - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_shards")
@@ -2381,13 +2423,13 @@ void* Create_ShardedFilespec(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ShardedFilespec - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ShardedFilespec pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pbasename && pnum_shards)
@@ -2402,7 +2444,7 @@ void* Create_ShardedFilespec(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ShardedFilespec(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pShardedFilespec;
 }
@@ -2411,6 +2453,8 @@ void* Create_TFRecordReader(std::string id, Json::Value pInputItem) {
 	TFRecordReader* pTFRecordReader = nullptr;
 	Scope* pScope = nullptr;
 	TFRecordReader::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	std::string container_;
 	std::string shared_name_;
@@ -2440,7 +2484,7 @@ void* Create_TFRecordReader(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : TFRecordReader - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2468,7 +2512,7 @@ void* Create_TFRecordReader(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : TFRecordReader pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2484,7 +2528,7 @@ void* Create_TFRecordReader(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : TFRecordReader(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pTFRecordReader;
 }
@@ -2493,6 +2537,8 @@ void* Create_TextLineReader(std::string id, Json::Value pInputItem) {
 	TextLineReader* pTextLineReader = nullptr;
 	Scope* pScope = nullptr;
 	TextLineReader::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	std::string container_;
 	std::string shared_name_;
@@ -2521,7 +2567,7 @@ void* Create_TextLineReader(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : TextLineReader - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2545,7 +2591,7 @@ void* Create_TextLineReader(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : TextLineReader pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2561,7 +2607,7 @@ void* Create_TextLineReader(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : TextLineReader(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pTextLineReader;
 }
@@ -2570,6 +2616,8 @@ void* Create_WholeFileReader(std::string id, Json::Value pInputItem) {
 	WholeFileReader* pWholeFileReader = nullptr;
 	Scope* pScope = nullptr;
 	WholeFileReader::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	std::string container_;
 	std::string shared_name_;
@@ -2598,7 +2646,7 @@ void* Create_WholeFileReader(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : WholeFileReader - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2621,7 +2669,7 @@ void* Create_WholeFileReader(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : WholeFileReader pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2637,7 +2685,7 @@ void* Create_WholeFileReader(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : WholeFileReader(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pWholeFileReader;
 }
@@ -2647,6 +2695,8 @@ void* Create_WriteFile(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pfilename = nullptr;
 	Output *pcontents = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2673,7 +2723,7 @@ void* Create_WriteFile(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : WriteFile - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filename")
@@ -2701,7 +2751,7 @@ void* Create_WriteFile(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : WriteFile - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "contents")
@@ -2724,13 +2774,13 @@ void* Create_WriteFile(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : WriteFile - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : WriteFile pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2746,7 +2796,7 @@ void* Create_WriteFile(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : WriteFile(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pWriteFile;
 }

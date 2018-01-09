@@ -21,6 +21,7 @@ void* Create_AllCandidateSampler(std::string id, Json::Value pInputItem) {
 	int64 num_sampled;
 	bool unique;
 	AllCandidateSampler::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -47,7 +48,7 @@ void* Create_AllCandidateSampler(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AllCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "true_classes")
@@ -70,7 +71,7 @@ void* Create_AllCandidateSampler(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AllCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_true")
@@ -83,7 +84,7 @@ void* Create_AllCandidateSampler(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AllCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_sampled")
@@ -96,7 +97,7 @@ void* Create_AllCandidateSampler(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AllCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "unique")
@@ -112,7 +113,7 @@ void* Create_AllCandidateSampler(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AllCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -133,7 +134,7 @@ void* Create_AllCandidateSampler(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : AllCandidateSampler pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -151,7 +152,7 @@ void* Create_AllCandidateSampler(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : AllCandidateSampler(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pAllCandidateSampler;
 }
@@ -163,6 +164,7 @@ void* Create_ComputeAccidentalHits(std::string id, Json::Value pInputItem) {
 	Output* sampled_candidates = nullptr;
 	int64 num_true;
 	ComputeAccidentalHits::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -189,7 +191,7 @@ void* Create_ComputeAccidentalHits(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ComputeAccidentalHits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "true_classes")
@@ -212,7 +214,7 @@ void* Create_ComputeAccidentalHits(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ComputeAccidentalHits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "sampled_candidates")
@@ -235,7 +237,7 @@ void* Create_ComputeAccidentalHits(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ComputeAccidentalHits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_true")
@@ -248,7 +250,7 @@ void* Create_ComputeAccidentalHits(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ComputeAccidentalHits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -269,7 +271,7 @@ void* Create_ComputeAccidentalHits(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ComputeAccidentalHits pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -287,7 +289,7 @@ void* Create_ComputeAccidentalHits(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ComputeAccidentalHits(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pComputeAccidentalHits;
 }
@@ -301,6 +303,7 @@ void* Create_FixedUnigramCandidateSampler(std::string id, Json::Value pInputItem
 	bool unique;
 	int64 range_max;
 	FixedUnigramCandidateSampler::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -327,7 +330,7 @@ void* Create_FixedUnigramCandidateSampler(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : FixedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "true_classes")
@@ -350,7 +353,7 @@ void* Create_FixedUnigramCandidateSampler(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : FixedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_true")
@@ -363,7 +366,7 @@ void* Create_FixedUnigramCandidateSampler(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : FixedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_sampled")
@@ -376,7 +379,7 @@ void* Create_FixedUnigramCandidateSampler(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : FixedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "unique")
@@ -392,7 +395,7 @@ void* Create_FixedUnigramCandidateSampler(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : FixedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "range_max")
@@ -405,7 +408,7 @@ void* Create_FixedUnigramCandidateSampler(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : FixedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -450,7 +453,7 @@ void* Create_FixedUnigramCandidateSampler(std::string id, Json::Value pInputItem
 		else
 		{
 			std::string msg = string_format("warning : FixedUnigramCandidateSampler pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -468,7 +471,7 @@ void* Create_FixedUnigramCandidateSampler(std::string id, Json::Value pInputItem
 	else
 	{
 		std::string msg = string_format("error : FixedUnigramCandidateSampler(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pFixedUnigramCandidateSampler;
 }
@@ -482,6 +485,7 @@ void* Create_LearnedUnigramCandidateSampler(std::string id, Json::Value pInputIt
 	bool unique;
 	int64 range_max;
 	LearnedUnigramCandidateSampler::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -508,7 +512,7 @@ void* Create_LearnedUnigramCandidateSampler(std::string id, Json::Value pInputIt
 			else
 			{
 				std::string msg = string_format("warning : LearnedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "true_classes")
@@ -531,7 +535,7 @@ void* Create_LearnedUnigramCandidateSampler(std::string id, Json::Value pInputIt
 			else
 			{
 				std::string msg = string_format("warning : LearnedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_true")
@@ -544,7 +548,7 @@ void* Create_LearnedUnigramCandidateSampler(std::string id, Json::Value pInputIt
 			else
 			{
 				std::string msg = string_format("warning : LearnedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_sampled")
@@ -557,7 +561,7 @@ void* Create_LearnedUnigramCandidateSampler(std::string id, Json::Value pInputIt
 			else
 			{
 				std::string msg = string_format("warning : LearnedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "unique")
@@ -573,7 +577,7 @@ void* Create_LearnedUnigramCandidateSampler(std::string id, Json::Value pInputIt
 			else
 			{
 				std::string msg = string_format("warning : LearnedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "range_max")
@@ -586,7 +590,7 @@ void* Create_LearnedUnigramCandidateSampler(std::string id, Json::Value pInputIt
 			else
 			{
 				std::string msg = string_format("warning : LearnedUnigramCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -607,7 +611,7 @@ void* Create_LearnedUnigramCandidateSampler(std::string id, Json::Value pInputIt
 		else
 		{
 			std::string msg = string_format("warning : LearnedUnigramCandidateSampler pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -625,7 +629,7 @@ void* Create_LearnedUnigramCandidateSampler(std::string id, Json::Value pInputIt
 	else
 	{
 		std::string msg = string_format("error : LearnedUnigramCandidateSampler(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pLearnedUnigramCandidateSampler;
 }
@@ -639,6 +643,7 @@ void* Create_LogUniformCandidateSampler(std::string id, Json::Value pInputItem) 
 	bool unique;
 	int64 range_max;
 	LogUniformCandidateSampler::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -665,7 +670,7 @@ void* Create_LogUniformCandidateSampler(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : LogUniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "true_classes")
@@ -688,7 +693,7 @@ void* Create_LogUniformCandidateSampler(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : LogUniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_true")
@@ -701,7 +706,7 @@ void* Create_LogUniformCandidateSampler(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : LogUniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_sampled")
@@ -714,7 +719,7 @@ void* Create_LogUniformCandidateSampler(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : LogUniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "unique")
@@ -730,7 +735,7 @@ void* Create_LogUniformCandidateSampler(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : LogUniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "range_max")
@@ -743,7 +748,7 @@ void* Create_LogUniformCandidateSampler(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : LogUniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -764,7 +769,7 @@ void* Create_LogUniformCandidateSampler(std::string id, Json::Value pInputItem) 
 		else
 		{
 			std::string msg = string_format("warning : LogUniformCandidateSampler pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -782,7 +787,7 @@ void* Create_LogUniformCandidateSampler(std::string id, Json::Value pInputItem) 
 	else
 	{
 		std::string msg = string_format("error : LogUniformCandidateSampler(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pLogUniformCandidateSampler;
 }
@@ -796,6 +801,7 @@ void* Create_UniformCandidateSampler(std::string id, Json::Value pInputItem) {
 	bool unique;
 	int64 range_max;
 	UniformCandidateSampler::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -822,7 +828,7 @@ void* Create_UniformCandidateSampler(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : UniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "true_classes")
@@ -845,7 +851,7 @@ void* Create_UniformCandidateSampler(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : UniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_true")
@@ -858,7 +864,7 @@ void* Create_UniformCandidateSampler(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : UniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_sampled")
@@ -871,7 +877,7 @@ void* Create_UniformCandidateSampler(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : UniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "unique")
@@ -887,7 +893,7 @@ void* Create_UniformCandidateSampler(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : UniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "range_max")
@@ -900,7 +906,7 @@ void* Create_UniformCandidateSampler(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : UniformCandidateSampler - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -921,7 +927,7 @@ void* Create_UniformCandidateSampler(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : UniformCandidateSampler pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -939,7 +945,7 @@ void* Create_UniformCandidateSampler(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : UniformCandidateSampler(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pUniformCandidateSampler;
 }

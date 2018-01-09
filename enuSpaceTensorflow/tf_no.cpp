@@ -16,6 +16,8 @@
 void* Create_NoOp(std::string id, Json::Value pInputItem) {
 	NoOp* pNoOp = nullptr;
 	Scope* pScope = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -41,7 +43,7 @@ void* Create_NoOp(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : NoOp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
@@ -63,7 +65,7 @@ void* Create_NoOp(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : NoOp(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pNoOp;
 }

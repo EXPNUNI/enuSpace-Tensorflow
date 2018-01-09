@@ -83,6 +83,7 @@ BOOL CtensorflowApp::InitInstance()
 	return TRUE;
 }
 
+/////////////////////////////////////////////////////////////////////////
 
 #include "enuSpaceToTensorflow.h"
 
@@ -91,7 +92,7 @@ VariableStruct (*g_fcbGetValue)(wchar_t*) = NULL;
 void(*g_fcbSetArrayValue)(wchar_t*, void*, int, int) = NULL;
 void(*g_fcbSetReShapeArrayValue)(wchar_t*, void*, int, int) = NULL;
 VariableStruct (*g_fcbGetArrayValue)(wchar_t*) = NULL;
-void(*g_fcbPrintMessage)(wchar_t*) = NULL;
+void(*g_fcbPrintMessage)(wchar_t*, wchar_t*) = NULL;
 
 CMap<CString, LPCWSTR, VariableStruct*, VariableStruct*> g_DBMapList;
 
@@ -190,7 +191,7 @@ extern "C" __declspec(dllexport) void SetCallBack_GetValue(VariableStruct fcbGet
 extern "C" __declspec(dllexport) void SetCallBack_SetArrayValue(void fcbSetArrayValue(wchar_t*, void*, int, int));
 extern "C" __declspec(dllexport) void SetCallBack_GetArrayValue(VariableStruct fcbGetArrayValue(wchar_t*));
 extern "C" __declspec(dllexport) void SetCallBack_SetReShapeArrayValue(void fcbSetReShapeArrayValue(wchar_t*, void*, int, int));
-extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*));
+extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*, wchar_t*));
 
 extern "C" __declspec(dllexport) int GetTaskType();
 extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar_t* pToType);
@@ -234,7 +235,7 @@ extern "C" __declspec(dllexport) void SetCallBack_SetReShapeArrayValue(void fcbS
 {
 	g_fcbSetReShapeArrayValue = fcbSetReShapeArrayValue;
 }
-extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*))
+extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*, wchar_t*))
 {
 	g_fcbPrintMessage = fcbPrintMessage;
 }
@@ -700,12 +701,13 @@ double GetValue(std::string strVariable)
 	return fReturn;
 }
 
-void PrintMessage(std::string strMessage)
+void PrintMessage(std::string strMessage, std::string strID)
 {
 	if (g_fcbPrintMessage && m_bShowDebugMessage)
 	{
 		std::string strTenMessage = string_format("tensorflow -> %s", strMessage.c_str());
-		g_fcbPrintMessage(StringToCString(strTenMessage).GetBuffer(0));
+		std::string strId = string_format("%s", strID.c_str());
+		g_fcbPrintMessage(StringToCString(strTenMessage).GetBuffer(0), StringToCString(strId).GetBuffer(0));
 	}
 }
 
@@ -790,144 +792,178 @@ extern "C" __declspec(dllexport) bool IsTaskStopWhenModify()
 
 extern "C" __declspec(dllexport) bool OnLoad()
 {
-	return Load_Tensorflow();
+	try
+	{
+		Load_Tensorflow();
+		return true;
+	}
+	catch (...)
+	{
+
+	}
+	return false;
 }
 
 bool bProcessing = false;
 int iLoopCycle = 0;
 extern "C" __declspec(dllexport) bool OnInit()
 {
-	InterfaceDataMapClear();
-	ObjectMapClear();
-
-	CString dirName = g_strDllPath;
-	CString strExt = L"/*.json";
-
-	CFileFind finder;
-
-	BOOL bWorking = finder.FindFile(dirName + strExt);
-
-	while (bWorking)
+	try
 	{
-		bWorking = finder.FindNextFile();
-		if (finder.IsDots())
+		InterfaceDataMapClear();
+		ObjectMapClear();
+
+		CString dirName = g_strDllPath;
+		CString strExt = L"/*.json";
+
+		CFileFind finder;
+
+		BOOL bWorking = finder.FindFile(dirName + strExt);
+
+		while (bWorking)
 		{
-			continue;
-		}
-
-		CString logic_file = finder.GetFilePath();
-
-		std::string filename = CStringToString(logic_file);
-
-		CString str;
-		CFile pFile;
-
-		if (pFile.Open(logic_file, CFile::modeRead | CFile::typeBinary))
-		{
-			pFile.Seek(2, CFile::begin);
-			size_t fLength = (size_t)pFile.GetLength() - 2;
-			TCHAR *th = (TCHAR*)malloc(fLength + sizeof(TCHAR));
-			memset(th, 0, fLength + sizeof(TCHAR));
-			pFile.Read(th, fLength);
-
-			str = th;
-			free(th);
-			pFile.Close();
-
-			std::string covertStr;
-			covertStr = CStringToString(str);
-
-			WCHAR drive[_MAX_DRIVE];
-			WCHAR dir[_MAX_DIR];
-			WCHAR fname[_MAX_FNAME];
-			WCHAR ext[_MAX_EXT];
-			_wsplitpath_s(logic_file, drive, dir, fname, ext);
-
-			///////////////////////////////////////////////////////////////////
-			// binary data file
-			CString datafilename;
-			datafilename.Format(L"%s%s%s.dat", drive, dir, fname);
-			if (_wfopen_s(&m_FileData, datafilename.GetBuffer(0), L"rb") != NULL)
+			bWorking = finder.FindNextFile();
+			if (finder.IsDots())
 			{
-				m_FileData = NULL;
+				continue;
 			}
 
-			std::string pagename;
-			pagename = CStringToString(fname);
+			CString logic_file = finder.GetFilePath();
 
-			Init_Tensorflow(covertStr, pagename);
+			std::string filename = CStringToString(logic_file);
 
-			///////////////////////////////////////////////////////////////////
-			// binary data file close
-			if (m_FileData)
+			CString str;
+			CFile pFile;
+
+			if (pFile.Open(logic_file, CFile::modeRead | CFile::typeBinary))
 			{
-				fclose(m_FileData);
-				m_FileData = NULL;
+				pFile.Seek(2, CFile::begin);
+				size_t fLength = (size_t)pFile.GetLength() - 2;
+				TCHAR *th = (TCHAR*)malloc(fLength + sizeof(TCHAR));
+				memset(th, 0, fLength + sizeof(TCHAR));
+				pFile.Read(th, fLength);
+
+				str = th;
+				free(th);
+				pFile.Close();
+
+				std::string covertStr;
+				covertStr = CStringToString(str);
+
+				WCHAR drive[_MAX_DRIVE];
+				WCHAR dir[_MAX_DIR];
+				WCHAR fname[_MAX_FNAME];
+				WCHAR ext[_MAX_EXT];
+				_wsplitpath_s(logic_file, drive, dir, fname, ext);
+
+				///////////////////////////////////////////////////////////////////
+				// binary data file
+				CString datafilename;
+				datafilename.Format(L"%s%s%s.dat", drive, dir, fname);
+				if (_wfopen_s(&m_FileData, datafilename.GetBuffer(0), L"rb") != NULL)
+				{
+					m_FileData = NULL;
+				}
+
+				std::string pagename;
+				pagename = CStringToString(fname);
+
+				Init_Tensorflow(covertStr, pagename);
+
+				///////////////////////////////////////////////////////////////////
+				// binary data file close
+				if (m_FileData)
+				{
+					fclose(m_FileData);
+					m_FileData = NULL;
+				}
 			}
 		}
+		finder.Close();
+
+		iLoopCycle = 0;
+		return true;
 	}
-	finder.Close();
+	catch (...)
+	{
 
-	iLoopCycle = 0;
-	return true;
+	}
+	return false;
 }
 
 extern "C" __declspec(dllexport) bool OnTask()
 {
-	if (m_bContinusLoop == false)
+	try
 	{
-		Task_Tensorflow();
-		iLoopCycle++;
+		if (m_bContinusLoop == false)
+		{
+			Task_Tensorflow();
+			iLoopCycle++;
 
-		if (g_fcbPrintMessage)
-		{
-			CString strMessage;
-			strMessage.Format(L"tensorflow -> event cycle ...................%d", iLoopCycle);
-			g_fcbPrintMessage(strMessage.GetBuffer(0));
-		}
-		return true;
-	}
-	else if (m_bContinusLoop && m_iSimulationMode == DEF_MODE_STEP)
-	{
-		Task_Tensorflow();
-		iLoopCycle++;
-
-		if (g_fcbPrintMessage)
-		{
-			CString strMessage;
-			strMessage.Format(L"tensorflow -> event cycle ...................%d", iLoopCycle);
-			g_fcbPrintMessage(strMessage.GetBuffer(0));
-		}
-		return true;
-	}
-	else
-	{
-		if (bProcessing == false)
-		{
-			while (m_bContinusLoop && m_iSimulationMode == DEF_MODE_RUN)
+			if (g_fcbPrintMessage)
 			{
-				bProcessing = true;
-				Task_Tensorflow();
-				iLoopCycle++;
-
-				if (g_fcbPrintMessage)
-				{
-					CString strMessage;
-					strMessage.Format(L"tensorflow -> contineous cycle ...................%d", iLoopCycle);
-					g_fcbPrintMessage(strMessage.GetBuffer(0));
-				}
+				CString strMessage;
+				strMessage.Format(L"tensorflow -> event cycle ...................%d", iLoopCycle);
+				g_fcbPrintMessage(strMessage.GetBuffer(0), L"");
 			}
-			bProcessing = false;
+			return true;
 		}
-	}
+		else if (m_bContinusLoop && m_iSimulationMode == DEF_MODE_STEP)
+		{
+			Task_Tensorflow();
+			iLoopCycle++;
 
-	return true;
+			if (g_fcbPrintMessage)
+			{
+				CString strMessage;
+				strMessage.Format(L"tensorflow -> event cycle ...................%d", iLoopCycle);
+				g_fcbPrintMessage(strMessage.GetBuffer(0), L"");
+			}
+			return true;
+		}
+		else
+		{
+			if (bProcessing == false)
+			{
+				while (m_bContinusLoop && m_iSimulationMode == DEF_MODE_RUN)
+				{
+					bProcessing = true;
+					Task_Tensorflow();
+					iLoopCycle++;
+
+					if (g_fcbPrintMessage)
+					{
+						CString strMessage;
+						strMessage.Format(L"tensorflow -> contineous cycle ...................%d", iLoopCycle);
+						g_fcbPrintMessage(strMessage.GetBuffer(0), L"");
+					}
+				}
+				bProcessing = false;
+			}
+		}
+
+		return true;
+	}
+	catch (...)
+	{
+
+	}
+	return false;
 }
 
 extern "C" __declspec(dllexport) bool OnUnload()
 {
-	FreeConsole();
-	return Unload_Tensorflow();
+	try
+	{
+		FreeConsole();
+		Unload_Tensorflow();
+		return true;
+	}
+	catch (...)
+	{
+
+	}
+	return false;
 }
 
 extern "C" __declspec(dllexport) void OnEditComponent(wchar_t* pStrSymbolName, wchar_t* pStrID)
@@ -946,60 +982,78 @@ extern "C" __declspec(dllexport) void OnModeChange(int iMode)
 
 extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction)
 {
-	CString strFunction = pStrFunction;
-	if (strFunction.Find(L"ShowDebugMessage") == 0)
+	try
 	{
-		CString Value = strFunction.Right(strFunction.GetLength() - 16);
-		Value.Trim();
-		Value.Trim(L"(");
-		Value.Trim(L")");
-		Value.Trim();
-		Value.MakeLower();
-		if (Value == L"true" || Value == L"1")
-			m_bShowDebugMessage = true;
-		else
-			m_bShowDebugMessage = false;
-	}
-	else if (strFunction.Find(L"SetInfiniteLoop") == 0)
-	{
-		CString Value = strFunction.Right(strFunction.GetLength() - 15);
-		Value.Trim();
-		Value.Trim(L"(");
-		Value.Trim(L")");
-		Value.Trim();
-		Value.MakeLower();
-		if (Value == L"true" || Value == L"1")
-			m_bContinusLoop = true;
-		else
-			m_bContinusLoop = false;
-	}
+		CString strFunction = pStrFunction;
+		if (strFunction.Find(L"ShowDebugMessage") == 0)
+		{
+			CString Value = strFunction.Right(strFunction.GetLength() - 16);
+			Value.Trim();
+			Value.Trim(L"(");
+			Value.Trim(L")");
+			Value.Trim();
+			Value.MakeLower();
+			if (Value == L"true" || Value == L"1")
+				m_bShowDebugMessage = true;
+			else
+				m_bShowDebugMessage = false;
+		}
+		else if (strFunction.Find(L"SetInfiniteLoop") == 0)
+		{
+			CString Value = strFunction.Right(strFunction.GetLength() - 15);
+			Value.Trim();
+			Value.Trim(L"(");
+			Value.Trim(L")");
+			Value.Trim();
+			Value.MakeLower();
+			if (Value == L"true" || Value == L"1")
+				m_bContinusLoop = true;
+			else
+				m_bContinusLoop = false;
+		}
 
-	if (g_fcbPrintMessage)
-	{
-		CString strMsg;
-		strMsg.Format(L"enuSpace to ExecuteFunction call - %s", strFunction);
-		g_fcbPrintMessage(strMsg.GetBuffer(0));
+		if (g_fcbPrintMessage)
+		{
+			CString strMsg;
+			strMsg.Format(L"enuSpace to ExecuteFunction call - %s", strFunction);
+			g_fcbPrintMessage(strMsg.GetBuffer(0), L"");
+		}
+		return;
 	}
+	catch (...)
+	{
+
+	}
+	return;
 }
 
 // HELP Interface
 extern "C" __declspec(dllexport) bool OnShowHelp(wchar_t* pStrSymbolName)
 {
-	CString strComponent = pStrSymbolName;
-	int SymbolType = GetSymbolType(CStringToString(strComponent));
-	if (SymbolType == SYMBOL_NONE)
+	try
 	{
-		return false;
+		CString strComponent = pStrSymbolName;
+		int SymbolType = GetSymbolType(CStringToString(strComponent));
+		if (SymbolType == SYMBOL_NONE)
+		{
+			return false;
+		}
+
+		strComponent.MakeLower();
+		strComponent.Remove(L'#');
+		CString strAddress;
+
+		CString strCategory = StringToCString(GetCategoryName(SymbolType));
+
+		strAddress.Format(L"https://expnuni.gitbooks.io/enuspacetensorflow/content/%s/%s.html", strCategory, strComponent);
+		ShellExecute(NULL, L"open", L"chrome.exe", strAddress, NULL, SW_SHOW);
+		return true;
 	}
+	catch (...)
+	{
 
-	strComponent.MakeLower();
-	strComponent.Remove(L'#');
-	CString strAddress;
-
-	CString strCategory = StringToCString(GetCategoryName(SymbolType));
-
-	strAddress.Format(L"https://expnuni.gitbooks.io/enuspacetensorflow/content/%s/%s.html", strCategory, strComponent);
-	ShellExecute(NULL, L"open", L"chrome.exe", strAddress, NULL, SW_SHOW);
-	return true;
+	}
+	return false;
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
+

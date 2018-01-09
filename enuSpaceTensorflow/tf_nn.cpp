@@ -24,7 +24,7 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	AvgPool::Attrs attrs;
-
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	std::string strTemp;
 	int iSize = (int)pInputItem.size();
@@ -52,7 +52,7 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "value")
@@ -76,7 +76,7 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -90,7 +90,7 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -103,7 +103,7 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -115,7 +115,7 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -134,7 +134,7 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : AvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && value)
@@ -153,7 +153,7 @@ void* Create_AvgPool(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : AvgPool(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_ksize.clear();
 	v_strides.clear();
@@ -169,6 +169,8 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	AvgPool3D::Attrs attrs;
 	std::string strTemp ="";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -194,7 +196,7 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -218,7 +220,7 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -231,7 +233,7 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -244,7 +246,7 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -256,7 +258,7 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -274,7 +276,7 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : AvgPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && value)
@@ -294,7 +296,7 @@ void* Create_AvgPool3D(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : AvgPool3D(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_ksize.clear();
 	v_strides.clear();
@@ -312,6 +314,7 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	std::string strTemp = "";
 	AvgPool3DGrad::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -338,7 +341,7 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "orig_input_shape")
@@ -362,7 +365,7 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "grad")
@@ -386,7 +389,7 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -399,7 +402,7 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -412,7 +415,7 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -424,7 +427,7 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AvgPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -442,7 +445,7 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : AvgPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && orig_input_shape && grad)
@@ -461,7 +464,7 @@ void* Create_AvgPool3DGrad(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : AvgPool3DGrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_ksize.clear();
 	v_strides.clear();
@@ -476,6 +479,7 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 	Output* bias = nullptr;
 	BiasAdd::Attrs attrs;
 	std::string strTemp ="";
+	std::string msgParam = string_format("#%s", id.c_str());
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -501,7 +505,7 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : BiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "value")
@@ -525,7 +529,7 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : BiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "bias")
@@ -548,7 +552,7 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : BiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -567,7 +571,7 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : BiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && value && bias)
@@ -583,7 +587,7 @@ void* Create_BiasAdd(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : BiasAdd(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 
 	return pBiasAdd;
@@ -595,6 +599,8 @@ void* Create_BiasAddGrad(std::string id, Json::Value pInputItem) {
 	Output* out_backprop = nullptr;
 	BiasAddGrad::Attrs attrs;
 	std::string strTemp = "";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -620,7 +626,7 @@ void* Create_BiasAddGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : BiasAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_backprop")
@@ -644,7 +650,7 @@ void* Create_BiasAddGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : BiasAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -662,7 +668,7 @@ void* Create_BiasAddGrad(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : BiasAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && out_backprop)
@@ -677,7 +683,7 @@ void* Create_BiasAddGrad(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : BiasAddGrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 
 
@@ -694,6 +700,7 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 	Conv2D::Attrs attrs;
 	std::string strTemp = "";
 	std::vector<int> v_dialtions;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -720,7 +727,7 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -744,7 +751,7 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -767,7 +774,7 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -779,7 +786,7 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -791,7 +798,7 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -817,7 +824,7 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Conv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -835,7 +842,7 @@ void* Create_Conv2D(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Conv2D(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pConv2D;
@@ -852,6 +859,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 	std::string strTemp = "";
 	Conv2DBackpropFilter::Attrs attrs;
 	std::vector<int> v_dialtions;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -878,7 +886,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -902,7 +910,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter_sizes")
@@ -925,7 +933,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_backprop")
@@ -948,7 +956,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -960,7 +968,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -972,7 +980,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -998,7 +1006,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Conv2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1017,7 +1025,7 @@ void* Create_Conv2DBackpropFilter(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Conv2DBackpropFilter(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pConv2DBackpropFilter;
@@ -1034,6 +1042,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 	Conv2DBackpropInput::Attrs attrs;
 	std::string strTemp = "";
 	std::vector<int> v_dialtions;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1060,7 +1069,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input_sizes")
@@ -1084,7 +1093,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -1107,7 +1116,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_backprop")
@@ -1130,7 +1139,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -1142,7 +1151,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -1154,7 +1163,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1180,7 +1189,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Conv2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1199,7 +1208,7 @@ void* Create_Conv2DBackpropInput(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Conv2DBackpropInput(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pConv2DBackpropInput;
@@ -1215,7 +1224,8 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 	Conv3D::Attrs attrs;
 	std::string strTemp = "";
 	std::vector<int> v_dialtions;
-
+	std::string msgParam = string_format("#%s", id.c_str());
+	
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1241,7 +1251,7 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -1265,7 +1275,7 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -1288,7 +1298,7 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -1300,7 +1310,7 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -1312,7 +1322,7 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1336,7 +1346,7 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Conv3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1355,7 +1365,7 @@ void* Create_Conv3D(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Conv3D(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pConv3D;
@@ -1372,6 +1382,7 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 	Conv3DBackpropFilterV2::Attrs attrs;
 	std::string strTemp = "";
 	std::vector<int> v_dialtions;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1398,7 +1409,7 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropFilterV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -1422,7 +1433,7 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropFilterV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter_sizes")
@@ -1445,7 +1456,7 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropFilterV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_backprop")
@@ -1468,7 +1479,7 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropFilterV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -1480,7 +1491,7 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropFilterV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -1492,7 +1503,7 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropFilterV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1516,7 +1527,7 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Conv3DBackpropFilterV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1535,7 +1546,7 @@ void* Create_Conv3DBackpropFilterV2(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Conv3DBackpropFilterV2(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pConv3DBackpropFilterV2;
@@ -1552,6 +1563,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 	Conv3DBackpropInputV2::Attrs attrs;
 	std::string strTemp = "";
 	std::vector<int> v_dialtions;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1578,7 +1590,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropInputV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input_sizes")
@@ -1602,7 +1614,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropInputV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -1625,7 +1637,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropInputV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_backprop")
@@ -1648,7 +1660,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropInputV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -1660,7 +1672,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropInputV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -1672,7 +1684,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Conv3DBackpropInputV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1696,7 +1708,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Conv3DBackpropInputV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1715,7 +1727,7 @@ void* Create_Conv3DBackpropInputV2(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Conv3DBackpropInputV2(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pConv3DBackpropInputV2;
@@ -1731,6 +1743,7 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 	DepthwiseConv2dNative::Attrs attrs;
 	std::string strTemp = "";
 	std::vector<int> v_dialtions;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1757,7 +1770,7 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNative - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -1781,7 +1794,7 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNative - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -1804,7 +1817,7 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNative - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -1816,7 +1829,7 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNative - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -1828,7 +1841,7 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNative - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1852,7 +1865,7 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : DepthwiseConv2dNative - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1871,7 +1884,7 @@ void* Create_DepthwiseConv2dNative(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DepthwiseConv2dNative(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pDepthwiseConv2dNative;
@@ -1888,6 +1901,7 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 	DepthwiseConv2dNativeBackpropFilter::Attrs attrs;
 	std::string strTemp = "";
 	std::vector<int> v_dialtions;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1914,7 +1928,7 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -1938,7 +1952,7 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter_sizes")
@@ -1961,7 +1975,7 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_backprop")
@@ -1984,7 +1998,7 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -1996,7 +2010,7 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -2008,7 +2022,7 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2032,7 +2046,7 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 		else
 		{
 			std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2052,7 +2066,7 @@ void* Create_DepthwiseConv2dNativeBackpropFilter(std::string id, Json::Value pIn
 	else
 	{
 		std::string msg = string_format("error : DepthwiseConv2dNativeBackpropFilter(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pDepthwiseConv2dNativeBackpropFilter;
@@ -2069,6 +2083,7 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 	DepthwiseConv2dNativeBackpropInput::Attrs attrs;
 	std::string strTemp = "";
 	std::vector<int> v_dialtions;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2095,7 +2110,7 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input_sizes")
@@ -2119,7 +2134,7 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -2142,7 +2157,7 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_backprop")
@@ -2165,7 +2180,7 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -2177,7 +2192,7 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -2189,7 +2204,7 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 			else
 			{
 				std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2213,7 +2228,7 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 		else
 		{
 			std::string msg = string_format("warning : DepthwiseConv2dNativeBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2233,7 +2248,7 @@ void* Create_DepthwiseConv2dNativeBackpropInput(std::string id, Json::Value pInp
 	else
 	{
 		std::string msg = string_format("error : DepthwiseConv2dNativeBackpropInput(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pDepthwiseConv2dNativeBackpropInput;
@@ -2247,6 +2262,7 @@ void* Create_Dilation2D(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::vector<int> v_rates;
 	std::string padding;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2273,7 +2289,7 @@ void* Create_Dilation2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -2297,7 +2313,7 @@ void* Create_Dilation2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -2320,7 +2336,7 @@ void* Create_Dilation2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -2332,7 +2348,7 @@ void* Create_Dilation2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "rates")
@@ -2344,7 +2360,7 @@ void* Create_Dilation2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -2356,13 +2372,13 @@ void* Create_Dilation2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Dilation2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2383,7 +2399,7 @@ void* Create_Dilation2D(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Dilation2D(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	v_rates.clear();
@@ -2399,6 +2415,7 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::vector<int> v_rates;
 	std::string padding;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2425,7 +2442,7 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -2449,7 +2466,7 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -2472,7 +2489,7 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_backprop")
@@ -2495,7 +2512,7 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -2507,7 +2524,7 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "rates")
@@ -2519,7 +2536,7 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -2531,13 +2548,13 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Dilation2DBackpropFilter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2558,7 +2575,7 @@ void* Create_Dilation2DBackpropFilter(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Dilation2DBackpropFilter(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	v_rates.clear();
@@ -2574,6 +2591,7 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::vector<int> v_rates;
 	std::string padding;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2600,7 +2618,7 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -2624,7 +2642,7 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -2647,7 +2665,7 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_backprop")
@@ -2670,7 +2688,7 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -2682,7 +2700,7 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "rates")
@@ -2694,7 +2712,7 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -2706,13 +2724,13 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Dilation2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Dilation2DBackpropInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2733,7 +2751,7 @@ void* Create_Dilation2DBackpropInput(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Dilation2DBackpropInput(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	v_rates.clear();
@@ -2744,6 +2762,7 @@ void* Create_Elu(std::string id, Json::Value pInputItem) {
 	Elu* pElu = nullptr;
 	Scope* pScope = nullptr;
 	Output* features = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2770,7 +2789,7 @@ void* Create_Elu(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Elu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "features")
@@ -2794,13 +2813,13 @@ void* Create_Elu(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Elu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Elu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	
 	}
@@ -2816,7 +2835,7 @@ void* Create_Elu(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Elu(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pElu;
 }
@@ -2827,6 +2846,7 @@ void* Create_FractionalAvgPool(std::string id, Json::Value pInputItem) {
 	Output* value = nullptr;
 	std::vector<float> v_pooling_ratio;
 	FractionalAvgPool::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2853,7 +2873,7 @@ void* Create_FractionalAvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FractionalAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "value")
@@ -2877,7 +2897,7 @@ void* Create_FractionalAvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FractionalAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "pooling_ratio")
@@ -2889,7 +2909,7 @@ void* Create_FractionalAvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FractionalAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2912,7 +2932,7 @@ void* Create_FractionalAvgPool(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : FractionalAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2933,7 +2953,7 @@ void* Create_FractionalAvgPool(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Dilation2DBackpropInput(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_pooling_ratio.clear();
 	return pFractionalAvgPool;
@@ -2945,6 +2965,7 @@ void* Create_FractionalMaxPool(std::string id, Json::Value pInputItem) {
 	Output* value = nullptr;
 	std::vector<float> v_pooling_ratio;
 	FractionalMaxPool::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -2971,7 +2992,7 @@ void* Create_FractionalMaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FractionalMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "value")
@@ -2995,7 +3016,7 @@ void* Create_FractionalMaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FractionalMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "pooling_ratio")
@@ -3007,7 +3028,7 @@ void* Create_FractionalMaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FractionalMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3030,7 +3051,7 @@ void* Create_FractionalMaxPool(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : FractionalMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -3050,7 +3071,7 @@ void* Create_FractionalMaxPool(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : FractionalMaxPool(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_pooling_ratio.clear();
 	return pFractionalMaxPool;
@@ -3066,6 +3087,8 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 	Output* variance = nullptr;
 	FusedBatchNorm::Attrs attrs;
 	std::string strTemp = "";
+	std::string msgParam = string_format("#%s", id.c_str());
+	
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -3091,7 +3114,7 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNorm - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "x")
@@ -3115,7 +3138,7 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNorm - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "scale")
@@ -3139,7 +3162,7 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNorm - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "offset")
@@ -3163,7 +3186,7 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNorm - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "mean")
@@ -3187,7 +3210,7 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNorm - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "variance")
@@ -3211,7 +3234,7 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNorm - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3233,7 +3256,7 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : FusedBatchNorm - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -3254,7 +3277,7 @@ void* Create_FusedBatchNorm(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : FusedBatchNorm(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pFusedBatchNorm;
 }
@@ -3269,6 +3292,8 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 	Output* reserve_space_2 = nullptr;
 	FusedBatchNormGrad::Attrs attrs;
 	std::string strTemp = "";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -3294,7 +3319,7 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNormGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "y_backprop")
@@ -3318,7 +3343,7 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNormGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "x")
@@ -3342,7 +3367,7 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNormGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "scale")
@@ -3366,7 +3391,7 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNormGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "reserve_space_1")
@@ -3390,7 +3415,7 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNormGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "reserve_space_2")
@@ -3414,7 +3439,7 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedBatchNormGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3436,7 +3461,7 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : FusedBatchNormGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -3457,7 +3482,7 @@ void* Create_FusedBatchNormGrad(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : FusedBatchNormGrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pFusedBatchNormGrad;
 }
@@ -3471,6 +3496,7 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 	std::string  mode;
 	std::vector<int> v_strides;
 	std::string padding;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -3497,7 +3523,7 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -3521,7 +3547,7 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "paddings")
@@ -3545,7 +3571,7 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -3569,7 +3595,7 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "mode")
@@ -3581,7 +3607,7 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -3593,7 +3619,7 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -3605,13 +3631,13 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : FusedPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -3629,7 +3655,7 @@ void* Create_FusedPadConv2D(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : FusedPadConv2D(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pFusedPadConv2D;
@@ -3646,6 +3672,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	FusedResizeAndPadConv2D::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -3672,7 +3699,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedResizeAndPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -3696,7 +3723,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedResizeAndPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "size")
@@ -3720,7 +3747,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedResizeAndPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "paddings")
@@ -3744,7 +3771,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedResizeAndPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -3768,7 +3795,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedResizeAndPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "mode")
@@ -3780,7 +3807,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedResizeAndPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -3792,7 +3819,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedResizeAndPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -3804,7 +3831,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedResizeAndPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3818,13 +3845,13 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : FusedResizeAndPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : FusedResizeAndPadConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -3842,7 +3869,7 @@ void* Create_FusedResizeAndPadConv2D(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : FusedResizeAndPadConv2D(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pFusedResizeAndPadConv2D;
@@ -3854,6 +3881,7 @@ void* Create_InTopK(std::string id, Json::Value pInputItem) {
 	Output* predictions = nullptr;
 	Output* targets = nullptr;
 	int64 k = 0;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -3880,7 +3908,7 @@ void* Create_InTopK(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : InTopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "predictions")
@@ -3904,7 +3932,7 @@ void* Create_InTopK(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : InTopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "targets")
@@ -3928,7 +3956,7 @@ void* Create_InTopK(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : InTopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "k")
@@ -3940,13 +3968,13 @@ void* Create_InTopK(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : InTopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : InTopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -3962,7 +3990,7 @@ void* Create_InTopK(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : InTopK(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pInTopK;
 }
@@ -3971,6 +3999,7 @@ void* Create_L2Loss(std::string id, Json::Value pInputItem) {
 	L2Loss* pL2Loss = nullptr;
 	Scope* pScope = nullptr;
 	Output* t = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -3997,7 +4026,7 @@ void* Create_L2Loss(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : L2Loss - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "t")
@@ -4021,13 +4050,13 @@ void* Create_L2Loss(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : L2Loss - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : L2Loss - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -4043,7 +4072,7 @@ void* Create_L2Loss(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : L2Loss(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pL2Loss;
 }
@@ -4053,6 +4082,7 @@ void* Create_LRN(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* pinput = nullptr;
 	LRN::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4079,7 +4109,7 @@ void* Create_LRN(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : LRN - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -4103,7 +4133,7 @@ void* Create_LRN(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : LRN - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4124,7 +4154,7 @@ void* Create_LRN(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : LRN - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -4140,7 +4170,7 @@ void* Create_LRN(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : LRN(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pLRN;
 }
@@ -4149,6 +4179,7 @@ void* Create_LogSoftmax(std::string id, Json::Value pInputItem) {
 	LogSoftmax* pLogSoftmax = nullptr;
 	Scope* pScope = nullptr;
 	Output* logits = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4175,7 +4206,7 @@ void* Create_LogSoftmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : LogSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "logits")
@@ -4199,13 +4230,13 @@ void* Create_LogSoftmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : LogSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : LogSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -4221,7 +4252,7 @@ void* Create_LogSoftmax(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : LogSoftmax(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pLogSoftmax;
 }
@@ -4234,7 +4265,9 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	MaxPool::Attrs attrs;
-	std::string strTemp = "";
+	std::string strTemp = ""; 
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -4260,7 +4293,7 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -4284,7 +4317,7 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -4296,7 +4329,7 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -4308,7 +4341,7 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -4320,7 +4353,7 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4337,13 +4370,13 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : MaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -4363,7 +4396,7 @@ void* Create_MaxPool(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : MaxPool(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_ksize.clear();
 	v_strides.clear();
@@ -4379,6 +4412,8 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	MaxPool3D::Attrs attrs;
 	std::string strTemp = "";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -4404,7 +4439,7 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -4428,7 +4463,7 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -4440,7 +4475,7 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -4452,7 +4487,7 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -4464,7 +4499,7 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4481,13 +4516,13 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : MaxPool3D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -4507,7 +4542,7 @@ void* Create_MaxPool3D(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : MaxPool(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_ksize.clear();
 	v_strides.clear();
@@ -4525,6 +4560,7 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	std::string strTemp = "";
 	MaxPool3DGrad::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4551,7 +4587,7 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "orig_input")
@@ -4575,7 +4611,7 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "orig_output")
@@ -4599,7 +4635,7 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "grad")
@@ -4623,7 +4659,7 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -4635,7 +4671,7 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -4647,7 +4683,7 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -4659,7 +4695,7 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4676,13 +4712,13 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : MaxPool3DGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -4702,7 +4738,7 @@ void* Create_MaxPool3DGrad(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : MaxPool3DGrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_ksize.clear();
 	v_strides.clear();
@@ -4720,6 +4756,7 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	MaxPool3DGradGrad::Attrs attrs;
 	std::string strTemp = "";
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -4746,7 +4783,7 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "orig_input")
@@ -4770,7 +4807,7 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "orig_output")
@@ -4794,7 +4831,7 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "grad")
@@ -4818,7 +4855,7 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -4831,7 +4868,7 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -4843,7 +4880,7 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -4855,7 +4892,7 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4872,13 +4909,13 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPool3DGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : MaxPool3DGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -4898,7 +4935,7 @@ void* Create_MaxPool3DGradGrad(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : MaxPool3DGradGrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_ksize.clear();
 	v_strides.clear();
@@ -4916,6 +4953,8 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 	std::string padding;
 	MaxPoolGradGrad::Attrs attrs;
 	std::string strTemp = "";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -4941,7 +4980,7 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "orig_input")
@@ -4965,7 +5004,7 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "orig_output")
@@ -4989,7 +5028,7 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "grad")
@@ -5013,7 +5052,7 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -5025,7 +5064,7 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -5037,7 +5076,7 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -5049,7 +5088,7 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5066,13 +5105,13 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : MaxPoolGradGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -5092,7 +5131,7 @@ void* Create_MaxPoolGradGrad(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : MaxPoolGradGrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_ksize.clear();
 	v_strides.clear();
@@ -5108,6 +5147,7 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
 	std::string padding;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -5134,7 +5174,7 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGradWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -5158,7 +5198,7 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGradWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "grad")
@@ -5182,7 +5222,7 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGradWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "argmax")
@@ -5206,7 +5246,7 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGradWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -5218,7 +5258,7 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGradWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -5230,7 +5270,7 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGradWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -5242,13 +5282,13 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolGradGradWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : MaxPoolGradGradWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -5268,7 +5308,7 @@ void* Create_MaxPoolGradGradWithArgmax(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : MaxPoolGradGradWithArgmax(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_ksize.clear();
 	v_strides.clear();
@@ -5283,6 +5323,7 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 	MaxPoolWithArgmax::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -5309,7 +5350,7 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -5333,7 +5374,7 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -5345,7 +5386,7 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -5357,7 +5398,7 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -5369,7 +5410,7 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : MaxPoolWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5385,7 +5426,7 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : MaxPoolWithArgmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -5406,7 +5447,7 @@ void* Create_MaxPoolWithArgmax(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : pMaxPoolWithArgmax(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_ksize.clear();
 	v_strides.clear();
@@ -5424,6 +5465,7 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	std::string padding;
 
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -5450,7 +5492,7 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -5474,7 +5516,7 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "min_input")
@@ -5498,7 +5540,7 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max_input")
@@ -5522,7 +5564,7 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -5534,7 +5576,7 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -5546,7 +5588,7 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -5558,13 +5600,13 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : QuantizedAvgPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -5586,7 +5628,7 @@ void* Create_QuantizedAvgPool(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : QuantizedAvgPool(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_ksize.clear();
 	v_strides.clear();
@@ -5614,7 +5656,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 	DataType out_type = DT_DOUBLE;
 	float variance_epsilon = 0;
 	bool scale_after_normalization = false;
-
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -5641,7 +5683,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "t")
@@ -5665,7 +5707,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "t_min")
@@ -5689,7 +5731,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "t_max")
@@ -5713,7 +5755,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "m")
@@ -5737,7 +5779,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "m_min")
@@ -5761,7 +5803,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "m_max")
@@ -5785,7 +5827,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "v")
@@ -5809,7 +5851,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "v_min")
@@ -5833,7 +5875,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "v_max")
@@ -5857,7 +5899,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "beta")
@@ -5881,7 +5923,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "beta_min")
@@ -5905,7 +5947,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "beta_max")
@@ -5929,7 +5971,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "gamma")
@@ -5953,7 +5995,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "gamma_min")
@@ -5977,7 +6019,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "gamma_max")
@@ -6001,7 +6043,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_type")
@@ -6034,7 +6076,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 		else
 		{
 			std::string msg = string_format("warning : QuantizedBatchNormWithGlobalNormalization - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -6060,7 +6102,7 @@ void* Create_QuantizedBatchNormWithGlobalNormalization(std::string id, Json::Val
 	else
 	{
 		std::string msg = string_format("error : QuantizedBatchNormWithGlobalNormalization(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 
 	return pQuantizedBatchNormWithGlobalNormalization;
@@ -6076,6 +6118,7 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 	Output* min_bias = nullptr;
 	Output* max_bias = nullptr;
 	DataType out_type = DT_DOUBLE;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -6102,7 +6145,7 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -6126,7 +6169,7 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "bias")
@@ -6149,7 +6192,7 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "min_input")
@@ -6172,7 +6215,7 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max_input")
@@ -6195,7 +6238,7 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "min_bias")
@@ -6218,7 +6261,7 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max_bias")
@@ -6241,7 +6284,7 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_type")
@@ -6253,13 +6296,13 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedBiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : QuantizedBiasAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope &&pInput&&bias&&min_input&&max_input&&min_bias&&max_bias)
@@ -6276,7 +6319,7 @@ void* Create_QuantizedBiasAdd(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : QuantizedBiasAdd(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pQuantizedBiasAdd;
 }
@@ -6293,6 +6336,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_strides;
 	StringPiece padding;
 	QuantizedConv2D::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -6319,7 +6363,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -6343,7 +6387,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "filter")
@@ -6367,7 +6411,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "min_input")
@@ -6391,7 +6435,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max_input")
@@ -6415,7 +6459,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "min_filter")
@@ -6439,7 +6483,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max_filter")
@@ -6463,7 +6507,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -6475,7 +6519,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -6487,7 +6531,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -6501,13 +6545,13 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : QuantizedConv2D - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -6527,7 +6571,7 @@ void* Create_QuantizedConv2D(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : QuantizedConv2D(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	v_strides.clear();
 	return pQuantizedConv2D;
@@ -6542,7 +6586,7 @@ void* Create_QuantizedMaxPool(std::string id, Json::Value pInputItem) {
 	std::vector<int> v_ksize;
 	std::vector<int> v_strides;
 	StringPiece padding;
-
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -6569,7 +6613,7 @@ void* Create_QuantizedMaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -6593,7 +6637,7 @@ void* Create_QuantizedMaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "min_input")
@@ -6617,7 +6661,7 @@ void* Create_QuantizedMaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max_input")
@@ -6641,7 +6685,7 @@ void* Create_QuantizedMaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "ksize")
@@ -6653,7 +6697,7 @@ void* Create_QuantizedMaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "strides")
@@ -6665,7 +6709,7 @@ void* Create_QuantizedMaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "padding")
@@ -6677,13 +6721,13 @@ void* Create_QuantizedMaxPool(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : QuantizedMaxPool - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -6705,7 +6749,7 @@ void* Create_QuantizedMaxPool(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : QuantizedMaxPool(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 
 	v_ksize.clear();
@@ -6720,6 +6764,7 @@ void* Create_QuantizedRelu(std::string id, Json::Value pInputItem) {
 	Output* min_features = nullptr;
 	Output* max_features = nullptr;
 	QuantizedRelu::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -6746,7 +6791,7 @@ void* Create_QuantizedRelu(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedRelu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "features")
@@ -6770,7 +6815,7 @@ void* Create_QuantizedRelu(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedRelu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "min_features")
@@ -6794,7 +6839,7 @@ void* Create_QuantizedRelu(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedRelu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max_features")
@@ -6818,7 +6863,7 @@ void* Create_QuantizedRelu(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedRelu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -6832,13 +6877,13 @@ void* Create_QuantizedRelu(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedRelu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : QuantizedRelu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -6857,7 +6902,7 @@ void* Create_QuantizedRelu(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : QuantizedRelu(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pQuantizedRelu;
 }
@@ -6869,6 +6914,7 @@ void* Create_QuantizedRelu6(std::string id, Json::Value pInputItem) {
 	Output* min_features = nullptr;
 	Output* max_features = nullptr;
 	QuantizedRelu6::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -6895,7 +6941,7 @@ void* Create_QuantizedRelu6(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedRelu6 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "features")
@@ -6919,7 +6965,7 @@ void* Create_QuantizedRelu6(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedRelu6 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "min_features")
@@ -6943,7 +6989,7 @@ void* Create_QuantizedRelu6(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedRelu6 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max_features")
@@ -6967,7 +7013,7 @@ void* Create_QuantizedRelu6(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedRelu6 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -6981,13 +7027,13 @@ void* Create_QuantizedRelu6(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedRelu6 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : QuantizedRelu6 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -7006,7 +7052,7 @@ void* Create_QuantizedRelu6(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : QuantizedRelu6(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pQuantizedRelu6;
 }
@@ -7019,6 +7065,7 @@ void* Create_QuantizedReluX(std::string id, Json::Value pInputItem) {
 	Output* min_features = nullptr;
 	Output* max_features = nullptr;
 	QuantizedReluX::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -7045,7 +7092,7 @@ void* Create_QuantizedReluX(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedReluX - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "features")
@@ -7069,7 +7116,7 @@ void* Create_QuantizedReluX(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedReluX - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max_value")
@@ -7093,7 +7140,7 @@ void* Create_QuantizedReluX(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedReluX - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "min_features")
@@ -7117,7 +7164,7 @@ void* Create_QuantizedReluX(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedReluX - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max_features")
@@ -7141,7 +7188,7 @@ void* Create_QuantizedReluX(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedReluX - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -7155,13 +7202,13 @@ void* Create_QuantizedReluX(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedReluX - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : QuantizedReluX - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -7179,7 +7226,7 @@ void* Create_QuantizedReluX(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : QuantizedReluX(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pQuantizedReluX;
 }
@@ -7188,6 +7235,7 @@ void* Create_Relu(std::string id, Json::Value pInputItem) {
 	Relu* pRelu = nullptr;
 	Scope* pScope = nullptr;
 	Output* features = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -7214,7 +7262,7 @@ void* Create_Relu(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Relu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "features")
@@ -7238,13 +7286,13 @@ void* Create_Relu(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Relu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Relu - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -7260,7 +7308,7 @@ void* Create_Relu(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Relu(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRelu;
 }
@@ -7269,6 +7317,7 @@ void* Create_Relu6(std::string id, Json::Value pInputItem) {
 	Relu6* pRelu6 = nullptr;
 	Scope* pScope = nullptr;
 	Output* features = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -7295,7 +7344,7 @@ void* Create_Relu6(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Relu6 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "features")
@@ -7319,13 +7368,13 @@ void* Create_Relu6(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Relu6 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Relu6 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -7341,7 +7390,7 @@ void* Create_Relu6(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Relu6(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRelu6;
 }
@@ -7350,6 +7399,7 @@ void* Create_Softmax(std::string id, Json::Value pInputItem) {
 	Softmax* pSoftmax = nullptr;
 	Scope* pScope = nullptr;
 	Output* plogits = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -7376,7 +7426,7 @@ void* Create_Softmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Softmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "logits")
@@ -7399,13 +7449,13 @@ void* Create_Softmax(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Softmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Softmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -7419,7 +7469,7 @@ void* Create_Softmax(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : softmax(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pSoftmax;
 }
@@ -7429,6 +7479,7 @@ void* Create_SoftmaxCrossEntropyWithLogits(std::string id, Json::Value pInputIte
 	Scope* pScope = nullptr;
 	Output* features = nullptr;
 	Output* labels = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -7455,7 +7506,7 @@ void* Create_SoftmaxCrossEntropyWithLogits(std::string id, Json::Value pInputIte
 			else
 			{
 				std::string msg = string_format("warning : SoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "features")
@@ -7478,7 +7529,7 @@ void* Create_SoftmaxCrossEntropyWithLogits(std::string id, Json::Value pInputIte
 			else
 			{
 				std::string msg = string_format("warning : SoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "labels")
@@ -7501,13 +7552,13 @@ void* Create_SoftmaxCrossEntropyWithLogits(std::string id, Json::Value pInputIte
 			else
 			{
 				std::string msg = string_format("warning : SoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : SoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -7524,7 +7575,7 @@ void* Create_SoftmaxCrossEntropyWithLogits(std::string id, Json::Value pInputIte
 	else
 	{
 		std::string msg = string_format("error : SoftmaxCrossEntropyWithLogits(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pSoftmaxCrossEntropyWithLogits;
 }
@@ -7533,6 +7584,7 @@ void* Create_Softplus(std::string id, Json::Value pInputItem) {
 	Softplus* pSoftplus = nullptr;
 	Scope* pScope = nullptr;
 	Output* pfeatures = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -7559,7 +7611,7 @@ void* Create_Softplus(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Softplus - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "features")
@@ -7583,13 +7635,13 @@ void* Create_Softplus(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Softplus - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Softplus - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -7603,7 +7655,7 @@ void* Create_Softplus(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Softplus(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pSoftplus;
 }
@@ -7613,6 +7665,7 @@ void* Create_Softsign(std::string id, Json::Value pInputItem) {
 	Softsign* pSoftsign = nullptr;
 	Scope* pScope = nullptr;
 	Output* pfeatures = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -7639,7 +7692,7 @@ void* Create_Softsign(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Softsign - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "features")
@@ -7663,13 +7716,13 @@ void* Create_Softsign(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Softsign - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Softsign - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -7683,7 +7736,7 @@ void* Create_Softsign(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Softsign(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 
 	return pSoftsign;
@@ -7694,6 +7747,7 @@ void* Create_SparseSoftmaxCrossEntropyWithLogits(std::string id, Json::Value pIn
 	Scope* pScope = nullptr;
 	Output* pfeatures = nullptr;
 	Output* plabels = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -7720,7 +7774,7 @@ void* Create_SparseSoftmaxCrossEntropyWithLogits(std::string id, Json::Value pIn
 			else
 			{
 				std::string msg = string_format("warning : SparseSoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "features")
@@ -7744,7 +7798,7 @@ void* Create_SparseSoftmaxCrossEntropyWithLogits(std::string id, Json::Value pIn
 			else
 			{
 				std::string msg = string_format("warning : SparseSoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "labels")
@@ -7767,13 +7821,13 @@ void* Create_SparseSoftmaxCrossEntropyWithLogits(std::string id, Json::Value pIn
 			else
 			{
 				std::string msg = string_format("warning : SparseSoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : SparseSoftmaxCrossEntropyWithLogits - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	
@@ -7791,7 +7845,7 @@ void* Create_SparseSoftmaxCrossEntropyWithLogits(std::string id, Json::Value pIn
 	else
 	{
 		std::string msg = string_format("error : SparseSoftmaxCrossEntropyWithLogits(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pSparseSoftmaxCrossEntropyWithLogits;
 }
@@ -7802,6 +7856,8 @@ void* Create_TopK(std::string id, Json::Value pInputItem) {
 	Output* pinput = nullptr;
 	Output* pk = nullptr;
 	TopK::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -7827,7 +7883,7 @@ void* Create_TopK(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : TopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -7851,7 +7907,7 @@ void* Create_TopK(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : TopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "k")
@@ -7874,7 +7930,7 @@ void* Create_TopK(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : TopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -7891,7 +7947,7 @@ void* Create_TopK(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : TopK - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -7909,7 +7965,7 @@ void* Create_TopK(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : TopK(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pTopK;
 }

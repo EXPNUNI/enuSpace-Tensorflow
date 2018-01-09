@@ -18,6 +18,8 @@ void* Create_AdjustContrast(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pimages = nullptr;
 	Output *pcontrast_factor = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -44,7 +46,7 @@ void* Create_AdjustContrast(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AdjustContrast - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "images")
@@ -67,7 +69,7 @@ void* Create_AdjustContrast(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AdjustContrast - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "contrast_factor")
@@ -96,13 +98,13 @@ void* Create_AdjustContrast(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AdjustContrast - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : AdjustContrast pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -118,7 +120,7 @@ void* Create_AdjustContrast(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : AdjustContrast(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pAdjustContrast;
 }
@@ -128,6 +130,8 @@ void* Create_AdjustHue(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pimages = nullptr;
 	Output *pdelta = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -154,7 +158,7 @@ void* Create_AdjustHue(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AdjustHue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "images")
@@ -177,7 +181,7 @@ void* Create_AdjustHue(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AdjustHue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "delta")
@@ -205,13 +209,13 @@ void* Create_AdjustHue(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AdjustHue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : AdjustHue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -227,7 +231,7 @@ void* Create_AdjustHue(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : AdjustHue(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pAdjustHue;
 }
@@ -237,6 +241,8 @@ void* Create_AdjustSaturation(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pimages = nullptr;
 	Output *pscale = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -263,7 +269,7 @@ void* Create_AdjustSaturation(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AdjustSaturation - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "images")
@@ -286,7 +292,7 @@ void* Create_AdjustSaturation(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AdjustSaturation - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "scale")
@@ -314,13 +320,13 @@ void* Create_AdjustSaturation(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AdjustSaturation - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : AdjustSaturation pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -336,7 +342,7 @@ void* Create_AdjustSaturation(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : AdjustSaturation(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pAdjustSaturation;
 }
@@ -350,6 +356,8 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 	Output *pcrop_size = nullptr;
 	CropAndResize::Attrs attrs;
 	std::string method_ = "";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -376,7 +384,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "image")
@@ -399,7 +407,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "boxes")
@@ -427,7 +435,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "box_ind")
@@ -455,7 +463,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "crop_size")
@@ -483,7 +491,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -502,7 +510,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : CropAndResize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -518,7 +526,7 @@ void* Create_CropAndResize(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : CropAndResize(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pCropAndResize;
 }
@@ -532,6 +540,8 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 	Output *pbox_ind = nullptr;
 	CropAndResizeGradBoxes::Attrs attrs;
 	std::string method_ = "";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -558,7 +568,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResizeGradBoxes - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "grads")
@@ -581,7 +591,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResizeGradBoxes - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "image")
@@ -604,7 +614,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResizeGradBoxes - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "boxes")
@@ -632,7 +642,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResizeGradBoxes - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "box_ind")
@@ -660,7 +670,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResizeGradBoxes - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -675,7 +685,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : CropAndResizeGradBoxes pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -691,7 +701,7 @@ void* Create_CropAndResizeGradBoxes(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : CropAndResizeGradBoxes(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pCropAndResizeGradBoxes;
 }
@@ -706,6 +716,8 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 	DataType T;
 	std::string method_ = "";
 	CropAndResizeGradImage::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -732,7 +744,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResizeGradImage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "grads")
@@ -755,7 +767,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResizeGradImage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "boxes")
@@ -783,7 +795,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResizeGradImage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "box_ind")
@@ -811,7 +823,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResizeGradImage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "image_size")
@@ -839,7 +851,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : CropAndResizeGradImage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "T")
@@ -849,13 +861,13 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 				if (!(T = GetDatatypeFromInitial(strPinInitial)))
 				{
 					std::string msg = string_format("warning : CropAndResizeGradImage - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					PrintMessage(msg, msgParam);
 				}
 			}
 			else
 			{
 				std::string msg = string_format("warning : CropAndResizeGradImage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -873,7 +885,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : CropAndResizeGradImage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -889,7 +901,7 @@ void* Create_CropAndResizeGradImage(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : CropAndResizeGradImage(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pCropAndResizeGradImage;
 }
@@ -898,6 +910,8 @@ void* Create_DecodeGif(std::string id, Json::Value pInputItem) {
 	DecodeGif* pDecodeGif = nullptr;
 	Scope* pScope = nullptr;
 	Output *pcontents = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -924,7 +938,7 @@ void* Create_DecodeGif(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeGif - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "contents")
@@ -947,13 +961,13 @@ void* Create_DecodeGif(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeGif - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : DecodeGif pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -969,7 +983,7 @@ void* Create_DecodeGif(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DecodeGif(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pDecodeGif;
 }
@@ -978,6 +992,8 @@ void* Create_DecodeBmp(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pcontents = nullptr;
 	DecodeBmp::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1004,7 +1020,7 @@ void* Create_DecodeBmp(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeBmp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "contents")
@@ -1027,7 +1043,7 @@ void* Create_DecodeBmp(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeBmp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1041,7 +1057,7 @@ void* Create_DecodeBmp(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : DecodeBmp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1057,7 +1073,7 @@ void* Create_DecodeBmp(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DecodeBmp(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pDecodeBmp;
 }
@@ -1068,6 +1084,8 @@ void* Create_DecodeJpeg(std::string id, Json::Value pInputItem) {
 	Output *pcontents = nullptr;
 	DecodeJpeg::Attrs attrs;
 	std::string dct_method_ = "";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1094,7 +1112,7 @@ void* Create_DecodeJpeg(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeJpeg - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "contents")
@@ -1117,7 +1135,7 @@ void* Create_DecodeJpeg(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeJpeg - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1140,7 +1158,7 @@ void* Create_DecodeJpeg(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : DecodeJpeg pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1156,7 +1174,7 @@ void* Create_DecodeJpeg(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DecodeJpeg(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pDecodeJpeg;
 }
@@ -1166,6 +1184,8 @@ void* Create_DecodePng(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pcontents = nullptr;
 	DecodePng::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1192,7 +1212,7 @@ void* Create_DecodePng(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodePng - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "contents")
@@ -1215,7 +1235,7 @@ void* Create_DecodePng(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodePng - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1230,7 +1250,7 @@ void* Create_DecodePng(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : DecodePng pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1246,7 +1266,7 @@ void* Create_DecodePng(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DecodeJpeg(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pDecodePng;
 }
@@ -1256,6 +1276,8 @@ void* Create_DrawBoundingBoxes(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pimages = nullptr;
 	Output *pboxes = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1282,7 +1304,7 @@ void* Create_DrawBoundingBoxes(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DrawBoundingBoxes - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "images")
@@ -1305,7 +1327,7 @@ void* Create_DrawBoundingBoxes(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DrawBoundingBoxes - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "boxes")
@@ -1333,13 +1355,13 @@ void* Create_DrawBoundingBoxes(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DrawBoundingBoxes - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : DrawBoundingBoxes pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1355,7 +1377,7 @@ void* Create_DrawBoundingBoxes(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DrawBoundingBoxes(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pDrawBoundingBoxes;
 }
@@ -1368,6 +1390,8 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 	std::string format_ = "";
 	std::string density_unit_ = "";
 	std::string xmp_metadata_ = "";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1394,7 +1418,7 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : EncodeJpeg - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "image")
@@ -1417,7 +1441,7 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : EncodeJpeg - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1451,7 +1475,7 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : EncodeJpeg pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1467,7 +1491,7 @@ void* Create_EncodeJpeg(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : EncodeJpeg(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pEncodeJpeg;
 }
@@ -1477,6 +1501,8 @@ void* Create_EncodePng(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output *pimage = nullptr;
 	EncodePng::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1503,7 +1529,7 @@ void* Create_EncodePng(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : EncodePng - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "image")
@@ -1526,7 +1552,7 @@ void* Create_EncodePng(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : EncodePng - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1540,7 +1566,7 @@ void* Create_EncodePng(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : EncodePng pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1556,7 +1582,7 @@ void* Create_EncodePng(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : EncodePng(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pEncodePng;
 }
@@ -1568,6 +1594,8 @@ void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem) {
 	Output *psize = nullptr;
 	Output *poffsets = nullptr;
 	ExtractGlimpse::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1594,7 +1622,7 @@ void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ExtractGlimpse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -1617,7 +1645,7 @@ void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ExtractGlimpse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "size")
@@ -1645,7 +1673,7 @@ void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ExtractGlimpse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "offsets")
@@ -1673,7 +1701,7 @@ void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ExtractGlimpse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1689,7 +1717,7 @@ void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ExtractGlimpse pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1705,7 +1733,7 @@ void* Create_ExtractGlimpse(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ExtractGlimpse(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pExtractGlimpse;
 }
@@ -1714,6 +1742,8 @@ void* Create_HSVToRGB(std::string id, Json::Value pInputItem) {
 	HSVToRGB* pHSVToRGB = nullptr;
 	Scope* pScope = nullptr;
 	Output *pimages = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1740,7 +1770,7 @@ void* Create_HSVToRGB(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : HSVToRGB - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "images")
@@ -1763,13 +1793,13 @@ void* Create_HSVToRGB(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : HSVToRGB - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : HSVToRGB pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1785,7 +1815,7 @@ void* Create_HSVToRGB(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : HSVToRGB(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pHSVToRGB;
 }
@@ -1797,6 +1827,8 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 	Output *pscores = nullptr;
 	Output *pmax_output_size = nullptr;
 	NonMaxSuppression::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1823,7 +1855,7 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : NonMaxSuppression - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "boxes")
@@ -1851,7 +1883,7 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : NonMaxSuppression - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "scores")
@@ -1879,7 +1911,7 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : NonMaxSuppression - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max_output_size")
@@ -1907,7 +1939,7 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : NonMaxSuppression - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1921,7 +1953,7 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : NonMaxSuppression pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1937,7 +1969,7 @@ void* Create_NonMaxSuppression(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : NonMaxSuppression(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pNonMaxSuppression;
 }
@@ -1946,6 +1978,8 @@ void* Create_RGBToHSV(std::string id, Json::Value pInputItem) {
 	RGBToHSV* pRGBToHSV = nullptr;
 	Scope* pScope = nullptr;
 	Output *pimages = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -1972,7 +2006,7 @@ void* Create_RGBToHSV(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RGBToHSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "images")
@@ -1995,13 +2029,13 @@ void* Create_RGBToHSV(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RGBToHSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : RGBToHSV pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2017,7 +2051,7 @@ void* Create_RGBToHSV(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RGBToHSV(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRGBToHSV;
 }
@@ -2029,6 +2063,8 @@ void* Create_QuantizedResizeBilinear(std::string id, Json::Value pInputItem) {
 	Output *pmin = nullptr;
 	Output *pmax = nullptr;
 	QuantizedResizeBilinear::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2055,7 +2091,7 @@ void* Create_QuantizedResizeBilinear(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "images")
@@ -2078,7 +2114,7 @@ void* Create_QuantizedResizeBilinear(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "size")
@@ -2106,7 +2142,7 @@ void* Create_QuantizedResizeBilinear(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "min")
@@ -2134,7 +2170,7 @@ void* Create_QuantizedResizeBilinear(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "max")
@@ -2162,7 +2198,7 @@ void* Create_QuantizedResizeBilinear(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : QuantizedResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2176,7 +2212,7 @@ void* Create_QuantizedResizeBilinear(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : QuantizedResizeBilinear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2194,7 +2230,7 @@ void* Create_QuantizedResizeBilinear(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : QuantizedResizeBilinear(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pQuantizedResizeBilinear;
 }
@@ -2205,6 +2241,8 @@ void* Create_ResizeArea(std::string id, Json::Value pInputItem) {
 	Output *pimages = nullptr;
 	Output *psize = nullptr;
 	ResizeArea::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2231,7 +2269,7 @@ void* Create_ResizeArea(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeArea - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "images")
@@ -2254,7 +2292,7 @@ void* Create_ResizeArea(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeArea - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "size")
@@ -2282,7 +2320,7 @@ void* Create_ResizeArea(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeArea - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2296,7 +2334,7 @@ void* Create_ResizeArea(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ResizeArea pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2312,7 +2350,7 @@ void* Create_ResizeArea(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ResizeArea(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pResizeArea;
 }
@@ -2323,6 +2361,8 @@ void* Create_ResizeBicubic(std::string id, Json::Value pInputItem) {
 	Output *pimages = nullptr;
 	Output *psize = nullptr;
 	ResizeBicubic::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2349,7 +2389,7 @@ void* Create_ResizeBicubic(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeBicubic - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "images")
@@ -2372,7 +2412,7 @@ void* Create_ResizeBicubic(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeBicubic - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "size")
@@ -2400,7 +2440,7 @@ void* Create_ResizeBicubic(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeBicubic - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2414,7 +2454,7 @@ void* Create_ResizeBicubic(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ResizeBicubic pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2430,7 +2470,7 @@ void* Create_ResizeBicubic(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ResizeBicubic(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pResizeBicubic;
 }
@@ -2441,6 +2481,8 @@ void* Create_ResizeBilinear(std::string id, Json::Value pInputItem) {
 	Output *pimages = nullptr;
 	Output *psize = nullptr;
 	ResizeBilinear::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2467,7 +2509,7 @@ void* Create_ResizeBilinear(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "images")
@@ -2490,7 +2532,7 @@ void* Create_ResizeBilinear(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "size")
@@ -2518,7 +2560,7 @@ void* Create_ResizeBilinear(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeBilinear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2532,7 +2574,7 @@ void* Create_ResizeBilinear(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ResizeBilinear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2548,7 +2590,7 @@ void* Create_ResizeBilinear(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ResizeBilinear(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pResizeBilinear;
 }
@@ -2559,6 +2601,8 @@ void* Create_ResizeNearestNeighbor(std::string id, Json::Value pInputItem) {
 	Output *pimages = nullptr;
 	Output *psize = nullptr;
 	ResizeNearestNeighbor::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2585,7 +2629,7 @@ void* Create_ResizeNearestNeighbor(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeNearestNeighbor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "images")
@@ -2608,7 +2652,7 @@ void* Create_ResizeNearestNeighbor(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeNearestNeighbor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "size")
@@ -2636,7 +2680,7 @@ void* Create_ResizeNearestNeighbor(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ResizeNearestNeighbor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2650,7 +2694,7 @@ void* Create_ResizeNearestNeighbor(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ResizeNearestNeighbor pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2666,7 +2710,7 @@ void* Create_ResizeNearestNeighbor(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ResizeNearestNeighbor(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pResizeNearestNeighbor;
 }
@@ -2679,6 +2723,8 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 	SampleDistortedBoundingBox::Attrs attrs;
 	std::vector<float> aspect_ratio_range_;
 	std::vector<float> area_range_;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2705,7 +2751,7 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : SampleDistortedBoundingBox - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "image_size")
@@ -2733,7 +2779,7 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : SampleDistortedBoundingBox - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "bounding_boxes")
@@ -2761,7 +2807,7 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : SampleDistortedBoundingBox - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2793,7 +2839,7 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 		else
 		{
 			std::string msg = string_format("warning : SampleDistortedBoundingBox pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2811,7 +2857,7 @@ void* Create_SampleDistortedBoundingBox(std::string id, Json::Value pInputItem) 
 	else
 	{
 		std::string msg = string_format("error : SampleDistortedBoundingBox(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pSampleDistortedBoundingBox;
 }
@@ -2824,6 +2870,8 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 	SampleDistortedBoundingBoxV2::Attrs attrs;
 	std::vector<float> aspect_ratio_range_;
 	std::vector<float> area_range_;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -2850,7 +2898,7 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : SampleDistortedBoundingBoxV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "image_size")
@@ -2878,7 +2926,7 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : SampleDistortedBoundingBoxV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "bounding_boxes")
@@ -2906,7 +2954,7 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : SampleDistortedBoundingBoxV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "min_object_covered")
@@ -2934,7 +2982,7 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : SampleDistortedBoundingBoxV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2965,7 +3013,7 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 		else
 		{
 			std::string msg = string_format("warning : SampleDistortedBoundingBoxV2 pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -2983,7 +3031,7 @@ void* Create_SampleDistortedBoundingBoxV2(std::string id, Json::Value pInputItem
 	else
 	{
 		std::string msg = string_format("error : SampleDistortedBoundingBoxV2(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pSampleDistortedBoundingBoxV2;
 }

@@ -75,7 +75,8 @@ bool Init_Tensorflow(std::string config_doc, std::string page_name)
 			Status st = m_pScope->status();
 			std::string errors = st.error_message().c_str();
 			std::string msg = string_format("error : %s.", errors.c_str());
-			PrintMessage(msg);
+			std::string msgParam = string_format("#%s", strId.c_str());
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -166,7 +167,8 @@ void ClientRunOutput(ClientSession* pClientSession, FetchInfo* pTar, Fetch_Outpu
 					iDataType = DEF_STRING;
 					break;
 				default:
-					PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()));
+					std::string msgParam = string_format("#%s", pObjet->id.c_str());
+					PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()), msgParam);
 					continue;
 					break;
 				}
@@ -430,7 +432,8 @@ void ClientRunOutputList(ClientSession* pClientSession, FetchInfo* pTar, Fetch_O
 						iDataType = DEF_STRING;
 						break;
 					default:
-						PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()));
+						std::string msgParam = string_format("#%s", pObjet->id.c_str());
+						PrintMessage(strings::Printf("Unknown interface data type(%s)", pObjet->id.c_str()), msgParam);
 						continue;
 						break;
 					}
@@ -2218,8 +2221,9 @@ ObjectInfo* LookupFromObjectMap(std::string strid)
 	}
 	else
 	{
+		std::string msgParam = string_format("#%s", strid.c_str());
 		std::string msg = string_format("warning : Could not find object(%s) in object map.", strid.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pObj;
 }
@@ -2244,8 +2248,9 @@ ObjectInfo* AddObjectMap(void* pCreate, std::string id, int iSymbol, std::string
 			return pCreateObj;
 		}
 	}
+	std::string msgParam = string_format("#%s", id.c_str());
 	std::string msg = string_format("warning : Could not add to list(all object). existed id(%s).", id.c_str());
-	PrintMessage(msg);
+	PrintMessage(msg, msgParam);
 	return nullptr;
 }
 
@@ -2263,8 +2268,9 @@ FetchInfo* AddRunObjectMap(ObjectInfo* pRunObj)
 			return pCreateObj;
 		}
 	}
+	std::string msgParam = string_format("#%s", pRunObj->id.c_str());
 	std::string msg = string_format("warning : Could not add to list(run list). existed id(%s).", pRunObj->id.c_str());
-	PrintMessage(msg);
+	PrintMessage(msg, msgParam);
 	return nullptr;
 }
  

@@ -17,6 +17,7 @@ void* Create_Abort(std::string id, Json::Value pInputItem) {
 	Abort* pAbort = nullptr;
 	Scope* pScope = nullptr;
 	Abort::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -43,7 +44,7 @@ void* Create_Abort(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Abort - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -64,7 +65,7 @@ void* Create_Abort(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Abort pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -78,7 +79,7 @@ void* Create_Abort(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Abort(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pAbort;
 }
@@ -86,6 +87,7 @@ void* Create_Abort(std::string id, Json::Value pInputItem) {
 void* Create_ControlTrigger(std::string id, Json::Value pInputItem) {
 	ControlTrigger* pControlTrigger = nullptr;
 	Scope* pScope = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -112,13 +114,13 @@ void* Create_ControlTrigger(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ControlTrigger - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ControlTrigger pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -132,7 +134,7 @@ void* Create_ControlTrigger(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("ControlTrigger : Abort(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pControlTrigger;
 } 
@@ -141,6 +143,7 @@ void* Create_LoopCond(std::string id, Json::Value pInputItem) {
 	LoopCond* pLoopCond = nullptr;
 	Scope* pScope = nullptr;
 	Output* pInput = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -167,7 +170,7 @@ void* Create_LoopCond(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : LoopCond - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -191,13 +194,13 @@ void* Create_LoopCond(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : LoopCond - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : LoopCond pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -211,7 +214,7 @@ void* Create_LoopCond(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : LoopCond(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pLoopCond;
 }
@@ -220,6 +223,7 @@ void* Create_Merge(std::string id, Json::Value pInputItem) {
 	Merge* pMerge = nullptr;
 	Scope* pScope = nullptr;
 	OutputList* inputs = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -246,7 +250,7 @@ void* Create_Merge(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Merge - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "inputs")
@@ -270,13 +274,13 @@ void* Create_Merge(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Merge - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Merge pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -292,7 +296,7 @@ void* Create_Merge(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Merge(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pMerge;
 }
@@ -301,6 +305,7 @@ void* Create_NextIteration(std::string id, Json::Value pInputItem) {
 	NextIteration* pNextIteration = nullptr;
 	Scope* pScope = nullptr;
 	Output* data = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -327,7 +332,7 @@ void* Create_NextIteration(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : NextIteration - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "data")
@@ -351,13 +356,13 @@ void* Create_NextIteration(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : NextIteration - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : NextIteration pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -371,7 +376,7 @@ void* Create_NextIteration(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : NextIteration(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pNextIteration;
 }
@@ -380,6 +385,7 @@ void* Create_RefNextIteration(std::string id, Json::Value pInputItem) {
 	RefNextIteration* pRefNextIteration = nullptr;
 	Scope* pScope = nullptr;
 	Output* data = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -406,7 +412,7 @@ void* Create_RefNextIteration(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RefNextIteration - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "data")
@@ -430,13 +436,13 @@ void* Create_RefNextIteration(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RefNextIteration - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : RefNextIteration pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -450,7 +456,7 @@ void* Create_RefNextIteration(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RefNextIteration(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRefNextIteration;
 }
@@ -460,6 +466,7 @@ void* Create_RefSelect(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* index = nullptr;
 	OutputList* inputs = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -486,7 +493,7 @@ void* Create_RefSelect(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RefSelect - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "index")
@@ -510,7 +517,7 @@ void* Create_RefSelect(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RefSelect - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "inputs")
@@ -534,13 +541,13 @@ void* Create_RefSelect(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RefSelect - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : RefSelect pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -554,7 +561,7 @@ void* Create_RefSelect(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RefSelect(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRefSelect;
 }
@@ -564,6 +571,7 @@ void* Create_RefSwitch(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* data = nullptr;
 	Output* pred = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -590,7 +598,7 @@ void* Create_RefSwitch(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RefSwitch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "data")
@@ -614,7 +622,7 @@ void* Create_RefSwitch(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RefSwitch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "pred")
@@ -638,13 +646,13 @@ void* Create_RefSwitch(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RefSwitch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : RefSwitch pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -660,7 +668,7 @@ void* Create_RefSwitch(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RefSwitch(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRefSwitch;
 }
@@ -670,6 +678,7 @@ void* Create_Switch(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* data = nullptr;
 	Output* pred = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -696,7 +705,7 @@ void* Create_Switch(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Switch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "data")
@@ -724,7 +733,7 @@ void* Create_Switch(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Switch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "pred")
@@ -752,13 +761,13 @@ void* Create_Switch(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Switch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Switch pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -774,7 +783,7 @@ void* Create_Switch(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Switch(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pSwitch;
 }

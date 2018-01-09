@@ -21,6 +21,8 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 	AsString::Attrs attrs;
 	std::string strTemp;
 	Input* Tempinput = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -46,7 +48,7 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AsString - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -71,7 +73,7 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : AsString - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -94,7 +96,7 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : AsString - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pinput)
@@ -109,7 +111,7 @@ void* Create_AsString(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : AsString(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	if (Tempinput)
 		delete Tempinput;
@@ -120,6 +122,7 @@ void* Create_DecodeBase64(std::string id, Json::Value pInputItem) {
 	DecodeBase64* pDecodeBase64 = nullptr;
 	Scope* pScope = nullptr;
 	Output* pInput = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -146,7 +149,7 @@ void* Create_DecodeBase64(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeBase64 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -169,13 +172,13 @@ void* Create_DecodeBase64(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeBase64 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : DecodeBase64 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pInput)
@@ -190,7 +193,7 @@ void* Create_DecodeBase64(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DecodeBase64(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pDecodeBase64;
 }
@@ -200,6 +203,7 @@ void* Create_EncodeBase64(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* pInput = nullptr;
 	EncodeBase64::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -226,7 +230,7 @@ void* Create_EncodeBase64(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : EncodeBase64 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -249,7 +253,7 @@ void* Create_EncodeBase64(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : EncodeBase64 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -263,7 +267,7 @@ void* Create_EncodeBase64(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : DecodeBase64 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pInput)
@@ -278,7 +282,7 @@ void* Create_EncodeBase64(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : EncodeBase64(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pEncodeBase64;
 }
@@ -290,6 +294,8 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 	Output* reduction_indices = nullptr;
 	ReduceJoin::Attrs attrs;
 	StringPiece strTemp ="";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -315,7 +321,7 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReduceJoin - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -338,7 +344,7 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReduceJoin - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "reduction_indices")
@@ -361,7 +367,7 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ReduceJoin - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -381,7 +387,7 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : ReduceJoin - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pInput && reduction_indices)
@@ -396,7 +402,7 @@ void* Create_ReduceJoin(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : pReduceJoin(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pReduceJoin;
 }
@@ -407,6 +413,8 @@ void* Create_StringJoin(std::string id, Json::Value pInputItem) {
 	OutputList* pInputs = nullptr;
 	StringJoin::Attrs attrs;
 	StringPiece temp1 = "";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -432,7 +440,7 @@ void* Create_StringJoin(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringJoin - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "inputs")
@@ -455,7 +463,7 @@ void* Create_StringJoin(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringJoin - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -473,7 +481,7 @@ void* Create_StringJoin(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : StringJoin - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pInputs)
@@ -488,7 +496,7 @@ void* Create_StringJoin(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : StringJoin(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pStringJoin;
 }
@@ -498,6 +506,8 @@ void* Create_StringSplit(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* pInput = nullptr;
 	Output* delimiter = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -523,7 +533,7 @@ void* Create_StringSplit(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -546,7 +556,7 @@ void* Create_StringSplit(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "delimiter")
@@ -569,13 +579,13 @@ void* Create_StringSplit(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : StringSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pInput && delimiter)
@@ -592,7 +602,7 @@ void* Create_StringSplit(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : StringSplit(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pStringSplit;
 }
@@ -602,6 +612,8 @@ void* Create_StringToHashBucket(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* string_tensor = nullptr;
 	int64 num_buckets = 0;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -627,7 +639,7 @@ void* Create_StringToHashBucket(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToHashBucket - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "string_tensor")
@@ -650,7 +662,7 @@ void* Create_StringToHashBucket(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToHashBucket - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_buckets")
@@ -662,13 +674,13 @@ void* Create_StringToHashBucket(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToHashBucket - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : StringToHashBucket - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && string_tensor )
@@ -683,7 +695,7 @@ void* Create_StringToHashBucket(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : StringToHashBucket(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pStringToHashBucket;
 }
@@ -693,6 +705,8 @@ void* Create_StringToHashBucketFast(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* pinput = nullptr;
 	int64 num_buckets = 0;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -718,7 +732,7 @@ void* Create_StringToHashBucketFast(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToHashBucketFast - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -741,7 +755,7 @@ void* Create_StringToHashBucketFast(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToHashBucketFast - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_buckets")
@@ -753,13 +767,13 @@ void* Create_StringToHashBucketFast(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToHashBucketFast - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : StringToHashBucketFast - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pinput)
@@ -774,7 +788,7 @@ void* Create_StringToHashBucketFast(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : StringToHashBucketFast(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pStringToHashBucketFast;
 }
@@ -785,6 +799,7 @@ void* Create_StringToHashBucketStrong(std::string id, Json::Value pInputItem) {
 	Output* pinput = nullptr;
 	int64 num_buckets = 0;
 	std::vector<int> v_key;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -811,7 +826,7 @@ void* Create_StringToHashBucketStrong(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToHashBucketStrong - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -834,7 +849,7 @@ void* Create_StringToHashBucketStrong(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToHashBucketStrong - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_buckets")
@@ -846,7 +861,7 @@ void* Create_StringToHashBucketStrong(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToHashBucketStrong - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "key")
@@ -858,13 +873,13 @@ void* Create_StringToHashBucketStrong(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToHashBucketStrong - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : StringToHashBucketStrong - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pinput)
@@ -881,7 +896,7 @@ void* Create_StringToHashBucketStrong(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : StringToHashBucketStrong(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	
 	v_key.clear();
@@ -894,6 +909,7 @@ void* Create_Substr(std::string id, Json::Value pInputItem) {
 	Output* pInput = nullptr;
 	Output* pos = nullptr;
 	Output* len = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -920,7 +936,7 @@ void* Create_Substr(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Substr - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "input")
@@ -943,7 +959,7 @@ void* Create_Substr(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Substr - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "pos")
@@ -966,7 +982,7 @@ void* Create_Substr(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Substr - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "len")
@@ -989,13 +1005,13 @@ void* Create_Substr(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Substr - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : Substr - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1009,7 +1025,7 @@ void* Create_Substr(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Substr(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 
 	return pSubstr;

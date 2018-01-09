@@ -99,5 +99,5 @@ void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iS
 double GetArrayValue(std::string strVariable);
 void SetValue(std::string strVariable, double fValue);
 double GetValue(std::string strVariable);
-void PrintMessage(std::string strMessage);
+void PrintMessage(std::string strMessage, std::string strID = "");
 int GetArrayIndexFromDimension(CString strOrgDim, CString strDimension);

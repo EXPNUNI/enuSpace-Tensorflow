@@ -20,6 +20,8 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 	OutputList* precord_defaults = nullptr;
 	DecodeCSV::Attrs attrs;
 	std::string Temp1 = "";
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -45,7 +47,7 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "records")
@@ -68,7 +70,7 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "record_defaults")
@@ -91,7 +93,7 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -113,7 +115,7 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && precords && precord_defaults)
@@ -128,7 +130,7 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DecodeCSV(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pDecodeCSV;
 }
@@ -137,6 +139,8 @@ void* Create_DecodeJSONExample(std::string id, Json::Value pInputItem) {
 	DecodeJSONExample* pDecodeJSONExample = nullptr;
 	Scope* pScope = nullptr;
 	Output* pjson_examples = nullptr;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -162,7 +166,7 @@ void* Create_DecodeJSONExample(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeJSONExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "json_examples")
@@ -185,13 +189,13 @@ void* Create_DecodeJSONExample(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeJSONExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : DecodeJSONExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pjson_examples)
@@ -206,7 +210,7 @@ void* Create_DecodeJSONExample(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DecodeJSONExample(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pDecodeJSONExample;
 }
@@ -217,6 +221,8 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 	Output* pbytes = nullptr;
 	DataType dtype;
 	DecodeRaw::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -242,7 +248,7 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "bytes")
@@ -265,7 +271,7 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_type")
@@ -279,7 +285,7 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -297,7 +303,7 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && pbytes)
@@ -312,7 +318,7 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DecodeRaw(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pDecodeRaw;
 }
@@ -328,6 +334,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 	vector<DataType> v_sparse_types;
 	vector<PartialTensorShape> v_dense_shapes;
 	gtl::ArraySlice<PartialTensorShape> dense_shapes;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -353,7 +361,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "serialized")
@@ -376,7 +384,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "names")
@@ -399,7 +407,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "sparse_keys")
@@ -422,7 +430,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dense_keys")
@@ -445,7 +453,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dense_defaults")
@@ -468,7 +476,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "sparse_types")
@@ -480,7 +488,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dense_shapes")
@@ -492,7 +500,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 	}
@@ -517,7 +525,7 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ParseExample(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pParseExample;
 }
@@ -540,6 +548,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 	std::vector<tensorflow::DataType> v_feature_list_sparse_types;
 	std::vector<PartialTensorShape> v_feature_list_dense_shapes;
 	std::vector<PartialTensorShape>v_context_dense_shapes;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -566,7 +575,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "serialized")
@@ -589,7 +598,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "feature_list_dense_missing_assumed_empty")
@@ -612,7 +621,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "context_sparse_keys")
@@ -635,7 +644,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "context_dense_keys")
@@ -658,7 +667,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "feature_list_sparse_keys")
@@ -681,7 +690,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "feature_list_dense_keys")
@@ -704,7 +713,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "context_dense_defaults")
@@ -727,7 +736,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "debug_name")
@@ -750,7 +759,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			else
 			{
 				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -784,7 +793,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 		else
 		{
 			std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && serialized &&feature_list_dense_missing_assumed_empty&&context_sparse_keys&&context_dense_keys &&feature_list_sparse_keys&&feature_list_dense_keys&&context_dense_defaults && debug_name)
@@ -825,7 +834,7 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 	else
 	{
 		std::string msg = string_format("error : ParseSingleSequenceExample(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 
 
@@ -838,6 +847,8 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* serialized = nullptr;
 	DataType dtype;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -863,7 +874,7 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "serialized")
@@ -886,7 +897,7 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "out_type")
@@ -898,19 +909,19 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 				if(dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : ParseTensor - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					PrintMessage(msg, msgParam);
 				}
 			}
 			else
 			{
 				std::string msg = string_format("warning : ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && serialized)
@@ -925,7 +936,7 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : ParseTensor(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pParseTensor;
 }
@@ -935,6 +946,8 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* string_tensor = nullptr;
 	StringToNumber::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -960,7 +973,7 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToNumber - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "string_tensor")
@@ -983,7 +996,7 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : StringToNumber - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1001,7 +1014,7 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : StringToNumber - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && string_tensor)
@@ -1016,7 +1029,7 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : DecodeRaw(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 
 	return pStringToNumber;

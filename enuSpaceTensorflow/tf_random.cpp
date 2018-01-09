@@ -20,6 +20,7 @@ void* Create_Multinomial(std::string id, Json::Value pInputItem) {
 	Output* logit = nullptr;
 	Output* num_samples = nullptr;
 	Multinomial::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -46,7 +47,7 @@ void* Create_Multinomial(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Multinomial - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "logits")
@@ -69,7 +70,7 @@ void* Create_Multinomial(std::string id, Json::Value pInputItem) {
 								if (dtype1 == DT_INT32)
 								{
 									std::string msg = string_format("warning : Multinomial - Logit Datatype misssMatch. double,float change.", id.c_str(), strPinName.c_str());
-									PrintMessage(msg);
+									PrintMessage(msg, msgParam);
 									logit = nullptr;
 								}
 							}
@@ -83,7 +84,7 @@ void* Create_Multinomial(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : Multinomial - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "num_samples")
@@ -106,7 +107,7 @@ void* Create_Multinomial(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : num_samples - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -123,7 +124,7 @@ void* Create_Multinomial(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : Multinomial - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && logit && num_samples)
@@ -138,7 +139,7 @@ void* Create_Multinomial(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : Multinomial(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pMultinomial;
 }
@@ -152,6 +153,7 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 	Output* minvals = nullptr;
 	Output* maxvals = nullptr;
 	ParameterizedTruncatedNormal::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -178,7 +180,7 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : ParameterizedTruncatedNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape")
@@ -201,7 +203,7 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : ParameterizedTruncatedNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "means")
@@ -224,7 +226,7 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : ParameterizedTruncatedNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "stdevs")
@@ -247,7 +249,7 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : ParameterizedTruncatedNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "minvals")
@@ -270,7 +272,7 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : ParameterizedTruncatedNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "maxvals")
@@ -293,7 +295,7 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 			else
 			{
 				std::string msg = string_format("warning : ParameterizedTruncatedNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -310,7 +312,7 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 		else
 		{
 			std::string msg = string_format("warning : ParameterizedTruncatedNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && shape && means&& stdevs && minvals && maxvals)
@@ -340,7 +342,7 @@ void* Create_ParameterizedTruncatedNormal(std::string id, Json::Value pInputItem
 	else
 	{
 		std::string msg = string_format("error : ParameterizedTruncatedNormal(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 
 
@@ -353,6 +355,8 @@ void* Create_RandomGamma(std::string id, Json::Value pInputItem) {
 	Output* shape = nullptr;
 	Output* alpha = nullptr;
 	RandomGamma::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -378,7 +382,7 @@ void* Create_RandomGamma(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomGamma - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape")
@@ -401,7 +405,7 @@ void* Create_RandomGamma(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomGamma - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "alpha")
@@ -424,7 +428,7 @@ void* Create_RandomGamma(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomGamma - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -441,7 +445,7 @@ void* Create_RandomGamma(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : RandomGamma - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && shape && alpha)
@@ -470,7 +474,7 @@ void* Create_RandomGamma(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RandomGamma(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRandomGamma;
 }
@@ -481,6 +485,7 @@ void* Create_RandomNormal(std::string id, Json::Value pInputItem) {
 	Output* pShape = nullptr;
 	tensorflow::DataType dtype = DT_DOUBLE;
 	tensorflow::ops::RandomNormal::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -507,7 +512,7 @@ void* Create_RandomNormal(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape")
@@ -523,7 +528,7 @@ void* Create_RandomNormal(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dtype")
@@ -534,13 +539,13 @@ void* Create_RandomNormal(std::string id, Json::Value pInputItem) {
 				if (dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : RandomNormal - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					PrintMessage(msg, msgParam);
 				}
 			}
 			else
 			{
 				std::string msg = string_format("warning : RandomNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -556,13 +561,13 @@ void* Create_RandomNormal(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : RandomNormal pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -592,7 +597,7 @@ void* Create_RandomNormal(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RandomNormal(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRandomNormal;
 }
@@ -603,6 +608,8 @@ void* Create_RandomPoisson(std::string id, Json::Value pInputItem) {
 	Output* shape = nullptr;
 	Output* rate = nullptr;
 	RandomPoisson::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -628,7 +635,7 @@ void* Create_RandomPoisson(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomPoisson - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape")
@@ -651,7 +658,7 @@ void* Create_RandomPoisson(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomPoisson - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "rate")
@@ -674,7 +681,7 @@ void* Create_RandomPoisson(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomPoisson - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -691,7 +698,7 @@ void* Create_RandomPoisson(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : RandomPoisson - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && shape && rate)
@@ -720,7 +727,7 @@ void* Create_RandomPoisson(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RandomPoisson(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRandomPoisson;
 }
@@ -730,6 +737,8 @@ void* Create_RandomShuffle(std::string id, Json::Value pInputItem) {
 	Scope* pScope = nullptr;
 	Output* value = nullptr;
 	RandomShuffle::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -755,7 +764,7 @@ void* Create_RandomShuffle(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomShuffle - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "value")
@@ -778,7 +787,7 @@ void* Create_RandomShuffle(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomShuffle - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -795,7 +804,7 @@ void* Create_RandomShuffle(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : RandomShuffle - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && value)
@@ -811,7 +820,7 @@ void* Create_RandomShuffle(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RandomShuffle(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRandomShuffle;
 }
@@ -822,6 +831,8 @@ void* Create_RandomUniform(std::string id, Json::Value pInputItem) {
 	Output* shape = nullptr;
 	DataType dtype;
 	RandomUniform::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
+
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
 	{
@@ -847,7 +858,7 @@ void* Create_RandomUniform(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomUniform - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape")
@@ -870,7 +881,7 @@ void* Create_RandomUniform(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomUniform - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dtype")
@@ -881,13 +892,13 @@ void* Create_RandomUniform(std::string id, Json::Value pInputItem) {
 				if(dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : RandomUniform - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					PrintMessage(msg, msgParam);
 				}
 			}
 			else
 			{
 				std::string msg = string_format("warning : RandomUniform - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -904,7 +915,7 @@ void* Create_RandomUniform(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : RandomUniform - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && shape)
@@ -919,7 +930,7 @@ void* Create_RandomUniform(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RandomUniform(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRandomUniform;
 }
@@ -931,6 +942,7 @@ void* Create_RandomUniformInt(std::string id, Json::Value pInputItem) {
 	Output* minval = nullptr;
 	Output* maxval = nullptr;
 	RandomUniformInt::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -957,7 +969,7 @@ void* Create_RandomUniformInt(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomUniformInt - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape")
@@ -980,7 +992,7 @@ void* Create_RandomUniformInt(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomUniformInt - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "minval")
@@ -1003,7 +1015,7 @@ void* Create_RandomUniformInt(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomUniformInt - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "maxval")
@@ -1026,7 +1038,7 @@ void* Create_RandomUniformInt(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : RandomUniformInt - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1043,7 +1055,7 @@ void* Create_RandomUniformInt(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : RandomUniformInt - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && shape && minval && maxval)
@@ -1059,7 +1071,7 @@ void* Create_RandomUniformInt(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : RandomUniformInt(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRandomUniformInt;
 }
@@ -1070,6 +1082,7 @@ void* Create_TruncatedNormal(std::string id, Json::Value pInputItem) {
 	Output* shape = nullptr;
 	DataType dtype;
 	TruncatedNormal::Attrs attrs;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1096,7 +1109,7 @@ void* Create_TruncatedNormal(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : TruncatedNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape")
@@ -1119,7 +1132,7 @@ void* Create_TruncatedNormal(std::string id, Json::Value pInputItem) {
 			else
 			{
 				std::string msg = string_format("warning : TruncatedNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dtype")
@@ -1130,13 +1143,13 @@ void* Create_TruncatedNormal(std::string id, Json::Value pInputItem) {
 				if(dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : TruncatedNormal - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					PrintMessage(msg, msgParam);
 				}
 			}
 			else
 			{
 				std::string msg = string_format("warning : TruncatedNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1153,7 +1166,7 @@ void* Create_TruncatedNormal(std::string id, Json::Value pInputItem) {
 		else
 		{
 			std::string msg = string_format("warning : TruncatedNormal - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 	if (pScope && shape )
@@ -1169,7 +1182,7 @@ void* Create_TruncatedNormal(std::string id, Json::Value pInputItem) {
 	else
 	{
 		std::string msg = string_format("error : TruncatedNormal(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pTruncatedNormal;
 }
@@ -1185,6 +1198,7 @@ void* Create_RandomNormal_ex(std::string id, Json::Value pInputItem)
 	tensorflow::ops::RandomNormal::Attrs attrs;
 
 	std::string str_shape;
+	std::string msgParam = string_format("#%s", id.c_str());
 
 	int iSize = (int)pInputItem.size();
 	for (int subindex = 0; subindex < iSize; ++subindex)
@@ -1211,7 +1225,7 @@ void* Create_RandomNormal_ex(std::string id, Json::Value pInputItem)
 			else
 			{
 				std::string msg = string_format("warning : RandomNormal_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "shape")
@@ -1227,7 +1241,7 @@ void* Create_RandomNormal_ex(std::string id, Json::Value pInputItem)
 			else
 			{
 				std::string msg = string_format("warning : RandomNormal_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "dtype")
@@ -1238,13 +1252,13 @@ void* Create_RandomNormal_ex(std::string id, Json::Value pInputItem)
 				if (dtype == DT_INVALID)
 				{
 					std::string msg = string_format("warning : RandomNormal_ex - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					PrintMessage(msg, msgParam);
 				}
 			}
 			else
 			{
 				std::string msg = string_format("warning : RandomNormal_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1260,13 +1274,13 @@ void* Create_RandomNormal_ex(std::string id, Json::Value pInputItem)
 			else
 			{
 				std::string msg = string_format("warning : RandomNormal_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				PrintMessage(msg, msgParam);
 			}
 		}
 		else
 		{
 			std::string msg = string_format("warning : RandomNormal_ex pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			PrintMessage(msg, msgParam);
 		}
 	}
 
@@ -1298,7 +1312,7 @@ void* Create_RandomNormal_ex(std::string id, Json::Value pInputItem)
 	else
 	{
 		std::string msg = string_format("error : RandomNormal_ex(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		PrintMessage(msg, msgParam);
 	}
 	return pRandomNormal;
 }
