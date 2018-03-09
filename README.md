@@ -13,7 +13,9 @@ gitbook : [enuSpaceTensorflow Guide](https://expnuni.gitbooks.io/enuspacetensorf
 
 [Tensorflow C++ API Guide](https://www.tensorflow.org/api_guides/cc/guide)
 
-<pre><code>
+
+
+```cpp
 #include "tensorflow/cc/client/client_session.h"
 #include "tensorflow/cc/ops/standard_ops.h"
 #include "tensorflow/core/framework/tensor.h"
@@ -42,7 +44,9 @@ int main()
   LOG(INFO) << outputs[0].matrix<float>();
   return 0;
 }
-</code></pre>
+```
+
+
 
 *enuSpace Tensorflow gui plugin*
 
