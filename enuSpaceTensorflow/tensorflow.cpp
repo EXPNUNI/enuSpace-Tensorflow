@@ -200,7 +200,7 @@ extern "C" __declspec(dllexport) bool IsTaskStopWhenModify();
 extern "C" __declspec(dllexport) bool OnInit();
 extern "C" __declspec(dllexport) bool OnLoad();
 extern "C" __declspec(dllexport) bool OnUnload();
-extern "C" __declspec(dllexport) bool OnTask();
+extern "C" __declspec(dllexport) bool OnTask(__int64 time);
 extern "C" __declspec(dllexport) void OnModeChange(int iMode);
 extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction);
 
@@ -891,7 +891,7 @@ extern "C" __declspec(dllexport) bool OnInit()
 	return false;
 }
 
-extern "C" __declspec(dllexport) bool OnTask()
+extern "C" __declspec(dllexport) bool OnTask(__int64 time)
 {
 	try
 	{
