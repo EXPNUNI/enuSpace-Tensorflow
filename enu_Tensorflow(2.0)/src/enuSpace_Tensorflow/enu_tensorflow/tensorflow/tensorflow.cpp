@@ -55,9 +55,7 @@ CtensorflowApp theApp;
 
 
 // CtensorflowApp initialization
-#include "enuSpaceToTensorflow.h"
-#include "EnuObj.h"
-#include "GlobalHeader.h"
+CString g_strDllPath;
 
 BOOL CtensorflowApp::InitInstance()
 {
@@ -75,221 +73,42 @@ BOOL CtensorflowApp::InitInstance()
 	_wsplitpath_s(szPath, drive, dir, fname, ext);
 	g_strDllPath.Format(L"%s%s", drive, dir);
 
+	if (AllocConsole())
+	{
+		freopen("CONIN$", "rb", stdin);
+		freopen("CONOUT$", "wb", stdout);
+		freopen("CONOUT$", "wb", stderr);
+	}
+
 	return TRUE;
 }
 
+/////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////////
-// enuSpace interface function pointer.
-void(*g_fcbSetValue)(wchar_t*, double) = NULL;
-VariableStruct(*g_fcbGetValue)(wchar_t*) = NULL;
-void(*g_fcbSetArrayValue)(wchar_t*, void*, int, int) = NULL;
-void(*g_fcbSetReShapeArrayValue)(wchar_t*, void*, int, int) = NULL;
-void(*g_fcbSetPinInterfaceVariable)(wchar_t*, void*, int, int) = NULL;
-VariableStruct(*g_fcbGetArrayValue)(wchar_t*) = NULL;
-void(*g_fcbPrintMessage)(wchar_t*, wchar_t*) = NULL;
-//////////////////////////////////////////////////////////////////////////////////////////////
-// enuSpace interface functions.
-extern "C" __declspec(dllexport) void SetCallBack_SetValue(void fcbSetValue(wchar_t*, double));
-extern "C" __declspec(dllexport) void SetCallBack_GetValue(VariableStruct fcbGetValue(wchar_t*));
-extern "C" __declspec(dllexport) void SetCallBack_SetArrayValue(void fcbSetArrayValue(wchar_t*, void*, int, int));
-extern "C" __declspec(dllexport) void SetCallBack_GetArrayValue(VariableStruct fcbGetArrayValue(wchar_t*));
-extern "C" __declspec(dllexport) void SetCallBack_SetReShapeArrayValue(void fcbSetReShapeArrayValue(wchar_t*, void*, int, int));
-extern "C" __declspec(dllexport) void SetCallBack_SetPinInterfaceVariable(void fcbSetPinInterfaceVariable(wchar_t*, void*, int, int));
-extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*, wchar_t*));
+#include "enuSpaceToTensorflow.h"
 
-extern "C" __declspec(dllexport) int GetTaskType();
-extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pMyType, wchar_t* pFromType, wchar_t* pToType);
-extern "C" __declspec(dllexport) bool IsTaskStopWhenModify();
-
-extern "C" __declspec(dllexport) bool OnInit();
-extern "C" __declspec(dllexport) bool OnLoad();
-extern "C" __declspec(dllexport) bool OnUnload();
-extern "C" __declspec(dllexport) bool OnTask(__int64 time);
-extern "C" __declspec(dllexport) void OnModeChange(int iMode);
-
-extern "C" __declspec(dllexport) bool OnSnap(wchar_t* pStIC);
-extern "C" __declspec(dllexport) bool OnReset(wchar_t* pStIC);
-
-extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction);
-
-extern "C" __declspec(dllexport) void OnEditComponent(wchar_t* pStrSymbolName, wchar_t* pStrID);
-extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, wchar_t* pStrID);
-extern "C" __declspec(dllexport) bool OnShowHelp(wchar_t* pStrSymbolName);
-
-extern "C" __declspec(dllexport) void OnSetObjectArray(CPtrArray* Object);
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-extern "C" __declspec(dllexport) void SetCallBack_SetValue(void fcbSetValue(wchar_t*, double))
-{
-	g_fcbSetValue = fcbSetValue;
-}
-
-extern "C" __declspec(dllexport) void SetCallBack_GetValue(VariableStruct fcbGetValue(wchar_t*))
-{
-	g_fcbGetValue = fcbGetValue;
-}
-
-extern "C" __declspec(dllexport) void SetCallBack_SetArrayValue(void fcbSetArrayValue(wchar_t*, void*, int, int))
-{
-	g_fcbSetArrayValue = fcbSetArrayValue;
-}
-
-extern "C" __declspec(dllexport) void SetCallBack_GetArrayValue(VariableStruct fcbGetArrayValue(wchar_t*))
-{
-	g_fcbGetArrayValue = fcbGetArrayValue;
-}
-
-extern "C" __declspec(dllexport) void SetCallBack_SetReShapeArrayValue(void fcbSetReShapeArrayValue(wchar_t*, void*, int, int))
-{
-	g_fcbSetReShapeArrayValue = fcbSetReShapeArrayValue;
-}
-
-extern "C" __declspec(dllexport) void SetCallBack_SetPinInterfaceVariable(void fcbSetPinInterfaceVariable(wchar_t*, void*, int, int))
-{
-	g_fcbSetPinInterfaceVariable = fcbSetPinInterfaceVariable;
-}
-
-extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*, wchar_t*))
-{
-	g_fcbPrintMessage = fcbPrintMessage;
-}
-
-extern "C" __declspec(dllexport) void OnSetObjectArray(CPtrArray* Object)
-{
-	if (Object)	g_enuObject = Object;
-}
-
-extern "C" __declspec(dllexport) bool OnLoad()
-{
-	return Load_Tensorflow();
-}
-
-extern "C" __declspec(dllexport) bool OnInit()
-{
-	try
-	{
-		if (g_fcbGetValue)
-		{
-			VariableStruct data;
-			data = g_fcbGetValue(L"dt.enu_tensorflow2_0");
-			if (data.type == DEF_DOUBLE)
-				g_DT = *(double*)data.pValue;
-		}
-
-		Init_Tensorflow();
-
-		return true;
-	}
-	catch (...)
-	{
-
-	}
-	return false;
-}
-
-extern "C" __declspec(dllexport) bool OnTask(__int64 time)
-{
-	try
-	{
-		if (g_fcbGetValue)
-		{
-			VariableStruct data;
-			data = g_fcbGetValue(L"dt.enu_tensorflow2_0");
-			if (data.type == DEF_DOUBLE)
-				g_DT = *(double*)data.pValue;
-		}
-
-
-
-		return true;
-	}
-	catch (...)
-	{
-
-	}
-	return false;
-}
-
-extern "C" __declspec(dllexport) bool OnUnload()
-{
-	return true;
-}
-
-extern "C" __declspec(dllexport) bool OnSnap(wchar_t* pStIC)
-{
-	return true;
-}
-
-extern "C" __declspec(dllexport) bool OnReset(wchar_t* pStIC)
-{
-	return true;
-}
-
-extern "C" __declspec(dllexport) void OnEditComponent(wchar_t* pStrSymbolName, wchar_t* pStrID)
-{
-
-}
-
-extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, wchar_t* pStrID)
-{
-
-}
-
-extern "C" __declspec(dllexport) void OnModeChange(int iMode)
-{
-
-}
-
-extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction)
-{
-
-}
-
-extern "C" __declspec(dllexport) bool OnShowHelp(wchar_t* pStrSymbolName)
-{
-	return true;
-}
-
-extern "C" __declspec(dllexport) int GetTaskType()
-{
-	return TASK_TYPE_OBJECTARRAY;
-}
-
-extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pMyType, wchar_t* pFromType, wchar_t* pToType)
-{
-	return true;
-}
-
-extern "C" __declspec(dllexport) bool IsTaskStopWhenModify()
-{
-	return true;
-}
-
-void PrintMessage(std::string strMessage)
-{
-	if (g_fcbPrintMessage && m_bShowDebugMessage)
-	{
-		std::string strTenMessage = string_format("tensorflow -> %s", strMessage.c_str());
-		// g_fcbPrintMessage(StringToCString(strTenMessage).GetBuffer(0));
-	}
-}
-
-void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iSize)
-{
-
-}
-/*
 void(*g_fcbSetValue)(wchar_t*, double) = NULL;
 VariableStruct (*g_fcbGetValue)(wchar_t*) = NULL;
 void(*g_fcbSetArrayValue)(wchar_t*, void*, int, int) = NULL;
 void(*g_fcbSetReShapeArrayValue)(wchar_t*, void*, int, int) = NULL;
 VariableStruct (*g_fcbGetArrayValue)(wchar_t*) = NULL;
-void(*g_fcbPrintMessage)(wchar_t*) = NULL;
+void(*g_fcbPrintMessage)(wchar_t*, wchar_t*) = NULL;
 
 CMap<CString, LPCWSTR, VariableStruct*, VariableStruct*> g_DBMapList;
 
+CString StringToCString(std::string str)
+{
+	CString result;
+	result = CString::CStringT(CA2CT(str.c_str()));
+	return result;
+}
+
+std::string CStringToString(CString reqStr)
+{
+	std::string result;
+	result = std::string(CT2CA(reqStr.operator LPCWSTR()));
+	return result;
+}
 
 int GetArrayIndexFromDimension(CString strOrgDim, CString strDimension)
 {
@@ -372,19 +191,20 @@ extern "C" __declspec(dllexport) void SetCallBack_GetValue(VariableStruct fcbGet
 extern "C" __declspec(dllexport) void SetCallBack_SetArrayValue(void fcbSetArrayValue(wchar_t*, void*, int, int));
 extern "C" __declspec(dllexport) void SetCallBack_GetArrayValue(VariableStruct fcbGetArrayValue(wchar_t*));
 extern "C" __declspec(dllexport) void SetCallBack_SetReShapeArrayValue(void fcbSetReShapeArrayValue(wchar_t*, void*, int, int));
-extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*));
+extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*, wchar_t*));
 
 extern "C" __declspec(dllexport) int GetTaskType();
-extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar_t* pToType);
+extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pMyType, wchar_t* pFromType, wchar_t* pToType);
 extern "C" __declspec(dllexport) bool IsTaskStopWhenModify();
 
 extern "C" __declspec(dllexport) bool OnInit();
 extern "C" __declspec(dllexport) bool OnLoad();
 extern "C" __declspec(dllexport) bool OnUnload();
-extern "C" __declspec(dllexport) bool OnTask();
+extern "C" __declspec(dllexport) bool OnTask(__int64 time);
 extern "C" __declspec(dllexport) void OnModeChange(int iMode);
 extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction);
-
+extern "C" __declspec(dllexport) bool OnSanp(wchar_t* pStIC);
+extern "C" __declspec(dllexport) bool OnReset(wchar_t* pStIC);
 
 extern "C" __declspec(dllexport) void OnEditComponent(wchar_t* pStrSymbolName, wchar_t* pStrID);
 extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, wchar_t* pStrID);
@@ -416,7 +236,7 @@ extern "C" __declspec(dllexport) void SetCallBack_SetReShapeArrayValue(void fcbS
 {
 	g_fcbSetReShapeArrayValue = fcbSetReShapeArrayValue;
 }
-extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*))
+extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*, wchar_t*))
 {
 	g_fcbPrintMessage = fcbPrintMessage;
 }
@@ -882,13 +702,22 @@ double GetValue(std::string strVariable)
 	return fReturn;
 }
 
+void PrintMessage(std::string strMessage, std::string strID)
+{
+	if (g_fcbPrintMessage && m_bShowDebugMessage)
+	{
+		std::string strTenMessage = string_format("tensorflow -> %s", strMessage.c_str());
+		std::string strId = string_format("%s", strID.c_str());
+		g_fcbPrintMessage(StringToCString(strTenMessage).GetBuffer(0), StringToCString(strId).GetBuffer(0));
+	}
+}
 
 extern "C" __declspec(dllexport) int GetTaskType()
 {
 	return TASK_TYPE_FLOW_COMPONENT_PAGE;
 }
 
-extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pFromType, wchar_t* pToType)
+extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pMyType, wchar_t* pFromType, wchar_t* pToType)
 {
 	CString strFromType = pFromType;
 	CString strToType = pToType;
@@ -962,142 +791,180 @@ extern "C" __declspec(dllexport) bool IsTaskStopWhenModify()
 	return true;
 }
 
+extern "C" __declspec(dllexport) bool OnLoad()
+{
+	try
+	{
+		Load_Tensorflow();
+		return true;
+	}
+	catch (...)
+	{
 
+	}
+	return false;
+}
 
 bool bProcessing = false;
 int iLoopCycle = 0;
 extern "C" __declspec(dllexport) bool OnInit()
 {
-	InterfaceDataMapClear();
-	ObjectMapClear();
-
-	CString dirName = g_strDllPath;
-	CString strExt = L"/*.json";
-
-	CFileFind finder;
-
-	BOOL bWorking = finder.FindFile(dirName + strExt);
-
-	while (bWorking)
+	try
 	{
-		bWorking = finder.FindNextFile();
-		if (finder.IsDots())
+		InterfaceDataMapClear();
+		ObjectMapClear();
+
+		CString dirName = g_strDllPath;
+		CString strExt = L"/*.json";
+
+		CFileFind finder;
+
+		BOOL bWorking = finder.FindFile(dirName + strExt);
+
+		while (bWorking)
 		{
-			continue;
-		}
-
-		CString logic_file = finder.GetFilePath();
-
-		std::string filename = CStringToString(logic_file);
-
-		CString str;
-		CFile pFile;
-
-		if (pFile.Open(logic_file, CFile::modeRead | CFile::typeBinary))
-		{
-			pFile.Seek(2, CFile::begin);
-			size_t fLength = (size_t)pFile.GetLength() - 2;
-			TCHAR *th = (TCHAR*)malloc(fLength + sizeof(TCHAR));
-			memset(th, 0, fLength + sizeof(TCHAR));
-			pFile.Read(th, fLength);
-
-			str = th;
-			free(th);
-			pFile.Close();
-
-			std::string covertStr;
-			covertStr = CStringToString(str);
-
-			WCHAR drive[_MAX_DRIVE];
-			WCHAR dir[_MAX_DIR];
-			WCHAR fname[_MAX_FNAME];
-			WCHAR ext[_MAX_EXT];
-			_wsplitpath_s(logic_file, drive, dir, fname, ext);
-
-			///////////////////////////////////////////////////////////////////
-			// binary data file
-			CString datafilename;
-			datafilename.Format(L"%s%s%s.dat", drive, dir, fname);
-			if (_wfopen_s(&m_FileData, datafilename.GetBuffer(0), L"rb") != NULL)
+			bWorking = finder.FindNextFile();
+			if (finder.IsDots())
 			{
-				m_FileData = NULL;
+				continue;
 			}
 
-			std::string pagename;
-			pagename = CStringToString(fname);
+			CString logic_file = finder.GetFilePath();
 
-			Init_Tensorflow(covertStr, pagename);
+			std::string filename = CStringToString(logic_file);
 
-			///////////////////////////////////////////////////////////////////
-			// binary data file close
-			if (m_FileData)
+			CString str;
+			CFile pFile;
+
+			if (pFile.Open(logic_file, CFile::modeRead | CFile::typeBinary))
 			{
-				fclose(m_FileData);
-				m_FileData = NULL;
-			}
-		}
-	}
-	finder.Close();
+				pFile.Seek(2, CFile::begin);
+				size_t fLength = (size_t)pFile.GetLength() - 2;
+				TCHAR *th = (TCHAR*)malloc(fLength + sizeof(TCHAR));
+				memset(th, 0, fLength + sizeof(TCHAR));
+				pFile.Read(th, fLength);
 
-	iLoopCycle = 0;
-	return true;
-}
+				str = th;
+				free(th);
+				pFile.Close();
 
-extern "C" __declspec(dllexport) bool OnTask()
-{
-	if (m_bContinusLoop == false)
-	{
-		Task_Tensorflow();
-		iLoopCycle++;
+				std::string covertStr;
+				covertStr = CStringToString(str);
 
-		if (g_fcbPrintMessage)
-		{
-			CString strMessage;
-			strMessage.Format(L"tensorflow -> event cycle ...................%d", iLoopCycle);
-			g_fcbPrintMessage(strMessage.GetBuffer(0));
-		}
-		return true;
-	}
-	else if (m_bContinusLoop && m_iSimulationMode == DEF_MODE_STEP)
-	{
-		Task_Tensorflow();
-		iLoopCycle++;
+				WCHAR drive[_MAX_DRIVE];
+				WCHAR dir[_MAX_DIR];
+				WCHAR fname[_MAX_FNAME];
+				WCHAR ext[_MAX_EXT];
+				_wsplitpath_s(logic_file, drive, dir, fname, ext);
 
-		if (g_fcbPrintMessage)
-		{
-			CString strMessage;
-			strMessage.Format(L"tensorflow -> event cycle ...................%d", iLoopCycle);
-			g_fcbPrintMessage(strMessage.GetBuffer(0));
-		}
-		return true;
-	}
-	else
-	{
-		if (bProcessing == false)
-		{
-			while (m_bContinusLoop && m_iSimulationMode == DEF_MODE_RUN)
-			{
-				bProcessing = true;
-				Task_Tensorflow();
-				iLoopCycle++;
-
-				if (g_fcbPrintMessage)
+				///////////////////////////////////////////////////////////////////
+				// binary data file
+				CString datafilename;
+				datafilename.Format(L"%s%s%s.dat", drive, dir, fname);
+				if (_wfopen_s(&m_FileData, datafilename.GetBuffer(0), L"rb") != NULL)
 				{
-					CString strMessage;
-					strMessage.Format(L"tensorflow -> contineous cycle ...................%d", iLoopCycle);
-					g_fcbPrintMessage(strMessage.GetBuffer(0));
+					m_FileData = NULL;
+				}
+
+				std::string pagename;
+				pagename = CStringToString(fname);
+
+				Init_Tensorflow(covertStr, pagename);
+
+				///////////////////////////////////////////////////////////////////
+				// binary data file close
+				if (m_FileData)
+				{
+					fclose(m_FileData);
+					m_FileData = NULL;
 				}
 			}
-			bProcessing = false;
 		}
-	}
+		finder.Close();
 
-	return true;
+		iLoopCycle = 0;
+		return true;
+	}
+	catch (...)
+	{
+
+	}
+	return false;
+}
+
+extern "C" __declspec(dllexport) bool OnTask(__int64 time)
+{
+	try
+	{
+		if (m_bContinusLoop == false)
+		{
+			Task_Tensorflow();
+			iLoopCycle++;
+
+			if (g_fcbPrintMessage)
+			{
+				CString strMessage;
+				strMessage.Format(L"tensorflow -> event cycle ...................%d", iLoopCycle);
+				g_fcbPrintMessage(strMessage.GetBuffer(0), L"");
+			}
+			return true;
+		}
+		else if (m_bContinusLoop && m_iSimulationMode == DEF_MODE_STEP)
+		{
+			Task_Tensorflow();
+			iLoopCycle++;
+
+			if (g_fcbPrintMessage)
+			{
+				CString strMessage;
+				strMessage.Format(L"tensorflow -> event cycle ...................%d", iLoopCycle);
+				g_fcbPrintMessage(strMessage.GetBuffer(0), L"");
+			}
+			return true;
+		}
+		else
+		{
+			if (bProcessing == false)
+			{
+				while (m_bContinusLoop && m_iSimulationMode == DEF_MODE_RUN)
+				{
+					bProcessing = true;
+					Task_Tensorflow();
+					iLoopCycle++;
+
+					if (g_fcbPrintMessage)
+					{
+						CString strMessage;
+						strMessage.Format(L"tensorflow -> contineous cycle ...................%d", iLoopCycle);
+						g_fcbPrintMessage(strMessage.GetBuffer(0), L"");
+					}
+				}
+				bProcessing = false;
+			}
+		}
+
+		return true;
+	}
+	catch (...)
+	{
+
+	}
+	return false;
 }
 
 extern "C" __declspec(dllexport) bool OnUnload()
 {
-	return Unload_Tensorflow();
+	try
+	{
+		FreeConsole();
+		Unload_Tensorflow();
+		return true;
+	}
+	catch (...)
+	{
+
+	}
+	return false;
 }
 
 extern "C" __declspec(dllexport) void OnEditComponent(wchar_t* pStrSymbolName, wchar_t* pStrID)
@@ -1116,61 +983,87 @@ extern "C" __declspec(dllexport) void OnModeChange(int iMode)
 
 extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction)
 {
-	CString strFunction = pStrFunction;
-	if (strFunction.Find(L"ShowDebugMessage") == 0)
+	try
 	{
-		CString Value = strFunction.Right(strFunction.GetLength() - 16);
-		Value.Trim();
-		Value.Trim(L"(");
-		Value.Trim(L")");
-		Value.Trim();
-		Value.MakeLower();
-		if (Value == L"true" || Value == L"1")
-			m_bShowDebugMessage = true;
-		else
-			m_bShowDebugMessage = false;
-	}
-	else if (strFunction.Find(L"SetInfiniteLoop") == 0)
-	{
-		CString Value = strFunction.Right(strFunction.GetLength() - 15);
-		Value.Trim();
-		Value.Trim(L"(");
-		Value.Trim(L")");
-		Value.Trim();
-		Value.MakeLower();
-		if (Value == L"true" || Value == L"1")
-			m_bContinusLoop = true;
-		else
-			m_bContinusLoop = false;
-	}
+		CString strFunction = pStrFunction;
+		if (strFunction.Find(L"ShowDebugMessage") == 0)
+		{
+			CString Value = strFunction.Right(strFunction.GetLength() - 16);
+			Value.Trim();
+			Value.Trim(L"(");
+			Value.Trim(L")");
+			Value.Trim();
+			Value.MakeLower();
+			if (Value == L"true" || Value == L"1")
+				m_bShowDebugMessage = true;
+			else
+				m_bShowDebugMessage = false;
+		}
+		else if (strFunction.Find(L"SetInfiniteLoop") == 0)
+		{
+			CString Value = strFunction.Right(strFunction.GetLength() - 15);
+			Value.Trim();
+			Value.Trim(L"(");
+			Value.Trim(L")");
+			Value.Trim();
+			Value.MakeLower();
+			if (Value == L"true" || Value == L"1")
+				m_bContinusLoop = true;
+			else
+				m_bContinusLoop = false;
+		}
 
-	if (g_fcbPrintMessage)
-	{
-		CString strMsg;
-		strMsg.Format(L"enuSpace to ExecuteFunction call - %s", strFunction);
-		g_fcbPrintMessage(strMsg.GetBuffer(0));
+		if (g_fcbPrintMessage)
+		{
+			CString strMsg;
+			strMsg.Format(L"enuSpace to ExecuteFunction call - %s", strFunction);
+			g_fcbPrintMessage(strMsg.GetBuffer(0), L"");
+		}
+		return;
 	}
+	catch (...)
+	{
+
+	}
+	return;
 }
 
+extern "C" __declspec(dllexport) bool OnSanp(wchar_t* pStIC)
+{
+	return true;
+}
+
+extern "C" __declspec(dllexport) bool OnReset(wchar_t* pStIC)
+{
+	return true;
+}
 // HELP Interface
 extern "C" __declspec(dllexport) bool OnShowHelp(wchar_t* pStrSymbolName)
 {
-	CString strComponent = pStrSymbolName;
-	int SymbolType = GetSymbolType(CStringToString(strComponent));
-	if (SymbolType == SYMBOL_NONE)
+	try
 	{
-		return false;
+		CString strComponent = pStrSymbolName;
+		int SymbolType = GetSymbolType(CStringToString(strComponent));
+		if (SymbolType == SYMBOL_NONE)
+		{
+			return false;
+		}
+
+		strComponent.MakeLower();
+		strComponent.Remove(L'#');
+		CString strAddress;
+
+		CString strCategory = StringToCString(GetCategoryName(SymbolType));
+
+		strAddress.Format(L"https://expnuni.gitbooks.io/enuspacetensorflow/content/%s/%s.html", strCategory, strComponent);
+		ShellExecute(NULL, L"open", L"chrome.exe", strAddress, NULL, SW_SHOW);
+		return true;
 	}
+	catch (...)
+	{
 
-	strComponent.MakeLower();
-	strComponent.Remove(L'#');
-	CString strAddress;
-
-	CString strCategory = StringToCString(GetCategoryName(SymbolType));
-
-	strAddress.Format(L"https://expnuni.gitbooks.io/enuspacetensorflow/content/%s/%s.html", strCategory, strComponent);
-	ShellExecute(NULL, L"open", L"chrome.exe", strAddress, NULL, SW_SHOW);
-	return true;
+	}
+	return false;
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
-*/
+

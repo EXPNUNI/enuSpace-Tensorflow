@@ -72,7 +72,3 @@ Tensor* Create_BinaryToTensor(std::string strPinType, std::string strPinShape, F
 
 void* Create_ArrayStrToOutput(Scope& pScope, std::string strPinType, std::string strPinShape, std::string strInitvalue);
 Tensor* Create_ArrayStrToTensor(std::string strPinType, std::string strPinShape, std::string strInitvalue);
-
-
-CString StringToCString(std::string str);
-std::string CStringToString(CString reqStr);

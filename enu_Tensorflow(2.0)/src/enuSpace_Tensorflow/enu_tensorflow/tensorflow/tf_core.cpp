@@ -12,6 +12,8 @@
 #include "utility_functions.h"
 #include "enuSpaceToTensorflow.h"
 
+
+
 // ClientSession에 연결된 연결선 정보를 따라서 Fect 벡터리스트에 추가하여 실행시 각 객체의 값을 업데이트 수행함
 void AddPrevFetchObject(ObjectInfo* pfetchObj, FetchInfo* pFetchInfo)
 {

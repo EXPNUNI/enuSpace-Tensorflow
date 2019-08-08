@@ -37,14 +37,3 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 
-//#pragma comment(lib, "tensorflow/cc/libcc_op_gen_main.a")
-//#pragma comment(lib, "tensorflow/cc/libclient_session.a")
-//#pragma comment(lib, "tensorflow/cc/libconst_op.a")
-//#pragma comment(lib, "tensorflow/cc/libcoordinator.a")
-//#pragma comment(lib, "tensorflow/cc/libgradients.a")
-//#pragma comment(lib, "tensorflow/cc/libgrad_op_registry.a")
-//#pragma comment(lib, "tensorflow/cc/libops.a")
-//#pragma comment(lib, "tensorflow/cc/libqueue_runner.a")
-//#pragma comment(lib, "tensorflow/cc/libscope.a")
-//#pragma comment(lib, "tensorflow/cc/libwhile_loop.a")
-//

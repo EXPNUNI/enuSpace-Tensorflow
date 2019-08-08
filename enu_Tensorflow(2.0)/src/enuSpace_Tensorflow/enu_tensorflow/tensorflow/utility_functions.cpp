@@ -879,7 +879,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<double>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -903,7 +903,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<complex64>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -921,7 +921,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<complex128>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -942,7 +942,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<float>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -963,7 +963,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<bfloat16>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -985,7 +985,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<int8>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1007,7 +1007,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<int16>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1029,7 +1029,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<uint8>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1051,7 +1051,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<uint16>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1073,7 +1073,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<int32_t>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1095,7 +1095,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<int64_t>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1117,7 +1117,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<qint8>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1139,7 +1139,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<qint16>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1161,7 +1161,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<qint32>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1183,7 +1183,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<quint8>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1204,7 +1204,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<quint16>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1225,7 +1225,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<bool>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 		arrayvals.clear();
 	}
 	break;
@@ -1242,7 +1242,7 @@ Tensor* Create_StrToTensor(std::string strPinType, std::string strPinShape, std:
 			pTensor->flat<std::string>()(i) = *it;
 			i++;
 		}
-		//arraySlice.clear();
+//		arraySlice.clear();
 	}
 	break;
 	default:
@@ -1322,7 +1322,7 @@ Tensor* Create_BinaryToTensor(std::string strPinType, std::string strPinShape, F
 				{
 					pTensor->flat<double>()(i) = pBuffer[i];
 				}
-				//arraySlice.clear();
+//				arraySlice.clear();
 	
 				delete[] pBuffer;
 			}
@@ -1353,7 +1353,7 @@ Tensor* Create_BinaryToTensor(std::string strPinType, std::string strPinShape, F
 				{
 					pTensor->flat<float>()(i) = pBuffer[i];
 				}
-				//arraySlice.clear();
+//				arraySlice.clear();
 	
 				delete[] pBuffer;
 			}
@@ -1384,7 +1384,7 @@ Tensor* Create_BinaryToTensor(std::string strPinType, std::string strPinShape, F
 				{
 					pTensor->flat<int32_t>()(i) = pBuffer[i];
 				}
-				//arraySlice.clear();
+//				arraySlice.clear();
 	
 				delete[] pBuffer;
 			}
@@ -1415,7 +1415,7 @@ Tensor* Create_BinaryToTensor(std::string strPinType, std::string strPinShape, F
 				{
 					pTensor->flat<bool>()(i) = pBuffer[i];
 				}
-				//arraySlice.clear();
+//				arraySlice.clear();
 	
 				delete[] pBuffer;
 			}
@@ -1488,7 +1488,7 @@ Tensor* Create_ArrayStrToTensor(std::string strPinType, std::string strPinShape,
 			arrayslice.clear();
 			arraydims.clear();
 			arrayvals.clear();
-			//arraySlice.clear();
+//			arraySlice.clear();
 		}
 		break;
 	}
@@ -1513,7 +1513,7 @@ Tensor* Create_ArrayStrToTensor(std::string strPinType, std::string strPinShape,
 			arrayslice.clear();
 			arraydims.clear();
 			arrayvals.clear();
-			//arraySlice.clear();
+//			arraySlice.clear();
 		}
 		break;
 	}
@@ -1538,7 +1538,7 @@ Tensor* Create_ArrayStrToTensor(std::string strPinType, std::string strPinShape,
 			arrayslice.clear();
 			arraydims.clear();
 			arrayvals.clear();
-			//arraySlice.clear();
+//			arraySlice.clear();
 		}
 		break;
 	}
@@ -1563,7 +1563,7 @@ Tensor* Create_ArrayStrToTensor(std::string strPinType, std::string strPinShape,
 			arrayslice.clear();
 			arraydims.clear();
 			arrayvals.clear();
-			//arraySlice.clear();
+//			arraySlice.clear();
 		}
 		break;
 	}
@@ -1588,7 +1588,7 @@ Tensor* Create_ArrayStrToTensor(std::string strPinType, std::string strPinShape,
 			arrayslice.clear();
 			arraydims.clear();
 			arrayvals.clear();
-			//arraySlice.clear();
+//			arraySlice.clear();
 		}
 		break;
 	}
@@ -1986,18 +1986,4 @@ bool isString(std::string strVal)
 		if ((strVal[i] < 0x20 && strVal[i] != 0x0A && strVal[i] != 0x0D && strVal[i] != 0x09)  || strVal[i] == 0xff) return false;
 	}
 	return bIsString;
-}
-
-CString StringToCString(std::string str)
-{
-	CString result;
-	result = CString::CStringT(CA2CT(str.c_str()));
-	return result;
-}
-
-std::string CStringToString(CString reqStr)
-{
-	std::string result;
-	result = std::string(CT2CA(reqStr.operator LPCWSTR()));
-	return result;
 }

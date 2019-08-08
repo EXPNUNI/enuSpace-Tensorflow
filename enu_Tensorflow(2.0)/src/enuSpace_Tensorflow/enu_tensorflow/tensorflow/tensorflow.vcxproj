@@ -191,8 +191,7 @@
     </ResourceCompile>
     <PostBuildEvent>
       <Command>copy "$(TargetDir)enu_tensorflow2_0.dll" "..\..\..\..\sample_project\tensorflow\Task\enu_tensorflow2_0\enu_tensorflow2_0.dll"
-copy "EnuObj.h" "..\..\..\..\sample_project\tensorflow\Task\enu_tensorflow2_0\EnuObj.h" 
-copy "enu_tensorflow2_0.h" "..\..\..\..\sample_project\tensorflow\Task\enu_tensorflow2_0\enu_tensorflow2_0.h"</Command>
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -230,9 +229,7 @@ copy "enu_tensorflow2_0.h" "..\..\..\..\sample_project\tensorflow\Task\enu_tenso
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AttributeParser.h" />
-    <ClInclude Include="EnuObj.h" />
     <ClInclude Include="enuSpaceToTensorflow.h" />
-    <ClInclude Include="enu_tensorflow2_0.h" />
     <ClInclude Include="GlobalHeader.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />

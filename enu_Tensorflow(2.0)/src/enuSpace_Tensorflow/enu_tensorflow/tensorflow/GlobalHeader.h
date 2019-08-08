@@ -25,16 +25,12 @@
 
 #include "jsoncpp/json.h"
 
-#include "EnuObj.h"
-#include "enu_tensorflow2_0.h"
-
 #define DEF_MODE_EDIT							0
 #define DEF_MODE_FREEZE							1
 #define DEF_MODE_STEP							2
 #define DEF_MODE_RUN							3
 
 #define SYMBOL_NONE														-1
-#define TF_LINK															0
 #define SYMBOL_BATCHTOSPACE 											1
 #define SYMBOL_BATCHTOSPACEND 											2
 #define SYMBOL_BITCAST 													3
@@ -395,7 +391,7 @@
 #define SYMBOL_PARAMETERIZEDTRUNCATEDNORMAL 		355
 #define SYMBOL_RANDOMGAMMA 		356
 #define SYMBOL_RANDOMNORMAL 		357
-#define SYMBOL_RANDOMPOISSON 		358
+//#define SYMBOL_RANDOMPOISSON 		358
 #define SYMBOL_RANDOMSHUFFLE 		359
 #define SYMBOL_RANDOMUNIFORM 		360
 #define SYMBOL_RANDOMUNIFORMINT 		361
@@ -551,67 +547,6 @@
 using namespace tensorflow;
 using namespace tensorflow::ops;
 
-
-struct Output_Info
-{
-	int type;						// 노드의 ouput 타입
-	void* pOutput;					// 노드의 output 주소
-	bool bConnect;
-
-	public:Output_Info()
-	{
-		type = OUTPUT_TYPE_OUTPUT;
-		pOutput = nullptr;
-		bConnect = false;
-	}
-};
-
-struct Link_Info
-{
-	tfLink* pEnuLink;
-
-	void* pFromObject;  // Object_Info* 
-	void* pToObject;	// Object_Info* 
-	public:Link_Info()
-	{
-		pEnuLink = NULL;
-		pFromObject = NULL;
-		pToObject = NULL;
-	}
-};
-
-struct Object_Info
-{
-	int type;
-	EnuObject* pEnuObject;
-	void*   pObject;							// 그래픽 로직 블럭의 클랙스 포인터
-
-	std::vector<Link_Info*> vInputList;			// 객체의 입력핀 리스트
-	std::vector<Link_Info*> vOutputList;		// 객체의 출력핀 리스트
-
-	std::map<std::string, Output_Info*> pMapOutputs;		// 그래픽 로직 블럭의 클래스의 Output 멤버 포인터 맵 리스트
-
-	public:Object_Info()
-	{
-		type = SYMBOL_NONE;
-		pEnuObject = NULL;
-		pObject = NULL;
-	}
-};
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////
-extern CString g_strDllPath;
-extern HANDLE g_hConsole;
-extern CPtrArray *g_enuObject;
-extern double g_DT;
-
-extern std::map<EnuObject*, Object_Info* > m_Object_MapList;
-extern std::map<EnuObject*, Link_Info* > m_Link_MapList;
-
-/////////////////////////////////////////////////////////////////////////
-
 struct OutputInfo
 {
 	int type;						// 노드의 ouput 타입
@@ -697,6 +632,5 @@ extern bool m_bContinusLoop;
 extern int m_iSimulationMode;
 
 extern FILE* m_FileData;
-
 
 #endif
