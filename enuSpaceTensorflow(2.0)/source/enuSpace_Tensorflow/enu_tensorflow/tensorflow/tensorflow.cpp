@@ -55,7 +55,9 @@ CtensorflowApp theApp;
 
 
 // CtensorflowApp initialization
-CString g_strDllPath;
+#include "enuSpaceToTensorflow.h"
+#include "EnuObj.h"
+#include "GlobalHeader.h"
 
 BOOL CtensorflowApp::InitInstance()
 {
@@ -77,8 +79,208 @@ BOOL CtensorflowApp::InitInstance()
 }
 
 
-#include "enuSpaceToTensorflow.h"
+//////////////////////////////////////////////////////////////////////////////////////////////
+// enuSpace interface function pointer.
+void(*g_fcbSetValue)(wchar_t*, double) = NULL;
+VariableStruct(*g_fcbGetValue)(wchar_t*) = NULL;
+void(*g_fcbSetArrayValue)(wchar_t*, void*, int, int) = NULL;
+void(*g_fcbSetReShapeArrayValue)(wchar_t*, void*, int, int) = NULL;
+void(*g_fcbSetPinInterfaceVariable)(wchar_t*, void*, int, int) = NULL;
+VariableStruct(*g_fcbGetArrayValue)(wchar_t*) = NULL;
+void(*g_fcbPrintMessage)(wchar_t*, wchar_t*) = NULL;
+//////////////////////////////////////////////////////////////////////////////////////////////
+// enuSpace interface functions.
+extern "C" __declspec(dllexport) void SetCallBack_SetValue(void fcbSetValue(wchar_t*, double));
+extern "C" __declspec(dllexport) void SetCallBack_GetValue(VariableStruct fcbGetValue(wchar_t*));
+extern "C" __declspec(dllexport) void SetCallBack_SetArrayValue(void fcbSetArrayValue(wchar_t*, void*, int, int));
+extern "C" __declspec(dllexport) void SetCallBack_GetArrayValue(VariableStruct fcbGetArrayValue(wchar_t*));
+extern "C" __declspec(dllexport) void SetCallBack_SetReShapeArrayValue(void fcbSetReShapeArrayValue(wchar_t*, void*, int, int));
+extern "C" __declspec(dllexport) void SetCallBack_SetPinInterfaceVariable(void fcbSetPinInterfaceVariable(wchar_t*, void*, int, int));
+extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*, wchar_t*));
 
+extern "C" __declspec(dllexport) int GetTaskType();
+extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pMyType, wchar_t* pFromType, wchar_t* pToType);
+extern "C" __declspec(dllexport) bool IsTaskStopWhenModify();
+
+extern "C" __declspec(dllexport) bool OnInit();
+extern "C" __declspec(dllexport) bool OnLoad();
+extern "C" __declspec(dllexport) bool OnUnload();
+extern "C" __declspec(dllexport) bool OnTask(__int64 time);
+extern "C" __declspec(dllexport) void OnModeChange(int iMode);
+
+extern "C" __declspec(dllexport) bool OnSnap(wchar_t* pStIC);
+extern "C" __declspec(dllexport) bool OnReset(wchar_t* pStIC);
+
+extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction);
+
+extern "C" __declspec(dllexport) void OnEditComponent(wchar_t* pStrSymbolName, wchar_t* pStrID);
+extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, wchar_t* pStrID);
+extern "C" __declspec(dllexport) bool OnShowHelp(wchar_t* pStrSymbolName);
+
+extern "C" __declspec(dllexport) void OnSetObjectArray(CPtrArray* Object);
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+extern "C" __declspec(dllexport) void SetCallBack_SetValue(void fcbSetValue(wchar_t*, double))
+{
+	g_fcbSetValue = fcbSetValue;
+}
+
+extern "C" __declspec(dllexport) void SetCallBack_GetValue(VariableStruct fcbGetValue(wchar_t*))
+{
+	g_fcbGetValue = fcbGetValue;
+}
+
+extern "C" __declspec(dllexport) void SetCallBack_SetArrayValue(void fcbSetArrayValue(wchar_t*, void*, int, int))
+{
+	g_fcbSetArrayValue = fcbSetArrayValue;
+}
+
+extern "C" __declspec(dllexport) void SetCallBack_GetArrayValue(VariableStruct fcbGetArrayValue(wchar_t*))
+{
+	g_fcbGetArrayValue = fcbGetArrayValue;
+}
+
+extern "C" __declspec(dllexport) void SetCallBack_SetReShapeArrayValue(void fcbSetReShapeArrayValue(wchar_t*, void*, int, int))
+{
+	g_fcbSetReShapeArrayValue = fcbSetReShapeArrayValue;
+}
+
+extern "C" __declspec(dllexport) void SetCallBack_SetPinInterfaceVariable(void fcbSetPinInterfaceVariable(wchar_t*, void*, int, int))
+{
+	g_fcbSetPinInterfaceVariable = fcbSetPinInterfaceVariable;
+}
+
+extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*, wchar_t*))
+{
+	g_fcbPrintMessage = fcbPrintMessage;
+}
+
+extern "C" __declspec(dllexport) void OnSetObjectArray(CPtrArray* Object)
+{
+	if (Object)	g_enuObject = Object;
+}
+
+extern "C" __declspec(dllexport) bool OnLoad()
+{
+	return Load_Tensorflow();
+}
+
+extern "C" __declspec(dllexport) bool OnInit()
+{
+	try
+	{
+		if (g_fcbGetValue)
+		{
+			VariableStruct data;
+			data = g_fcbGetValue(L"dt.enu_tensorflow2_0");
+			if (data.type == DEF_DOUBLE)
+				g_DT = *(double*)data.pValue;
+		}
+
+		Init_Tensorflow();
+
+		return true;
+	}
+	catch (...)
+	{
+
+	}
+	return false;
+}
+
+extern "C" __declspec(dllexport) bool OnTask(__int64 time)
+{
+	try
+	{
+		if (g_fcbGetValue)
+		{
+			VariableStruct data;
+			data = g_fcbGetValue(L"dt.enu_tensorflow2_0");
+			if (data.type == DEF_DOUBLE)
+				g_DT = *(double*)data.pValue;
+		}
+
+
+
+		return true;
+	}
+	catch (...)
+	{
+
+	}
+	return false;
+}
+
+extern "C" __declspec(dllexport) bool OnUnload()
+{
+	return true;
+}
+
+extern "C" __declspec(dllexport) bool OnSnap(wchar_t* pStIC)
+{
+	return true;
+}
+
+extern "C" __declspec(dllexport) bool OnReset(wchar_t* pStIC)
+{
+	return true;
+}
+
+extern "C" __declspec(dllexport) void OnEditComponent(wchar_t* pStrSymbolName, wchar_t* pStrID)
+{
+
+}
+
+extern "C" __declspec(dllexport) void OnShowComponent(wchar_t* pStrSymbolName, wchar_t* pStrID)
+{
+
+}
+
+extern "C" __declspec(dllexport) void OnModeChange(int iMode)
+{
+
+}
+
+extern "C" __declspec(dllexport) void ExecuteFunction(wchar_t* pStrFunction)
+{
+
+}
+
+extern "C" __declspec(dllexport) bool OnShowHelp(wchar_t* pStrSymbolName)
+{
+	return true;
+}
+
+extern "C" __declspec(dllexport) int GetTaskType()
+{
+	return TASK_TYPE_OBJECTARRAY;
+}
+
+extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pMyType, wchar_t* pFromType, wchar_t* pToType)
+{
+	return true;
+}
+
+extern "C" __declspec(dllexport) bool IsTaskStopWhenModify()
+{
+	return true;
+}
+
+void PrintMessage(std::string strMessage)
+{
+	if (g_fcbPrintMessage && m_bShowDebugMessage)
+	{
+		std::string strTenMessage = string_format("tensorflow -> %s", strMessage.c_str());
+		// g_fcbPrintMessage(StringToCString(strTenMessage).GetBuffer(0));
+	}
+}
+
+void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iSize)
+{
+
+}
+/*
 void(*g_fcbSetValue)(wchar_t*, double) = NULL;
 VariableStruct (*g_fcbGetValue)(wchar_t*) = NULL;
 void(*g_fcbSetArrayValue)(wchar_t*, void*, int, int) = NULL;
@@ -88,19 +290,6 @@ void(*g_fcbPrintMessage)(wchar_t*) = NULL;
 
 CMap<CString, LPCWSTR, VariableStruct*, VariableStruct*> g_DBMapList;
 
-CString StringToCString(std::string str)
-{
-	CString result;
-	result = CString::CStringT(CA2CT(str.c_str()));
-	return result;
-}
-
-std::string CStringToString(CString reqStr)
-{
-	std::string result;
-	result = std::string(CT2CA(reqStr.operator LPCWSTR()));
-	return result;
-}
 
 int GetArrayIndexFromDimension(CString strOrgDim, CString strDimension)
 {
@@ -693,14 +882,6 @@ double GetValue(std::string strVariable)
 	return fReturn;
 }
 
-void PrintMessage(std::string strMessage)
-{
-	if (g_fcbPrintMessage && m_bShowDebugMessage)
-	{
-		std::string strTenMessage = string_format("tensorflow -> %s", strMessage.c_str());
-		g_fcbPrintMessage(StringToCString(strTenMessage).GetBuffer(0));
-	}
-}
 
 extern "C" __declspec(dllexport) int GetTaskType()
 {
@@ -781,10 +962,7 @@ extern "C" __declspec(dllexport) bool IsTaskStopWhenModify()
 	return true;
 }
 
-extern "C" __declspec(dllexport) bool OnLoad()
-{
-	return Load_Tensorflow();
-}
+
 
 bool bProcessing = false;
 int iLoopCycle = 0;
@@ -995,3 +1173,4 @@ extern "C" __declspec(dllexport) bool OnShowHelp(wchar_t* pStrSymbolName)
 	return true;
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
+*/

@@ -1987,3 +1987,17 @@ bool isString(std::string strVal)
 	}
 	return bIsString;
 }
+
+CString StringToCString(std::string str)
+{
+	CString result;
+	result = CString::CStringT(CA2CT(str.c_str()));
+	return result;
+}
+
+std::string CStringToString(CString reqStr)
+{
+	std::string result;
+	result = std::string(CT2CA(reqStr.operator LPCWSTR()));
+	return result;
+}

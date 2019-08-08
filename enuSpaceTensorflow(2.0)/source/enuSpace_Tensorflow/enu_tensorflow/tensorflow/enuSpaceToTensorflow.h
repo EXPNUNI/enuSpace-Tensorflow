@@ -17,8 +17,10 @@
 #include "jsoncpp/json.h"
 #include "GlobalHeader.h"
 
+void* Create_Object(Object_Info* pObjectInfo);
+
 bool Load_Tensorflow();
-bool Init_Tensorflow(std::string logic_file, std::string page_name);
+bool Init_Tensorflow();// std::string logic_file, std::string page_name);
 bool Task_Tensorflow();
 bool Unload_Tensorflow();
 

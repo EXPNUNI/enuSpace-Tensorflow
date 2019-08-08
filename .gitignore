@@ -31,3 +31,22 @@
 *.out
 *.app
 
+enuSpaceTensorflow(2.0)/source/bazel-bin/**
+enuSpaceTensorflow(2.0)/source/enuSpace_Tensorflow/Debug/**
+enuSpaceTensorflow(2.0)/source/enuSpace_Tensorflow/ipch/**
+enuSpaceTensorflow(2.0)/source/enuSpace_Tensorflow/x64/**
+enuSpaceTensorflow(2.0)/source/enuSpace_Tensorflow/.vs/**
+enuSpaceTensorflow(2.0)/source/enuSpace_Tensorflow/enu_tensorflow/Debug/**
+enuSpaceTensorflow(2.0)/source/enuSpace_Tensorflow/enu_tensorflow/ipch/**
+enuSpaceTensorflow(2.0)/source/enuSpace_Tensorflow/enu_tensorflow/tensorflow.VC.db
+enuSpaceTensorflow(2.0)/source/enuSpace_Tensorflow/enu_tensorflow/tensorflow/Debug/**
+enuSpaceTensorflow(2.0)/source/enuSpace_Tensorflow/enu_tensorflow/tensorflow/x64/**
+enuSpaceTensorflow(2.0)/source/enuSpace_Tensorflow/enu_tensorflow/.vs/**
+*.bmp
+*.VC.VC.opendb
+*.VC.db
+enuSpaceTensorflow(2.0)/sample_project/tensorflow/Task/Logic/.vs/**
+enuSpaceTensorflow(2.0)/sample_project/tensorflow/Task/enu_tensorflow2_0/.vs/**
+
+
+
