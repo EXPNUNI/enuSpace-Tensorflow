@@ -33,6 +33,8 @@
 
 enu_Tensorflow(2.0)/src/swigwin-3.0.10/**
 enu_Tensorflow(2.0)/src/tensorflow/**
+enu_Tensorflow(2.0)/src/tensorflow_gpu/**
+
 enu_Tensorflow(2.0)/src/Utility Program/**
 enu_Tensorflow(2.0)/src/cudnn-9.1-windows10-x64-v7/**
 enu_Tensorflow(2.0)/src/cudnn-8.0-windows10-x64-v5.1/**

@@ -268,19 +268,6 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 		if (m_pScope->ok() == false)
 			return pSession;
 
-		// device set interface
-		GraphDef def;
-		m_pScope->ToGraphDef(&def);
-
-		for (int i = 0; i < def.node_size(); ++i)
-		{
-			auto node = def.mutable_node(i);
-			if (node->device().empty()) 
-			{
-				node->set_device(device);
-			}
-		}
-
 		////////////////////////////////////////////////////////////////////////////////////
 		// init variables
 		std::map<std::string, ObjectInfo*>::iterator vit;
@@ -825,6 +812,12 @@ void* Create_Scope(std::string id, Json::Value pInputItem) {
 	Scope* pRoot = new Scope(Scope::NewRootScope());
 	m_pScope = pRoot;
 	AddObjectMap(pRoot, id, SYMBOL_SCOPE, "Scope", pInputItem);
+
+
+	m_pGraphDef = new GraphDef;
+	graph::SetDefaultDevice("/cpu:0", m_pGraphDef);
+	m_pScope->ToGraphDef(m_pGraphDef);
+
 	return pRoot;
 }
 

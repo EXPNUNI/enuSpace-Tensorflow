@@ -625,6 +625,7 @@ struct FeedTypeObject
 extern std::map<std::string, ObjectInfo* > m_ObjectMapList;
 extern std::map<std::string, FetchInfo* > m_RunMapList;
 extern Scope* m_pScope;										// set the current scope node pointer.
+extern GraphDef* m_pGraphDef;
 
 extern std::map<std::string, int>	m_SymbolList;
 extern bool m_bShowDebugMessage;
