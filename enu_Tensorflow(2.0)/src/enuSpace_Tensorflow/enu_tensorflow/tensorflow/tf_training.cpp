@@ -52,8 +52,8 @@ void* Create_ApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -76,8 +76,8 @@ void* Create_ApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -99,8 +99,8 @@ void* Create_ApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum_update")
@@ -122,8 +122,8 @@ void* Create_ApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -145,8 +145,8 @@ void* Create_ApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -168,8 +168,8 @@ void* Create_ApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -191,8 +191,8 @@ void* Create_ApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -214,8 +214,8 @@ void* Create_ApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -228,8 +228,8 @@ void* Create_ApplyAdadelta(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ApplyAdadelta pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ApplyAdadelta pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -242,8 +242,8 @@ void* Create_ApplyAdadelta(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ApplyAdadelta(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ApplyAdadelta(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pApplyAdadelta;
 }
@@ -281,8 +281,8 @@ void* Create_ApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -305,8 +305,8 @@ void* Create_ApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -328,8 +328,8 @@ void* Create_ApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -351,8 +351,8 @@ void* Create_ApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -374,8 +374,8 @@ void* Create_ApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -388,8 +388,8 @@ void* Create_ApplyAdagrad(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ApplyAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ApplyAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -402,8 +402,8 @@ void* Create_ApplyAdagrad(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ApplyAdagrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ApplyAdagrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pApplyAdagrad;
 }
@@ -445,8 +445,8 @@ void* Create_ApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -469,8 +469,8 @@ void* Create_ApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient_accumulator")
@@ -492,8 +492,8 @@ void* Create_ApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient_squared_accumulator")
@@ -515,8 +515,8 @@ void* Create_ApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -538,8 +538,8 @@ void* Create_ApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -561,8 +561,8 @@ void* Create_ApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -584,8 +584,8 @@ void* Create_ApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -607,8 +607,8 @@ void* Create_ApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "global_step")
@@ -630,8 +630,8 @@ void* Create_ApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -644,8 +644,8 @@ void* Create_ApplyAdagradDA(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ApplyAdagradDA pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ApplyAdagradDA pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -658,8 +658,8 @@ void* Create_ApplyAdagradDA(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ApplyAdagradDA(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ApplyAdagradDA(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pApplyAdagradDA;
 }
@@ -703,8 +703,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -727,8 +727,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "m")
@@ -750,8 +750,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "v")
@@ -773,8 +773,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "beta1_power")
@@ -796,8 +796,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "beta2_power")
@@ -819,8 +819,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -842,8 +842,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "beta1")
@@ -865,8 +865,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "beta2")
@@ -888,8 +888,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -911,8 +911,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -934,8 +934,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -949,8 +949,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ApplyAdam pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ApplyAdam pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -963,8 +963,8 @@ void* Create_ApplyAdam(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ApplyAdam(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ApplyAdam(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pApplyAdam;
 }
@@ -1007,8 +1007,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -1031,8 +1031,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mg")
@@ -1054,8 +1054,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "ms")
@@ -1077,8 +1077,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mom")
@@ -1100,8 +1100,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -1123,8 +1123,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -1146,8 +1146,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -1169,8 +1169,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -1192,8 +1192,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -1215,8 +1215,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1229,8 +1229,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ApplyCenteredRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ApplyCenteredRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1243,8 +1243,8 @@ void* Create_ApplyCenteredRMSProp(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ApplyCenteredRMSProp(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ApplyCenteredRMSProp(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pApplyCenteredRMSProp;
 }
@@ -1286,8 +1286,8 @@ void* Create_ApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -1310,8 +1310,8 @@ void* Create_ApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -1334,8 +1334,8 @@ void* Create_ApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "linear")
@@ -1358,8 +1358,8 @@ void* Create_ApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -1382,8 +1382,8 @@ void* Create_ApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -1406,8 +1406,8 @@ void* Create_ApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -1430,8 +1430,8 @@ void* Create_ApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -1454,8 +1454,8 @@ void* Create_ApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr_power")
@@ -1478,8 +1478,8 @@ void* Create_ApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1492,8 +1492,8 @@ void* Create_ApplyFtrl(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ApplyFtrl pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ApplyFtrl pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1506,8 +1506,8 @@ void* Create_ApplyFtrl(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ApplyFtrl(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ApplyFtrl(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pApplyFtrl;
 }
@@ -1546,8 +1546,8 @@ void* Create_ApplyGradientDescent(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -1570,8 +1570,8 @@ void* Create_ApplyGradientDescent(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "alpha")
@@ -1594,8 +1594,8 @@ void* Create_ApplyGradientDescent(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "delta")
@@ -1618,8 +1618,8 @@ void* Create_ApplyGradientDescent(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1632,8 +1632,8 @@ void* Create_ApplyGradientDescent(std::string id, Json::Value pInputItem)
 		}
 		else
 		{
-			std::string msg = string_format("warning : ApplyGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ApplyGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1646,8 +1646,8 @@ void* Create_ApplyGradientDescent(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : ApplyGradientDescent(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ApplyGradientDescent(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pGradientDescent;
 }
@@ -1686,8 +1686,8 @@ void* Create_ApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -1710,8 +1710,8 @@ void* Create_ApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -1734,8 +1734,8 @@ void* Create_ApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -1758,8 +1758,8 @@ void* Create_ApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -1782,8 +1782,8 @@ void* Create_ApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -1806,8 +1806,8 @@ void* Create_ApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1821,8 +1821,8 @@ void* Create_ApplyMomentum(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ApplyMomentum pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ApplyMomentum pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1835,8 +1835,8 @@ void* Create_ApplyMomentum(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ApplyMomentum(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ApplyMomentum(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pApplyMomentum;
 }
@@ -1876,8 +1876,8 @@ void* Create_ApplyProximalAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -1899,8 +1899,8 @@ void* Create_ApplyProximalAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -1922,8 +1922,8 @@ void* Create_ApplyProximalAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -1945,8 +1945,8 @@ void* Create_ApplyProximalAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -1968,8 +1968,8 @@ void* Create_ApplyProximalAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -1991,8 +1991,8 @@ void* Create_ApplyProximalAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -2014,8 +2014,8 @@ void* Create_ApplyProximalAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2028,8 +2028,8 @@ void* Create_ApplyProximalAdagrad(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ApplyProximalAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ApplyProximalAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2042,8 +2042,8 @@ void* Create_ApplyProximalAdagrad(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ApplyProximalAdagrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ApplyProximalAdagrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pApplyProximalAdagrad;
 }
@@ -2082,8 +2082,8 @@ void* Create_ApplyProximalGradientDescent(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -2105,8 +2105,8 @@ void* Create_ApplyProximalGradientDescent(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "alpha")
@@ -2128,8 +2128,8 @@ void* Create_ApplyProximalGradientDescent(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -2151,8 +2151,8 @@ void* Create_ApplyProximalGradientDescent(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -2174,8 +2174,8 @@ void* Create_ApplyProximalGradientDescent(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "delta")
@@ -2197,8 +2197,8 @@ void* Create_ApplyProximalGradientDescent(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2211,8 +2211,8 @@ void* Create_ApplyProximalGradientDescent(std::string id, Json::Value pInputItem
 		}
 		else
 		{
-			std::string msg = string_format("warning : ApplyProximalGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ApplyProximalGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2225,8 +2225,8 @@ void* Create_ApplyProximalGradientDescent(std::string id, Json::Value pInputItem
 	}
 	else
 	{
-		std::string msg = string_format("error : ApplyProximalGradientDescent(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ApplyProximalGradientDescent(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pApplyProximalGradientDescent;
 }
@@ -2269,8 +2269,8 @@ void* Create_ApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -2292,8 +2292,8 @@ void* Create_ApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "ms")
@@ -2315,8 +2315,8 @@ void* Create_ApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mom")
@@ -2338,8 +2338,8 @@ void* Create_ApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -2361,8 +2361,8 @@ void* Create_ApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -2384,8 +2384,8 @@ void* Create_ApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -2407,8 +2407,8 @@ void* Create_ApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -2430,8 +2430,8 @@ void* Create_ApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -2453,8 +2453,8 @@ void* Create_ApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2467,8 +2467,8 @@ void* Create_ApplyRMSProp(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ApplyRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ApplyRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2481,8 +2481,8 @@ void* Create_ApplyRMSProp(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ApplyRMSProp(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ApplyRMSProp(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pApplyRMSProp;
 }
@@ -2523,8 +2523,8 @@ void* Create_ResourceApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -2546,8 +2546,8 @@ void* Create_ResourceApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -2569,8 +2569,8 @@ void* Create_ResourceApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum_update")
@@ -2592,8 +2592,8 @@ void* Create_ResourceApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -2615,8 +2615,8 @@ void* Create_ResourceApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -2638,8 +2638,8 @@ void* Create_ResourceApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -2661,8 +2661,8 @@ void* Create_ResourceApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -2684,8 +2684,8 @@ void* Create_ResourceApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2698,8 +2698,8 @@ void* Create_ResourceApplyAdadelta(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceApplyAdadelta pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceApplyAdadelta pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2712,8 +2712,8 @@ void* Create_ResourceApplyAdadelta(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceApplyAdadelta(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceApplyAdadelta(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceApplyAdadelta;
 }
@@ -2751,8 +2751,8 @@ void* Create_ResourceApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -2774,8 +2774,8 @@ void* Create_ResourceApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -2797,8 +2797,8 @@ void* Create_ResourceApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -2820,8 +2820,8 @@ void* Create_ResourceApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -2843,8 +2843,8 @@ void* Create_ResourceApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2857,8 +2857,8 @@ void* Create_ResourceApplyAdagrad(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceApplyAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceApplyAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2871,8 +2871,8 @@ void* Create_ResourceApplyAdagrad(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceApplyAdagrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceApplyAdagrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceApplyAdagrad;
 }
@@ -2914,8 +2914,8 @@ void* Create_ResourceApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -2937,8 +2937,8 @@ void* Create_ResourceApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient_accumulator")
@@ -2960,8 +2960,8 @@ void* Create_ResourceApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient_squared_accumulator")
@@ -2983,8 +2983,8 @@ void* Create_ResourceApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -3006,8 +3006,8 @@ void* Create_ResourceApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -3029,8 +3029,8 @@ void* Create_ResourceApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -3052,8 +3052,8 @@ void* Create_ResourceApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -3075,8 +3075,8 @@ void* Create_ResourceApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "global_step")
@@ -3098,8 +3098,8 @@ void* Create_ResourceApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3112,8 +3112,8 @@ void* Create_ResourceApplyAdagradDA(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceApplyAdagradDA pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceApplyAdagradDA pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3126,8 +3126,8 @@ void* Create_ResourceApplyAdagradDA(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceApplyAdagradDA(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceApplyAdagradDA(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceApplyAdagradDA;
 }
@@ -3171,8 +3171,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -3194,8 +3194,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "m")
@@ -3217,8 +3217,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "v")
@@ -3240,8 +3240,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "beta1_power")
@@ -3263,8 +3263,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "beta2_power")
@@ -3286,8 +3286,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -3309,8 +3309,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "beta1")
@@ -3332,8 +3332,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "beta2")
@@ -3355,8 +3355,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -3378,8 +3378,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -3401,8 +3401,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyAdamResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyAdamResourceApplyAdam - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3416,8 +3416,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceApplyAdam pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceApplyAdam pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3430,8 +3430,8 @@ void* Create_ResourceApplyAdam(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceApplyAdam(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceApplyAdam(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceApplyAdam;
 }
@@ -3474,8 +3474,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -3497,8 +3497,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mg")
@@ -3520,8 +3520,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "ms")
@@ -3543,8 +3543,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mom")
@@ -3566,8 +3566,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -3589,8 +3589,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -3612,8 +3612,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -3635,8 +3635,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -3658,8 +3658,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -3681,8 +3681,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3695,8 +3695,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceApplyCenteredRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceApplyCenteredRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3709,8 +3709,8 @@ void* Create_ResourceApplyCenteredRMSProp(std::string id, Json::Value pInputItem
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceApplyCenteredRMSProp(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceApplyCenteredRMSProp(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceApplyCenteredRMSProp;
 }
@@ -3752,8 +3752,8 @@ void* Create_ResourceApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -3775,8 +3775,8 @@ void* Create_ResourceApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -3798,8 +3798,8 @@ void* Create_ResourceApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "linear")
@@ -3821,8 +3821,8 @@ void* Create_ResourceApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -3844,8 +3844,8 @@ void* Create_ResourceApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -3867,8 +3867,8 @@ void* Create_ResourceApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -3890,8 +3890,8 @@ void* Create_ResourceApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -3913,8 +3913,8 @@ void* Create_ResourceApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr_power")
@@ -3936,8 +3936,8 @@ void* Create_ResourceApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3950,8 +3950,8 @@ void* Create_ResourceApplyFtrl(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceApplyFtrl pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceApplyFtrl pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3964,8 +3964,8 @@ void* Create_ResourceApplyFtrl(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceApplyFtrl(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceApplyFtrl(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceApplyFtrl;
 }
@@ -4002,8 +4002,8 @@ void* Create_ResourceApplyGradientDescent(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -4025,8 +4025,8 @@ void* Create_ResourceApplyGradientDescent(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "alpha")
@@ -4048,8 +4048,8 @@ void* Create_ResourceApplyGradientDescent(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "delta")
@@ -4071,8 +4071,8 @@ void* Create_ResourceApplyGradientDescent(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4085,8 +4085,8 @@ void* Create_ResourceApplyGradientDescent(std::string id, Json::Value pInputItem
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceApplyGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceApplyGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4099,8 +4099,8 @@ void* Create_ResourceApplyGradientDescent(std::string id, Json::Value pInputItem
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceApplyGradientDescent(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceApplyGradientDescent(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceApplyGradientDescent;
 }
@@ -4139,8 +4139,8 @@ void* Create_ResourceApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -4162,8 +4162,8 @@ void* Create_ResourceApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -4185,8 +4185,8 @@ void* Create_ResourceApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -4208,8 +4208,8 @@ void* Create_ResourceApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -4231,8 +4231,8 @@ void* Create_ResourceApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -4254,8 +4254,8 @@ void* Create_ResourceApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4269,8 +4269,8 @@ void* Create_ResourceApplyMomentum(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceApplyMomentum pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceApplyMomentum pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4283,8 +4283,8 @@ void* Create_ResourceApplyMomentum(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceApplyMomentum(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceApplyMomentum(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceApplyMomentum;
 }
@@ -4324,8 +4324,8 @@ void* Create_ResourceApplyProximalAdagrad(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -4347,8 +4347,8 @@ void* Create_ResourceApplyProximalAdagrad(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -4370,8 +4370,8 @@ void* Create_ResourceApplyProximalAdagrad(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -4393,8 +4393,8 @@ void* Create_ResourceApplyProximalAdagrad(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -4416,8 +4416,8 @@ void* Create_ResourceApplyProximalAdagrad(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -4439,8 +4439,8 @@ void* Create_ResourceApplyProximalAdagrad(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -4462,8 +4462,8 @@ void* Create_ResourceApplyProximalAdagrad(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4476,8 +4476,8 @@ void* Create_ResourceApplyProximalAdagrad(std::string id, Json::Value pInputItem
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceApplyProximalAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceApplyProximalAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4490,8 +4490,8 @@ void* Create_ResourceApplyProximalAdagrad(std::string id, Json::Value pInputItem
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceApplyProximalAdagrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceApplyProximalAdagrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceApplyProximalAdagrad;
 }
@@ -4530,8 +4530,8 @@ void* Create_ResourceApplyProximalGradientDescent(std::string id, Json::Value pI
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -4553,8 +4553,8 @@ void* Create_ResourceApplyProximalGradientDescent(std::string id, Json::Value pI
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "alpha")
@@ -4576,8 +4576,8 @@ void* Create_ResourceApplyProximalGradientDescent(std::string id, Json::Value pI
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -4599,8 +4599,8 @@ void* Create_ResourceApplyProximalGradientDescent(std::string id, Json::Value pI
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -4622,8 +4622,8 @@ void* Create_ResourceApplyProximalGradientDescent(std::string id, Json::Value pI
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "delta")
@@ -4645,8 +4645,8 @@ void* Create_ResourceApplyProximalGradientDescent(std::string id, Json::Value pI
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4659,8 +4659,8 @@ void* Create_ResourceApplyProximalGradientDescent(std::string id, Json::Value pI
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceApplyProximalGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceApplyProximalGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4673,8 +4673,8 @@ void* Create_ResourceApplyProximalGradientDescent(std::string id, Json::Value pI
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceApplyProximalGradientDescent(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceApplyProximalGradientDescent(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceApplyProximalGradientDescent;
 }
@@ -4716,8 +4716,8 @@ void* Create_ResourceApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -4739,8 +4739,8 @@ void* Create_ResourceApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "ms")
@@ -4762,8 +4762,8 @@ void* Create_ResourceApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mom")
@@ -4785,8 +4785,8 @@ void* Create_ResourceApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -4808,8 +4808,8 @@ void* Create_ResourceApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -4831,8 +4831,8 @@ void* Create_ResourceApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -4854,8 +4854,8 @@ void* Create_ResourceApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -4877,8 +4877,8 @@ void* Create_ResourceApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -4900,8 +4900,8 @@ void* Create_ResourceApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4914,8 +4914,8 @@ void* Create_ResourceApplyRMSProp(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceApplyRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceApplyRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4928,8 +4928,8 @@ void* Create_ResourceApplyRMSProp(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceApplyRMSProp(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceApplyRMSProp(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceApplyRMSProp;
 }
@@ -4971,8 +4971,8 @@ void* Create_ResourceSparseApplyAdadelta(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -4994,8 +4994,8 @@ void* Create_ResourceSparseApplyAdadelta(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -5017,8 +5017,8 @@ void* Create_ResourceSparseApplyAdadelta(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum_update")
@@ -5040,8 +5040,8 @@ void* Create_ResourceSparseApplyAdadelta(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -5063,8 +5063,8 @@ void* Create_ResourceSparseApplyAdadelta(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -5086,8 +5086,8 @@ void* Create_ResourceSparseApplyAdadelta(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -5109,8 +5109,8 @@ void* Create_ResourceSparseApplyAdadelta(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -5132,8 +5132,8 @@ void* Create_ResourceSparseApplyAdadelta(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -5155,8 +5155,8 @@ void* Create_ResourceSparseApplyAdadelta(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5169,8 +5169,8 @@ void* Create_ResourceSparseApplyAdadelta(std::string id, Json::Value pInputItem)
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceSparseApplyAdadelta pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceSparseApplyAdadelta pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5183,8 +5183,8 @@ void* Create_ResourceSparseApplyAdadelta(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceSparseApplyAdadelta(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceSparseApplyAdadelta(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceSparseApplyAdadelta;
 }
@@ -5223,8 +5223,8 @@ void* Create_ResourceSparseApplyAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -5246,8 +5246,8 @@ void* Create_ResourceSparseApplyAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -5269,8 +5269,8 @@ void* Create_ResourceSparseApplyAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -5292,8 +5292,8 @@ void* Create_ResourceSparseApplyAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -5315,8 +5315,8 @@ void* Create_ResourceSparseApplyAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -5338,8 +5338,8 @@ void* Create_ResourceSparseApplyAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5352,8 +5352,8 @@ void* Create_ResourceSparseApplyAdagrad(std::string id, Json::Value pInputItem) 
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceSparseApplyAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceSparseApplyAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5366,8 +5366,8 @@ void* Create_ResourceSparseApplyAdagrad(std::string id, Json::Value pInputItem) 
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceSparseApplyAdagrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceSparseApplyAdagrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceSparseApplyAdagrad;
 }
@@ -5410,8 +5410,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -5433,8 +5433,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient_accumulator")
@@ -5456,8 +5456,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient_squared_accumulator")
@@ -5479,8 +5479,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -5502,8 +5502,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -5525,8 +5525,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -5548,8 +5548,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -5571,8 +5571,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -5594,8 +5594,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "global_step")
@@ -5617,8 +5617,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5631,8 +5631,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceSparseApplyAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceSparseApplyAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5645,8 +5645,8 @@ void* Create_ResourceSparseApplyAdagradDA(std::string id, Json::Value pInputItem
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceSparseApplyAdagrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceSparseApplyAdagrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceSparseApplyAdagradDA;
 }
@@ -5690,8 +5690,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -5713,8 +5713,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mg")
@@ -5736,8 +5736,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "ms")
@@ -5759,8 +5759,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mom")
@@ -5782,8 +5782,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -5805,8 +5805,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -5828,8 +5828,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -5851,8 +5851,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -5874,8 +5874,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -5897,8 +5897,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -5920,8 +5920,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5934,8 +5934,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceSparseApplyCenteredRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceSparseApplyCenteredRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5948,8 +5948,8 @@ void* Create_ResourceSparseApplyCenteredRMSProp(std::string id, Json::Value pInp
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceSparseApplyCenteredRMSProp(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceSparseApplyCenteredRMSProp(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceSparseApplyCenteredRMSProp;
 }
@@ -5992,8 +5992,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -6015,8 +6015,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -6038,8 +6038,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "linear")
@@ -6061,8 +6061,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -6084,8 +6084,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -6107,8 +6107,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -6130,8 +6130,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -6153,8 +6153,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -6176,8 +6176,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr_power")
@@ -6199,8 +6199,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -6213,8 +6213,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceSparseApplyFtrl pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceSparseApplyFtrl pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -6227,8 +6227,8 @@ void* Create_ResourceSparseApplyFtrl(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceSparseApplyFtrl(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceSparseApplyFtrl(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceSparseApplyFtrl;
 }
@@ -6268,8 +6268,8 @@ void* Create_ResourceSparseApplyMomentum(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -6291,8 +6291,8 @@ void* Create_ResourceSparseApplyMomentum(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -6314,8 +6314,8 @@ void* Create_ResourceSparseApplyMomentum(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -6337,8 +6337,8 @@ void* Create_ResourceSparseApplyMomentum(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -6360,8 +6360,8 @@ void* Create_ResourceSparseApplyMomentum(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -6383,8 +6383,8 @@ void* Create_ResourceSparseApplyMomentum(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -6406,8 +6406,8 @@ void* Create_ResourceSparseApplyMomentum(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -6421,8 +6421,8 @@ void* Create_ResourceSparseApplyMomentum(std::string id, Json::Value pInputItem)
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceSparseApplyMomentum pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceSparseApplyMomentum pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -6435,8 +6435,8 @@ void* Create_ResourceSparseApplyMomentum(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceSparseApplyMomentum(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceSparseApplyMomentum(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceSparseApplyMomentum;
 }
@@ -6477,8 +6477,8 @@ void* Create_ResourceSparseApplyProximalAdagrad(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -6500,8 +6500,8 @@ void* Create_ResourceSparseApplyProximalAdagrad(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -6523,8 +6523,8 @@ void* Create_ResourceSparseApplyProximalAdagrad(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -6546,8 +6546,8 @@ void* Create_ResourceSparseApplyProximalAdagrad(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -6569,8 +6569,8 @@ void* Create_ResourceSparseApplyProximalAdagrad(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -6592,8 +6592,8 @@ void* Create_ResourceSparseApplyProximalAdagrad(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -6615,8 +6615,8 @@ void* Create_ResourceSparseApplyProximalAdagrad(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -6638,8 +6638,8 @@ void* Create_ResourceSparseApplyProximalAdagrad(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -6652,8 +6652,8 @@ void* Create_ResourceSparseApplyProximalAdagrad(std::string id, Json::Value pInp
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceSparseApplyProximalAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceSparseApplyProximalAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -6666,8 +6666,8 @@ void* Create_ResourceSparseApplyProximalAdagrad(std::string id, Json::Value pInp
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceSparseApplyProximalAdagrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceSparseApplyProximalAdagrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceSparseApplyProximalAdagrad;
 }
@@ -6707,8 +6707,8 @@ void* Create_ResourceSparseApplyProximalGradientDescent(std::string id, Json::Va
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -6730,8 +6730,8 @@ void* Create_ResourceSparseApplyProximalGradientDescent(std::string id, Json::Va
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "alpha")
@@ -6753,8 +6753,8 @@ void* Create_ResourceSparseApplyProximalGradientDescent(std::string id, Json::Va
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -6776,8 +6776,8 @@ void* Create_ResourceSparseApplyProximalGradientDescent(std::string id, Json::Va
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -6799,8 +6799,8 @@ void* Create_ResourceSparseApplyProximalGradientDescent(std::string id, Json::Va
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -6822,8 +6822,8 @@ void* Create_ResourceSparseApplyProximalGradientDescent(std::string id, Json::Va
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -6845,8 +6845,8 @@ void* Create_ResourceSparseApplyProximalGradientDescent(std::string id, Json::Va
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -6859,8 +6859,8 @@ void* Create_ResourceSparseApplyProximalGradientDescent(std::string id, Json::Va
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceSparseApplyProximalGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceSparseApplyProximalGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -6873,8 +6873,8 @@ void* Create_ResourceSparseApplyProximalGradientDescent(std::string id, Json::Va
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceSparseApplyProximalGradientDescent(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceSparseApplyProximalGradientDescent(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceSparseApplyProximalGradientDescent;
 }
@@ -6917,8 +6917,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -6940,8 +6940,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "ms")
@@ -6963,8 +6963,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mom")
@@ -6986,8 +6986,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -7009,8 +7009,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -7032,8 +7032,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -7055,8 +7055,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -7078,8 +7078,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -7101,8 +7101,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -7124,8 +7124,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ResourceSparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -7138,8 +7138,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 		}
 		else
 		{
-			std::string msg = string_format("warning : ResourceSparseApplyRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ResourceSparseApplyRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -7152,8 +7152,8 @@ void* Create_ResourceSparseApplyRMSProp(std::string id, Json::Value pInputItem) 
 	}
 	else
 	{
-		std::string msg = string_format("error : ResourceSparseApplyRMSProp(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ResourceSparseApplyRMSProp(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pResourceSparseApplyRMSProp;
 }
@@ -7195,8 +7195,8 @@ void* Create_SparseApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -7218,8 +7218,8 @@ void* Create_SparseApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -7241,8 +7241,8 @@ void* Create_SparseApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum_update")
@@ -7264,8 +7264,8 @@ void* Create_SparseApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -7287,8 +7287,8 @@ void* Create_SparseApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -7310,8 +7310,8 @@ void* Create_SparseApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -7333,8 +7333,8 @@ void* Create_SparseApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -7356,8 +7356,8 @@ void* Create_SparseApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -7379,8 +7379,8 @@ void* Create_SparseApplyAdadelta(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdadelta - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -7393,8 +7393,8 @@ void* Create_SparseApplyAdadelta(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseApplyAdadelta pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseApplyAdadelta pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -7407,8 +7407,8 @@ void* Create_SparseApplyAdadelta(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseApplyAdadelta(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseApplyAdadelta(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseApplyAdadelta;
 }
@@ -7447,8 +7447,8 @@ void* Create_SparseApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -7470,8 +7470,8 @@ void* Create_SparseApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -7493,8 +7493,8 @@ void* Create_SparseApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -7516,8 +7516,8 @@ void* Create_SparseApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -7539,8 +7539,8 @@ void* Create_SparseApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -7562,8 +7562,8 @@ void* Create_SparseApplyAdagrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -7576,8 +7576,8 @@ void* Create_SparseApplyAdagrad(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseApplyAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseApplyAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -7590,8 +7590,8 @@ void* Create_SparseApplyAdagrad(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseApplyAdagrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseApplyAdagrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseApplyAdagrad;
 }
@@ -7634,8 +7634,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -7657,8 +7657,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient_accumulator")
@@ -7680,8 +7680,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient_squared_accumulator")
@@ -7703,8 +7703,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -7726,8 +7726,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -7749,8 +7749,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -7772,8 +7772,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -7795,8 +7795,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -7818,8 +7818,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "global_step")
@@ -7841,8 +7841,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyAdagradDA - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -7855,8 +7855,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseApplyAdagradDA pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseApplyAdagradDA pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -7869,8 +7869,8 @@ void* Create_SparseApplyAdagradDA(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseApplyAdagradDA(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseApplyAdagradDA(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseApplyAdagradDA;
 }
@@ -7914,8 +7914,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -7937,8 +7937,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mg")
@@ -7960,8 +7960,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "ms")
@@ -7983,8 +7983,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mom")
@@ -8006,8 +8006,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -8029,8 +8029,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -8052,8 +8052,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -8075,8 +8075,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -8098,8 +8098,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -8121,8 +8121,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -8144,8 +8144,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyCenteredRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -8158,8 +8158,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseApplyCenteredRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseApplyCenteredRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -8172,8 +8172,8 @@ void* Create_SparseApplyCenteredRMSProp(std::string id, Json::Value pInputItem) 
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseApplyCenteredRMSProp(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseApplyCenteredRMSProp(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseApplyCenteredRMSProp;
 }
@@ -8216,8 +8216,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -8239,8 +8239,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -8262,8 +8262,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "linear")
@@ -8285,8 +8285,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -8308,8 +8308,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -8331,8 +8331,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -8354,8 +8354,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -8377,8 +8377,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -8400,8 +8400,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr_power")
@@ -8423,8 +8423,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyFtrl - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -8437,8 +8437,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseApplyFtrl pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseApplyFtrl pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -8451,8 +8451,8 @@ void* Create_SparseApplyFtrl(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseApplyFtrl(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseApplyFtrl(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseApplyFtrl;
 }
@@ -8492,8 +8492,8 @@ void* Create_SparseApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -8515,8 +8515,8 @@ void* Create_SparseApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -8538,8 +8538,8 @@ void* Create_SparseApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -8561,8 +8561,8 @@ void* Create_SparseApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -8584,8 +8584,8 @@ void* Create_SparseApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -8607,8 +8607,8 @@ void* Create_SparseApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -8630,8 +8630,8 @@ void* Create_SparseApplyMomentum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyMomentum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -8645,8 +8645,8 @@ void* Create_SparseApplyMomentum(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseApplyMomentum pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseApplyMomentum pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -8659,8 +8659,8 @@ void* Create_SparseApplyMomentum(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseApplyMomentum(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseApplyMomentum(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseApplyMomentum;
 }
@@ -8701,8 +8701,8 @@ void* Create_SparseApplyProximalAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -8724,8 +8724,8 @@ void* Create_SparseApplyProximalAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "accum")
@@ -8747,8 +8747,8 @@ void* Create_SparseApplyProximalAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -8770,8 +8770,8 @@ void* Create_SparseApplyProximalAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -8793,8 +8793,8 @@ void* Create_SparseApplyProximalAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -8816,8 +8816,8 @@ void* Create_SparseApplyProximalAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -8839,8 +8839,8 @@ void* Create_SparseApplyProximalAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -8862,8 +8862,8 @@ void* Create_SparseApplyProximalAdagrad(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalAdagrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -8876,8 +8876,8 @@ void* Create_SparseApplyProximalAdagrad(std::string id, Json::Value pInputItem) 
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseApplyProximalAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseApplyProximalAdagrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -8890,8 +8890,8 @@ void* Create_SparseApplyProximalAdagrad(std::string id, Json::Value pInputItem) 
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseApplyProximalAdagrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseApplyProximalAdagrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseApplyProximalAdagrad;
 }
@@ -8931,8 +8931,8 @@ void* Create_SparseApplyProximalGradientDescent(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -8954,8 +8954,8 @@ void* Create_SparseApplyProximalGradientDescent(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "alpha")
@@ -8977,8 +8977,8 @@ void* Create_SparseApplyProximalGradientDescent(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l1")
@@ -9000,8 +9000,8 @@ void* Create_SparseApplyProximalGradientDescent(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "l2")
@@ -9023,8 +9023,8 @@ void* Create_SparseApplyProximalGradientDescent(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -9046,8 +9046,8 @@ void* Create_SparseApplyProximalGradientDescent(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -9069,8 +9069,8 @@ void* Create_SparseApplyProximalGradientDescent(std::string id, Json::Value pInp
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyProximalGradientDescent - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -9083,8 +9083,8 @@ void* Create_SparseApplyProximalGradientDescent(std::string id, Json::Value pInp
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseApplyProximalGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseApplyProximalGradientDescent pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -9097,8 +9097,8 @@ void* Create_SparseApplyProximalGradientDescent(std::string id, Json::Value pInp
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseApplyProximalGradientDescent(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseApplyProximalGradientDescent(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseApplyProximalGradientDescent;
 }
@@ -9141,8 +9141,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "var")
@@ -9164,8 +9164,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "ms")
@@ -9187,8 +9187,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "mom")
@@ -9210,8 +9210,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lr")
@@ -9233,8 +9233,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "rho")
@@ -9256,8 +9256,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "momentum")
@@ -9279,8 +9279,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "epsilon")
@@ -9302,8 +9302,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad")
@@ -9325,8 +9325,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -9348,8 +9348,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseApplyRMSProp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -9362,8 +9362,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseApplyRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseApplyRMSProp pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -9376,8 +9376,8 @@ void* Create_SparseApplyRMSProp(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseApplyRMSProp(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseApplyRMSProp(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseApplyRMSProp;
 }
@@ -9413,8 +9413,8 @@ void* Create_GradientDescentOptimizer(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : GradientDescentOptimizer - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("GradientDescentOptimizer - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "learning_rate")
@@ -9428,8 +9428,8 @@ void* Create_GradientDescentOptimizer(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : GradientDescentOptimizer - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("GradientDescentOptimizer - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "loss")
@@ -9451,8 +9451,8 @@ void* Create_GradientDescentOptimizer(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : GradientDescentOptimizer - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("GradientDescentOptimizer - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 			}
 		}
 	}
@@ -9467,8 +9467,8 @@ void* Create_GradientDescentOptimizer(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : GradientDescentOptimizer(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("GradientDescentOptimizer(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	*/
 	return nullptr;

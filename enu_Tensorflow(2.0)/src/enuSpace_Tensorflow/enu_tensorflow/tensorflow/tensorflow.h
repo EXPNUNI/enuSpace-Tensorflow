@@ -154,4 +154,5 @@ double GetArrayValue(std::string strVariable);
 void SetValue(std::string strVariable, double fValue);
 double GetValue(std::string strVariable);
 void PrintMessage(std::string strMessage, std::string strID = "");
+void  SetLastError(int iType, std::string strClassification, int errornum, std::string strErrorMsg, bool bPopup=false, std::string strID="");
 int GetArrayIndexFromDimension(CString strOrgDim, CString strDimension);

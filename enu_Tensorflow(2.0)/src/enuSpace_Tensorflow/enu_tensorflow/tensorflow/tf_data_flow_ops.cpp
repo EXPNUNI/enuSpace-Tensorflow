@@ -44,8 +44,8 @@ void* Create_AccumulatorApplyGradient(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -67,8 +67,8 @@ void* Create_AccumulatorApplyGradient(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "local_step")
@@ -95,8 +95,8 @@ void* Create_AccumulatorApplyGradient(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient")
@@ -118,14 +118,14 @@ void* Create_AccumulatorApplyGradient(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : AccumulatorApplyGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("AccumulatorApplyGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -140,8 +140,8 @@ void* Create_AccumulatorApplyGradient(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : AccumulatorApplyGradient(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("AccumulatorApplyGradient(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pAccumulatorApplyGradient;
 }
@@ -176,8 +176,8 @@ void* Create_AccumulatorNumAccumulated(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorSetGlobalStep - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorSetGlobalStep - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -199,14 +199,14 @@ void* Create_AccumulatorNumAccumulated(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorNumAccumulated - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorNumAccumulated - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : AccumulatorNumAccumulated pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("AccumulatorNumAccumulated pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -221,8 +221,8 @@ void* Create_AccumulatorNumAccumulated(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : AccumulatorNumAccumulated(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("AccumulatorNumAccumulated(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pAccumulatorNumAccumulated;
 }
@@ -257,8 +257,8 @@ void* Create_AccumulatorSetGlobalStep(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorSetGlobalStep - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorSetGlobalStep - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -280,8 +280,8 @@ void* Create_AccumulatorSetGlobalStep(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorSetGlobalStep - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorSetGlobalStep - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "new_global_step")
@@ -308,14 +308,14 @@ void* Create_AccumulatorSetGlobalStep(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorSetGlobalStep - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorSetGlobalStep - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : AccumulatorSetGlobalStep pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("AccumulatorSetGlobalStep pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -330,8 +330,8 @@ void* Create_AccumulatorSetGlobalStep(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : AccumulatorSetGlobalStep(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("AccumulatorSetGlobalStep(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pAccumulatorSetGlobalStep;
 }
@@ -367,8 +367,8 @@ void* Create_AccumulatorTakeGradient(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -390,8 +390,8 @@ void* Create_AccumulatorTakeGradient(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "num_required")
@@ -418,8 +418,8 @@ void* Create_AccumulatorTakeGradient(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -428,20 +428,20 @@ void* Create_AccumulatorTakeGradient(std::string id, Json::Value pInputItem) {
 			{
 				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
-					std::string msg = string_format("warning : AccumulatorTakeGradient - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("AccumulatorTakeGradient - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : AccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : AccumulatorTakeGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("AccumulatorTakeGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -456,8 +456,8 @@ void* Create_AccumulatorTakeGradient(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : AccumulatorTakeGradient(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("AccumulatorTakeGradient(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 
 	return pAccumulatorTakeGradient;
@@ -496,8 +496,8 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : Barrier - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Barrier - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "component_types")
@@ -509,8 +509,8 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : Barrier - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Barrier - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -541,8 +541,8 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : Barrier pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Barrier pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -557,8 +557,8 @@ void* Create_Barrier(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : Barrier(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Barrier(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pBarrier;
 }
@@ -593,8 +593,8 @@ void* Create_BarrierClose(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -616,8 +616,8 @@ void* Create_BarrierClose(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -630,8 +630,8 @@ void* Create_BarrierClose(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : BarrierClose pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("BarrierClose pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 
 	}
@@ -647,8 +647,8 @@ void* Create_BarrierClose(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : BarrierClose(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("BarrierClose(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pBarrierClose;
 }
@@ -682,8 +682,8 @@ void* Create_BarrierIncompleteSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -705,14 +705,14 @@ void* Create_BarrierIncompleteSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : BarrierIncompleteSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("BarrierIncompleteSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -727,8 +727,8 @@ void* Create_BarrierIncompleteSize(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : BarrierIncompleteSize(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("BarrierIncompleteSize(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pBarrierIncompleteSize;
 }
@@ -765,8 +765,8 @@ void* Create_BarrierInsertMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierInsertMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierInsertMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -788,8 +788,8 @@ void* Create_BarrierInsertMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierInsertMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierInsertMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "keys")
@@ -816,8 +816,8 @@ void* Create_BarrierInsertMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierInsertMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierInsertMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "values")
@@ -844,8 +844,8 @@ void* Create_BarrierInsertMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierInsertMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierInsertMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "component_index")
@@ -857,14 +857,14 @@ void* Create_BarrierInsertMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierInsertMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierInsertMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : BarrierInsertMany pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("BarrierInsertMany pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -879,8 +879,8 @@ void* Create_BarrierInsertMany(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : BarrierInsertMany(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("BarrierInsertMany(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pBarrierInsertMany;
 }
@@ -914,8 +914,8 @@ void* Create_BarrierReadySize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierReadySize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierReadySize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -937,14 +937,14 @@ void* Create_BarrierReadySize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierReadySize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierReadySize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : BarrierReadySize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("BarrierReadySize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -959,8 +959,8 @@ void* Create_BarrierReadySize(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : BarrierReadySize(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("BarrierReadySize(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pBarrierReadySize;
 }
@@ -997,8 +997,8 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierTakeMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierTakeMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -1020,8 +1020,8 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierTakeMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierTakeMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "num_elements")
@@ -1050,8 +1050,8 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierTakeMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierTakeMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "component_types")
@@ -1063,8 +1063,8 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : BarrierTakeMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("BarrierTakeMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1079,8 +1079,8 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : BarrierTakeMany pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("BarrierTakeMany pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1099,8 +1099,8 @@ void* Create_BarrierTakeMany(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : BarrierTakeMany(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("BarrierTakeMany(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pBarrierTakeMany;
 }
@@ -1138,8 +1138,8 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "shape")
@@ -1150,8 +1150,8 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -1160,14 +1160,14 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 			{
 				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
-					std::string msg = string_format("warning : ConditionalAccumulator - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("ConditionalAccumulator - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : ConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1189,8 +1189,8 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : ConditionalAccumulator pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ConditionalAccumulator pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1203,8 +1203,8 @@ void* Create_ConditionalAccumulator(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ConditionalAccumulator(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ConditionalAccumulator(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pConditionalAccumulator;
 }
@@ -1238,8 +1238,8 @@ void* Create_DeleteSessionTensor(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DeleteSessionTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DeleteSessionTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -1261,14 +1261,14 @@ void* Create_DeleteSessionTensor(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DeleteSessionTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DeleteSessionTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : DeleteSessionTensor pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("DeleteSessionTensor pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1281,8 +1281,8 @@ void* Create_DeleteSessionTensor(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : DeleteSessionTensor(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("DeleteSessionTensor(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pDeleteSessionTensor;
 }
@@ -1318,8 +1318,8 @@ void* Create_DynamicPartition(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DynamicPartition - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DynamicPartition - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "data")
@@ -1346,8 +1346,8 @@ void* Create_DynamicPartition(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DynamicPartition - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DynamicPartition - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "partitions")
@@ -1376,8 +1376,8 @@ void* Create_DynamicPartition(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DynamicPartition - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DynamicPartition - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "num_partitions")
@@ -1389,14 +1389,14 @@ void* Create_DynamicPartition(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DynamicPartition - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DynamicPartition - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : DynamicPartition pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("DynamicPartition pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1413,15 +1413,15 @@ void* Create_DynamicPartition(std::string id, Json::Value pInputItem) {
 
 			if (pScope->ok() == false)
 			{
-				std::string msg = string_format("error : Create DynamicPartition(%s) Object create failed. (Scope fail)", id.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Create DynamicPartition(%s) Object create failed. (Scope fail)", id.c_str());
+				SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 			}
 		}
 	}
 	else
 	{
-		std::string msg = string_format("error : DynamicPartition(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("DynamicPartition(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pDynamicPartition;
 }
@@ -1456,8 +1456,8 @@ void* Create_DynamicStitch(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DynamicStitch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DynamicStitch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -1484,8 +1484,8 @@ void* Create_DynamicStitch(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DynamicStitch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DynamicStitch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "data")
@@ -1512,14 +1512,14 @@ void* Create_DynamicStitch(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DynamicStitch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DynamicStitch - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : DynamicStitch pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("DynamicStitch pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1532,8 +1532,8 @@ void* Create_DynamicStitch(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : DynamicStitch(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("DynamicStitch(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pDynamicStitch;
 }
@@ -1572,8 +1572,8 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : FIFOQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("FIFOQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "component_types")
@@ -1600,8 +1600,8 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : FIFOQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("FIFOQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1632,8 +1632,8 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : FIFOQueue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("FIFOQueue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1655,8 +1655,8 @@ void* Create_FIFOQueue(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : FIFOQueue(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("FIFOQueue(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pFIFOQueue;
 }
@@ -1690,8 +1690,8 @@ void* Create_GetSessionHandle(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : GetSessionHandle - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("GetSessionHandle - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "value")
@@ -1713,14 +1713,14 @@ void* Create_GetSessionHandle(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : GetSessionHandle - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("GetSessionHandle - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : GetSessionHandle pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("GetSessionHandle pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1735,8 +1735,8 @@ void* Create_GetSessionHandle(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : GetSessionHandle(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("GetSessionHandle(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pGetSessionHandle;
 }
@@ -1770,8 +1770,8 @@ void* Create_GetSessionHandleV2(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : GetSessionHandleV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("GetSessionHandleV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "value")
@@ -1793,14 +1793,14 @@ void* Create_GetSessionHandleV2(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : GetSessionHandleV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("GetSessionHandleV2 - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : GetSessionHandleV2 pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("GetSessionHandleV2 pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1815,8 +1815,8 @@ void* Create_GetSessionHandleV2(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : GetSessionHandleV2(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("GetSessionHandleV2(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pGetSessionHandleV2;
 }
@@ -1851,8 +1851,8 @@ void* Create_GetSessionTensor(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : GetSessionTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("GetSessionTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -1874,8 +1874,8 @@ void* Create_GetSessionTensor(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : GetSessionTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("GetSessionTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -1884,20 +1884,20 @@ void* Create_GetSessionTensor(std::string id, Json::Value pInputItem) {
 			{
 				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
-					std::string msg = string_format("warning : GetSessionTensor - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("GetSessionTensor - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : GetSessionTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("GetSessionTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : GetSessionTensor pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("GetSessionTensor pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1912,8 +1912,8 @@ void* Create_GetSessionTensor(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : GetSessionTensor(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("GetSessionTensor(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pGetSessionTensor;
 }
@@ -1950,8 +1950,8 @@ void* Create_MapClear(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -1963,8 +1963,8 @@ void* Create_MapClear(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1988,8 +1988,8 @@ void* Create_MapClear(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : MapClear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("MapClear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2005,8 +2005,8 @@ void* Create_MapClear(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : MapClear(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("MapClear(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pMapClear;
 }
@@ -2042,8 +2042,8 @@ void* Create_MapIncompleteSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -2055,8 +2055,8 @@ void* Create_MapIncompleteSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2080,8 +2080,8 @@ void* Create_MapIncompleteSize(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : MapIncompleteSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("MapIncompleteSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2097,8 +2097,8 @@ void* Create_MapIncompleteSize(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : MapIncompleteSize(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("MapIncompleteSize(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pMapIncompleteSize;
 }
@@ -2136,8 +2136,8 @@ void* Create_MapPeek(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "key")
@@ -2164,8 +2164,8 @@ void* Create_MapPeek(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -2192,8 +2192,8 @@ void* Create_MapPeek(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -2205,8 +2205,8 @@ void* Create_MapPeek(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2230,8 +2230,8 @@ void* Create_MapPeek(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : MapPeek pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("MapPeek pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2247,8 +2247,8 @@ void* Create_MapPeek(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : MapPeek(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("MapPeek(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pMapPeek;
 }
@@ -2284,8 +2284,8 @@ void* Create_MapSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -2297,8 +2297,8 @@ void* Create_MapSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2322,8 +2322,8 @@ void* Create_MapSize(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : MapSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("MapSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2339,8 +2339,8 @@ void* Create_MapSize(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : MapSize(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("MapSize(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pMapSize;
 }
@@ -2379,8 +2379,8 @@ void* Create_MapStage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "key")
@@ -2407,8 +2407,8 @@ void* Create_MapStage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -2435,8 +2435,8 @@ void* Create_MapStage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "values")
@@ -2463,8 +2463,8 @@ void* Create_MapStage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -2476,8 +2476,8 @@ void* Create_MapStage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2501,8 +2501,8 @@ void* Create_MapStage(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : MapStage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("MapStage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2518,8 +2518,8 @@ void* Create_MapStage(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : MapStage(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("MapStage(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pMapStage;
 }
@@ -2557,8 +2557,8 @@ void* Create_MapUnstage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "key")
@@ -2585,8 +2585,8 @@ void* Create_MapUnstage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -2613,8 +2613,8 @@ void* Create_MapUnstage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -2626,8 +2626,8 @@ void* Create_MapUnstage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2651,8 +2651,8 @@ void* Create_MapUnstage(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : MapUnstage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("MapUnstage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2668,8 +2668,8 @@ void* Create_MapUnstage(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : MapUnstage(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("MapUnstage(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pMapUnstage;
 }
@@ -2707,8 +2707,8 @@ void* Create_MapUnstageNoKey(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -2735,8 +2735,8 @@ void* Create_MapUnstageNoKey(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -2748,8 +2748,8 @@ void* Create_MapUnstageNoKey(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : MapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("MapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2773,8 +2773,8 @@ void* Create_MapUnstageNoKey(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : MapUnstageNoKey pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("MapUnstageNoKey pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2791,8 +2791,8 @@ void* Create_MapUnstageNoKey(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : MapUnstage(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("MapUnstage(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pMapUnstageNoKey;
 }
@@ -2828,8 +2828,8 @@ void* Create_OrderedMapClear(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -2841,8 +2841,8 @@ void* Create_OrderedMapClear(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2866,8 +2866,8 @@ void* Create_OrderedMapClear(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : OrderedMapClear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("OrderedMapClear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2883,8 +2883,8 @@ void* Create_OrderedMapClear(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : OrderedMapClear(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("OrderedMapClear(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pOrderedMapClear;
 }
@@ -2920,8 +2920,8 @@ void* Create_OrderedMapIncompleteSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -2933,8 +2933,8 @@ void* Create_OrderedMapIncompleteSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapIncompleteSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2958,8 +2958,8 @@ void* Create_OrderedMapIncompleteSize(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : OrderedMapIncompleteSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("OrderedMapIncompleteSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -2975,8 +2975,8 @@ void* Create_OrderedMapIncompleteSize(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : OrderedMapIncompleteSize(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("OrderedMapIncompleteSize(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pOrderedMapIncompleteSize;
 }
@@ -3014,8 +3014,8 @@ void* Create_OrderedMapPeek(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "key")
@@ -3042,8 +3042,8 @@ void* Create_OrderedMapPeek(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -3070,8 +3070,8 @@ void* Create_OrderedMapPeek(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -3083,8 +3083,8 @@ void* Create_OrderedMapPeek(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapPeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3108,8 +3108,8 @@ void* Create_OrderedMapPeek(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : OrderedMapPeek pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("OrderedMapPeek pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3125,8 +3125,8 @@ void* Create_OrderedMapPeek(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : OrderedMapPeek(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("OrderedMapPeek(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pOrderedMapPeek;
 }
@@ -3162,8 +3162,8 @@ void* Create_OrderedMapSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -3175,8 +3175,8 @@ void* Create_OrderedMapSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3200,8 +3200,8 @@ void* Create_OrderedMapSize(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : OrderedMapSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("OrderedMapSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3217,8 +3217,8 @@ void* Create_OrderedMapSize(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : OrderedMapSize(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("OrderedMapSize(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pOrderedMapSize;
 }
@@ -3257,8 +3257,8 @@ void* Create_OrderedMapStage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "key")
@@ -3285,8 +3285,8 @@ void* Create_OrderedMapStage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -3313,8 +3313,8 @@ void* Create_OrderedMapStage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "values")
@@ -3341,8 +3341,8 @@ void* Create_OrderedMapStage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -3354,8 +3354,8 @@ void* Create_OrderedMapStage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapStage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3379,8 +3379,8 @@ void* Create_OrderedMapStage(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : OrderedMapStage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("OrderedMapStage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3396,8 +3396,8 @@ void* Create_OrderedMapStage(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : OrderedMapStage(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("OrderedMapStage(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pOrderedMapStage;
 }
@@ -3435,8 +3435,8 @@ void* Create_OrderedMapUnstage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "key")
@@ -3463,8 +3463,8 @@ void* Create_OrderedMapUnstage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -3491,8 +3491,8 @@ void* Create_OrderedMapUnstage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -3504,8 +3504,8 @@ void* Create_OrderedMapUnstage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapUnstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3529,8 +3529,8 @@ void* Create_OrderedMapUnstage(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : OrderedMapUnstage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("OrderedMapUnstage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3546,8 +3546,8 @@ void* Create_OrderedMapUnstage(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : OrderedMapUnstage(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("OrderedMapUnstage(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pOrderedMapUnstage;
 }
@@ -3585,8 +3585,8 @@ void* Create_OrderedMapUnstageNoKey(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -3613,8 +3613,8 @@ void* Create_OrderedMapUnstageNoKey(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -3626,8 +3626,8 @@ void* Create_OrderedMapUnstageNoKey(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : OrderedMapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("OrderedMapUnstageNoKey - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3651,8 +3651,8 @@ void* Create_OrderedMapUnstageNoKey(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : OrderedMapUnstageNoKey pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("OrderedMapUnstageNoKey pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3669,8 +3669,8 @@ void* Create_OrderedMapUnstageNoKey(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : MapUnstage(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("MapUnstage(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pOrderedMapUnstageNoKey;
 }
@@ -3708,8 +3708,8 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : PaddingFIFOQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("PaddingFIFOQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "component_types")
@@ -3721,8 +3721,8 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : PaddingFIFOQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("PaddingFIFOQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3753,8 +3753,8 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : PaddingFIFOQueue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("PaddingFIFOQueue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3769,8 +3769,8 @@ void* Create_PaddingFIFOQueue(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : PaddingFIFOQueue(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("PaddingFIFOQueue(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pPaddingFIFOQueue;
 }
@@ -3808,8 +3808,8 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : PriorityQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("PriorityQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "shapes")
@@ -3820,8 +3820,8 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : PriorityQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("PriorityQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3850,8 +3850,8 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : PriorityQueue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("PriorityQueue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3865,8 +3865,8 @@ void* Create_PriorityQueue(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : PriorityQueue(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("PriorityQueue(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pPriorityQueue;
 }
@@ -3901,8 +3901,8 @@ void* Create_QueueClose(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -3924,8 +3924,8 @@ void* Create_QueueClose(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3938,8 +3938,8 @@ void* Create_QueueClose(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : QueueClose pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("QueueClose pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -3952,8 +3952,8 @@ void* Create_QueueClose(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : QueueClose(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("QueueClose(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 
 	return pQueueClose;
@@ -3990,8 +3990,8 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueDequeue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueDequeue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -4013,8 +4013,8 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueDequeue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueDequeue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "component_types")
@@ -4026,8 +4026,8 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueDequeue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueDequeue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4040,8 +4040,8 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : QueueDequeue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("QueueDequeue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4056,8 +4056,8 @@ void* Create_QueueDequeue(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : QueueDequeue(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("QueueDequeue(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pQueueDequeue;
 }
@@ -4094,8 +4094,8 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueDequeueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueDequeueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -4117,8 +4117,8 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueDequeueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueDequeueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "n")
@@ -4145,8 +4145,8 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueDequeueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueDequeueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "component_types")
@@ -4158,8 +4158,8 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueDequeueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueDequeueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4172,8 +4172,8 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : QueueDequeueMany pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("QueueDequeueMany pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4188,8 +4188,8 @@ void* Create_QueueDequeueMany(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : QueueDequeueMany(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("QueueDequeueMany(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pQueueDequeueMany;
 }
@@ -4226,8 +4226,8 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueDequeueUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueDequeueUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -4249,8 +4249,8 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueDequeueUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueDequeueUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "n")
@@ -4277,8 +4277,8 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueDequeueUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueDequeueUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "component_types")
@@ -4290,8 +4290,8 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueDequeueUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueDequeueUpTo - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4304,8 +4304,8 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : QueueDequeueUpTo pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("QueueDequeueUpTo pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4320,8 +4320,8 @@ void* Create_QueueDequeueUpTo(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : QueueDequeueUpTo(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("QueueDequeueUpTo(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pQueueDequeueUpTo;
 }
@@ -4357,8 +4357,8 @@ void* Create_QueueEnqueue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueEnqueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueEnqueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -4380,8 +4380,8 @@ void* Create_QueueEnqueue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueEnqueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueEnqueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "components")
@@ -4403,8 +4403,8 @@ void* Create_QueueEnqueue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueEnqueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueEnqueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4417,8 +4417,8 @@ void* Create_QueueEnqueue(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : QueueEnqueue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("QueueEnqueue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4437,8 +4437,8 @@ void* Create_QueueEnqueue(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : QueueEnqueue(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("QueueEnqueue(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pQueueEnqueue;
 }
@@ -4474,8 +4474,8 @@ void* Create_QueueEnqueueMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueEnqueueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueEnqueueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -4497,8 +4497,8 @@ void* Create_QueueEnqueueMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueEnqueueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueEnqueueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "components")
@@ -4520,8 +4520,8 @@ void* Create_QueueEnqueueMany(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueEnqueueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueEnqueueMany - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4534,8 +4534,8 @@ void* Create_QueueEnqueueMany(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : QueueEnqueueMany pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("QueueEnqueueMany pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4548,8 +4548,8 @@ void* Create_QueueEnqueueMany(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : QueueEnqueueMany(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("QueueEnqueueMany(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pQueueEnqueueMany;
 }
@@ -4583,8 +4583,8 @@ void* Create_QueueSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -4606,8 +4606,8 @@ void* Create_QueueSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : QueueSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("QueueSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 	}
@@ -4621,8 +4621,8 @@ void* Create_QueueSize(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : QueueSize(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("QueueSize(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pQueueSize;
 }
@@ -4660,8 +4660,8 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : RandomShuffleQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("RandomShuffleQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "component_types")
@@ -4673,8 +4673,8 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : RandomShuffleQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("RandomShuffleQueue - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4707,8 +4707,8 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : RandomShuffleQueue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("RandomShuffleQueue pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4723,8 +4723,8 @@ void* Create_RandomShuffleQueue(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : RandomShuffleQueue(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("RandomShuffleQueue(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pRandomShuffleQueue;
 }
@@ -4759,8 +4759,8 @@ void* Create_RecordInput(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : RecordInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("RecordInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "file_pattern")
@@ -4771,8 +4771,8 @@ void* Create_RecordInput(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : RecordInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("RecordInput - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4789,8 +4789,8 @@ void* Create_RecordInput(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : RecordInput pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("RecordInput pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -4803,8 +4803,8 @@ void* Create_RecordInput(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : RecordInput(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("RecordInput(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pRecordInput;
 }
@@ -4843,8 +4843,8 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -4866,8 +4866,8 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "local_step")
@@ -4894,8 +4894,8 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient_indices")
@@ -4922,8 +4922,8 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient_values")
@@ -4950,8 +4950,8 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "gradient_shape")
@@ -4978,8 +4978,8 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "has_known_shape")
@@ -4991,14 +4991,14 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAccumulatorApplyGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseAccumulatorApplyGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseAccumulatorApplyGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5011,8 +5011,8 @@ void* Create_SparseAccumulatorApplyGradient(std::string id, Json::Value pInputIt
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseAccumulatorApplyGradient(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseAccumulatorApplyGradient(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseAccumulatorApplyGradient;
 }
@@ -5048,8 +5048,8 @@ void* Create_SparseAccumulatorTakeGradient(std::string id, Json::Value pInputIte
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -5071,8 +5071,8 @@ void* Create_SparseAccumulatorTakeGradient(std::string id, Json::Value pInputIte
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "num_required")
@@ -5099,8 +5099,8 @@ void* Create_SparseAccumulatorTakeGradient(std::string id, Json::Value pInputIte
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -5109,20 +5109,20 @@ void* Create_SparseAccumulatorTakeGradient(std::string id, Json::Value pInputIte
 			{
 				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
-					std::string msg = string_format("warning : SparseAccumulatorTakeGradient - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("SparseAccumulatorTakeGradient - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAccumulatorTakeGradient - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseAccumulatorTakeGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseAccumulatorTakeGradient pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5139,8 +5139,8 @@ void* Create_SparseAccumulatorTakeGradient(std::string id, Json::Value pInputIte
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseAccumulatorTakeGradient(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseAccumulatorTakeGradient(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseAccumulatorTakeGradient;
 }
@@ -5178,8 +5178,8 @@ void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "shape")
@@ -5190,8 +5190,8 @@ void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -5200,14 +5200,14 @@ void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem
 			{
 				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
-					std::string msg = string_format("warning : SparseConditionalAccumulator - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("SparseConditionalAccumulator - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseConditionalAccumulator - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5229,8 +5229,8 @@ void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseConditionalAccumulator pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseConditionalAccumulator pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5243,8 +5243,8 @@ void* Create_SparseConditionalAccumulator(std::string id, Json::Value pInputItem
 	}
 	else
 	{
-		std::string msg = string_format("error : pSparseConditionalAccumulator(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("pSparseConditionalAccumulator(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseConditionalAccumulator;
 }
@@ -5281,8 +5281,8 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : Stage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Stage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "values")
@@ -5304,8 +5304,8 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : Stage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Stage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5329,8 +5329,8 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : Stage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Stage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5343,8 +5343,8 @@ void* Create_Stage(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : Stage(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Stage(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pStage;
 }
@@ -5380,8 +5380,8 @@ void* Create_StageClear(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : StageClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("StageClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -5393,8 +5393,8 @@ void* Create_StageClear(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : StageClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("StageClear - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5418,8 +5418,8 @@ void* Create_StageClear(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : StageClear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("StageClear pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5435,8 +5435,8 @@ void* Create_StageClear(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : MapClear(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("MapClear(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pStageClear;
 }
@@ -5474,8 +5474,8 @@ void* Create_StagePeek(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : StagePeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("StagePeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "index")
@@ -5502,8 +5502,8 @@ void* Create_StagePeek(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : StagePeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("StagePeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -5515,8 +5515,8 @@ void* Create_StagePeek(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : StagePeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("StagePeek - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5540,8 +5540,8 @@ void* Create_StagePeek(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : StagePeek pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("StagePeek pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5557,8 +5557,8 @@ void* Create_StagePeek(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : MapPeek(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("MapPeek(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pStagePeek;
 }
@@ -5594,8 +5594,8 @@ void* Create_StageSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : StageSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("StageSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -5607,8 +5607,8 @@ void* Create_StageSize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : StageSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("StageSize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5632,8 +5632,8 @@ void* Create_StageSize(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : StageSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("StageSize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5649,8 +5649,8 @@ void* Create_StageSize(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : MapSize(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("MapSize(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pStageSize;
 }
@@ -5686,8 +5686,8 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArray - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArray - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "size")
@@ -5714,8 +5714,8 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArray - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArray - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -5724,14 +5724,14 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 			{
 				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
-					std::string msg = string_format("warning : TensorArray - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("TensorArray - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArray - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArray - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5751,8 +5751,8 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : TensorArray pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("TensorArray pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5768,8 +5768,8 @@ void* Create_TensorArray(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : TensorArray(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("TensorArray(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pTensorArray;
 }
@@ -5803,8 +5803,8 @@ void* Create_TensorArrayClose(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -5826,14 +5826,14 @@ void* Create_TensorArrayClose(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayClose - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : TensorArrayClose pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("TensorArrayClose pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5846,8 +5846,8 @@ void* Create_TensorArrayClose(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : TensorArrayClose(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("TensorArrayClose(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pTensorArrayClose;
 }
@@ -5884,8 +5884,8 @@ void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -5907,8 +5907,8 @@ void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "flow_in")
@@ -5935,8 +5935,8 @@ void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -5945,14 +5945,14 @@ void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem) {
 			{
 				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
-					std::string msg = string_format("warning : TensorArrayConcat - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("TensorArrayConcat - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -5965,8 +5965,8 @@ void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : TensorArrayConcat pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("TensorArrayConcat pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -5982,8 +5982,8 @@ void* Create_TensorArrayConcat(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : TensorArrayConcat(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("TensorArrayConcat(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pTensorArrayConcat;
 }
@@ -6021,8 +6021,8 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayGather - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayGather - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -6044,8 +6044,8 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayGather - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayGather - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -6072,8 +6072,8 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayGather - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayGather - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "flow_in")
@@ -6100,8 +6100,8 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayGather - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayGather - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -6110,14 +6110,14 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 			{
 				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
-					std::string msg = string_format("warning : TensorArrayGather - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("TensorArrayGather - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayGather - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayGather - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -6130,8 +6130,8 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : TensorArrayGather pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("TensorArrayGather pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -6146,8 +6146,8 @@ void* Create_TensorArrayGather(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : TensorArrayGather(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("TensorArrayGather(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pTensorArrayGather;
 }
@@ -6183,8 +6183,8 @@ void* Create_TensorArrayGrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -6206,8 +6206,8 @@ void* Create_TensorArrayGrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "flow_in")
@@ -6234,8 +6234,8 @@ void* Create_TensorArrayGrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "source")
@@ -6246,14 +6246,14 @@ void* Create_TensorArrayGrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : TensorArrayGrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("TensorArrayGrad pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -6269,8 +6269,8 @@ void* Create_TensorArrayGrad(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : TensorArrayGrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("TensorArrayGrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pTensorArrayGrad;
 }
@@ -6307,8 +6307,8 @@ void* Create_TensorArrayRead(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -6330,8 +6330,8 @@ void* Create_TensorArrayRead(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "index")
@@ -6358,8 +6358,8 @@ void* Create_TensorArrayRead(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "flow_in")
@@ -6386,8 +6386,8 @@ void* Create_TensorArrayRead(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -6396,20 +6396,20 @@ void* Create_TensorArrayRead(std::string id, Json::Value pInputItem) {
 			{
 				if (!(dtype = GetDatatypeFromInitial(strPinInitial)))
 				{
-					std::string msg = string_format("warning : TensorArrayRead - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("TensorArrayRead - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayRead - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : TensorArrayRead pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("TensorArrayRead pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -6424,8 +6424,8 @@ void* Create_TensorArrayRead(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : TensorArrayRead(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("TensorArrayRead(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pTensorArrayRead;
 }
@@ -6462,8 +6462,8 @@ void* Create_TensorArrayScatter(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayScatter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayScatter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -6485,8 +6485,8 @@ void* Create_TensorArrayScatter(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayScatter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayScatter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -6513,8 +6513,8 @@ void* Create_TensorArrayScatter(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayScatter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayScatter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "value")
@@ -6536,8 +6536,8 @@ void* Create_TensorArrayScatter(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayScatter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayScatter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "flow_in")
@@ -6564,14 +6564,14 @@ void* Create_TensorArrayScatter(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayScatter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayScatter - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : TensorArrayScatter pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("TensorArrayScatter pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -6586,8 +6586,8 @@ void* Create_TensorArrayScatter(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : TensorArrayScatter(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("TensorArrayScatter(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pTensorArrayScatter;
 }
@@ -6622,8 +6622,8 @@ void* Create_TensorArraySize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArraySize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArraySize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -6645,8 +6645,8 @@ void* Create_TensorArraySize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArraySize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArraySize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "flow_in")
@@ -6673,14 +6673,14 @@ void* Create_TensorArraySize(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArraySize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArraySize - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : TensorArraySize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("TensorArraySize pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -6695,8 +6695,8 @@ void* Create_TensorArraySize(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : TensorArraySize(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("TensorArraySize(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pTensorArraySize;
 }
@@ -6733,8 +6733,8 @@ void* Create_TensorArraySplit(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -6756,8 +6756,8 @@ void* Create_TensorArraySplit(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "lengths")
@@ -6784,8 +6784,8 @@ void* Create_TensorArraySplit(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "value")
@@ -6812,8 +6812,8 @@ void* Create_TensorArraySplit(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "flow_in")
@@ -6840,14 +6840,14 @@ void* Create_TensorArraySplit(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : TensorArraySplit pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("TensorArraySplit pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -6862,8 +6862,8 @@ void* Create_TensorArraySplit(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : TensorArraySplit(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("TensorArraySplit(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pTensorArraySplit;
 }
@@ -6900,8 +6900,8 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArraySplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "handle")
@@ -6923,8 +6923,8 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayWrite - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayWrite - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "index")
@@ -6951,8 +6951,8 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayWrite - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayWrite - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "value")
@@ -6979,8 +6979,8 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayWrite - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayWrite - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "flow_in")
@@ -7007,14 +7007,14 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : TensorArrayWrite - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TensorArrayWrite - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : TensorArrayWrite pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("TensorArrayWrite pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -7029,8 +7029,8 @@ void* Create_TensorArrayWrite(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : TensorArrayWrite(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("TensorArrayWrite(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pTensorArrayWrite;
 }
@@ -7067,8 +7067,8 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : Unstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Unstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtypes")
@@ -7080,8 +7080,8 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : Unstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Unstage - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -7105,8 +7105,8 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : Unstage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Unstage pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -7121,8 +7121,8 @@ void* Create_Unstage(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : Unstage(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Unstage(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pUnstage;
 }

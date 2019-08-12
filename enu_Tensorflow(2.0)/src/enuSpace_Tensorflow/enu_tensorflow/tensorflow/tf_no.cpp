@@ -40,14 +40,14 @@ void* Create_NoOp(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : NoOp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("NoOp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : NoOp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("NoOp - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope)
@@ -62,8 +62,8 @@ void* Create_NoOp(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : NoOp(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("NoOp(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pNoOp;
 }

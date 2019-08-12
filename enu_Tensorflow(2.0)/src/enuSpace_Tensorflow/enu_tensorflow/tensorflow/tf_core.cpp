@@ -118,14 +118,14 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 				}
 				else
 				{
-					std::string msg = string_format("warning : ClientSession - %s(%s) scope information missed.", id.c_str(), strPinName.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("ClientSession - %s(%s) scope information missed.", id.c_str(), strPinName.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ClientSession - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "inputs")
@@ -144,8 +144,8 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 						}
 						else
 						{
-							std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed (lookup output map).", id.c_str(), strPinName.c_str());
-							PrintMessage(msg);
+							std::string msg = string_format("ClientSession - %s(%s) transfer information missed (lookup output map).", id.c_str(), strPinName.c_str());
+							SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 						}
 					}
 				}
@@ -186,8 +186,8 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 							}
 							else
 							{
-								std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed (lookup type is not output).", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
+								std::string msg = string_format("ClientSession - %s(%s) transfer information missed (lookup type is not output).", id.c_str(), strPinName.c_str());
+								SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 							}
 						}
 					}
@@ -195,8 +195,8 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ClientSession - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "run_outputs")
@@ -220,32 +220,32 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 							}
 							else if (pOutputObj->type == OUTPUT_TYPE_OUTPUT)
 							{
-								std::string msg = string_format("warning : ClientSession - %s(%s) not support output object.", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
+								std::string msg = string_format("ClientSession - %s(%s) not support output object.", id.c_str(), strPinName.c_str());
+								SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 							}
 							else if (pOutputObj->type == OUTPUT_TYPE_OUTPUTLIST)
 							{
-								std::string msg = string_format("warning : ClientSession - %s(%s) not support operationlist object.", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
+								std::string msg = string_format("ClientSession - %s(%s) not support operationlist object.", id.c_str(), strPinName.c_str());
+								SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 							}
 							else
 							{
-								std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed (lookup type is not output).", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
+								std::string msg = string_format("ClientSession - %s(%s) transfer information missed (lookup type is not output).", id.c_str(), strPinName.c_str());
+								SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 							}
 						}
 						else
 						{
-							std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed (lookup output map).", id.c_str(), strPinName.c_str());
-							PrintMessage(msg);
+							std::string msg = string_format("ClientSession - %s(%s) transfer information missed (lookup output map).", id.c_str(), strPinName.c_str());
+							SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 						}
 					}
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : ClientSession - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ClientSession - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		// device set interface
@@ -260,8 +260,8 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 	
 	if (pSession == nullptr)
 	{
-		std::string msg = string_format("error : ClientSession(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ClientSession(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	else
 	{
@@ -324,8 +324,8 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 										st = pSession->Run(init_obj, &outputs);
 										if (st.code() != error::OK)
 										{
-											std::string msg = string_format("error: %s.", st.error_message().c_str());
-											PrintMessage(msg);
+											std::string msg = string_format("%s.", st.error_message().c_str());
+											SetLastError(DEF_ERROR, "", 0, msg);
 										}
 
 										bRun = true;
@@ -376,20 +376,20 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 									st = pSession->Run(init_obj, &outputs);
 									if (st.code() != error::OK)
 									{
-										std::string msg = string_format("error: %s.", st.error_message().c_str());
-										PrintMessage(msg);
+										std::string msg = string_format("%s.", st.error_message().c_str());
+										SetLastError(DEF_ERROR, "", 0, msg);
 									}
 								}
 								else 
 								{
-									std::string msg = string_format("error : variable init - %s binary information missed 1.", pTar->id.c_str());
-									PrintMessage(msg);
+									std::string msg = string_format("variable init - %s binary information missed 1.", pTar->id.c_str());
+									SetLastError(DEF_ERROR, "", 0, msg, false, pTar->id.c_str());
 								}
 							}
 							else
 							{
-								std::string msg = string_format("error : variable init - %s binary information missed 2.", pTar->id.c_str());
-								PrintMessage(msg);
+								std::string msg = string_format("variable init - %s binary information missed 2.", pTar->id.c_str());
+								SetLastError(DEF_ERROR, "", 0, msg, false, pTar->id.c_str());
 							}
 						}
 						else
@@ -410,14 +410,14 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 									st = pSession->Run(init_obj, &outputs);
 									if (st.code() != error::OK)
 									{
-										std::string msg = string_format("error: %s.", st.error_message().c_str());
-										PrintMessage(msg);
+										std::string msg = string_format("%s.", st.error_message().c_str());
+										SetLastError(DEF_ERROR, "", 0, msg);
 									}
 								}
 								else
 								{
-									std::string msg = string_format("error : variable init - %s Create_StrToOutput information missed.", pTar->id.c_str());
-									PrintMessage(msg);
+									std::string msg = string_format("variable init - %s Create_StrToOutput information missed.", pTar->id.c_str());
+									SetLastError(DEF_ERROR, "", 0, msg, false, pTar->id.c_str());
 								}
 							}
 							// initvalues = 1.0;2.0 datatype= "", strBinPinType="string, int, float, bool, double", strBinPinShape = [10][10]
@@ -436,20 +436,20 @@ void* Create_ClientSession(std::string id, Json::Value pInputItem) {
 									st = pSession->Run(init_obj, &outputs);
 									if (st.code() != error::OK)
 									{
-										std::string msg = string_format("error: %s.", st.error_message().c_str());
-										PrintMessage(msg);
+										std::string msg = string_format("%s.", st.error_message().c_str());
+										SetLastError(DEF_ERROR, "", 0, msg);
 									}
 								}
 								else
 								{
-									std::string msg = string_format("error : variable init - %s Create_ArrayStrToOutput information missed.", pTar->id.c_str());
-									PrintMessage(msg);
+									std::string msg = string_format("variable init - %s Create_ArrayStrToOutput information missed.", pTar->id.c_str());
+									SetLastError(DEF_ERROR, "", 0, msg, false, pTar->id.c_str());
 								}
 							}
 							else
 							{
-								std::string msg = string_format("warning : variable init - %s text information missed.", pTar->id.c_str());
-								PrintMessage(msg);
+								std::string msg = string_format("variable init - %s text information missed.", pTar->id.c_str());
+								SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 							}
 						}
 					}
@@ -512,8 +512,8 @@ void* Create_Input_Initializer(std::string id, Json::Value pInputItem) {
 							}
 							else
 							{
-								std::string msg = string_format("warning : %s(%s) binary data missed.", id.c_str(), strPinName.c_str());
-								PrintMessage(msg);
+								std::string msg = string_format("%s(%s) binary data missed.", id.c_str(), strPinName.c_str());
+								SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 							}
 						}
 					}
@@ -521,14 +521,14 @@ void* Create_Input_Initializer(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : Initializer - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Initializer - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : Initializer pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Initializer pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (ptensor)
@@ -586,14 +586,14 @@ void* Create_InputList(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : InputList - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("InputList - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : InputList pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("InputList pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -606,8 +606,8 @@ void* Create_InputList(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : InputList(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("InputList(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 
 	return pInputList;
@@ -654,14 +654,14 @@ void* Create_Operation(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : Operation - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Operation - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : Operation pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Operation pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -674,13 +674,13 @@ void* Create_Operation(std::string id, Json::Value pInputItem) {
 	}
 	else if (n_count > 1)
 	{
-		std::string msg = string_format("error : Operation(%s) more than one transfer is not supported.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Operation(%s) more than one transfer is not supported.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	else
 	{
-		std::string msg = string_format("error : Operation(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Operation(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	
 	return pOperation;
@@ -728,26 +728,26 @@ void* Create_Output(std::string id, Json::Value pInputItem) {
 						}
 						else
 						{
-							std::string msg = string_format("warning : Output - %s(%s) pin type only support output, operation.", id.c_str(), strPinName.c_str());
-							PrintMessage(msg);
+							std::string msg = string_format("Output - %s(%s) pin type only support output, operation.", id.c_str(), strPinName.c_str());
+							SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 						}
 					}
 					else
 					{
-						std::string msg = string_format("warning : Output - %s(%s) could not find form output map.", id.c_str(), strPinName.c_str());
-						PrintMessage(msg);
+						std::string msg = string_format("Output - %s(%s) could not find form output map.", id.c_str(), strPinName.c_str());
+						SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 					}
 				}
 				else
 				{
-					std::string msg = string_format("warning : Output - %s(%s)  could not find form object map.", id.c_str(), strPinName.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("Output - %s(%s)  could not find form object map.", id.c_str(), strPinName.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : Output - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Output - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "index")
@@ -765,14 +765,14 @@ void* Create_Output(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : Output - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Output - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : Output pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Output pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -787,8 +787,8 @@ void* Create_Output(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : Output(%s) input pin object node is null.", id.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Output(%s) input pin object node is null.", id.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	else if (pOperation)
@@ -800,8 +800,8 @@ void* Create_Output(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : Output(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Output(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 
 	return pOutput;
@@ -860,14 +860,14 @@ void* Create_Status(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : Status - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Status - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : Status pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Status pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -879,8 +879,8 @@ void* Create_Status(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : Status(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Status(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 
 	return pStatus;
@@ -921,15 +921,15 @@ void* Create_Tensor(std::string id, Json::Value pInputItem) {
 				dtype = GetDatatypeFromInitial(strPinInitial);
 				if (dtype == DT_INVALID)
 				{
-					std::string msg = string_format("warning : Tensor - %s(%s) unknown dtype", id.c_str(), strPinName.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("Tensor - %s(%s) unknown dtype", id.c_str(), strPinName.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 				strdatatype = strPinInitial;
 			}
 			else
 			{
-				std::string msg = string_format("warning : Tensor - %s(%s) dtype is not initialized", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Tensor - %s(%s) dtype is not initialized", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "initvalues")
@@ -947,8 +947,8 @@ void* Create_Tensor(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : Tensor pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Tensor pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -966,8 +966,8 @@ void* Create_Tensor(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : %s(%s) binary data missed.", id.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("%s(%s) binary data missed.", id.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		AddObjectMap(pTensor, id, SYMBOL_TENSOR, "Tensor", pInputItem);
@@ -1013,15 +1013,15 @@ void* Create_Input(std::string id, Json::Value pInputItem)
 				dtype = GetDatatypeFromInitial(strPinInitial);
 				if (dtype == DT_INVALID)
 				{
-					std::string msg = string_format("warning : Input_ex - %s(%s) unknown dtype", id.c_str(), strPinName.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("Input_ex - %s(%s) unknown dtype", id.c_str(), strPinName.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 				strdatatype = strPinInitial;
 			}
 			else
 			{
-				std::string msg = string_format("warning : Input_ex - %s(%s) dtype is not initialized", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Input_ex - %s(%s) dtype is not initialized", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "initvalues")
@@ -1051,15 +1051,15 @@ void* Create_Input(std::string id, Json::Value pInputItem)
 
 				if (strPinBinPos != "binary")
 				{
-					std::string msg = string_format("warning : Input - %s(%s) binary information missed.", id.c_str(), strPinName.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("Input - %s(%s) binary information missed.", id.c_str(), strPinName.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : Input_ex pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Input_ex pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1092,8 +1092,8 @@ void* Create_Input(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : %s(%s) binary data missed.", id.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("%s(%s) binary data missed.", id.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 	}
@@ -1142,8 +1142,8 @@ void* Create_FeedType(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : FeedType - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("FeedType - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "initializer")
@@ -1157,15 +1157,15 @@ void* Create_FeedType(std::string id, Json::Value pInputItem)
 						initializer = (Input::Initializer*)pObj->pObject;
 					else
 					{
-						std::string msg = string_format("warning : FeedType - %s(%s) not support another type(input initializer).", id.c_str(), strPinName.c_str());
-						PrintMessage(msg);
+						std::string msg = string_format("FeedType - %s(%s) not support another type(input initializer).", id.c_str(), strPinName.c_str());
+						SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 					}
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : FeedType - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("FeedType - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "outputhash")
@@ -1174,8 +1174,8 @@ void* Create_FeedType(std::string id, Json::Value pInputItem)
 		}
 		else
 		{
-			std::string msg = string_format("warning : FeedType pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("FeedType pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1221,8 +1221,8 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : Const - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Const - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "val")
@@ -1243,8 +1243,8 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 					}
 					else
 					{
-						std::string msg = string_format("warning : Const - %s(%s) binary information missed.", id.c_str(), strPinName.c_str());
-						PrintMessage(msg);
+						std::string msg = string_format("Const - %s(%s) binary information missed.", id.c_str(), strPinName.c_str());
+						SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 					}
 				}
 				else
@@ -1340,8 +1340,8 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 					}
 					else
 					{
-						std::string msg = string_format("warning : Const - %s(val-initvalue) transfer information missed.", id.c_str());
-						PrintMessage(msg);
+						std::string msg = string_format("Const - %s(val-initvalue) transfer information missed.", id.c_str());
+						SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 					}
 
 					array_slice.clear();
@@ -1352,13 +1352,13 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 	}
 	if (pScope == nullptr)
 	{
-		std::string msg = string_format("warning : Const - %s(scope) transfer information missed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Const - %s(scope) transfer information missed.", id.c_str());
+		SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 	}
 	if (pTensor == nullptr)
 	{
-		std::string msg = string_format("warning : Const - %s(val) transfer information missed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Const - %s(val) transfer information missed.", id.c_str());
+		SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 	}
 
 	if (pScope && pTensor)
@@ -1370,8 +1370,8 @@ void* Create_Const(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : Const(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Const(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 
 	if (pTensor)
@@ -1418,8 +1418,8 @@ void* Create_Const_ex(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : Const_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Const_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -1430,8 +1430,8 @@ void* Create_Const_ex(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : Const_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Const_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "val")
@@ -1452,8 +1452,8 @@ void* Create_Const_ex(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : Const_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Const_ex - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 	}
@@ -1568,8 +1568,8 @@ void* Create_Const_ex(std::string id, Json::Value pInputItem)
 		}
 		else
 		{
-			std::string msg = string_format("warning : Const_ex - %s(val-initvalue) transfer information missed.", id.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Const_ex - %s(val-initvalue) transfer information missed.", id.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 
 		array_slice.clear();
@@ -1585,21 +1585,21 @@ void* Create_Const_ex(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : Const_ex - %s(%s) binary information missed.", id.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Const_ex - %s(%s) binary information missed.", id.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 	}
 
 	if (pScope == nullptr)
 	{
-		std::string msg = string_format("warning : Const_ex - %s(scope) transfer information missed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Const_ex - %s(scope) transfer information missed.", id.c_str());
+		SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 	}
 	if (pTensor == nullptr)
 	{
-		std::string msg = string_format("warning : Const_ex - %s(val) transfer information missed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Const_ex - %s(val) transfer information missed.", id.c_str());
+		SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 	}
 
 	if (pScope && pTensor)
@@ -1612,8 +1612,8 @@ void* Create_Const_ex(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : Const_ex(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("Const_ex(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 
 	if (pTensor)
@@ -1659,8 +1659,8 @@ void* Create_AddSymbolicGradients(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : Variable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("Variable - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "outputs")
@@ -1696,8 +1696,8 @@ void* Create_AddSymbolicGradients(std::string id, Json::Value pInputItem)
 
 		else
 		{
-			std::string msg = string_format("warning : Variable pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("Variable pin name - %s(%s) unknown value.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1715,8 +1715,8 @@ void* Create_AddSymbolicGradients(std::string id, Json::Value pInputItem)
 		st = AddSymbolicGradients(*pScope, outputlist, inputlist, grad_inputs, &grad_outputs);
 		if (st.code() != error::OK)
 		{
-			std::string msg = string_format("error: %s.", st.error_message().c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("%s.", st.error_message().c_str());
+			SetLastError(DEF_ERROR, "", 0, msg);
 		}
 		else
 		{
@@ -1738,7 +1738,7 @@ void* Create_AddSymbolicGradients(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : AddSymbolicGradients(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("AddSymbolicGradients(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 }

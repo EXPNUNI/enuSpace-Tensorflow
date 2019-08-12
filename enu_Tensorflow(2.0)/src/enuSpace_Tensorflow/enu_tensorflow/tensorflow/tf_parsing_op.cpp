@@ -44,8 +44,8 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "records")
@@ -67,8 +67,8 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "record_defaults")
@@ -90,8 +90,8 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -112,8 +112,8 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("DecodeCSV - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && precords && precord_defaults)
@@ -127,8 +127,8 @@ void* Create_DecodeCSV(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : DecodeCSV(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("DecodeCSV(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pDecodeCSV;
 }
@@ -161,8 +161,8 @@ void* Create_DecodeJSONExample(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DecodeJSONExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DecodeJSONExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "json_examples")
@@ -184,14 +184,14 @@ void* Create_DecodeJSONExample(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DecodeJSONExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DecodeJSONExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : DecodeJSONExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("DecodeJSONExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && pjson_examples)
@@ -205,8 +205,8 @@ void* Create_DecodeJSONExample(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : DecodeJSONExample(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("DecodeJSONExample(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pDecodeJSONExample;
 }
@@ -241,8 +241,8 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "bytes")
@@ -264,8 +264,8 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "out_type")
@@ -278,8 +278,8 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -296,8 +296,8 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("DecodeRaw - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && pbytes)
@@ -311,8 +311,8 @@ void* Create_DecodeRaw(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : DecodeRaw(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("DecodeRaw(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pDecodeRaw;
 }
@@ -352,8 +352,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "serialized")
@@ -375,8 +375,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "names")
@@ -398,8 +398,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_keys")
@@ -421,8 +421,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dense_keys")
@@ -444,8 +444,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dense_defaults")
@@ -467,8 +467,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_types")
@@ -479,8 +479,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dense_shapes")
@@ -491,8 +491,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 	}
@@ -516,8 +516,8 @@ void* Create_ParseExample(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ParseExample(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ParseExample(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pParseExample;
 }
@@ -565,8 +565,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "serialized")
@@ -588,8 +588,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "feature_list_dense_missing_assumed_empty")
@@ -611,8 +611,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "context_sparse_keys")
@@ -634,8 +634,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "context_dense_keys")
@@ -657,8 +657,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "feature_list_sparse_keys")
@@ -680,8 +680,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "feature_list_dense_keys")
@@ -703,8 +703,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "context_dense_defaults")
@@ -726,8 +726,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "debug_name")
@@ -749,8 +749,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -783,8 +783,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 		}
 		else
 		{
-			std::string msg = string_format("warning : ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ParseSingleSequenceExample - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && serialized &&feature_list_dense_missing_assumed_empty&&context_sparse_keys&&context_dense_keys &&feature_list_sparse_keys&&feature_list_dense_keys&&context_dense_defaults && debug_name)
@@ -824,8 +824,8 @@ void* Create_ParseSingleSequenceExample(std::string id, Json::Value pInputItem) 
 	}
 	else
 	{
-		std::string msg = string_format("error : ParseSingleSequenceExample(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ParseSingleSequenceExample(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 
 
@@ -862,8 +862,8 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "serialized")
@@ -885,8 +885,8 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "out_type")
@@ -897,20 +897,20 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 				dtype = GetDatatypeFromInitial(strPinInitial);
 				if(dtype == DT_INVALID)
 				{
-					std::string msg = string_format("warning : ParseTensor - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("ParseTensor - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("ParseTensor - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && serialized)
@@ -924,8 +924,8 @@ void* Create_ParseTensor(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : ParseTensor(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("ParseTensor(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pParseTensor;
 }
@@ -959,8 +959,8 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : StringToNumber - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("StringToNumber - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "string_tensor")
@@ -982,8 +982,8 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : StringToNumber - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("StringToNumber - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -1000,8 +1000,8 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : StringToNumber - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("StringToNumber - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && string_tensor)
@@ -1015,8 +1015,8 @@ void* Create_StringToNumber(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : DecodeRaw(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("DecodeRaw(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 
 	return pStringToNumber;

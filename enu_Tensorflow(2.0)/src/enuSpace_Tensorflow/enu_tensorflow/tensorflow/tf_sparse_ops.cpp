@@ -49,8 +49,8 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AddManySparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AddManySparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_indices")
@@ -72,8 +72,8 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AddManySparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AddManySparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_values")
@@ -95,8 +95,8 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AddManySparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AddManySparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_shape")
@@ -118,8 +118,8 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AddManySparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AddManySparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -142,8 +142,8 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : AddManySparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("AddManySparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && sparse_indices && sparse_values && sparse_shape)
@@ -157,8 +157,8 @@ void* Create_AddManySparseToTensorsMap(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : AddManySparseToTensorsMap(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("AddManySparseToTensorsMap(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pAddManySparseToTensorsMap;
 }
@@ -196,8 +196,8 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AddSparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AddSparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_indices")
@@ -219,8 +219,8 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AddSparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AddSparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_values")
@@ -242,8 +242,8 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AddSparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AddSparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_shape")
@@ -265,8 +265,8 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : AddSparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("AddSparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -290,8 +290,8 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : AddSparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("AddSparseToTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && sparse_indices && sparse_values && sparse_shape)
@@ -306,8 +306,8 @@ void* Create_AddSparseToTensorsMap(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : AddSparseToTensorsMap(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("AddSparseToTensorsMap(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pAddSparseToTensorsMap;
 }
@@ -342,8 +342,8 @@ void* Create_DeserializeManySparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DeserializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DeserializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "serialized_sparse")
@@ -365,8 +365,8 @@ void* Create_DeserializeManySparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : DeserializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DeserializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -376,20 +376,20 @@ void* Create_DeserializeManySparse(std::string id, Json::Value pInputItem) {
 				dtype = GetDatatypeFromInitial(strPinInitial);
 				if(dtype == DT_INVALID)
 				{
-					std::string msg = string_format("warning : DeserializeManySparse - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("DeserializeManySparse - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : DeserializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("DeserializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : DeserializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("DeserializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && serialized_sparse)
@@ -405,8 +405,8 @@ void* Create_DeserializeManySparse(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : DeserializeManySparse(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("DeserializeManySparse(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pDeserializeManySparse;
 }
@@ -442,8 +442,8 @@ void* Create_SerializeManySparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SerializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SerializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_indices")
@@ -465,8 +465,8 @@ void* Create_SerializeManySparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SerializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SerializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_values")
@@ -488,8 +488,8 @@ void* Create_SerializeManySparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SerializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SerializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_shape")
@@ -511,14 +511,14 @@ void* Create_SerializeManySparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SerializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SerializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SerializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SerializeManySparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && sparse_indices && sparse_values && sparse_shape)
@@ -532,8 +532,8 @@ void* Create_SerializeManySparse(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SerializeManySparse(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SerializeManySparse(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSerializeManySparse;
 }
@@ -569,8 +569,8 @@ void* Create_SerializeSparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SerializeSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SerializeSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_indices")
@@ -592,8 +592,8 @@ void* Create_SerializeSparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SerializeSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SerializeSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_values")
@@ -615,8 +615,8 @@ void* Create_SerializeSparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SerializeSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SerializeSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_shape")
@@ -638,14 +638,14 @@ void* Create_SerializeSparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SerializeSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SerializeSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SerializeSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SerializeSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && sparse_indices && sparse_values && sparse_shape)
@@ -669,8 +669,8 @@ void* Create_SerializeSparse(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SerializeSparse(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SerializeSparse(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSerializeSparse;
 }
@@ -710,8 +710,8 @@ void* Create_SparseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_indices")
@@ -733,8 +733,8 @@ void* Create_SparseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_values")
@@ -756,8 +756,8 @@ void* Create_SparseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_shape")
@@ -779,8 +779,8 @@ void* Create_SparseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b_indices")
@@ -802,8 +802,8 @@ void* Create_SparseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b_values")
@@ -825,8 +825,8 @@ void* Create_SparseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b_shape")
@@ -848,8 +848,8 @@ void* Create_SparseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "thresh")
@@ -871,14 +871,14 @@ void* Create_SparseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && a_indices && a_values && a_shape &&  b_indices && b_values && b_shape && thresh)
@@ -894,8 +894,8 @@ void* Create_SparseAdd(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseAdd(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseAdd(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseAdd;
 }
@@ -932,8 +932,8 @@ void* Create_SparseAddGrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "backprop_val_grad")
@@ -955,8 +955,8 @@ void* Create_SparseAddGrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_indices")
@@ -978,8 +978,8 @@ void* Create_SparseAddGrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b_indices")
@@ -1001,8 +1001,8 @@ void* Create_SparseAddGrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sum_indices")
@@ -1024,14 +1024,14 @@ void* Create_SparseAddGrad(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseAddGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && backprop_val_grad && a_indices && b_indices && sum_indices)
@@ -1046,8 +1046,8 @@ void* Create_SparseAddGrad(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseAddGrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseAddGrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseAddGrad;
 }
@@ -1084,8 +1084,8 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -1114,8 +1114,8 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "values")
@@ -1144,8 +1144,8 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "shapes")
@@ -1174,8 +1174,8 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "concat_dim")
@@ -1186,14 +1186,14 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && indices && values && shapes)
@@ -1217,8 +1217,8 @@ void* Create_SparseConcat(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseConcat(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseConcat(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseConcat;
 }
@@ -1262,8 +1262,8 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -1296,8 +1296,8 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "values")
@@ -1326,8 +1326,8 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "shapes")
@@ -1356,8 +1356,8 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dense_inputs")
@@ -1386,8 +1386,8 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "hashed_output")
@@ -1405,8 +1405,8 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "num_buckets")
@@ -1422,8 +1422,8 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseConcat - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "hash_key")
@@ -1438,8 +1438,8 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "out_type")
@@ -1449,14 +1449,14 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 				out_type = GetDatatypeFromInitial(strPinInitial);
 				if (out_type == DT_INVALID)
 				{
-					std::string msg = string_format("warning : SparseCross - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("SparseCross - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "internal_type")
@@ -1467,20 +1467,20 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 				internal_type = GetDatatypeFromInitial(strPinInitial);
 				if (internal_type == DT_INVALID)
 				{
-					std::string msg = string_format("warning : SparseCross - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("SparseCross - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseCross - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 
@@ -1499,8 +1499,8 @@ void* Create_SparseCross(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseCross(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseCross(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseCross;
 }
@@ -1537,8 +1537,8 @@ void* Create_SparseDenseCwiseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_indices")
@@ -1560,8 +1560,8 @@ void* Create_SparseDenseCwiseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_values")
@@ -1583,8 +1583,8 @@ void* Create_SparseDenseCwiseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_shape")
@@ -1606,8 +1606,8 @@ void* Create_SparseDenseCwiseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dense")
@@ -1629,14 +1629,14 @@ void* Create_SparseDenseCwiseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseDenseCwiseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && sp_indices && sp_values && sp_shape && dense)
@@ -1650,8 +1650,8 @@ void* Create_SparseDenseCwiseAdd(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseDenseCwiseAdd(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseDenseCwiseAdd(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseDenseCwiseAdd;
 }
@@ -1688,8 +1688,8 @@ void* Create_SparseDenseCwiseDiv(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_indices")
@@ -1711,8 +1711,8 @@ void* Create_SparseDenseCwiseDiv(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_values")
@@ -1734,8 +1734,8 @@ void* Create_SparseDenseCwiseDiv(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_shape")
@@ -1757,8 +1757,8 @@ void* Create_SparseDenseCwiseDiv(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dense")
@@ -1780,14 +1780,14 @@ void* Create_SparseDenseCwiseDiv(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseDenseCwiseDiv - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && sp_indices && sp_values && sp_shape && dense)
@@ -1801,8 +1801,8 @@ void* Create_SparseDenseCwiseDiv(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseDenseCwiseDiv(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseDenseCwiseDiv(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseDenseCwiseDiv;
 }
@@ -1839,8 +1839,8 @@ void* Create_SparseDenseCwiseMul(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_indices")
@@ -1862,8 +1862,8 @@ void* Create_SparseDenseCwiseMul(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_values")
@@ -1885,8 +1885,8 @@ void* Create_SparseDenseCwiseMul(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_shape")
@@ -1908,8 +1908,8 @@ void* Create_SparseDenseCwiseMul(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dense")
@@ -1931,14 +1931,14 @@ void* Create_SparseDenseCwiseMul(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseDenseCwiseMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && sp_indices && sp_values && sp_shape && dense)
@@ -1952,8 +1952,8 @@ void* Create_SparseDenseCwiseMul(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseDenseCwiseMul(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseDenseCwiseMul(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseDenseCwiseMul;
 }
@@ -1991,8 +1991,8 @@ void* Create_SparseReduceSum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_indices")
@@ -2014,8 +2014,8 @@ void* Create_SparseReduceSum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_values")
@@ -2037,8 +2037,8 @@ void* Create_SparseReduceSum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_shape")
@@ -2060,8 +2060,8 @@ void* Create_SparseReduceSum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "reduction_axes")
@@ -2083,8 +2083,8 @@ void* Create_SparseReduceSum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2098,8 +2098,8 @@ void* Create_SparseReduceSum(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseReduceSum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && input_indices && input_values && input_shape && reduction_axes)
@@ -2113,8 +2113,8 @@ void* Create_SparseReduceSum(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseReduceSum(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseReduceSum(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseReduceSum;
 }
@@ -2152,8 +2152,8 @@ void* Create_SparseReduceSumSparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_indices")
@@ -2175,8 +2175,8 @@ void* Create_SparseReduceSumSparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_values")
@@ -2198,8 +2198,8 @@ void* Create_SparseReduceSumSparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_shape")
@@ -2221,8 +2221,8 @@ void* Create_SparseReduceSumSparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "reduction_axes")
@@ -2244,8 +2244,8 @@ void* Create_SparseReduceSumSparse(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -2259,8 +2259,8 @@ void* Create_SparseReduceSumSparse(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseReduceSumSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && input_indices && input_values && input_shape && reduction_axes)
@@ -2276,8 +2276,8 @@ void* Create_SparseReduceSumSparse(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseReduceSum(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseReduceSum(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseReduceSumSparse;
 }
@@ -2313,8 +2313,8 @@ void* Create_SparseReorder(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReorder - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReorder - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_indices")
@@ -2336,8 +2336,8 @@ void* Create_SparseReorder(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReorder - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReorder - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_values")
@@ -2359,8 +2359,8 @@ void* Create_SparseReorder(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReorder - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReorder - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_shape")
@@ -2382,14 +2382,14 @@ void* Create_SparseReorder(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReorder - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReorder - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseReorder - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseReorder - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && input_indices && input_values && input_shape)
@@ -2404,8 +2404,8 @@ void* Create_SparseReorder(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseReorder(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseReorder(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseReorder;
 }
@@ -2441,8 +2441,8 @@ void* Create_SparseReshape(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReshape - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReshape - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_indices")
@@ -2464,8 +2464,8 @@ void* Create_SparseReshape(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReshape - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReshape - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_shape")
@@ -2487,8 +2487,8 @@ void* Create_SparseReshape(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReshape - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReshape - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "new_shape")
@@ -2510,14 +2510,14 @@ void* Create_SparseReshape(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReshape - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReshape - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseReshape - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseReshape - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && input_indices && input_shape && new_shape)
@@ -2537,8 +2537,8 @@ void* Create_SparseReshape(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseReshape(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseReshape(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseReshape;
 }
@@ -2574,8 +2574,8 @@ void* Create_SparseSoftmax(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_indices")
@@ -2597,8 +2597,8 @@ void* Create_SparseSoftmax(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_values")
@@ -2620,8 +2620,8 @@ void* Create_SparseSoftmax(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sp_shape")
@@ -2643,14 +2643,14 @@ void* Create_SparseSoftmax(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseSoftmax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && sp_indices && sp_values && sp_shape)
@@ -2664,8 +2664,8 @@ void* Create_SparseSoftmax(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseSoftmax(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseSoftmax(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseSoftmax;
 }
@@ -2704,8 +2704,8 @@ void* Create_SparseSparseMaximum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_indices")
@@ -2727,8 +2727,8 @@ void* Create_SparseSparseMaximum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_values")
@@ -2750,8 +2750,8 @@ void* Create_SparseSparseMaximum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_shape")
@@ -2773,8 +2773,8 @@ void* Create_SparseSparseMaximum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b_indices")
@@ -2796,8 +2796,8 @@ void* Create_SparseSparseMaximum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b_values")
@@ -2819,8 +2819,8 @@ void* Create_SparseSparseMaximum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b_shape")
@@ -2842,14 +2842,14 @@ void* Create_SparseSparseMaximum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseSparseMaximum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && a_indices && a_values && a_shape && b_indices && b_values && b_shape)
@@ -2864,8 +2864,8 @@ void* Create_SparseSparseMaximum(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseSparseMaximum(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseSparseMaximum(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseSparseMaximum;
 }
@@ -2904,8 +2904,8 @@ void* Create_SparseSparseMinimum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_indices")
@@ -2927,8 +2927,8 @@ void* Create_SparseSparseMinimum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_values")
@@ -2950,8 +2950,8 @@ void* Create_SparseSparseMinimum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_shape")
@@ -2973,8 +2973,8 @@ void* Create_SparseSparseMinimum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b_indices")
@@ -2996,8 +2996,8 @@ void* Create_SparseSparseMinimum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b_values")
@@ -3019,8 +3019,8 @@ void* Create_SparseSparseMinimum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b_shape")
@@ -3042,14 +3042,14 @@ void* Create_SparseSparseMinimum(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseSparseMinimum - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && a_indices && a_values && a_shape && b_indices && b_values && b_shape)
@@ -3064,8 +3064,8 @@ void* Create_SparseSparseMinimum(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseSparseMinimum(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseSparseMinimum(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseSparseMinimum;
 }
@@ -3103,8 +3103,8 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "split_dim")
@@ -3126,8 +3126,8 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -3150,8 +3150,8 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "values")
@@ -3173,8 +3173,8 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "shape")
@@ -3196,8 +3196,8 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "num_split")
@@ -3208,14 +3208,14 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseSplit - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && split_dim &&indices&&values&&shape)
@@ -3236,8 +3236,8 @@ void* Create_SparseSplit(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseSplit(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseSplit(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseSplit;
 }
@@ -3274,8 +3274,8 @@ void* Create_SparseTensorDenseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_indices")
@@ -3297,8 +3297,8 @@ void* Create_SparseTensorDenseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_values")
@@ -3320,8 +3320,8 @@ void* Create_SparseTensorDenseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_shape")
@@ -3343,8 +3343,8 @@ void* Create_SparseTensorDenseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b")
@@ -3366,14 +3366,14 @@ void* Create_SparseTensorDenseAdd(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseTensorDenseAdd - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && a_indices &&a_values && a_shape&&b)
@@ -3388,8 +3388,8 @@ void* Create_SparseTensorDenseAdd(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseTensorDenseAdd(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseTensorDenseAdd(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseTensorDenseAdd;
 }
@@ -3427,8 +3427,8 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_indices")
@@ -3450,8 +3450,8 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_values")
@@ -3473,8 +3473,8 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "a_shape")
@@ -3496,8 +3496,8 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "b")
@@ -3519,8 +3519,8 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3534,8 +3534,8 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseTensorDenseMatMul - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && a_indices &&a_values && a_shape&&b)
@@ -3549,8 +3549,8 @@ void* Create_SparseTensorDenseMatMul(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseTensorDenseMatMul(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseTensorDenseMatMul(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseTensorDenseMatMul;
 }
@@ -3588,8 +3588,8 @@ void* Create_SparseToDense(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_indices")
@@ -3611,8 +3611,8 @@ void* Create_SparseToDense(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "output_shape")
@@ -3634,8 +3634,8 @@ void* Create_SparseToDense(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_values")
@@ -3657,8 +3657,8 @@ void* Create_SparseToDense(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "default_value")
@@ -3680,8 +3680,8 @@ void* Create_SparseToDense(std::string id, Json::Value pInputItem) {
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3695,8 +3695,8 @@ void* Create_SparseToDense(std::string id, Json::Value pInputItem) {
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseToDense - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && sparse_indices && output_shape && sparse_values && default_value)
@@ -3710,8 +3710,8 @@ void* Create_SparseToDense(std::string id, Json::Value pInputItem) {
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseToDense(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseToDense(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseToDense;
 }
@@ -3748,8 +3748,8 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : TakeManySparseFromTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TakeManySparseFromTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "sparse_handles")
@@ -3771,8 +3771,8 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 			}
 			else
 			{
-				std::string msg = string_format("warning : TakeManySparseFromTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TakeManySparseFromTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dtype")
@@ -3782,14 +3782,14 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 				dtype = GetDatatypeFromInitial(strPinInitial);
 				if (dtype == DT_INVALID)
 				{
-					std::string msg = string_format("warning : TakeManySparseFromTensorsMap - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
-					PrintMessage(msg);
+					std::string msg = string_format("TakeManySparseFromTensorsMap - %s(%s) unknown type(%s).", id.c_str(), strPinName.c_str(), strPinInitial.c_str());
+					SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 				}
 			}
 			else
 			{
-				std::string msg = string_format("warning : TakeManySparseFromTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("TakeManySparseFromTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -3814,8 +3814,8 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 		}
 		else
 		{
-			std::string msg = string_format("warning : TakeManySparseFromTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("TakeManySparseFromTensorsMap - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && sparse_handles)
@@ -3832,8 +3832,8 @@ void* Create_TakeManySparseFromTensorsMap(std::string id, Json::Value pInputItem
 	}
 	else
 	{
-		std::string msg = string_format("error : TakeManySparseFromTensorsMap(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("TakeManySparseFromTensorsMap(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pTakeManySparseFromTensorsMap;
 }
@@ -3871,8 +3871,8 @@ void* Create_SparseFillEmptyRows(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -3894,8 +3894,8 @@ void* Create_SparseFillEmptyRows(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "values")
@@ -3917,8 +3917,8 @@ void* Create_SparseFillEmptyRows(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "dense_shape")
@@ -3940,8 +3940,8 @@ void* Create_SparseFillEmptyRows(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "default_value")
@@ -3963,14 +3963,14 @@ void* Create_SparseFillEmptyRows(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseFillEmptyRows - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && indices && values&&dense_shape &&default_value)
@@ -3988,8 +3988,8 @@ void* Create_SparseFillEmptyRows(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseFillEmptyRows(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseFillEmptyRows(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseFillEmptyRows;
 }
@@ -4026,8 +4026,8 @@ void* Create_SparseFillEmptyRowsGrad(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "reverse_index_map")
@@ -4049,8 +4049,8 @@ void* Create_SparseFillEmptyRowsGrad(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "grad_values")
@@ -4072,14 +4072,14 @@ void* Create_SparseFillEmptyRowsGrad(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseFillEmptyRowsGrad - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && reverse_index_map && grad_values)
@@ -4094,8 +4094,8 @@ void* Create_SparseFillEmptyRowsGrad(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseFillEmptyRowsGrad(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseFillEmptyRowsGrad(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseFillEmptyRowsGrad;
 }
@@ -4134,8 +4134,8 @@ void* Create_SparseReduceMax(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_indices")
@@ -4157,8 +4157,8 @@ void* Create_SparseReduceMax(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_values")
@@ -4180,8 +4180,8 @@ void* Create_SparseReduceMax(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_shape")
@@ -4203,8 +4203,8 @@ void* Create_SparseReduceMax(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "reduction_axes")
@@ -4226,8 +4226,8 @@ void* Create_SparseReduceMax(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4241,8 +4241,8 @@ void* Create_SparseReduceMax(std::string id, Json::Value pInputItem)
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseReduceMax - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && input_indices && input_values &&input_shape &&reduction_axes)
@@ -4256,8 +4256,8 @@ void* Create_SparseReduceMax(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseReduceMax(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseReduceMax(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseReduceMax;
 }
@@ -4296,8 +4296,8 @@ void* Create_SparseReduceMaxSparse(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_indices")
@@ -4319,8 +4319,8 @@ void* Create_SparseReduceMaxSparse(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_values")
@@ -4342,8 +4342,8 @@ void* Create_SparseReduceMaxSparse(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "input_shape")
@@ -4365,8 +4365,8 @@ void* Create_SparseReduceMaxSparse(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "reduction_axes")
@@ -4388,8 +4388,8 @@ void* Create_SparseReduceMaxSparse(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "attrs")
@@ -4403,8 +4403,8 @@ void* Create_SparseReduceMaxSparse(std::string id, Json::Value pInputItem)
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseReduceMaxSparse - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && input_indices && input_values &&input_shape &&reduction_axes)
@@ -4420,8 +4420,8 @@ void* Create_SparseReduceMaxSparse(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseReduceMaxSparse(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseReduceMaxSparse(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseReduceMaxSparse;
 }
@@ -4460,8 +4460,8 @@ void* Create_SparseSlice(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "indices")
@@ -4483,8 +4483,8 @@ void* Create_SparseSlice(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "values")
@@ -4506,8 +4506,8 @@ void* Create_SparseSlice(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "shape")
@@ -4529,8 +4529,8 @@ void* Create_SparseSlice(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "start")
@@ -4552,8 +4552,8 @@ void* Create_SparseSlice(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else if (strPinName == "size")
@@ -4575,14 +4575,14 @@ void* Create_SparseSlice(std::string id, Json::Value pInputItem)
 			}
 			else
 			{
-				std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-				PrintMessage(msg);
+				std::string msg = string_format("SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+				SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 			}
 		}
 		else
 		{
-			std::string msg = string_format("warning : SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
-			PrintMessage(msg);
+			std::string msg = string_format("SparseSlice - %s(%s) transfer information missed.", id.c_str(), strPinName.c_str());
+			SetLastError(DEF_WARNING, "", 0, msg, false, id.c_str());
 		}
 	}
 	if (pScope && indices && values &&shape &&start&&size)
@@ -4598,8 +4598,8 @@ void* Create_SparseSlice(std::string id, Json::Value pInputItem)
 	}
 	else
 	{
-		std::string msg = string_format("error : SparseSlice(%s) Object create failed.", id.c_str());
-		PrintMessage(msg);
+		std::string msg = string_format("SparseSlice(%s) Object create failed.", id.c_str());
+		SetLastError(DEF_ERROR, "", 0, msg, false, id.c_str());
 	}
 	return pSparseSlice;
 }

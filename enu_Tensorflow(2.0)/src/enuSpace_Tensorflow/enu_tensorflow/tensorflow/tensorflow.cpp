@@ -93,6 +93,7 @@ void(*g_fcbSetArrayValue)(wchar_t*, void*, int, int) = NULL;
 void(*g_fcbSetReShapeArrayValue)(wchar_t*, void*, int, int) = NULL;
 VariableStruct (*g_fcbGetArrayValue)(wchar_t*) = NULL;
 void(*g_fcbPrintMessage)(wchar_t*, wchar_t*) = NULL;
+void(*g_fcbSetLastError)(int, wchar_t*, int, wchar_t*, bool, wchar_t*) = NULL;
 
 CMap<CString, LPCWSTR, VariableStruct*, VariableStruct*> g_DBMapList;
 
@@ -192,6 +193,7 @@ extern "C" __declspec(dllexport) void SetCallBack_SetArrayValue(void fcbSetArray
 extern "C" __declspec(dllexport) void SetCallBack_GetArrayValue(VariableStruct fcbGetArrayValue(wchar_t*));
 extern "C" __declspec(dllexport) void SetCallBack_SetReShapeArrayValue(void fcbSetReShapeArrayValue(wchar_t*, void*, int, int));
 extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*, wchar_t*));
+extern "C" __declspec(dllexport) void SetCallBack_SetLastError(void fcbSetLastError(int, wchar_t*, int, wchar_t*, bool, wchar_t*));
 
 extern "C" __declspec(dllexport) int GetTaskType();
 extern "C" __declspec(dllexport) bool IsEnableTransfer(wchar_t* pMyType, wchar_t* pFromType, wchar_t* pToType);
@@ -239,6 +241,11 @@ extern "C" __declspec(dllexport) void SetCallBack_SetReShapeArrayValue(void fcbS
 extern "C" __declspec(dllexport) void SetCallBack_PrintMessage(void fcbPrintMessage(wchar_t*, wchar_t*))
 {
 	g_fcbPrintMessage = fcbPrintMessage;
+}
+
+extern "C" __declspec(dllexport) void SetCallBack_SetLastError(void fcbSetLastError(int, wchar_t*, int, wchar_t*, bool, wchar_t*))
+{
+	g_fcbSetLastError = fcbSetLastError;
 }
 
 // 인터페이스 맵 데이터 구조체 클리어 수행.
@@ -442,7 +449,7 @@ void SetReShapeArrayValue(std::string strVariable, void* pSrc, int iType, int iS
 			}
 			else
 			{
-				PrintMessage(strings::Printf("error : SetArrayValue (Unknown Variable id(%s)", strVariable.c_str()));
+				SetLastError(DEF_ERROR, "", 0, strings::Printf("SetArrayValue (Unknown Variable id(%s)", strVariable.c_str()));
 				return;			// enuSpace에 없는 변수를 요청함.
 			}
 		}
@@ -709,6 +716,17 @@ void PrintMessage(std::string strMessage, std::string strID)
 		std::string strTenMessage = string_format("tensorflow -> %s", strMessage.c_str());
 		std::string strId = string_format("%s", strID.c_str());
 		g_fcbPrintMessage(StringToCString(strTenMessage).GetBuffer(0), StringToCString(strId).GetBuffer(0));
+	}
+}
+
+void  SetLastError(int iType, std::string strClassification, int errornum, std::string strErrorMsg, bool bPopup, std::string strID)
+{
+	if (g_fcbSetLastError)
+	{
+		if (strClassification == "")
+			g_fcbSetLastError(iType, L"TENSORFLOW", errornum, StringToCString(strErrorMsg).GetBuffer(0), bPopup, StringToCString(strID).GetBuffer(0));
+		else
+			g_fcbSetLastError(iType, StringToCString(strClassification).GetBuffer(0), errornum, StringToCString(strErrorMsg).GetBuffer(0), bPopup, StringToCString(strID).GetBuffer(0));
 	}
 }
 

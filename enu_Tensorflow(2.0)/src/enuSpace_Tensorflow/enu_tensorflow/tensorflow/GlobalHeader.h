@@ -544,6 +544,11 @@
 #define OUTPUT_TYPE_OPERATION		3
 #define OUTPUT_TYPE_OUTPUT_ETC		4
 
+//////////////////////////////////////////////////////////////////////////
+// 에러 관련 코드
+#define DEF_ERROR		0
+#define DEF_WARNING		1
+
 using namespace tensorflow;
 using namespace tensorflow::ops;
 
